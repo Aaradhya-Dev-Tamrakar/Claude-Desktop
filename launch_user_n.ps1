@@ -57,20 +57,54 @@ function Add-NewProfile {
     return $Name
 }
 
+function Show-ProfileTable {
+    param($Profiles, $AccountKeys)
+
+    $rows = for ($i = 0; $i -lt $AccountKeys.Count; $i++) {
+        $key = $AccountKeys[$i]
+        $lastLogin = $Profiles.$key.last_login
+        if (-not $lastLogin) { $lastLogin = "Never" }
+        [PSCustomObject]@{
+            Num       = "[$($i + 1)]"
+            Profile   = $key
+            Email     = $Profiles.$key.email
+            LastLogin = $lastLogin
+        }
+    }
+
+    $numW = [Math]::Max(3, ($rows.Num | Measure-Object -Property Length -Maximum).Maximum)
+    $profW = [Math]::Max(7, ($rows.Profile | Measure-Object -Property Length -Maximum).Maximum)
+    $emailW = [Math]::Max(5, ($rows.Email | Measure-Object -Property Length -Maximum).Maximum)
+    $loginW = [Math]::Max(10, ($rows.LastLogin | Measure-Object -Property Length -Maximum).Maximum)
+    $widths = @($numW, $profW, $emailW, $loginW)
+
+    function New-Border($L, $C, $R) {
+        $L + (($widths | ForEach-Object { "-" * ($_ + 2) }) -join $C) + $R
+    }
+    function New-Row([string[]]$Cells) {
+        $padded = for ($c = 0; $c -lt $Cells.Count; $c++) { " " + $Cells[$c].PadRight($widths[$c]) + " " }
+        "|" + ($padded -join "|") + "|"
+    }
+
+    $innerWidth = (New-Border "+" "+" "+").Length - 2
+
+    Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
+    Write-Host (New-Row @("#", "Profile", "Email", "Last Login")) -ForegroundColor Cyan
+    Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
+    foreach ($r in $rows) {
+        Write-Host (New-Row @($r.Num, $r.Profile, $r.Email, $r.LastLogin)) -ForegroundColor Yellow
+    }
+    Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
+    Write-Host ("| " + "[N] Add New Profile (+)".PadRight($innerWidth - 2) + " |") -ForegroundColor Magenta
+    Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
+}
+
 if (-not $Account) {
     Write-Host "----------------------------------------" -ForegroundColor Cyan
     Write-Host " Select a Claude Desktop Profile:" -ForegroundColor Green
     Write-Host "----------------------------------------" -ForegroundColor Cyan
 
-    for ($i = 0; $i -lt $AccountKeys.Count; $i++) {
-        $key = $AccountKeys[$i]
-        $email = $Profiles.$key.email
-        $lastLogin = $Profiles.$key.last_login
-        if (-not $lastLogin) { $lastLogin = "Never" }
-        Write-Host " [$($i + 1)] $key ($email) - Last Login: $lastLogin" -ForegroundColor Yellow
-    }
-    Write-Host " [N] Add New Profile (+)" -ForegroundColor Magenta
-    Write-Host "----------------------------------------" -ForegroundColor Cyan
+    Show-ProfileTable -Profiles $Profiles -AccountKeys $AccountKeys
 
     $selection = Read-Host "Select profile [1-$($AccountKeys.Count) or N] (Default: 1)"
     if ($selection -match '^[Nn]$|^\+$') {
@@ -158,7 +192,8 @@ if ($ProfileInfo) {
         if (Test-Path $RegPath) {
             Remove-Item -Path $RegPath -Force -Recurse -ErrorAction SilentlyContinue
         }
-    } catch { }
+    }
+    catch { }
 
     # Close existing running Claude processes
     $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
