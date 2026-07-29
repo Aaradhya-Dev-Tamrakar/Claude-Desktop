@@ -16,7 +16,7 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 
 - **`launch_user_n.ps1`**: Profile launcher script. Resolves executable paths, swaps profile session data, and launches Claude Desktop natively.
 - **`launch.bat`**: Double-click launcher for Windows File Explorer.
-- **`profiles.json`**: Configuration file mapping account profile names to email addresses and user data storage paths.
+- **`profiles.json`**: Configuration file mapping account profile names to email addresses, user data storage paths, and last logged-in timestamps.
 - **`sync.ps1`**: Automated Git repository synchronization tool.
 
 ## Usage

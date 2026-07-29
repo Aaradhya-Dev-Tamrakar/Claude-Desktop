@@ -46,8 +46,9 @@ function Add-NewProfile {
     $Path = "%USERPROFILE%\.claude-profiles\$Name"
 
     $Profiles | Add-Member -NotePropertyName $Name -NotePropertyValue @{
-        email = $Email
-        path  = $Path
+        email      = $Email
+        path       = $Path
+        last_login = $null
     } -Force
 
     $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
@@ -64,7 +65,9 @@ if (-not $Account) {
     for ($i = 0; $i -lt $AccountKeys.Count; $i++) {
         $key = $AccountKeys[$i]
         $email = $Profiles.$key.email
-        Write-Host " [$($i + 1)] $key ($email)" -ForegroundColor Yellow
+        $lastLogin = $Profiles.$key.last_login
+        if (-not $lastLogin) { $lastLogin = "Never" }
+        Write-Host " [$($i + 1)] $key ($email) - Last Login: $lastLogin" -ForegroundColor Yellow
     }
     Write-Host " [N] Add New Profile (+)" -ForegroundColor Magenta
     Write-Host "----------------------------------------" -ForegroundColor Cyan
@@ -218,13 +221,19 @@ if ($ProfileInfo) {
     # Update active profile tracker file
     $Account | Set-Content $StateFile -Encoding UTF8
 
+    # Update last login timestamp in profile and save to profiles.json
+    $CurrentTimestamp = (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
+    $ProfileInfo | Add-Member -NotePropertyName "last_login" -NotePropertyValue $CurrentTimestamp -Force
+    $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
+
     Write-Host "----------------------------------------" -ForegroundColor Cyan
     Write-Host " Launching Claude Desktop (Native)" -ForegroundColor Green
-    Write-Host " Profile : $Account" -ForegroundColor Yellow
-    Write-Host " Email   : $Email" -ForegroundColor Yellow
-    Write-Host " Active  : $NativeAppDataDir" -ForegroundColor Gray
-    Write-Host " Storage : $TargetStorageDir" -ForegroundColor Gray
-    Write-Host " Exe     : $ClaudeExe" -ForegroundColor Gray
+    Write-Host " Profile    : $Account" -ForegroundColor Yellow
+    Write-Host " Email      : $Email" -ForegroundColor Yellow
+    Write-Host " Last Login : $CurrentTimestamp" -ForegroundColor Yellow
+    Write-Host " Active     : $NativeAppDataDir" -ForegroundColor Gray
+    Write-Host " Storage    : $TargetStorageDir" -ForegroundColor Gray
+    Write-Host " Exe        : $ClaudeExe" -ForegroundColor Gray
     Write-Host "----------------------------------------" -ForegroundColor Cyan
 
     # Redirect stdout/stderr to temp logs to suppress internal Electron/Node.js deprecation warnings (DEP0169)
