@@ -226,7 +226,10 @@ if ($ProfileInfo) {
     Write-Host " Exe     : $ClaudeExe" -ForegroundColor Gray
     Write-Host "----------------------------------------" -ForegroundColor Cyan
 
-    Start-Process $ClaudeExe
+    # Redirect stdout/stderr to temp logs to suppress internal Electron/Node.js deprecation warnings (DEP0169)
+    $OutLog = Join-Path $env:TEMP "claude_out.log"
+    $ErrLog = Join-Path $env:TEMP "claude_err.log"
+    Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
 }
 else {
     Write-Host "Account '$Account' not found in profiles.json" -ForegroundColor Red
