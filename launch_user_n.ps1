@@ -84,6 +84,11 @@ function Add-NewProfile {
 function Show-ProfileTable {
     param($Profiles, $AccountKeys)
 
+    if ($AccountKeys.Count -eq 0) {
+        Write-Host "(No profiles yet. Press N to add your first profile.)" -ForegroundColor DarkGray
+        return
+    }
+
     $rows = for ($i = 0; $i -lt $AccountKeys.Count; $i++) {
         $key = $AccountKeys[$i]
         $lastLogin = $Profiles.$key.last_login
@@ -106,7 +111,10 @@ function Show-ProfileTable {
         $L + (($widths | ForEach-Object { "-" * ($_ + 2) }) -join $C) + $R
     }
     function New-Row([string[]]$Cells) {
-        $padded = for ($c = 0; $c -lt $Cells.Count; $c++) { " " + $Cells[$c].PadRight($widths[$c]) + " " }
+        $padded = for ($c = 0; $c -lt $Cells.Count; $c++) {
+            $cell = if ($null -ne $Cells[$c]) { [string]$Cells[$c] } else { "" }
+            " " + $cell.PadRight($widths[$c]) + " "
+        }
         "|" + ($padded -join "|") + "|"
     }
 
@@ -130,23 +138,30 @@ if (-not $Account) {
 
     Show-ProfileTable -Profiles $Profiles -AccountKeys $AccountKeys
 
-    $selection = Read-Host "Select profile [1-$($AccountKeys.Count) or N] (Default: 1)"
-    if ($selection -match '^[Nn]$|^\+$') {
+    if ($AccountKeys.Count -eq 0) {
+        $selection = Read-Host "No profiles yet. Press N (or Enter) to add your first profile"
         $Account = Add-NewProfile
         $Profiles = Get-Content $ConfigFile | ConvertFrom-Json
     }
-    elseif ([string]::IsNullOrWhiteSpace($selection)) {
-        $Account = $AccountKeys[0]
-    }
     else {
-        $selectionIndex = [int]$selection - 1
-        if ($selectionIndex -ge 0 -and $selectionIndex -lt $AccountKeys.Count) {
-            $Account = $AccountKeys[$selectionIndex]
+        $selection = Read-Host "Select profile [1-$($AccountKeys.Count) or N] (Default: 1)"
+        if ($selection -match '^[Nn]$|^\+$') {
+            $Account = Add-NewProfile
+            $Profiles = Get-Content $ConfigFile | ConvertFrom-Json
+        }
+        elseif ([string]::IsNullOrWhiteSpace($selection)) {
+            $Account = $AccountKeys[0]
         }
         else {
-            Write-Host "Invalid selection '$selection'" -ForegroundColor Red
-            Read-Host "Press Enter to exit..."
-            exit 1
+            $selectionIndex = [int]$selection - 1
+            if ($selectionIndex -ge 0 -and $selectionIndex -lt $AccountKeys.Count) {
+                $Account = $AccountKeys[$selectionIndex]
+            }
+            else {
+                Write-Host "Invalid selection '$selection'" -ForegroundColor Red
+                Read-Host "Press Enter to exit..."
+                exit 1
+            }
         }
     }
 }
