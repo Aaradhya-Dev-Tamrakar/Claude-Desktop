@@ -10,6 +10,8 @@ $RECYCLE.BIN/
 # PowerShell history & transient log files
 *.log
 *.tmp
+*.mht
+dev-logs/
 
 # Visual Studio Code & IDE settings
 .vscode/*

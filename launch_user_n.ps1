@@ -84,6 +84,7 @@ if (-not $Account) {
         }
         else {
             Write-Host "Invalid selection '$selection'" -ForegroundColor Red
+            Read-Host "Press Enter to exit..."
             exit 1
         }
     }
