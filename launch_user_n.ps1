@@ -142,6 +142,14 @@ if ($ProfileInfo) {
         exit 1
     }
 
+    # Close existing running Claude processes to ensure single-instance OAuth callbacks route to the target profile
+    $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
+    if ($RunningClaude) {
+        Write-Host "Closing running Claude process(es) to switch profiles..." -ForegroundColor Yellow
+        $RunningClaude | Stop-Process -Force
+        Start-Sleep -Milliseconds 500
+    }
+
     Write-Host "----------------------------------------" -ForegroundColor Cyan
     Write-Host " Launching Claude Desktop" -ForegroundColor Green
     Write-Host " Profile : $Account" -ForegroundColor Yellow
