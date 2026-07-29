@@ -70,7 +70,7 @@ Describe "Get-ValidatedProfilePath (path containment)" {
             $proc = Start-Process pwsh -ArgumentList @("-NoProfile", "-File", $HarnessPath, $rawPath, "user1") -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$TestDrive\out.txt" -RedirectStandardError "$TestDrive\err.txt"
             $proc.ExitCode | Should -Be 0
             $output = Get-Content "$TestDrive\out.txt" -Raw
-            $output.Trim() | Should -Match [regex]::Escape("user1")
+            $output.Trim() | Should -Match $([regex]::Escape("user1"))
         }
 
         It "accepts a nested subfolder still under the base dir" {
