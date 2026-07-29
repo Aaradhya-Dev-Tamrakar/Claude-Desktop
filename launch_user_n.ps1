@@ -226,15 +226,7 @@ if ($ProfileInfo) {
     Write-Host " Exe     : $ClaudeExe" -ForegroundColor Gray
     Write-Host "----------------------------------------" -ForegroundColor Cyan
 
-    # Launch detached via Windows AppX shell protocol if MSIX package, or direct process
-    $AppxPkg = Get-AppxPackage *claude* -ErrorAction SilentlyContinue
-    if ($AppxPkg -and $AppxPkg.PackageFamilyName) {
-        $Aumid = "$($AppxPkg.PackageFamilyName)!App"
-        Start-Process explorer.exe "shell:AppsFolder\$Aumid"
-    }
-    else {
-        Start-Process $ClaudeExe
-    }
+    Start-Process $ClaudeExe
 }
 else {
     Write-Host "Account '$Account' not found in profiles.json" -ForegroundColor Red
