@@ -1,101 +1,101 @@
 {
   "user1": {
-    "email": "aaradhyadevtmr@gmail.com",
+    "nickname": "aaradhya-personal",
     "path": "%USERPROFILE%\\.claude-profiles\\user1",
     "last_login": "2026-07-29 13:09:27"
   },
   "user2": {
-    "email": "devtamrakaraaradhya83@gmail.com",
+    "nickname": "adt-83",
     "path": "%USERPROFILE%\\.claude-profiles\\user2",
     "last_login": "2026-07-29 13:14:14"
   },
   "user3": {
-    "email": "adtgames2061@gmail.com",
+    "nickname": "aaradhya-games",
     "path": "%USERPROFILE%\\.claude-profiles\\user3",
     "last_login": "2026-07-29 13:59:44"
   },
   "user4": {
-    "email": "aaradhya.bei79001@gmail.com",
+    "nickname": "aaradhya-bei",
     "path": "%USERPROFILE%\\.claude-profiles\\user4",
     "last_login": null
   },
   "user5": {
-    "email": "aaradhyadtmr@gmail.com",
+    "nickname": "adtmr",
     "path": "%USERPROFILE%\\.claude-profiles\\user5",
     "last_login": null
   },
   "user6": {
-    "email": "aaradhyadevtm@gmail.com",
+    "nickname": "adevtm",
     "path": "%USERPROFILE%\\.claude-profiles\\user6",
     "last_login": null
   },
   "user7": {
-    "email": "aaradhya.devtamrakar@ieee.org",
+    "nickname": "ieee-personal",
     "path": "%USERPROFILE%\\.claude-profiles\\user7",
     "last_login": "2026-07-29 13:41:47"
   },
   "user8": {
-    "email": "xavier.valois007@gmail.com",
+    "nickname": "xavier-valois",
     "path": "%USERPROFILE%\\.claude-profiles\\user8",
     "last_login": "2026-07-29 13:13:28"
   },
   "user9": {
-    "email": "majorprj79001@gmail.com",
+    "nickname": "maj-prj01",
     "path": "%USERPROFILE%\\.claude-profiles\\user9",
     "last_login": null
   },
   "user10": {
-    "email": "majorprj79034@gmail.com",
+    "nickname": "maj-prj34",
     "path": "%USERPROFILE%\\.claude-profiles\\user10",
     "last_login": null
   },
   "user11": {
-    "email": "majorprj79039@gmail.com",
+    "nickname": "maj-prj39",
     "path": "%USERPROFILE%\\.claude-profiles\\user11",
     "last_login": null
   },
   "user12": {
-    "email": "majorprj79043@gmail.com",
+    "nickname": "maj-prj43",
     "path": "%USERPROFILE%\\.claude-profiles\\user12",
     "last_login": null
   },
   "user13": {
-    "email": "aaradhya.claude.user0@gmail.com",
+    "nickname": "claude-test-0",
     "path": "%USERPROFILE%\\.claude-profiles\\user13",
     "last_login": null
   },
   "user14": {
-    "email": "aaradhya.claude.user1@gmail.com",
+    "nickname": "claude-test-1",
     "path": "%USERPROFILE%\\.claude-profiles\\user14",
     "last_login": null
   },
   "user15": {
-    "email": "tamrakarfamily0@gmail.com",
+    "nickname": "family",
     "path": "%USERPROFILE%\\.claude-profiles\\user15",
     "last_login": null
   },
   "user16": {
-    "email": "beie7923@gmail.com",
+    "nickname": "bei-org",
     "path": "%USERPROFILE%\\.claude-profiles\\user16",
     "last_login": null
   },
   "user17": {
-    "email": "ieee.stb.kecktm@gmail.com",
+    "nickname": "ieee-stb-kec",
     "path": "%USERPROFILE%\\.claude-profiles\\user17",
     "last_login": null
   },
   "user18": {
-    "email": "kec.makerspace@gmail.com",
+    "nickname": "kec-makerspace",
     "path": "%USERPROFILE%\\.claude-profiles\\user18",
     "last_login": null
   },
   "user19": {
-    "email": "kaaliz.official@gmail.com",
+    "nickname": "kaaliz",
     "path": "%USERPROFILE%\\.claude-profiles\\user19",
     "last_login": null
   },
   "user20": {
-    "email": "offonthewaytoheart@gmail.com",
+    "nickname": "otwth",
     "path": "%USERPROFILE%\\.claude-profiles\\user20",
     "last_login": null
   }

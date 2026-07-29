@@ -61,15 +61,15 @@ function Add-NewProfile {
         return $Name
     }
 
-    $Email = Read-Host "Enter email address for '$Name'"
-    if ([string]::IsNullOrWhiteSpace($Email)) {
-        $Email = "$Name@example.com"
+    $Nickname = Read-Host "Enter a nickname for '$Name' (e.g. work, personal, ieee)"
+    if ([string]::IsNullOrWhiteSpace($Nickname)) {
+        $Nickname = $Name
     }
 
     $Path = "%USERPROFILE%\.claude-profiles\$Name"
 
     $Profiles | Add-Member -NotePropertyName $Name -NotePropertyValue @{
-        email      = $Email
+        nickname   = $Nickname
         path       = $Path
         last_login = $null
     } -Force
@@ -90,16 +90,16 @@ function Show-ProfileTable {
         [PSCustomObject]@{
             Num       = "[$($i + 1)]"
             Profile   = $key
-            Email     = $Profiles.$key.email
+            Nickname  = $Profiles.$key.nickname
             LastLogin = $lastLogin
         }
     }
 
     $numW = [Math]::Max(3, ($rows.Num | Measure-Object -Property Length -Maximum).Maximum)
     $profW = [Math]::Max(7, ($rows.Profile | Measure-Object -Property Length -Maximum).Maximum)
-    $emailW = [Math]::Max(5, ($rows.Email | Measure-Object -Property Length -Maximum).Maximum)
+    $nickW = [Math]::Max(8, ($rows.Nickname | Measure-Object -Property Length -Maximum).Maximum)
     $loginW = [Math]::Max(10, ($rows.LastLogin | Measure-Object -Property Length -Maximum).Maximum)
-    $widths = @($numW, $profW, $emailW, $loginW)
+    $widths = @($numW, $profW, $nickW, $loginW)
 
     function New-Border($L, $C, $R) {
         $L + (($widths | ForEach-Object { "-" * ($_ + 2) }) -join $C) + $R
@@ -112,10 +112,10 @@ function Show-ProfileTable {
     $innerWidth = (New-Border "+" "+" "+").Length - 2
 
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
-    Write-Host (New-Row @("#", "Profile", "Email", "Last Login")) -ForegroundColor Cyan
+    Write-Host (New-Row @("#", "Profile", "Nickname", "Last Login")) -ForegroundColor Cyan
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     foreach ($r in $rows) {
-        Write-Host (New-Row @($r.Num, $r.Profile, $r.Email, $r.LastLogin)) -ForegroundColor Yellow
+        Write-Host (New-Row @($r.Num, $r.Profile, $r.Nickname, $r.LastLogin)) -ForegroundColor Yellow
     }
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     Write-Host ("| " + "[N] Add New Profile (+)".PadRight($innerWidth - 2) + " |") -ForegroundColor Magenta
@@ -164,7 +164,7 @@ elseif (-not ($Profiles.psobject.properties.Name -contains $Account)) {
 $ProfileInfo = $Profiles.$Account
 
 if ($ProfileInfo) {
-    $Email = $ProfileInfo.email
+    $Nickname = $ProfileInfo.nickname
     $RawDir = $ProfileInfo.path
     $Dir = Get-ValidatedProfilePath -RawPath $RawDir -ProfileName $Account
 
@@ -294,7 +294,7 @@ if ($ProfileInfo) {
     Write-Host "----------------------------------------" -ForegroundColor Cyan
     Write-Host " Launching Claude Desktop (Native)" -ForegroundColor Green
     Write-Host " Profile    : $Account" -ForegroundColor Yellow
-    Write-Host " Email      : $Email" -ForegroundColor Yellow
+    Write-Host " Nickname   : $Nickname" -ForegroundColor Yellow
     Write-Host " Last Login : $CurrentTimestamp" -ForegroundColor Yellow
     Write-Host " Active     : $NativeAppDataDir" -ForegroundColor Gray
     Write-Host " Storage    : $TargetStorageDir" -ForegroundColor Gray
