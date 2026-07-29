@@ -1,5 +1,6 @@
 param (
-    [string]$Account
+    [string]$Account,
+    [switch]$WhatIf
 )
 
 $ConfigFile = Join-Path $PSScriptRoot "profiles.json"
@@ -169,7 +170,12 @@ if ($ProfileInfo) {
     $Dir = Get-ValidatedProfilePath -RawPath $RawDir -ProfileName $Account
 
     if (-not (Test-Path $Dir)) {
-        New-Item -ItemType Directory -Force -Path $Dir | Out-Null
+        if ($WhatIf) {
+            Write-Host "[WhatIf] Would create profile storage dir '$Dir'." -ForegroundColor DarkCyan
+        }
+        else {
+            New-Item -ItemType Directory -Force -Path $Dir | Out-Null
+        }
     }
 
     $ExecutablePaths = [System.Collections.Generic.List[string]]::new()
@@ -218,13 +224,18 @@ if ($ProfileInfo) {
     try {
         $RegPath = 'HKCU:\Software\Classes\claude'
         if (Test-Path $RegPath) {
-            $RegBackupDir = Join-Path $ProfilesBaseDir "RegistryBackups"
-            if (-not (Test-Path $RegBackupDir)) {
-                New-Item -ItemType Directory -Force -Path $RegBackupDir | Out-Null
+            if ($WhatIf) {
+                Write-Host "[WhatIf] Would export '$RegPath' to RegistryBackups\ then remove it." -ForegroundColor DarkCyan
             }
-            $RegBackupFile = Join-Path $RegBackupDir "claude-protocol-$(Get-Date -Format 'yyyyMMdd-HHmmss').reg"
-            & reg.exe export "HKCU\Software\Classes\claude" $RegBackupFile /y 2>$null | Out-Null
-            Remove-Item -Path $RegPath -Force -Recurse -ErrorAction SilentlyContinue
+            else {
+                $RegBackupDir = Join-Path $ProfilesBaseDir "RegistryBackups"
+                if (-not (Test-Path $RegBackupDir)) {
+                    New-Item -ItemType Directory -Force -Path $RegBackupDir | Out-Null
+                }
+                $RegBackupFile = Join-Path $RegBackupDir "claude-protocol-$(Get-Date -Format 'yyyyMMdd-HHmmss').reg"
+                & reg.exe export "HKCU\Software\Classes\claude" $RegBackupFile /y 2>$null | Out-Null
+                Remove-Item -Path $RegPath -Force -Recurse -ErrorAction SilentlyContinue
+            }
         }
     }
     catch { }
@@ -232,9 +243,14 @@ if ($ProfileInfo) {
     # Close existing running Claude processes
     $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
     if ($RunningClaude) {
-        Write-Host "Closing running Claude process(es) to switch profiles..." -ForegroundColor Yellow
-        $RunningClaude | Stop-Process -Force
-        Start-Sleep -Milliseconds 800
+        if ($WhatIf) {
+            Write-Host "[WhatIf] Would stop $($RunningClaude.Count) running Claude process(es)." -ForegroundColor DarkCyan
+        }
+        else {
+            Write-Host "Closing running Claude process(es) to switch profiles..." -ForegroundColor Yellow
+            $RunningClaude | Stop-Process -Force
+            Start-Sleep -Milliseconds 800
+        }
     }
 
     $StateFile = Join-Path $ProfilesBaseDir ".active_profile"
@@ -247,49 +263,76 @@ if ($ProfileInfo) {
         $PrevAccount = (Get-Content $StateFile -Raw).Trim()
         if ($PrevAccount -and ($PrevAccount -ne $Account) -and (Test-Path $NativeAppDataDir)) {
             $PrevStorageDir = Join-Path $ProfilesBaseDir $PrevAccount
-            if (-not (Test-Path $PrevStorageDir)) {
-                New-Item -ItemType Directory -Force -Path $PrevStorageDir | Out-Null
+            if ($WhatIf) {
+                Write-Host "[WhatIf] Would mirror '$NativeAppDataDir' -> '$PrevStorageDir' (backup for '$PrevAccount')." -ForegroundColor DarkCyan
             }
-            Write-Host "[+] Saving current session data to profile '$PrevAccount'..." -ForegroundColor Gray
-            & robocopy $NativeAppDataDir $PrevStorageDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+            else {
+                if (-not (Test-Path $PrevStorageDir)) {
+                    New-Item -ItemType Directory -Force -Path $PrevStorageDir | Out-Null
+                }
+                Write-Host "[+] Saving current session data to profile '$PrevAccount'..." -ForegroundColor Gray
+                & robocopy $NativeAppDataDir $PrevStorageDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+            }
         }
     }
 
     # Restore target profile session into Native AppData directory
     $TargetStorageDir = $Dir
     if (-not (Test-Path $TargetStorageDir)) {
-        New-Item -ItemType Directory -Force -Path $TargetStorageDir | Out-Null
+        if (-not $WhatIf) {
+            New-Item -ItemType Directory -Force -Path $TargetStorageDir | Out-Null
+        }
     }
 
     if (-not (Test-Path $NativeAppDataDir)) {
-        New-Item -ItemType Directory -Force -Path $NativeAppDataDir | Out-Null
+        if (-not $WhatIf) {
+            New-Item -ItemType Directory -Force -Path $NativeAppDataDir | Out-Null
+        }
     }
 
     $TargetFiles = Get-ChildItem -Path $TargetStorageDir -ErrorAction SilentlyContinue
     if ($TargetFiles) {
-        Write-Host "[+] Restoring session data for profile '$Account'..." -ForegroundColor Cyan
-        & robocopy $TargetStorageDir $NativeAppDataDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+        if ($WhatIf) {
+            Write-Host "[WhatIf] Would mirror '$TargetStorageDir' -> '$NativeAppDataDir' (restore for '$Account')." -ForegroundColor DarkCyan
+        }
+        else {
+            Write-Host "[+] Restoring session data for profile '$Account'..." -ForegroundColor Cyan
+            & robocopy $TargetStorageDir $NativeAppDataDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+        }
     }
     else {
-        Write-Host "[+] Initializing fresh profile storage for '$Account'..." -ForegroundColor Cyan
-        Get-ChildItem -Path $NativeAppDataDir -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+        if ($WhatIf) {
+            Write-Host "[WhatIf] Would clear '$NativeAppDataDir' to initialize fresh profile storage for '$Account'." -ForegroundColor DarkCyan
+        }
+        else {
+            Write-Host "[+] Initializing fresh profile storage for '$Account'..." -ForegroundColor Cyan
+            Get-ChildItem -Path $NativeAppDataDir -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+        }
     }
 
     # Clear stale Chromium disk cache files to force clean initialization (prevents Error -8)
     foreach ($cDir in $CacheExcludeDirs) {
         $cPath = Join-Path $NativeAppDataDir $cDir
         if (Test-Path $cPath) {
-            Remove-Item -Path $cPath -Recurse -Force -ErrorAction SilentlyContinue
+            if ($WhatIf) {
+                Write-Host "[WhatIf] Would remove cache dir '$cPath'." -ForegroundColor DarkCyan
+            }
+            else {
+                Remove-Item -Path $cPath -Recurse -Force -ErrorAction SilentlyContinue
+            }
         }
     }
 
     # Update active profile tracker file
-    $Account | Set-Content $StateFile -Encoding UTF8
-
-    # Update last login timestamp in profile and save to profiles.json
     $CurrentTimestamp = (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
-    $ProfileInfo | Add-Member -NotePropertyName "last_login" -NotePropertyValue $CurrentTimestamp -Force
-    $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
+    if ($WhatIf) {
+        Write-Host "[WhatIf] Would set active profile to '$Account' and update last_login to '$CurrentTimestamp'." -ForegroundColor DarkCyan
+    }
+    else {
+        $Account | Set-Content $StateFile -Encoding UTF8
+        $ProfileInfo | Add-Member -NotePropertyName "last_login" -NotePropertyValue $CurrentTimestamp -Force
+        $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
+    }
 
     Write-Host "----------------------------------------" -ForegroundColor Cyan
     Write-Host " Launching Claude Desktop (Native)" -ForegroundColor Green
@@ -303,12 +346,18 @@ if ($ProfileInfo) {
 
     # Redirect stdout/stderr to per-profile logs to suppress internal Electron/Node.js deprecation warnings (DEP0169)
     $LogsDir = Join-Path $ProfilesBaseDir "Logs\$Account"
-    if (-not (Test-Path $LogsDir)) {
-        New-Item -ItemType Directory -Force -Path $LogsDir | Out-Null
+    if ($WhatIf) {
+        Write-Host "[WhatIf] Would launch '$ClaudeExe' with logs under '$LogsDir'." -ForegroundColor DarkCyan
+        Write-Host "[WhatIf] Dry run complete. No files, registry, or processes were modified." -ForegroundColor Green
     }
-    $OutLog = Join-Path $LogsDir "claude_out.log"
-    $ErrLog = Join-Path $LogsDir "claude_err.log"
-    Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+    else {
+        if (-not (Test-Path $LogsDir)) {
+            New-Item -ItemType Directory -Force -Path $LogsDir | Out-Null
+        }
+        $OutLog = Join-Path $LogsDir "claude_out.log"
+        $ErrLog = Join-Path $LogsDir "claude_err.log"
+        Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+    }
 }
 else {
     Write-Host "Account '$Account' not found in profiles.json" -ForegroundColor Red

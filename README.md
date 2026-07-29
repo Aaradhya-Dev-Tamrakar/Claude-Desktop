@@ -30,6 +30,12 @@ pwsh -File .\launch_user_n.ps1 -Account user1
 pwsh -File .\launch_user_n.ps1 -Account user2
 ```
 
+Preview what a profile switch would do without touching any files, the registry, or running processes:
+
+```powershell
+pwsh -File .\launch_user_n.ps1 -Account user1 -WhatIf
+```
+
 ### Syncing Git Repository
 
 Run full sync (pull rebase, auto-commit changes, and push):
