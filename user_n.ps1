@@ -2,7 +2,7 @@ param (
     [string]$Account = "user1"
 )
 
-$ConfigFile = "D:\Claude Desktop\profiles.json"
+$ConfigFile = Join-Path $PSScriptRoot "profiles.json"
 
 if (Test-Path $ConfigFile) {
     $Profiles = Get-Content $ConfigFile | ConvertFrom-Json
@@ -21,9 +21,11 @@ if (Test-Path $ConfigFile) {
 
         Start-Process "$env:LOCALAPPDATA\Microsoft\WindowsApps\Claude.exe" `
             -ArgumentList "--user-data-dir=`"$Dir`""
-    } else {
+    }
+    else {
         Write-Host "Account '$Account' not found in profiles.json" -ForegroundColor Red
     }
-} else {
+}
+else {
     Write-Host "profiles.json file is missing!" -ForegroundColor Red
 }
