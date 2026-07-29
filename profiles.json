@@ -1,14 +1,14 @@
 {
   "user1": {
     "email": "aaradhyadevtmr@gmail.com",
-    "path": "C:\\Users\\Aaradhya\\.claude-profiles\\user1"
+    "path": "%USERPROFILE%\\.claude-profiles\\user1"
   },
   "user2": {
     "email": "your_second_email@example.com",
-    "path": "C:\\Users\\Aaradhya\\.claude-profiles\\user2"
+    "path": "%USERPROFILE%\\.claude-profiles\\user2"
   },
   "work": {
     "email": "work_email@example.com",
-    "path": "C:\\Users\\Aaradhya\\.claude-profiles\\work"
+    "path": "%USERPROFILE%\\.claude-profiles\\work"
   }
 }

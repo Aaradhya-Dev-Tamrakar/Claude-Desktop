@@ -40,20 +40,13 @@ function Get-AutoCommitMessage {
         $summary = "$firstTwo +$extraCount more"
     }
 
-    # Disambiguate repeated edits to the same file(s): filenames alone repeat
-    # verbatim across unrelated commits, so fold in line-churn stats and,
-    # where possible, the nearest changed identifier pulled straight from
-    # the diff hunk headers.
-    $rawDiff = git diff -U0 HEAD -- 2>$null
-    $diffStat = git diff --shortstat HEAD -- 2>$null
+    $rawDiff = git diff --cached -U0 2>$null
+    $diffStat = git diff --cached --shortstat 2>$null
     $churn = ""
     if ($diffStat -match '(\d+) insertion') { $ins = $Matches[1] } else { $ins = 0 }
     if ($diffStat -match '(\d+) deletion') { $del = $Matches[1] } else { $del = 0 }
     if (($ins + 0) -gt 0 -or ($del + 0) -gt 0) { $churn = " (+$ins/-$del)" }
 
-    # A pure "no newline at end of file" fixup: the only changed lines are a
-    # removed/added pair with identical text, distinguished solely by git's
-    # "\ No newline at end of file" marker.
     $isNewlineOnly = $false
     if ($rawDiff -match '\\ No newline at end of file') {
         $addedLines = $rawDiff | Where-Object { $_ -match '^\+[^+]' } | ForEach-Object { $_.Substring(1) }
@@ -81,14 +74,14 @@ function Get-AutoCommitMessage {
             Select-Object -First 1
             if ($addedLine) {
                 $snippet = $addedLine
-                if ($snippet.Length -gt 50) { $snippet = $snippet.Substring(0, 50) + "…" }
+                if ($snippet.Length -gt 50) { $snippet = $snippet.Substring(0, 50) + "..." }
                 $hunkContext = $snippet
             }
         }
     }
 
     if ($hunkContext) {
-        return "${prefix}: update ${summary} — ${hunkContext}${churn}"
+        return "${prefix}: update ${summary} - ${hunkContext}${churn}"
     }
     return "${prefix}: update ${summary}${churn}"
 }
@@ -100,14 +93,21 @@ if (-not (Test-Path "$RepoPath\.git")) {
 }
 Push-Location $RepoPath
 
-Write-Host "[Sync] Pulling latest from origin main..." -ForegroundColor Cyan
-git pull --autostash origin main
+$currentBranch = (git branch --show-current 2>$null)
+if ($currentBranch) { $currentBranch = $currentBranch.Trim() }
+if (-not $currentBranch) { $currentBranch = "main" }
+
+Write-Host "[Sync] Pulling latest from origin $currentBranch..." -ForegroundColor Cyan
+git pull --rebase --autostash origin $currentBranch
 
 if ($PullOnly) {
     Write-Host "[Sync] Pull complete (PullOnly flag set)." -ForegroundColor Green
     Pop-Location
     exit 0
 }
+
+Write-Host "[Sync] Staging changes..." -ForegroundColor Cyan
+git add -A
 
 if (-not $Message) {
     $Message = Get-AutoCommitMessage
@@ -117,18 +117,15 @@ if (-not $Message) {
 }
 
 if ($Message) {
-    Write-Host "[Sync] Staging changes..." -ForegroundColor Cyan
-    git add -A
-
     Write-Host "[Sync] Committing: '$Message'..." -ForegroundColor Cyan
     git commit -m "$Message"
 
-    Write-Host "[Sync] Pushing to origin main..." -ForegroundColor Cyan
-    git push origin main
+    Write-Host "[Sync] Pushing to origin $currentBranch..." -ForegroundColor Cyan
+    git push origin $currentBranch
     if ($LASTEXITCODE -ne 0) {
         Write-Host "[Sync] Push rejected. Re-pulling and retrying push..." -ForegroundColor Yellow
-        git pull --rebase --autostash origin main
-        git push origin main
+        git pull --rebase --autostash origin $currentBranch
+        git push origin $currentBranch
     }
 }
 else {
