@@ -170,6 +170,9 @@ if ($ProfileInfo) {
     }
     $StateFile = Join-Path $ProfilesBaseDir ".active_profile"
 
+    # Ephemeral Chromium cache folders to exclude from sync to prevent disk cache corruptions (Error -8)
+    $CacheExcludeDirs = @("Cache", "GPUCache", "Code Cache", "Script Cache", "Crashpad", "blob_storage", "DawnCache", "Cache_Data")
+
     # Save currently active profile session back to its storage folder
     if (Test-Path $StateFile) {
         $PrevAccount = (Get-Content $StateFile -Raw).Trim()
@@ -179,7 +182,7 @@ if ($ProfileInfo) {
                 New-Item -ItemType Directory -Force -Path $PrevStorageDir | Out-Null
             }
             Write-Host "[+] Saving current session data to profile '$PrevAccount'..." -ForegroundColor Gray
-            & robocopy $NativeAppDataDir $PrevStorageDir /MIR /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+            & robocopy $NativeAppDataDir $PrevStorageDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
         }
     }
 
@@ -196,11 +199,19 @@ if ($ProfileInfo) {
     $TargetFiles = Get-ChildItem -Path $TargetStorageDir -ErrorAction SilentlyContinue
     if ($TargetFiles) {
         Write-Host "[+] Restoring session data for profile '$Account'..." -ForegroundColor Cyan
-        & robocopy $TargetStorageDir $NativeAppDataDir /MIR /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+        & robocopy $TargetStorageDir $NativeAppDataDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
     }
     else {
         Write-Host "[+] Initializing fresh profile storage for '$Account'..." -ForegroundColor Cyan
         Get-ChildItem -Path $NativeAppDataDir -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+    }
+
+    # Clear stale Chromium disk cache files to force clean initialization (prevents Error -8)
+    foreach ($cDir in $CacheExcludeDirs) {
+        $cPath = Join-Path $NativeAppDataDir $cDir
+        if (Test-Path $cPath) {
+            Remove-Item -Path $cPath -Recurse -Force -ErrorAction SilentlyContinue
+        }
     }
 
     # Update active profile tracker file
@@ -215,7 +226,15 @@ if ($ProfileInfo) {
     Write-Host " Exe     : $ClaudeExe" -ForegroundColor Gray
     Write-Host "----------------------------------------" -ForegroundColor Cyan
 
-    Start-Process $ClaudeExe
+    # Launch detached via Windows AppX shell protocol if MSIX package, or direct process
+    $AppxPkg = Get-AppxPackage *claude* -ErrorAction SilentlyContinue
+    if ($AppxPkg -and $AppxPkg.PackageFamilyName) {
+        $Aumid = "$($AppxPkg.PackageFamilyName)!App"
+        Start-Process explorer.exe "shell:AppsFolder\$Aumid"
+    }
+    else {
+        Start-Process $ClaudeExe
+    }
 }
 else {
     Write-Host "Account '$Account' not found in profiles.json" -ForegroundColor Red
