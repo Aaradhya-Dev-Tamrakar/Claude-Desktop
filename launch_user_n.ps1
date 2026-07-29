@@ -142,34 +142,80 @@ if ($ProfileInfo) {
         exit 1
     }
 
-    # Close existing running Claude processes to ensure single-instance OAuth callbacks route to the target profile
+    # Native AppData directory used by Claude Desktop MSIX / Desktop installer
+    $NativeAppDataDir = "$env:LOCALAPPDATA\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude"
+    if (-not (Test-Path (Split-Path $NativeAppDataDir -Parent))) {
+        $NativeAppDataDir = "$env:APPDATA\Claude"
+    }
+
+    # Remove any custom registry protocol overrides so Windows uses 100% native AppX protocol handling
+    try {
+        $RegPath = 'HKCU:\Software\Classes\claude'
+        if (Test-Path $RegPath) {
+            Remove-Item -Path $RegPath -Force -Recurse -ErrorAction SilentlyContinue
+        }
+    } catch { }
+
+    # Close existing running Claude processes
     $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
     if ($RunningClaude) {
         Write-Host "Closing running Claude process(es) to switch profiles..." -ForegroundColor Yellow
         $RunningClaude | Stop-Process -Force
-        Start-Sleep -Milliseconds 500
+        Start-Sleep -Milliseconds 800
     }
 
-    # Register/update Windows Registry protocol handler so OAuth deep-link callbacks (claude://) route to this profile
-    try {
-        $RegPath = 'HKCU:\Software\Classes\claude\shell\open\command'
-        if (-not (Test-Path $RegPath)) {
-            New-Item -Path $RegPath -Force | Out-Null
-        }
-        $ProtocolCmd = '"' + $ClaudeExe + '" --user-data-dir="' + $Dir + '" "%1"'
-        Set-ItemProperty -Path $RegPath -Name '(default)' -Value $ProtocolCmd -ErrorAction SilentlyContinue
+    $ProfilesBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
+    if (-not (Test-Path $ProfilesBaseDir)) {
+        New-Item -ItemType Directory -Force -Path $ProfilesBaseDir | Out-Null
     }
-    catch { }
+    $StateFile = Join-Path $ProfilesBaseDir ".active_profile"
+
+    # Save currently active profile session back to its storage folder
+    if (Test-Path $StateFile) {
+        $PrevAccount = (Get-Content $StateFile -Raw).Trim()
+        if ($PrevAccount -and ($PrevAccount -ne $Account) -and (Test-Path $NativeAppDataDir)) {
+            $PrevStorageDir = Join-Path $ProfilesBaseDir $PrevAccount
+            if (-not (Test-Path $PrevStorageDir)) {
+                New-Item -ItemType Directory -Force -Path $PrevStorageDir | Out-Null
+            }
+            Write-Host "[+] Saving current session data to profile '$PrevAccount'..." -ForegroundColor Gray
+            & robocopy $NativeAppDataDir $PrevStorageDir /MIR /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+        }
+    }
+
+    # Restore target profile session into Native AppData directory
+    $TargetStorageDir = $Dir
+    if (-not (Test-Path $TargetStorageDir)) {
+        New-Item -ItemType Directory -Force -Path $TargetStorageDir | Out-Null
+    }
+
+    if (-not (Test-Path $NativeAppDataDir)) {
+        New-Item -ItemType Directory -Force -Path $NativeAppDataDir | Out-Null
+    }
+
+    $TargetFiles = Get-ChildItem -Path $TargetStorageDir -ErrorAction SilentlyContinue
+    if ($TargetFiles) {
+        Write-Host "[+] Restoring session data for profile '$Account'..." -ForegroundColor Cyan
+        & robocopy $TargetStorageDir $NativeAppDataDir /MIR /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+    }
+    else {
+        Write-Host "[+] Initializing fresh profile storage for '$Account'..." -ForegroundColor Cyan
+        Get-ChildItem -Path $NativeAppDataDir -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+    }
+
+    # Update active profile tracker file
+    $Account | Set-Content $StateFile -Encoding UTF8
 
     Write-Host "----------------------------------------" -ForegroundColor Cyan
-    Write-Host " Launching Claude Desktop" -ForegroundColor Green
+    Write-Host " Launching Claude Desktop (Native)" -ForegroundColor Green
     Write-Host " Profile : $Account" -ForegroundColor Yellow
     Write-Host " Email   : $Email" -ForegroundColor Yellow
-    Write-Host " Path    : $Dir" -ForegroundColor Gray
+    Write-Host " Active  : $NativeAppDataDir" -ForegroundColor Gray
+    Write-Host " Storage : $TargetStorageDir" -ForegroundColor Gray
     Write-Host " Exe     : $ClaudeExe" -ForegroundColor Gray
     Write-Host "----------------------------------------" -ForegroundColor Cyan
 
-    Start-Process $ClaudeExe -ArgumentList "--user-data-dir=`"$Dir`""
+    Start-Process $ClaudeExe
 }
 else {
     Write-Host "Account '$Account' not found in profiles.json" -ForegroundColor Red

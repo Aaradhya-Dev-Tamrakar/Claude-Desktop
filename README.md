@@ -4,10 +4,10 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 
 ## Features
 
-- **Multi-Profile Management**: Launch distinct Claude Desktop sessions using dedicated data directories (`--user-data-dir`).
+- **Multi-Profile Management**: Launch distinct Claude Desktop sessions via automated profile session swapping into native AppData paths.
+- **Native MSIX & OAuth Compatibility**: 100% compatible with Windows MSIX packages and browser OAuth deep links (`claude://`) without dual-window or authentication loop issues.
 - **Dynamic Executable Resolution**: Automatically locates `Claude.exe` across MSIX/Windows Store App packages (`Get-AppxPackage *claude*`) and traditional local installation directories (`AppData\Local\Programs\Claude` and `WindowsApps`).
-- **Portable Profile Config**: Supports environment variables like `%USERPROFILE%` in `profiles.json` and automatically creates missing profile storage directories on launch.
-- **Seamless OAuth Protocol Routing**: Dynamically updates the Windows Registry `claude://` protocol handler on launch so browser authentication callbacks route directly to the active profile's data directory.
+- **Automatic Session Backup & Persistence**: Automatically saves and syncs cookies, tokens, and local storage per profile on every switch.
 - **Smart Git Synchronization**: Automatically stages, commits, pulls (with `--rebase` & `--autostash`), and pushes repository changes.
 - **Intelligent Commit Messaging**: Dynamically generates conventional commit messages (`feat`, `refactor`, `chore`) derived from staged git diffs, hunk context headers, and line churn statistics (`+ins/-del`).
 - **PowerShell 7 (`pwsh`) Compatible**: Fully compatible with PowerShell 7 (`pwsh`) and Windows PowerShell 5.1.
