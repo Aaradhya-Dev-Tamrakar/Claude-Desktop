@@ -150,6 +150,17 @@ if ($ProfileInfo) {
         Start-Sleep -Milliseconds 500
     }
 
+    # Register/update Windows Registry protocol handler so OAuth deep-link callbacks (claude://) route to this profile
+    try {
+        $RegPath = 'HKCU:\Software\Classes\claude\shell\open\command'
+        if (-not (Test-Path $RegPath)) {
+            New-Item -Path $RegPath -Force | Out-Null
+        }
+        $ProtocolCmd = '"' + $ClaudeExe + '" --user-data-dir="' + $Dir + '" "%1"'
+        Set-ItemProperty -Path $RegPath -Name '(default)' -Value $ProtocolCmd -ErrorAction SilentlyContinue
+    }
+    catch { }
+
     Write-Host "----------------------------------------" -ForegroundColor Cyan
     Write-Host " Launching Claude Desktop" -ForegroundColor Green
     Write-Host " Profile : $Account" -ForegroundColor Yellow
