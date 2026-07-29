@@ -7,8 +7,8 @@
     "email": "devtamrakaraaradhya83@gmail.com",
     "path": "%USERPROFILE%\\.claude-profiles\\user2"
   },
-  "work": {
-    "email": "work_email@example.com",
-    "path": "%USERPROFILE%\\.claude-profiles\\work"
+  "user3": {
+    "email": "adtgames2061@gmail.com",
+    "path": "%USERPROFILE%\\.claude-profiles\\user3"
   }
 }
