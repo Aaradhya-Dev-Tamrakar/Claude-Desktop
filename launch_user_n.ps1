@@ -12,6 +12,29 @@ if (-not (Test-Path $ConfigFile)) {
 $Profiles = Get-Content $ConfigFile | ConvertFrom-Json
 $AccountKeys = @($Profiles.psobject.properties.Name)
 
+function Get-ValidatedProfilePath {
+    param(
+        [Parameter(Mandatory = $true)][string]$RawPath,
+        [Parameter(Mandatory = $true)][string]$ProfileName
+    )
+
+    $BaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
+    $BaseFull = [System.IO.Path]::GetFullPath($BaseDir).TrimEnd('\') + '\'
+
+    $Expanded = [System.Environment]::ExpandEnvironmentVariables($RawPath)
+    $ExpandedFull = [System.IO.Path]::GetFullPath($Expanded)
+
+    if (-not $ExpandedFull.StartsWith($BaseFull, [System.StringComparison]::OrdinalIgnoreCase)) {
+        Write-Host "[!] Profile '$ProfileName' path resolves outside the approved base directory." -ForegroundColor Red
+        Write-Host "    Base    : $BaseFull" -ForegroundColor Gray
+        Write-Host "    Resolved: $ExpandedFull" -ForegroundColor Gray
+        Write-Host "    Refusing to use this path. Fix 'path' for '$ProfileName' in profiles.json." -ForegroundColor Red
+        exit 1
+    }
+
+    return $ExpandedFull
+}
+
 function Add-NewProfile {
     param(
         [string]$SuggestedName = ""
@@ -143,7 +166,7 @@ $ProfileInfo = $Profiles.$Account
 if ($ProfileInfo) {
     $Email = $ProfileInfo.email
     $RawDir = $ProfileInfo.path
-    $Dir = [System.Environment]::ExpandEnvironmentVariables($RawDir)
+    $Dir = Get-ValidatedProfilePath -RawPath $RawDir -ProfileName $Account
 
     if (-not (Test-Path $Dir)) {
         New-Item -ItemType Directory -Force -Path $Dir | Out-Null
@@ -186,10 +209,21 @@ if ($ProfileInfo) {
         $NativeAppDataDir = "$env:APPDATA\Claude"
     }
 
+    $ProfilesBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
+    if (-not (Test-Path $ProfilesBaseDir)) {
+        New-Item -ItemType Directory -Force -Path $ProfilesBaseDir | Out-Null
+    }
+
     # Remove any custom registry protocol overrides so Windows uses 100% native AppX protocol handling
     try {
         $RegPath = 'HKCU:\Software\Classes\claude'
         if (Test-Path $RegPath) {
+            $RegBackupDir = Join-Path $ProfilesBaseDir "RegistryBackups"
+            if (-not (Test-Path $RegBackupDir)) {
+                New-Item -ItemType Directory -Force -Path $RegBackupDir | Out-Null
+            }
+            $RegBackupFile = Join-Path $RegBackupDir "claude-protocol-$(Get-Date -Format 'yyyyMMdd-HHmmss').reg"
+            & reg.exe export "HKCU\Software\Classes\claude" $RegBackupFile /y 2>$null | Out-Null
             Remove-Item -Path $RegPath -Force -Recurse -ErrorAction SilentlyContinue
         }
     }
@@ -203,10 +237,6 @@ if ($ProfileInfo) {
         Start-Sleep -Milliseconds 800
     }
 
-    $ProfilesBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
-    if (-not (Test-Path $ProfilesBaseDir)) {
-        New-Item -ItemType Directory -Force -Path $ProfilesBaseDir | Out-Null
-    }
     $StateFile = Join-Path $ProfilesBaseDir ".active_profile"
 
     # Ephemeral Chromium cache folders to exclude from sync to prevent disk cache corruptions (Error -8)
@@ -271,9 +301,13 @@ if ($ProfileInfo) {
     Write-Host " Exe        : $ClaudeExe" -ForegroundColor Gray
     Write-Host "----------------------------------------" -ForegroundColor Cyan
 
-    # Redirect stdout/stderr to temp logs to suppress internal Electron/Node.js deprecation warnings (DEP0169)
-    $OutLog = Join-Path $env:TEMP "claude_out.log"
-    $ErrLog = Join-Path $env:TEMP "claude_err.log"
+    # Redirect stdout/stderr to per-profile logs to suppress internal Electron/Node.js deprecation warnings (DEP0169)
+    $LogsDir = Join-Path $ProfilesBaseDir "Logs\$Account"
+    if (-not (Test-Path $LogsDir)) {
+        New-Item -ItemType Directory -Force -Path $LogsDir | Out-Null
+    }
+    $OutLog = Join-Path $LogsDir "claude_out.log"
+    $ErrLog = Join-Path $LogsDir "claude_err.log"
     Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
 }
 else {

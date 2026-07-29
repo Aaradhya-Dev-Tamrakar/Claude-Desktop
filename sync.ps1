@@ -5,6 +5,37 @@ param (
     [switch]$PullOnly
 )
 
+function Find-StagedSecrets {
+    $stagedDiff = git diff --cached -U0 2>$null
+    if (-not $stagedDiff) { return @() }
+
+    $addedLines = $stagedDiff | Where-Object { $_ -match '^\+[^+]' } | ForEach-Object { $_.Substring(1) }
+    if (-not $addedLines) { return @() }
+
+    $secretPatterns = @(
+        'AKIA[0-9A-Z]{16}'
+        'sk-[a-zA-Z0-9]{20,}'
+        'sk-ant-[a-zA-Z0-9\-]{20,}'
+        'ghp_[a-zA-Z0-9]{36}'
+        'github_pat_[a-zA-Z0-9_]{20,}'
+        'AIza[0-9A-Za-z\-_]{35}'
+        'xox[baprs]-[0-9a-zA-Z\-]{10,}'
+        '-----BEGIN (RSA|EC|OPENSSH|PGP|DSA)? ?PRIVATE KEY-----'
+        '(?i)(api[_-]?key|secret|password|token|passwd)\s*[:=]\s*[''"][^''"\s]{8,}[''"]'
+    )
+
+    $hits = @()
+    foreach ($line in $addedLines) {
+        foreach ($pattern in $secretPatterns) {
+            if ($line -match $pattern) {
+                $hits += [PSCustomObject]@{ Pattern = $pattern; Snippet = $line.Trim().Substring(0, [Math]::Min(60, $line.Trim().Length)) }
+                break
+            }
+        }
+    }
+    return $hits
+}
+
 function Get-AutoCommitMessage {
     $statusLines = git status --porcelain
     if (-not $statusLines) { return $null }
@@ -74,7 +105,10 @@ function Get-AutoCommitMessage {
             Select-Object -First 1
             if ($addedLine) {
                 $snippet = $addedLine
-                if ($snippet.Length -gt 50) { $snippet = $snippet.Substring(0, 50) + "..." }
+                if ($snippet -match '(?i)(api[_-]?key|secret|password|token|passwd)\s*[:=]') {
+                    $snippet = "[redacted: credential-like line]"
+                }
+                elseif ($snippet.Length -gt 50) { $snippet = $snippet.Substring(0, 50) + "..." }
                 $hunkContext = $snippet
             }
         }
@@ -108,6 +142,19 @@ if ($PullOnly) {
 
 Write-Host "[Sync] Staging changes..." -ForegroundColor Cyan
 git add -A
+
+$secretHits = Find-StagedSecrets
+if ($secretHits.Count -gt 0) {
+    Write-Host "[Sync] Aborting: possible secret(s) detected in staged changes." -ForegroundColor Red
+    foreach ($hit in $secretHits) {
+        Write-Host "    Pattern: $($hit.Pattern)" -ForegroundColor Yellow
+        Write-Host "    Line   : $($hit.Snippet)..." -ForegroundColor Gray
+    }
+    Write-Host "[Sync] Unstage or remove the offending content, then re-run." -ForegroundColor Red
+    git reset
+    Pop-Location
+    exit 1
+}
 
 if (-not $Message) {
     $Message = Get-AutoCommitMessage
