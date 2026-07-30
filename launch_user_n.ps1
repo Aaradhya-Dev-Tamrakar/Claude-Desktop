@@ -100,11 +100,11 @@ function Show-ProfileTable {
         if (-not $lastLoginDate) { $lastLoginDate = "Never" }
         if (-not $lastLoginTime) { $lastLoginTime = "-" }
         [PSCustomObject]@{
-            Num       = "[$($i + 1)]"
-            Profile   = $key
-            Nickname  = $Profiles.$key.nickname
-            LastTime  = $lastLoginTime
-            LastDate  = $lastLoginDate
+            Num      = "[$($i + 1)]"
+            Profile  = $key
+            Nickname = $Profiles.$key.nickname
+            LastTime = $lastLoginTime
+            LastDate = $lastLoginDate
         }
     }
 
@@ -437,7 +437,7 @@ if ($ProfileInfo) {
         try {
             $ReminderScript = Join-Path $PSScriptRoot "cooldown-reminder.ps1"
             if (Test-Path $ReminderScript) {
-                & $ReminderScript -LoginTime $Now -Nickname $Nickname -EnableToast:(-not $NoCooldownAlarm) -EnableGCal:$GCalReminder
+                & $ReminderScript -LoginTime $Now -Nickname $Nickname -DisableToast:$NoCooldownAlarm -EnableGCal:$GCalReminder
             }
         }
         catch {
