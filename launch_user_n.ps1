@@ -1,6 +1,7 @@
 param (
     [string]$Account,
-    [switch]$WhatIf
+    [switch]$WhatIf,
+    [switch]$Concurrent
 )
 
 $ConfigFile = Join-Path $PSScriptRoot "profiles.json"
@@ -183,24 +184,43 @@ if ($ProfileInfo) {
     $Nickname = $ProfileInfo.nickname
     $RawDir = $ProfileInfo.path
     $Dir = Get-ValidatedProfilePath -RawPath $RawDir -ProfileName $Account
+    $TargetStorageDir = $Dir
 
-    # Same-profile short-circuit: if the requested account is already the active
-    # profile AND Claude is currently running, this is not a switch - do nothing
-    # rather than closing and relaunching the same session.
     $ProfilesBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
-    $StateFile = Join-Path $ProfilesBaseDir ".active_profile"
-    $ActiveAccount = $null
-    if (Test-Path $StateFile) {
-        $ActiveAccount = (Get-Content $StateFile -Raw).Trim()
-    }
-    $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
 
-    if ($RunningClaude -and ($ActiveAccount -eq $Account)) {
-        Write-Host "----------------------------------------" -ForegroundColor Cyan
-        Write-Host " Profile '$Account' ($Nickname) is already open." -ForegroundColor Green
-        Write-Host " No action taken." -ForegroundColor Gray
-        Write-Host "----------------------------------------" -ForegroundColor Cyan
-        exit 0
+    if ($Concurrent) {
+        # Concurrent mode has no single "active profile" - .active_profile is never
+        # written to in this mode (see the tracker-update block below), so check
+        # per-instance instead: is a claude.exe already running with THIS profile's
+        # --user-data-dir on its command line?
+        $ExistingConcurrent = Get-CimInstance Win32_Process -Filter "Name = 'claude.exe'" -ErrorAction SilentlyContinue |
+        Where-Object { $_.CommandLine -and $_.CommandLine.Contains($Dir) }
+        if ($ExistingConcurrent) {
+            Write-Host "----------------------------------------" -ForegroundColor Cyan
+            Write-Host " Profile '$Account' ($Nickname) is already running as a concurrent instance." -ForegroundColor Green
+            Write-Host " No action taken." -ForegroundColor Gray
+            Write-Host "----------------------------------------" -ForegroundColor Cyan
+            exit 0
+        }
+    }
+    else {
+        # Same-profile short-circuit: if the requested account is already the active
+        # profile AND Claude is currently running, this is not a switch - do nothing
+        # rather than closing and relaunching the same session.
+        $StateFile = Join-Path $ProfilesBaseDir ".active_profile"
+        $ActiveAccount = $null
+        if (Test-Path $StateFile) {
+            $ActiveAccount = (Get-Content $StateFile -Raw).Trim()
+        }
+        $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
+
+        if ($RunningClaude -and ($ActiveAccount -eq $Account)) {
+            Write-Host "----------------------------------------" -ForegroundColor Cyan
+            Write-Host " Profile '$Account' ($Nickname) is already open." -ForegroundColor Green
+            Write-Host " No action taken." -ForegroundColor Gray
+            Write-Host "----------------------------------------" -ForegroundColor Cyan
+            exit 0
+        }
     }
 
     if (-not (Test-Path $Dir)) {
@@ -257,30 +277,37 @@ if ($ProfileInfo) {
     # handling. If Claude was installed via the non-Store installer (LOCALAPPDATA\Programs\Claude),
     # there is no AppX URI activation to fall back on — removing the override here leaves
     # claude:// with NO handler at all, breaking OAuth/quick-signin callback routing.
-    try {
-        $RegPath = 'HKCU:\Software\Classes\claude'
-        if ($AppxPkg -and (Test-Path $RegPath)) {
-            if ($WhatIf) {
-                Write-Host "[WhatIf] Would export '$RegPath' to RegistryBackups\ then remove it (AppX present)." -ForegroundColor DarkCyan
-            }
-            else {
-                $RegBackupDir = Join-Path $ProfilesBaseDir "RegistryBackups"
-                if (-not (Test-Path $RegBackupDir)) {
-                    New-Item -ItemType Directory -Force -Path $RegBackupDir | Out-Null
-                }
-                $RegBackupFile = Join-Path $RegBackupDir "claude-protocol-$(Get-Date -Format 'yyyyMMdd-HHmmss').reg"
-                & reg.exe export "HKCU\Software\Classes\claude" $RegBackupFile /y 2>$null | Out-Null
-                Remove-Item -Path $RegPath -Force -Recurse -ErrorAction SilentlyContinue
-            }
-        }
-        elseif (-not $AppxPkg -and -not (Test-Path $RegPath)) {
-            Write-Host "[!] No AppX package and no 'claude://' registry handler found — quick sign-in callback may not route back to the app." -ForegroundColor Yellow
-        }
+    # Skipped entirely in Concurrent mode: claude:// is a single OS-wide handler, so flipping
+    # it per concurrent launch would fight with whatever other instances are already running.
+    if ($Concurrent) {
+        Write-Host "[!] Concurrent mode: 'claude://' sign-in is a single OS-wide handler and routes to whichever instance last had focus. Sign in to each profile one at a time (others closed) before running them side by side." -ForegroundColor Yellow
     }
-    catch { }
+    else {
+        try {
+            $RegPath = 'HKCU:\Software\Classes\claude'
+            if ($AppxPkg -and (Test-Path $RegPath)) {
+                if ($WhatIf) {
+                    Write-Host "[WhatIf] Would export '$RegPath' to RegistryBackups\ then remove it (AppX present)." -ForegroundColor DarkCyan
+                }
+                else {
+                    $RegBackupDir = Join-Path $ProfilesBaseDir "RegistryBackups"
+                    if (-not (Test-Path $RegBackupDir)) {
+                        New-Item -ItemType Directory -Force -Path $RegBackupDir | Out-Null
+                    }
+                    $RegBackupFile = Join-Path $RegBackupDir "claude-protocol-$(Get-Date -Format 'yyyyMMdd-HHmmss').reg"
+                    & reg.exe export "HKCU\Software\Classes\claude" $RegBackupFile /y 2>$null | Out-Null
+                    Remove-Item -Path $RegPath -Force -Recurse -ErrorAction SilentlyContinue
+                }
+            }
+            elseif (-not $AppxPkg -and -not (Test-Path $RegPath)) {
+                Write-Host "[!] No AppX package and no 'claude://' registry handler found — quick sign-in callback may not route back to the app." -ForegroundColor Yellow
+            }
+        }
+        catch { }
+    }
 
-    # Close existing running Claude processes
-    if ($RunningClaude) {
+    # Close existing running Claude processes (skipped in Concurrent mode by design)
+    if (-not $Concurrent -and $RunningClaude) {
         if ($WhatIf) {
             Write-Host "[WhatIf] Would stop $($RunningClaude.Count) running Claude process(es)." -ForegroundColor DarkCyan
         }
@@ -291,81 +318,107 @@ if ($ProfileInfo) {
         }
     }
 
-    # Ephemeral Chromium cache folders to exclude from sync to prevent disk cache corruptions (Error -8)
-    $CacheExcludeDirs = @("Cache", "GPUCache", "Code Cache", "Script Cache", "Crashpad", "blob_storage", "DawnCache", "Cache_Data")
+    if (-not $Concurrent) {
+        # Ephemeral Chromium cache folders to exclude from sync to prevent disk cache corruptions (Error -8)
+        $CacheExcludeDirs = @("Cache", "GPUCache", "Code Cache", "Script Cache", "Crashpad", "blob_storage", "DawnCache", "Cache_Data")
 
-    # Save currently active profile session back to its storage folder
-    if (Test-Path $StateFile) {
-        $PrevAccount = (Get-Content $StateFile -Raw).Trim()
-        if ($PrevAccount -and ($PrevAccount -ne $Account) -and (Test-Path $NativeAppDataDir)) {
-            $PrevStorageDir = Join-Path $ProfilesBaseDir $PrevAccount
+        # Save currently active profile session back to its storage folder
+        if (Test-Path $StateFile) {
+            $PrevAccount = (Get-Content $StateFile -Raw).Trim()
+            if ($PrevAccount -and ($PrevAccount -ne $Account) -and (Test-Path $NativeAppDataDir)) {
+                $PrevStorageDir = Join-Path $ProfilesBaseDir $PrevAccount
+                if ($WhatIf) {
+                    Write-Host "[WhatIf] Would mirror '$NativeAppDataDir' -> '$PrevStorageDir' (backup for '$PrevAccount')." -ForegroundColor DarkCyan
+                }
+                else {
+                    if (-not (Test-Path $PrevStorageDir)) {
+                        New-Item -ItemType Directory -Force -Path $PrevStorageDir | Out-Null
+                    }
+                    Write-Host "[+] Saving current session data to profile '$PrevAccount'..." -ForegroundColor Gray
+                    & robocopy $NativeAppDataDir $PrevStorageDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+                }
+            }
+        }
+
+        # Restore target profile session into Native AppData directory
+        if (-not (Test-Path $TargetStorageDir)) {
+            if (-not $WhatIf) {
+                New-Item -ItemType Directory -Force -Path $TargetStorageDir | Out-Null
+            }
+        }
+
+        if (-not (Test-Path $NativeAppDataDir)) {
+            if (-not $WhatIf) {
+                New-Item -ItemType Directory -Force -Path $NativeAppDataDir | Out-Null
+            }
+        }
+
+        $TargetFiles = Get-ChildItem -Path $TargetStorageDir -ErrorAction SilentlyContinue
+        if ($TargetFiles) {
             if ($WhatIf) {
-                Write-Host "[WhatIf] Would mirror '$NativeAppDataDir' -> '$PrevStorageDir' (backup for '$PrevAccount')." -ForegroundColor DarkCyan
+                Write-Host "[WhatIf] Would mirror '$TargetStorageDir' -> '$NativeAppDataDir' (restore for '$Account')." -ForegroundColor DarkCyan
             }
             else {
-                if (-not (Test-Path $PrevStorageDir)) {
-                    New-Item -ItemType Directory -Force -Path $PrevStorageDir | Out-Null
-                }
-                Write-Host "[+] Saving current session data to profile '$PrevAccount'..." -ForegroundColor Gray
-                & robocopy $NativeAppDataDir $PrevStorageDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+                Write-Host "[+] Restoring session data for profile '$Account'..." -ForegroundColor Cyan
+                & robocopy $TargetStorageDir $NativeAppDataDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
             }
         }
-    }
-
-    # Restore target profile session into Native AppData directory
-    $TargetStorageDir = $Dir
-    if (-not (Test-Path $TargetStorageDir)) {
-        if (-not $WhatIf) {
-            New-Item -ItemType Directory -Force -Path $TargetStorageDir | Out-Null
-        }
-    }
-
-    if (-not (Test-Path $NativeAppDataDir)) {
-        if (-not $WhatIf) {
-            New-Item -ItemType Directory -Force -Path $NativeAppDataDir | Out-Null
-        }
-    }
-
-    $TargetFiles = Get-ChildItem -Path $TargetStorageDir -ErrorAction SilentlyContinue
-    if ($TargetFiles) {
-        if ($WhatIf) {
-            Write-Host "[WhatIf] Would mirror '$TargetStorageDir' -> '$NativeAppDataDir' (restore for '$Account')." -ForegroundColor DarkCyan
-        }
         else {
-            Write-Host "[+] Restoring session data for profile '$Account'..." -ForegroundColor Cyan
-            & robocopy $TargetStorageDir $NativeAppDataDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+            if ($WhatIf) {
+                Write-Host "[WhatIf] Would clear '$NativeAppDataDir' to initialize fresh profile storage for '$Account'." -ForegroundColor DarkCyan
+            }
+            else {
+                Write-Host "[+] Initializing fresh profile storage for '$Account'..." -ForegroundColor Cyan
+                Get-ChildItem -Path $NativeAppDataDir -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+            }
+        }
+
+        # Clear stale Chromium disk cache files to force clean initialization (prevents Error -8)
+        foreach ($cDir in $CacheExcludeDirs) {
+            $cPath = Join-Path $NativeAppDataDir $cDir
+            if (Test-Path $cPath) {
+                if ($WhatIf) {
+                    Write-Host "[WhatIf] Would remove cache dir '$cPath'." -ForegroundColor DarkCyan
+                }
+                else {
+                    Remove-Item -Path $cPath -Recurse -Force -ErrorAction SilentlyContinue
+                }
+            }
         }
     }
     else {
+        # Concurrent mode: no shared directory to swap - Claude launches directly against
+        # $Dir via --user-data-dir further down, so there is nothing to mirror here. Reusing
+        # $Dir as both the swap-mode backup target and the concurrent live data dir is
+        # intentional (one naming scheme, no third directory layout) - but do not run a
+        # non-Concurrent switch INTO this same profile while a concurrent instance of it is
+        # still live, since that would robocopy /MIR over a directory the running instance
+        # has open file handles on.
         if ($WhatIf) {
-            Write-Host "[WhatIf] Would clear '$NativeAppDataDir' to initialize fresh profile storage for '$Account'." -ForegroundColor DarkCyan
+            Write-Host "[WhatIf] Concurrent mode: would launch directly against '$Dir' (no swap/mirror)." -ForegroundColor DarkCyan
         }
         else {
-            Write-Host "[+] Initializing fresh profile storage for '$Account'..." -ForegroundColor Cyan
-            Get-ChildItem -Path $NativeAppDataDir -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+            Write-Host "[+] Concurrent mode: launching directly against '$Dir' (no swap/mirror needed)." -ForegroundColor Gray
         }
     }
 
-    # Clear stale Chromium disk cache files to force clean initialization (prevents Error -8)
-    foreach ($cDir in $CacheExcludeDirs) {
-        $cPath = Join-Path $NativeAppDataDir $cDir
-        if (Test-Path $cPath) {
-            if ($WhatIf) {
-                Write-Host "[WhatIf] Would remove cache dir '$cPath'." -ForegroundColor DarkCyan
-            }
-            else {
-                Remove-Item -Path $cPath -Recurse -Force -ErrorAction SilentlyContinue
-            }
-        }
-    }
-
-    # Update active profile tracker file
+    # Update last-login timestamp (both modes). The single-slot .active_profile tracker
+    # is swap-mode only — Concurrent mode intentionally never claims it, since "one active
+    # profile" doesn't apply when several may be running, and claiming it here would corrupt
+    # a later non-concurrent switch's backup-save logic (see the "no shared directory" note above).
     $CurrentTimestamp = (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
     if ($WhatIf) {
-        Write-Host "[WhatIf] Would set active profile to '$Account' and update last_login to '$CurrentTimestamp'." -ForegroundColor DarkCyan
+        if ($Concurrent) {
+            Write-Host "[WhatIf] Would update last_login to '$CurrentTimestamp' for '$Account' (active-profile tracker left untouched in Concurrent mode)." -ForegroundColor DarkCyan
+        }
+        else {
+            Write-Host "[WhatIf] Would set active profile to '$Account' and update last_login to '$CurrentTimestamp'." -ForegroundColor DarkCyan
+        }
     }
     else {
-        $Account | Set-Content $StateFile -Encoding UTF8
+        if (-not $Concurrent) {
+            $Account | Set-Content $StateFile -Encoding UTF8
+        }
         $ProfileInfo | Add-Member -NotePropertyName "last_login" -NotePropertyValue $CurrentTimestamp -Force
         $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
     }
@@ -392,7 +445,12 @@ if ($ProfileInfo) {
         }
         $OutLog = Join-Path $LogsDir "claude_out.log"
         $ErrLog = Join-Path $LogsDir "claude_err.log"
-        Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+        if ($Concurrent) {
+            Start-Process $ClaudeExe -ArgumentList "--user-data-dir=`"$Dir`"" -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+        }
+        else {
+            Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+        }
     }
 
     # Auto-sync repo (profiles.json last_login, etc.) via sync.ps1 on every launch.
