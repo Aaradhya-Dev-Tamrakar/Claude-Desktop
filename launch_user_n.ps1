@@ -1,7 +1,9 @@
 param (
     [string]$Account,
     [switch]$WhatIf,
-    [switch]$Concurrent
+    [switch]$Concurrent,
+    [switch]$NoCooldownAlarm,
+    [switch]$GCalReminder
 )
 
 $ConfigFile = Join-Path $PSScriptRoot "profiles.json"
@@ -429,6 +431,18 @@ if ($ProfileInfo) {
         $ProfileInfo | Add-Member -NotePropertyName "last_login_date" -NotePropertyValue $CurrentDate -Force
         $ProfileInfo | Add-Member -NotePropertyName "last_login_time" -NotePropertyValue $CurrentTime -Force
         $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
+
+        # Cooldown reminders (toast + optional GCal) are best-effort and must
+        # never block or fail the launch itself.
+        try {
+            $ReminderScript = Join-Path $PSScriptRoot "cooldown-reminder.ps1"
+            if (Test-Path $ReminderScript) {
+                & $ReminderScript -LoginTime $Now -Nickname $Nickname -EnableToast:(-not $NoCooldownAlarm) -EnableGCal:$GCalReminder
+            }
+        }
+        catch {
+            Write-Warning "Cooldown reminder setup failed: $_"
+        }
     }
 
     Write-Host "----------------------------------------" -ForegroundColor Cyan

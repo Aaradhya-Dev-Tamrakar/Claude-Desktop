@@ -24,3 +24,7 @@ dev-logs/
 
 # Claude Desktop profile runtime output
 .claude-profiles/
+
+# Google Calendar OAuth client secret & cached token — never commit
+gcal-credentials.json
+gcal-token.json
