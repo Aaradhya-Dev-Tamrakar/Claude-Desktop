@@ -89,3 +89,18 @@ else {
     Write-Host " Reset complete. All profiles and sessions cleared." -ForegroundColor Green
 }
 Write-Host "----------------------------------------" -ForegroundColor Cyan
+
+# Auto-sync repo (profiles.json reset to {}) via sync.ps1 on every reset.
+# Spawned as a separate pwsh process (not dot-sourced/called in-process) so that
+# sync.ps1's internal `exit` calls (e.g. secret-scan abort) cannot terminate this
+# script's own session.
+if ($WhatIf) {
+    Write-Host "[WhatIf] Would auto-sync repository via sync.ps1 (pull, commit, push)." -ForegroundColor DarkCyan
+}
+else {
+    Write-Host "[+] Auto-syncing repository via sync.ps1..." -ForegroundColor Cyan
+    & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "sync.ps1") -Message "chore(sync): auto-sync after resetting all Claude Desktop profiles"
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[!] Auto-sync via sync.ps1 exited with code $LASTEXITCODE. Repo may be out of sync." -ForegroundColor Yellow
+    }
+}

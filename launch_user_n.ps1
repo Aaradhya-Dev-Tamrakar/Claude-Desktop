@@ -379,6 +379,21 @@ if ($ProfileInfo) {
         $ErrLog = Join-Path $LogsDir "claude_err.log"
         Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
     }
+
+    # Auto-sync repo (profiles.json last_login, etc.) via sync.ps1 on every launch.
+    # Spawned as a separate pwsh process (not dot-sourced/called in-process) so that
+    # sync.ps1's internal `exit` calls (e.g. secret-scan abort) cannot terminate this
+    # launcher's own session.
+    if ($WhatIf) {
+        Write-Host "[WhatIf] Would auto-sync repository via sync.ps1 (pull, commit, push)." -ForegroundColor DarkCyan
+    }
+    else {
+        Write-Host "[+] Auto-syncing repository via sync.ps1..." -ForegroundColor Cyan
+        & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "sync.ps1") -Message "chore(sync): auto-sync after launching profile '$Account' ($Nickname)"
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "[!] Auto-sync via sync.ps1 exited with code $LASTEXITCODE. Repo may be out of sync." -ForegroundColor Yellow
+        }
+    }
 }
 else {
     Write-Host "Account '$Account' not found in profiles.json" -ForegroundColor Red
