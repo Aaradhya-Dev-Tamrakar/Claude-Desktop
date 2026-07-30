@@ -184,6 +184,25 @@ if ($ProfileInfo) {
     $RawDir = $ProfileInfo.path
     $Dir = Get-ValidatedProfilePath -RawPath $RawDir -ProfileName $Account
 
+    # Same-profile short-circuit: if the requested account is already the active
+    # profile AND Claude is currently running, this is not a switch - do nothing
+    # rather than closing and relaunching the same session.
+    $ProfilesBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
+    $StateFile = Join-Path $ProfilesBaseDir ".active_profile"
+    $ActiveAccount = $null
+    if (Test-Path $StateFile) {
+        $ActiveAccount = (Get-Content $StateFile -Raw).Trim()
+    }
+    $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
+
+    if ($RunningClaude -and ($ActiveAccount -eq $Account)) {
+        Write-Host "----------------------------------------" -ForegroundColor Cyan
+        Write-Host " Profile '$Account' ($Nickname) is already open." -ForegroundColor Green
+        Write-Host " No action taken." -ForegroundColor Gray
+        Write-Host "----------------------------------------" -ForegroundColor Cyan
+        exit 0
+    }
+
     if (-not (Test-Path $Dir)) {
         if ($WhatIf) {
             Write-Host "[WhatIf] Would create profile storage dir '$Dir'." -ForegroundColor DarkCyan
@@ -230,7 +249,6 @@ if ($ProfileInfo) {
         $NativeAppDataDir = "$env:APPDATA\Claude"
     }
 
-    $ProfilesBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
     if (-not (Test-Path $ProfilesBaseDir)) {
         New-Item -ItemType Directory -Force -Path $ProfilesBaseDir | Out-Null
     }
@@ -262,7 +280,6 @@ if ($ProfileInfo) {
     catch { }
 
     # Close existing running Claude processes
-    $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
     if ($RunningClaude) {
         if ($WhatIf) {
             Write-Host "[WhatIf] Would stop $($RunningClaude.Count) running Claude process(es)." -ForegroundColor DarkCyan
@@ -273,8 +290,6 @@ if ($ProfileInfo) {
             Start-Sleep -Milliseconds 800
         }
     }
-
-    $StateFile = Join-Path $ProfilesBaseDir ".active_profile"
 
     # Ephemeral Chromium cache folders to exclude from sync to prevent disk cache corruptions (Error -8)
     $CacheExcludeDirs = @("Cache", "GPUCache", "Code Cache", "Script Cache", "Crashpad", "blob_storage", "DawnCache", "Cache_Data")
