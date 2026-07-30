@@ -235,12 +235,15 @@ if ($ProfileInfo) {
         New-Item -ItemType Directory -Force -Path $ProfilesBaseDir | Out-Null
     }
 
-    # Remove any custom registry protocol overrides so Windows uses 100% native AppX protocol handling
+    # Only strip custom registry protocol overrides when the AppX package owns native protocol
+    # handling. If Claude was installed via the non-Store installer (LOCALAPPDATA\Programs\Claude),
+    # there is no AppX URI activation to fall back on — removing the override here leaves
+    # claude:// with NO handler at all, breaking OAuth/quick-signin callback routing.
     try {
         $RegPath = 'HKCU:\Software\Classes\claude'
-        if (Test-Path $RegPath) {
+        if ($AppxPkg -and (Test-Path $RegPath)) {
             if ($WhatIf) {
-                Write-Host "[WhatIf] Would export '$RegPath' to RegistryBackups\ then remove it." -ForegroundColor DarkCyan
+                Write-Host "[WhatIf] Would export '$RegPath' to RegistryBackups\ then remove it (AppX present)." -ForegroundColor DarkCyan
             }
             else {
                 $RegBackupDir = Join-Path $ProfilesBaseDir "RegistryBackups"
@@ -251,6 +254,9 @@ if ($ProfileInfo) {
                 & reg.exe export "HKCU\Software\Classes\claude" $RegBackupFile /y 2>$null | Out-Null
                 Remove-Item -Path $RegPath -Force -Recurse -ErrorAction SilentlyContinue
             }
+        }
+        elseif (-not $AppxPkg -and -not (Test-Path $RegPath)) {
+            Write-Host "[!] No AppX package and no 'claude://' registry handler found — quick sign-in callback may not route back to the app." -ForegroundColor Yellow
         }
     }
     catch { }
