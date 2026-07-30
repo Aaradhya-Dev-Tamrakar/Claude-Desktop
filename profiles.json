@@ -8,5 +8,10 @@
     "nickname": "dev83",
     "path": "%USERPROFILE%\\.claude-profiles\\user2",
     "last_login": "2026-07-30 08:00:49"
+  },
+  "user3": {
+    "nickname": "xavier",
+    "path": "%USERPROFILE%\\.claude-profiles\\user3",
+    "last_login": "2026-07-30 08:02:14"
   }
 }
