@@ -134,9 +134,10 @@ Describe "-WhatIf (no-mutation guarantee)" {
 
         $profiles = Get-Content $RealConfigFile | ConvertFrom-Json
         $profiles | Add-Member -NotePropertyName $ScratchProfileName -NotePropertyValue @{
-            nickname   = "pester-scratch"
-            path       = "%USERPROFILE%\.claude-profiles\$ScratchProfileName"
-            last_login = $null
+            nickname        = "pester-scratch"
+            path            = "%USERPROFILE%\.claude-profiles\$ScratchProfileName"
+            last_login_date = $null
+            last_login_time = $null
         } -Force
         $profiles | ConvertTo-Json -Depth 5 | Set-Content $RealConfigFile -Encoding UTF8
     }
@@ -181,11 +182,12 @@ Describe "-WhatIf (no-mutation guarantee)" {
         Test-Path $ScratchDir | Should -Be $false
     }
 
-    It "leaves profiles.json's scratch entry with last_login still null" {
+    It "leaves profiles.json's scratch entry with last_login_date/time still null" {
         # The state-file/timestamp write is one of the WhatIf-gated steps;
         # confirm it did not fire for the scratch profile.
         $profiles = Get-Content $RealConfigFile | ConvertFrom-Json
-        $profiles.$ScratchProfileName.last_login | Should -BeNullOrEmpty
+        $profiles.$ScratchProfileName.last_login_date | Should -BeNullOrEmpty
+        $profiles.$ScratchProfileName.last_login_time | Should -BeNullOrEmpty
     }
 
     It "output contains [WhatIf] markers, not [+] action markers, for the gated steps" {

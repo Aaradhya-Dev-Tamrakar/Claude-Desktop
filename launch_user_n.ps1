@@ -71,9 +71,10 @@ function Add-NewProfile {
     $Path = "%USERPROFILE%\.claude-profiles\$Name"
 
     $Profiles | Add-Member -NotePropertyName $Name -NotePropertyValue @{
-        nickname   = $Nickname
-        path       = $Path
-        last_login = $null
+        nickname        = $Nickname
+        path            = $Path
+        last_login_date = $null
+        last_login_time = $null
     } -Force
 
     $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
@@ -92,21 +93,25 @@ function Show-ProfileTable {
 
     $rows = for ($i = 0; $i -lt $AccountKeys.Count; $i++) {
         $key = $AccountKeys[$i]
-        $lastLogin = $Profiles.$key.last_login
-        if (-not $lastLogin) { $lastLogin = "Never" }
+        $lastLoginDate = $Profiles.$key.last_login_date
+        $lastLoginTime = $Profiles.$key.last_login_time
+        if (-not $lastLoginDate) { $lastLoginDate = "Never" }
+        if (-not $lastLoginTime) { $lastLoginTime = "-" }
         [PSCustomObject]@{
             Num       = "[$($i + 1)]"
             Profile   = $key
             Nickname  = $Profiles.$key.nickname
-            LastLogin = $lastLogin
+            LastTime  = $lastLoginTime
+            LastDate  = $lastLoginDate
         }
     }
 
     $numW = [Math]::Max(3, ($rows.Num | Measure-Object -Property Length -Maximum).Maximum)
     $profW = [Math]::Max(7, ($rows.Profile | Measure-Object -Property Length -Maximum).Maximum)
     $nickW = [Math]::Max(8, ($rows.Nickname | Measure-Object -Property Length -Maximum).Maximum)
-    $loginW = [Math]::Max(10, ($rows.LastLogin | Measure-Object -Property Length -Maximum).Maximum)
-    $widths = @($numW, $profW, $nickW, $loginW)
+    $timeW = [Math]::Max(10, ($rows.LastTime | Measure-Object -Property Length -Maximum).Maximum)
+    $dateW = [Math]::Max(10, ($rows.LastDate | Measure-Object -Property Length -Maximum).Maximum)
+    $widths = @($numW, $profW, $nickW, $timeW, $dateW)
 
     function New-Border($L, $C, $R) {
         $L + (($widths | ForEach-Object { "-" * ($_ + 2) }) -join $C) + $R
@@ -122,10 +127,10 @@ function Show-ProfileTable {
     $innerWidth = (New-Border "+" "+" "+").Length - 2
 
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
-    Write-Host (New-Row @("#", "Profile", "Nickname", "Last Login")) -ForegroundColor Cyan
+    Write-Host (New-Row @("#", "Profile", "Nickname", "Last Time", "Last Date")) -ForegroundColor Cyan
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     foreach ($r in $rows) {
-        Write-Host (New-Row @($r.Num, $r.Profile, $r.Nickname, $r.LastLogin)) -ForegroundColor Yellow
+        Write-Host (New-Row @($r.Num, $r.Profile, $r.Nickname, $r.LastTime, $r.LastDate)) -ForegroundColor Yellow
     }
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     Write-Host ("| " + "[N] Add New Profile (+)".PadRight($innerWidth - 2) + " |") -ForegroundColor Magenta
@@ -406,20 +411,23 @@ if ($ProfileInfo) {
     # is swap-mode only — Concurrent mode intentionally never claims it, since "one active
     # profile" doesn't apply when several may be running, and claiming it here would corrupt
     # a later non-concurrent switch's backup-save logic (see the "no shared directory" note above).
-    $CurrentTimestamp = (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
+    $Now = Get-Date
+    $CurrentDate = $Now.ToString("yyyy-MM-dd")
+    $CurrentTime = $Now.ToString("HH:mm:ss")
     if ($WhatIf) {
         if ($Concurrent) {
-            Write-Host "[WhatIf] Would update last_login to '$CurrentTimestamp' for '$Account' (active-profile tracker left untouched in Concurrent mode)." -ForegroundColor DarkCyan
+            Write-Host "[WhatIf] Would update last_login to '$CurrentDate $CurrentTime' for '$Account' (active-profile tracker left untouched in Concurrent mode)." -ForegroundColor DarkCyan
         }
         else {
-            Write-Host "[WhatIf] Would set active profile to '$Account' and update last_login to '$CurrentTimestamp'." -ForegroundColor DarkCyan
+            Write-Host "[WhatIf] Would set active profile to '$Account' and update last_login to '$CurrentDate $CurrentTime'." -ForegroundColor DarkCyan
         }
     }
     else {
         if (-not $Concurrent) {
             $Account | Set-Content $StateFile -Encoding UTF8
         }
-        $ProfileInfo | Add-Member -NotePropertyName "last_login" -NotePropertyValue $CurrentTimestamp -Force
+        $ProfileInfo | Add-Member -NotePropertyName "last_login_date" -NotePropertyValue $CurrentDate -Force
+        $ProfileInfo | Add-Member -NotePropertyName "last_login_time" -NotePropertyValue $CurrentTime -Force
         $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
     }
 
@@ -427,7 +435,7 @@ if ($ProfileInfo) {
     Write-Host " Launching Claude Desktop (Native)" -ForegroundColor Green
     Write-Host " Profile    : $Account" -ForegroundColor Yellow
     Write-Host " Nickname   : $Nickname" -ForegroundColor Yellow
-    Write-Host " Last Login : $CurrentTimestamp" -ForegroundColor Yellow
+    Write-Host " Last Login : $CurrentDate $CurrentTime" -ForegroundColor Yellow
     Write-Host " Active     : $NativeAppDataDir" -ForegroundColor Gray
     Write-Host " Storage    : $TargetStorageDir" -ForegroundColor Gray
     Write-Host " Exe        : $ClaudeExe" -ForegroundColor Gray
