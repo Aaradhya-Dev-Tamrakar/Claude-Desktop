@@ -29,9 +29,9 @@
 .PARAMETER Nickname
     Profile nickname, used in notification/event text.
 
-.PARAMETER EnableToast
-    Switch. Register the local scheduled-task toast alarm. Default: on
-    unless -NoToast is passed by the caller's wrapper logic.
+.PARAMETER DisableToast
+    Switch. Suppress the Windows toast notification when the cooldown expires.
+    Toast is shown by default; pass -DisableToast to opt out.
 
 .PARAMETER EnableGCal
     Switch. Attempt to create the Google Calendar event. Off by default —
@@ -41,7 +41,7 @@
 param (
     [Parameter(Mandatory = $true)][datetime]$LoginTime,
     [Parameter(Mandatory = $true)][string]$Nickname,
-    [switch]$EnableToast = $true,
+    [switch]$DisableToast,
     [switch]$EnableGCal
 )
 
@@ -175,7 +175,7 @@ function New-CooldownCalendarEvent {
     }
 }
 
-if ($EnableToast) {
+if (-not $DisableToast) {
     Register-CooldownToast -ReadyTime $ReadyTime -Nickname $Nickname
 }
 
