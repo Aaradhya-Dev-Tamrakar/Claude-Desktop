@@ -102,7 +102,6 @@ function New-CooldownCalendarEvent {
         $Cred = Get-Content $CredPath -Raw | ConvertFrom-Json
         $ClientId = $Cred.installed.client_id
         $ClientSecret = $Cred.installed.client_secret
-        $RedirectUri = "urn:ietf:wg:oauth:2.0:oob"
 
         $AccessToken = $null
 
@@ -130,11 +129,33 @@ function New-CooldownCalendarEvent {
         }
 
         if (-not $AccessToken) {
-            # First-run consent flow — opens a browser, user pastes the code back.
-            $AuthUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=$ClientId&redirect_uri=$RedirectUri&response_type=code&scope=https://www.googleapis.com/auth/calendar.events&access_type=offline&prompt=consent"
+            # First-run consent flow. Google deprecated the OOB
+            # (urn:ietf:wg:oauth:2.0:oob) copy-paste flow in Jan 2023 — desktop
+            # clients must use the loopback IP redirect instead. We spin up a
+            # short-lived local HTTP listener, open the consent screen pointed
+            # at it, and capture the ?code= Google redirects back with.
+            $Listener = New-Object System.Net.HttpListener
+            $LoopbackPort = Get-Random -Minimum 49152 -Maximum 65535
+            $RedirectUri = "http://127.0.0.1:$LoopbackPort/"
+            $Listener.Prefixes.Add($RedirectUri)
+            $Listener.Start()
+
+            $AuthUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=$ClientId&redirect_uri=$([uri]::EscapeDataString($RedirectUri))&response_type=code&scope=https://www.googleapis.com/auth/calendar.events&access_type=offline&prompt=consent"
             Write-Host "[i] First-time Google Calendar auth — opening browser for consent..." -ForegroundColor Cyan
             Start-Process $AuthUrl
-            $Code = Read-Host "Paste the authorization code shown by Google"
+
+            $Context = $Listener.GetContext()  # blocks until Google redirects back
+            $Code = $Context.Request.QueryString["code"]
+            $ResponseHtml = "<html><body>Authentication complete — you can close this tab and return to PowerShell.</body></html>"
+            $Buffer = [System.Text.Encoding]::UTF8.GetBytes($ResponseHtml)
+            $Context.Response.ContentLength64 = $Buffer.Length
+            $Context.Response.OutputStream.Write($Buffer, 0, $Buffer.Length)
+            $Context.Response.OutputStream.Close()
+            $Listener.Stop()
+
+            if (-not $Code) {
+                throw "No authorization code received from loopback redirect."
+            }
 
             $TokenBody = @{
                 client_id     = $ClientId
