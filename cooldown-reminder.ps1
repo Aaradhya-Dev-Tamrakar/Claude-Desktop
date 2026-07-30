@@ -176,7 +176,23 @@ function New-CooldownCalendarEvent {
 
         $EventStart = $ReadyTime.ToString("yyyy-MM-ddTHH:mm:ss")
         $EventEnd = $ReadyTime.AddMinutes(15).ToString("yyyy-MM-ddTHH:mm:ss")
-        $TimeZone = [System.TimeZoneInfo]::Local.Id
+        # Google Calendar requires IANA time zone IDs (e.g. "Asia/Kathmandu");
+        # TimeZoneInfo.Local.Id on Windows returns a Windows TZ name (e.g.
+        # "Nepal Standard Time"), which the API rejects with a 400. Convert.
+        try {
+            $IanaId = $null
+            if ([System.TimeZoneInfo]::TryConvertWindowsIdToIanaId([System.TimeZoneInfo]::Local.Id, [ref]$IanaId)) {
+                $TimeZone = $IanaId
+            }
+            else {
+                $TimeZone = "Etc/UTC"
+                Write-Warning "cooldown-reminder: could not resolve IANA time zone for '$([System.TimeZoneInfo]::Local.Id)' — falling back to UTC."
+            }
+        }
+        catch {
+            $TimeZone = "Etc/UTC"
+            Write-Warning "cooldown-reminder: time zone conversion failed ($_). Falling back to UTC."
+        }
 
         $EventBody = @{
             summary     = "Claude cooldown ready — $Nickname"
