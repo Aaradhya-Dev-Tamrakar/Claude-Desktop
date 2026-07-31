@@ -52,5 +52,11 @@
     "nickname": "adevtm",
     "last_login_date": "2026-07-31",
     "last_login_time": "15:31:50"
+  },
+  "user10": {
+    "path": "%USERPROFILE%\\.claude-profiles\\user10",
+    "nickname": "a.claude0",
+    "last_login_date": "2026-07-31",
+    "last_login_time": "15:32:58"
   }
 }
