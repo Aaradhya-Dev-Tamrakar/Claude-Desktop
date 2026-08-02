@@ -4,8 +4,9 @@ param (
     [switch]$Concurrent,
     [switch]$NoCooldownAlarm,
     [switch]$GCalReminder,
-    # Skip syncing team-mcp.json / team-context.md into this launch. Use for
-    # a one-off launch you don't want the shared MCP config force-merged into.
+    # Skip syncing team-mcp.json / team-context.md / team-memory.md into this
+    # launch. Use for a one-off launch you don't want the shared MCP config
+    # force-merged into.
     [switch]$NoTeamSync,
     # Dot-source-and-return-early hook for Pester: stops after function
     # definitions, before any interactive prompt or side-effecting logic.
@@ -166,36 +167,48 @@ function Sync-TeamMcpConfig {
     }
 }
 
-function Send-TeamContextToClipboard {
-    # Copies team-context.md's content to the clipboard so it's one paste
-    # away as a seed message / custom-instructions block. Not injected into
-    # the app automatically: Claude Desktop's chat-side custom instructions
-    # and Memory are account-level and server-side (synced via whichever
-    # account is authenticated in this profile), not a local file this
-    # script can write into — so clipboard-and-paste is the honest local
-    # equivalent, not a guess at an unconfirmed config path.
+function Send-TeamContextAndMemoryToClipboard {
+    # Copies team-context.md (static identity/context) and team-memory.md
+    # (growing, hand-appended log) to the clipboard concatenated, so both
+    # are one paste away as a seed message / custom-instructions block. Not
+    # injected into the app automatically: Claude Desktop's chat-side custom
+    # instructions and Memory are account-level and server-side (synced via
+    # whichever account is authenticated in this profile), not a local file
+    # this script can write into — so clipboard-and-paste is the honest
+    # local equivalent, not a guess at an unconfirmed config path. Either
+    # file may exist alone; both missing is a silent no-op.
     param(
         [Parameter(Mandatory = $true)][string]$RepoRoot,
         [switch]$WhatIf
     )
 
     $ContextPath = Join-Path $RepoRoot "team-context.md"
-    if (-not (Test-Path $ContextPath)) {
-        return  # No team-context.md checked in yet — nothing to copy, silently skip.
+    $MemoryPath  = Join-Path $RepoRoot "team-memory.md"
+    $HasContext  = Test-Path $ContextPath
+    $HasMemory   = Test-Path $MemoryPath
+
+    if (-not $HasContext -and -not $HasMemory) {
+        return  # Neither file checked in yet — nothing to copy, silently skip.
     }
 
+    $Present = @()
+    if ($HasContext) { $Present += "team-context.md" }
+    if ($HasMemory) { $Present += "team-memory.md" }
+
     if ($WhatIf) {
-        Write-Host "[WhatIf] Would copy 'team-context.md' to the clipboard." -ForegroundColor DarkCyan
+        Write-Host "[WhatIf] Would copy $($Present -join ' + ') to the clipboard." -ForegroundColor DarkCyan
         return
     }
 
     try {
-        $Content = Get-Content $ContextPath -Raw
-        Set-Clipboard -Value $Content
-        Write-Host "[+] team-context.md copied to clipboard — paste as your first message or into Custom Instructions." -ForegroundColor Gray
+        $Sections = @()
+        if ($HasContext) { $Sections += (Get-Content $ContextPath -Raw).TrimEnd() }
+        if ($HasMemory) { $Sections += (Get-Content $MemoryPath -Raw).TrimEnd() }
+        Set-Clipboard -Value ($Sections -join "`n`n---`n`n")
+        Write-Host "[+] $($Present -join ' + ') copied to clipboard — paste as your first message or into Custom Instructions." -ForegroundColor Gray
     }
     catch {
-        Write-Warning "Failed to copy team-context.md to clipboard ($_). Open the file manually if needed."
+        Write-Warning "Failed to copy team context/memory to clipboard ($_). Open the file(s) manually if needed."
     }
 }
 
@@ -723,16 +736,17 @@ if ($ProfileInfo) {
     }
 
     # Team interlink: force-merge shared MCP servers into this profile's
-    # claude_desktop_config.json, and stage team-context.md on the clipboard
-    # for manual paste into Custom Instructions / first message. Both are
-    # best-effort no-ops if team-mcp.json / team-context.md aren't checked in
-    # yet. Runs for both modes: $NativeAppDataDir is what swap-mode Claude
-    # reads (already restored by the mirror step above); $Dir is what
-    # Concurrent mode reads directly via --user-data-dir.
+    # claude_desktop_config.json, and stage team-context.md + team-memory.md
+    # on the clipboard for manual paste into Custom Instructions / first
+    # message. All are best-effort no-ops if team-mcp.json / team-context.md
+    # / team-memory.md aren't checked in yet. Runs for both modes:
+    # $NativeAppDataDir is what swap-mode Claude reads (already restored by
+    # the mirror step above); $Dir is what Concurrent mode reads directly
+    # via --user-data-dir.
     if (-not $NoTeamSync) {
         $TeamConfigDir = if ($Concurrent) { $Dir } else { $NativeAppDataDir }
         Sync-TeamMcpConfig -RepoRoot $PSScriptRoot -TargetConfigDir $TeamConfigDir -WhatIf:$WhatIf
-        Send-TeamContextToClipboard -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
+        Send-TeamContextAndMemoryToClipboard -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
     }
 
     Write-Host "----------------------------------------" -ForegroundColor Cyan
