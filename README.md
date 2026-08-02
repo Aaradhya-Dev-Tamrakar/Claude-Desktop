@@ -48,14 +48,14 @@ With no arguments, the script prompts once for a mode (Isolated or Concurrent), 
 Launch two or more profiles side by side, each its own independent window — each keeps its own `--user-data-dir`, so nothing is swapped or mirrored:
 
 ```powershell
-pwsh -File .\launch_user_n.ps1 -Mode Concurrent -Users tisha,shreejan
+pwsh -File .\launch_user_n.ps1 -Mode Concurrent -Users aaradhya,bei79001
 ```
 
 Or one at a time:
 
 ```powershell
-pwsh -File .\launch_user_n.ps1 -Concurrent -Account tisha
-pwsh -File .\launch_user_n.ps1 -Concurrent -Account shreejan
+pwsh -File .\launch_user_n.ps1 -Concurrent -Account aaradhya
+pwsh -File .\launch_user_n.ps1 -Concurrent -Account bei79001
 ```
 
 `claude://` sign-in is a single OS-wide handler shared by every window — sign in to each profile one at a time (others closed) before running them concurrently. A profile that fails to launch (missing exe, unknown name) doesn't block the rest of the `-Users` list.
