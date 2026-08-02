@@ -1,201 +1,580 @@
-<#
-.SYNOPSIS
-    Smoke tests for launch_user_n.ps1.
+param (
+    [string]$Account,
+    [switch]$WhatIf,
+    [switch]$Concurrent,
+    [switch]$NoCooldownAlarm,
+    [switch]$GCalReminder
+)
 
-.DESCRIPTION
-    Two areas covered:
-      1. Get-ValidatedProfilePath - the path-containment boundary. Tested by
-         invoking a throwaway harness script in a child pwsh process, since
-         the real function calls `exit 1` on rejection (correct for the
-         script's own control flow, but means it cannot be dot-sourced and
-         asserted against directly without exiting the test host).
-      2. -WhatIf - asserts a dry run against a scratch profile leaves the
-         real filesystem, registry key, and .claude-profiles state
-         untouched. Does not attempt to launch Claude.exe or exercise
-         robocopy/reg.exe.
-
-         IMPORTANT: Get-ValidatedProfilePath hardcodes its containment
-         check against the real %USERPROFILE%\.claude-profiles by design
-         (this is correct - the base dir intentionally isn't
-         config-driven, since that would defeat the containment boundary
-         it enforces). Because of this, the -WhatIf tests CANNOT use a
-         fully isolated TestDrive scratch directory - a path outside the
-         real base dir would be rejected by Get-ValidatedProfilePath
-         before ever reaching WhatIf-gated code. Instead this suite
-         temporarily adds one scratch entry ("pester-whatif-scratch") to
-         your REAL profiles.json, backs the original file up first, and
-         restores it in AfterAll. It does not touch any of your real
-         numbered profiles (user1-user20).
-
-.NOTES
-    NOT YET EXECUTED. Written and statically reviewed only - this sandbox
-    has no pwsh/Pester and no access to install them (packages.microsoft.com
-    is not on the network allowlist). Run locally with:
-
-        cd tests
-        Invoke-Pester -Path .\launch_user_n.Tests.ps1 -Output Detailed
-
-    Requires Pester 5+ (Install-Module Pester -MinimumVersion 5.0 -Scope CurrentUser).
-#>
-
-BeforeAll {
-    $script:RepoRoot = Split-Path $PSScriptRoot -Parent
-    $script:LauncherPath = Join-Path $RepoRoot "launch_user_n.ps1"
-    $script:RealBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
-
-    # Minimal harness that dot-sources just the function definition out of the
-    # real script (via AST) and calls it with test args, so the test asserts
-    # against the actual shipped implementation rather than a re-typed copy.
-    $script:HarnessPath = Join-Path $TestDrive "harness.ps1"
-    $launcherContent = Get-Content $LauncherPath -Raw
-    $ast = [System.Management.Automation.Language.Parser]::ParseInput($launcherContent, [ref]$null, [ref]$null)
-    $funcDef = $ast.FindAll({ param($node) $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $node.Name -eq 'Get-ValidatedProfilePath' }, $true) | Select-Object -First 1
-    if (-not $funcDef) {
-        throw "Get-ValidatedProfilePath not found in launch_user_n.ps1 - has it been renamed?"
-    }
-    $harnessContent = @"
-$($funcDef.Extent.Text)
-
-`$result = Get-ValidatedProfilePath -RawPath `$args[0] -ProfileName `$args[1]
-Write-Output `$result
-"@
-    Set-Content -Path $HarnessPath -Value $harnessContent -Encoding UTF8
+if ($GCalReminder) {
+    Write-Warning "GCalReminder: Google Calendar integration is currently paused. This switch has no effect until re-enabled in cooldown-reminder.ps1."
 }
 
-Describe "Get-ValidatedProfilePath (path containment)" {
+$ConfigFile = Join-Path $PSScriptRoot "profiles.json"
 
-    Context "Paths that resolve inside %USERPROFILE%\.claude-profiles" {
-        It "accepts the standard profile path shape" {
-            $rawPath = "%USERPROFILE%\.claude-profiles\user1"
-            $proc = Start-Process pwsh -ArgumentList @("-NoProfile", "-File", $HarnessPath, $rawPath, "user1") -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$TestDrive\out.txt" -RedirectStandardError "$TestDrive\err.txt"
-            $proc.ExitCode | Should -Be 0
-            $output = Get-Content "$TestDrive\out.txt" -Raw
-            $output.Trim() | Should -Match $([regex]::Escape("user1"))
-        }
+if (-not (Test-Path $ConfigFile)) {
+    Write-Host "profiles.json file is missing!" -ForegroundColor Red
+    exit 1
+}
 
-        It "accepts a nested subfolder still under the base dir" {
-            $rawPath = "%USERPROFILE%\.claude-profiles\user1\subfolder"
-            $proc = Start-Process pwsh -ArgumentList @("-NoProfile", "-File", $HarnessPath, $rawPath, "user1") -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$TestDrive\out2.txt" -RedirectStandardError "$TestDrive\err2.txt"
-            $proc.ExitCode | Should -Be 0
+$Profiles = Get-Content $ConfigFile | ConvertFrom-Json
+$AccountKeys = @($Profiles.psobject.properties.Name)
+
+function Get-ValidatedProfilePath {
+    param(
+        [Parameter(Mandatory = $true)][string]$RawPath,
+        [Parameter(Mandatory = $true)][string]$ProfileName
+    )
+
+    $BaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
+    $BaseFull = [System.IO.Path]::GetFullPath($BaseDir).TrimEnd('\') + '\'
+
+    $Expanded = [System.Environment]::ExpandEnvironmentVariables($RawPath)
+    $ExpandedFull = [System.IO.Path]::GetFullPath($Expanded)
+
+    if (-not $ExpandedFull.StartsWith($BaseFull, [System.StringComparison]::OrdinalIgnoreCase)) {
+        Write-Host "[!] Profile '$ProfileName' path resolves outside the approved base directory." -ForegroundColor Red
+        Write-Host "    Base    : $BaseFull" -ForegroundColor Gray
+        Write-Host "    Resolved: $ExpandedFull" -ForegroundColor Gray
+        Write-Host "    Refusing to use this path. Fix 'path' for '$ProfileName' in profiles.json." -ForegroundColor Red
+        exit 1
+    }
+
+    return $ExpandedFull
+}
+
+function Add-NewProfile {
+    param(
+        [string]$SuggestedName = ""
+    )
+
+    Write-Host "----------------------------------------" -ForegroundColor Cyan
+    Write-Host " Add New Claude Desktop Profile" -ForegroundColor Green
+    Write-Host "----------------------------------------" -ForegroundColor Cyan
+
+    $Name = $SuggestedName
+    if (-not $Name) {
+        $Name = Read-Host "Enter profile name (e.g. user3, personal, client)"
+    }
+
+    if ([string]::IsNullOrWhiteSpace($Name)) {
+        Write-Host "Profile name cannot be empty." -ForegroundColor Red
+        exit 1
+    }
+
+    $Name = $Name.Trim().ToLower() -replace '[^a-z0-9_-]', ''
+
+    if ($Profiles.psobject.properties.Name -contains $Name) {
+        Write-Host "Profile '$Name' already exists!" -ForegroundColor Yellow
+        return $Name
+    }
+
+    $Nickname = Read-Host "Enter a nickname for '$Name' (e.g. work, personal, ieee)"
+    if ([string]::IsNullOrWhiteSpace($Nickname)) {
+        $Nickname = $Name
+    }
+
+    $Path = "%USERPROFILE%\.claude-profiles\$Name"
+
+    $Profiles | Add-Member -NotePropertyName $Name -NotePropertyValue @{
+        nickname        = $Nickname
+        path            = $Path
+        last_login_date = $null
+        last_login_time = $null
+    } -Force
+
+    $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
+    Write-Host "[+] Saved new profile '$Name' to profiles.json!" -ForegroundColor Green
+
+    return $Name
+}
+
+function Show-ProfileTable {
+    param($Profiles, $AccountKeys)
+
+    if ($AccountKeys.Count -eq 0) {
+        Write-Host "(No profiles yet. Press N to add your first profile.)" -ForegroundColor DarkGray
+        return
+    }
+
+    $rows = for ($i = 0; $i -lt $AccountKeys.Count; $i++) {
+        $key = $AccountKeys[$i]
+        $lastLoginDate = $Profiles.$key.last_login_date
+        $lastLoginTime = $Profiles.$key.last_login_time
+        if (-not $lastLoginDate) { $lastLoginDate = "Never" }
+        if (-not $lastLoginTime) { $lastLoginTime = "-" }
+        [PSCustomObject]@{
+            Num      = "[$($i + 1)]"
+            Profile  = $key
+            Nickname = $Profiles.$key.nickname
+            LastTime = $lastLoginTime
+            LastDate = $lastLoginDate
         }
     }
 
-    Context "Paths that attempt to escape the base dir" {
-        It "rejects a parent-directory traversal (..\..\)" {
-            $rawPath = "%USERPROFILE%\.claude-profiles\..\..\Desktop\evil"
-            $proc = Start-Process pwsh -ArgumentList @("-NoProfile", "-File", $HarnessPath, $rawPath, "malicious") -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$TestDrive\out3.txt" -RedirectStandardError "$TestDrive\err3.txt"
-            $proc.ExitCode | Should -Be 1
-        }
+    $numW = [Math]::Max(3, ($rows.Num | Measure-Object -Property Length -Maximum).Maximum)
+    $profW = [Math]::Max(7, ($rows.Profile | Measure-Object -Property Length -Maximum).Maximum)
+    $nickW = [Math]::Max(8, ($rows.Nickname | Measure-Object -Property Length -Maximum).Maximum)
+    $timeW = [Math]::Max(10, ($rows.LastTime | Measure-Object -Property Length -Maximum).Maximum)
+    $dateW = [Math]::Max(10, ($rows.LastDate | Measure-Object -Property Length -Maximum).Maximum)
+    $widths = @($numW, $profW, $nickW, $timeW, $dateW)
 
-        It "rejects an absolute path entirely outside the base dir" {
-            $rawPath = "C:\Windows\System32\config"
-            $proc = Start-Process pwsh -ArgumentList @("-NoProfile", "-File", $HarnessPath, $rawPath, "malicious") -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$TestDrive\out4.txt" -RedirectStandardError "$TestDrive\err4.txt"
-            $proc.ExitCode | Should -Be 1
+    function New-Border($L, $C, $R) {
+        $L + (($widths | ForEach-Object { "-" * ($_ + 2) }) -join $C) + $R
+    }
+    function New-Row([string[]]$Cells) {
+        $padded = for ($c = 0; $c -lt $Cells.Count; $c++) {
+            $cell = if ($null -ne $Cells[$c]) { [string]$Cells[$c] } else { "" }
+            " " + $cell.PadRight($widths[$c]) + " "
         }
+        "|" + ($padded -join "|") + "|"
+    }
 
-        It "rejects a sibling directory that merely shares a string prefix (.claude-profiles-evil)" {
-            # Guards against a naive StartsWith check without the trailing
-            # separator, which would wrongly accept this as "inside".
-            $rawPath = "%USERPROFILE%\.claude-profiles-evil\payload"
-            $proc = Start-Process pwsh -ArgumentList @("-NoProfile", "-File", $HarnessPath, $rawPath, "malicious") -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$TestDrive\out5.txt" -RedirectStandardError "$TestDrive\err5.txt"
-            $proc.ExitCode | Should -Be 1
+    $innerWidth = (New-Border "+" "+" "+").Length - 2
+
+    Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
+    Write-Host (New-Row @("#", "Profile", "Nickname", "Last Time", "Last Date")) -ForegroundColor Cyan
+    Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
+    foreach ($r in $rows) {
+        Write-Host (New-Row @($r.Num, $r.Profile, $r.Nickname, $r.LastTime, $r.LastDate)) -ForegroundColor Yellow
+    }
+    Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
+    Write-Host ("| " + "[N] Add New Profile (+)".PadRight($innerWidth - 2) + " |") -ForegroundColor Magenta
+    Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
+}
+
+if (-not $Account) {
+    Write-Host "----------------------------------------" -ForegroundColor Cyan
+    Write-Host " Select a Claude Desktop Profile:" -ForegroundColor Green
+    Write-Host "----------------------------------------" -ForegroundColor Cyan
+
+    Show-ProfileTable -Profiles $Profiles -AccountKeys $AccountKeys
+
+    if ($AccountKeys.Count -eq 0) {
+        $selection = Read-Host "No profiles yet. Press N (or Enter) to add your first profile"
+        $Account = Add-NewProfile
+        $Profiles = Get-Content $ConfigFile | ConvertFrom-Json
+    }
+    else {
+        $selection = Read-Host "Select profile [1-$($AccountKeys.Count) or N] (Default: 1)"
+        if ($selection -match '^[Nn]$|^\+$') {
+            $Account = Add-NewProfile
+            $Profiles = Get-Content $ConfigFile | ConvertFrom-Json
+        }
+        elseif ([string]::IsNullOrWhiteSpace($selection)) {
+            $Account = $AccountKeys[0]
+        }
+        else {
+            $selectionIndex = [int]$selection - 1
+            if ($selectionIndex -ge 0 -and $selectionIndex -lt $AccountKeys.Count) {
+                $Account = $AccountKeys[$selectionIndex]
+            }
+            else {
+                Write-Host "Invalid selection '$selection'" -ForegroundColor Red
+                Read-Host "Press Enter to exit..."
+                exit 1
+            }
         }
     }
 }
-
-Describe "-WhatIf (no-mutation guarantee)" {
-
-    BeforeAll {
-        # IMPORTANT: Get-ValidatedProfilePath hardcodes its containment check
-        # against the REAL %USERPROFILE%\.claude-profiles (by design - see
-        # its implementation; the base dir is intentionally not
-        # configurable, since making it config-driven would defeat the
-        # purpose of the containment boundary). This means a fully isolated
-        # TestDrive scratch dir CANNOT be used here: a scratch path outside
-        # the real base dir would correctly be rejected by
-        # Get-ValidatedProfilePath before ever reaching WhatIf-gated code,
-        # producing a false pass on this test for the same reason described
-        # in the Claude.exe guard below.
-        #
-        # Instead this test uses a real subfolder under the actual base dir,
-        # with a profile name unlikely to collide with real ones
-        # ("pester-whatif-scratch"). It reads/restores the real profiles.json
-        # (backed up first) rather than substituting an isolated one.
-        $script:RealConfigFile = Join-Path $RepoRoot "profiles.json"
-        $script:RealConfigBackup = Join-Path $TestDrive "profiles.json.bak"
-        Copy-Item $RealConfigFile $RealConfigBackup
-
-        $script:ScratchProfileName = "pester-whatif-scratch"
-        $script:ScratchDir = Join-Path $RealBaseDir $ScratchProfileName
-
-        if (Test-Path $ScratchDir) {
-            throw "Refusing to run: '$ScratchDir' already exists. Remove it manually before running this test suite, in case it holds real data."
-        }
-
-        $profiles = Get-Content $RealConfigFile | ConvertFrom-Json
-        $profiles | Add-Member -NotePropertyName $ScratchProfileName -NotePropertyValue @{
-            nickname        = "pester-scratch"
-            path            = "%USERPROFILE%\.claude-profiles\$ScratchProfileName"
-            last_login_date = $null
-            last_login_time = $null
-        } -Force
-        $profiles | ConvertTo-Json -Depth 5 | Set-Content $RealConfigFile -Encoding UTF8
+elseif (-not ($Profiles.psobject.properties.Name -contains $Account)) {
+    Write-Host "Account '$Account' not found in profiles.json." -ForegroundColor Yellow
+    $response = Read-Host "Would you like to add '$Account' as a new profile? [Y/n]"
+    if ([string]::IsNullOrWhiteSpace($response) -or $response -match '^[Yy]') {
+        $Account = Add-NewProfile -SuggestedName $Account
+        $Profiles = Get-Content $ConfigFile | ConvertFrom-Json
     }
+    else {
+        exit 1
+    }
+}
 
-    AfterAll {
-        # Restore the real profiles.json exactly as it was, and remove the
-        # scratch directory if the test (incorrectly) created one.
-        Copy-Item $RealConfigBackup $RealConfigFile -Force
-        if (Test-Path $ScratchDir) {
-            Remove-Item $ScratchDir -Recurse -Force
+$ProfileInfo = $Profiles.$Account
+
+if ($ProfileInfo) {
+    $Nickname = $ProfileInfo.nickname
+    $RawDir = $ProfileInfo.path
+    $Dir = Get-ValidatedProfilePath -RawPath $RawDir -ProfileName $Account
+    $TargetStorageDir = $Dir
+
+    $ProfilesBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
+
+    if ($Concurrent) {
+        # Concurrent mode has no single "active profile" - .active_profile is never
+        # written to in this mode (see the tracker-update block below), so check
+        # per-instance instead: is a claude.exe already running with THIS profile's
+        # --user-data-dir on its command line?
+        $ExistingConcurrent = Get-CimInstance Win32_Process -Filter "Name = 'claude.exe'" -ErrorAction SilentlyContinue |
+        Where-Object { $_.CommandLine -and $_.CommandLine.Contains($Dir) }
+        if ($ExistingConcurrent) {
+            Write-Host "----------------------------------------" -ForegroundColor Cyan
+            Write-Host " Profile '$Account' ($Nickname) is already running as a concurrent instance." -ForegroundColor Green
+            Write-Host " No action taken." -ForegroundColor Gray
+            Write-Host "----------------------------------------" -ForegroundColor Cyan
+            exit 0
         }
     }
-
-    It "does not create the profile storage directory" {
-        # NOTE: This It block performs the actual -WhatIf run; the two It
-        # blocks below read files this one produces (whatif_out.txt) and
-        # state this one is expected NOT to have changed (profiles.json's
-        # last_login). They depend on running in file order, after this
-        # block, in the same process - do not add -Parallel to this Describe
-        # without restructuring (e.g. moving the run into BeforeAll).
-        Test-Path $ScratchDir | Should -Be $false
-
-        $proc = Start-Process pwsh -ArgumentList @("-NoProfile", "-File", $LauncherPath, "-Account", $ScratchProfileName, "-WhatIf") -NoNewWindow -Wait -PassThru -RedirectStandardOutput "$TestDrive\whatif_out.txt" -RedirectStandardError "$TestDrive\whatif_err.txt"
-
-        $outContent = Get-Content "$TestDrive\whatif_out.txt" -Raw -ErrorAction SilentlyContinue
-        $errContent = Get-Content "$TestDrive\whatif_err.txt" -Raw -ErrorAction SilentlyContinue
-        $combined = "$outContent $errContent"
-
-        # Guard against the specific known false-negative: if Claude.exe
-        # isn't discoverable on this machine, the script exits 1 before any
-        # WhatIf-gated code runs, producing the same "no directory created"
-        # outcome as a correctly-working WhatIf. Detect that exact case by
-        # its known message rather than by absence of [WhatIf] markers,
-        # since a clean machine with no prior session/registry state can
-        # legitimately produce few or no markers without being a false
-        # negative.
-        if ($combined -match 'Claude Desktop executable.*not found') {
-            Set-ItResult -Inconclusive -Because "No Claude.exe discoverable on this machine - script exited before reaching WhatIf-gated code, so this is not a valid test of the no-mutation guarantee here. Exit code: $($proc.ExitCode)"
-            return
+    else {
+        # Same-profile short-circuit: if the requested account is already the active
+        # profile AND Claude is currently running, this is not a switch - do nothing
+        # rather than closing and relaunching the same session.
+        $StateFile = Join-Path $ProfilesBaseDir ".active_profile"
+        $ActiveAccount = $null
+        if (Test-Path $StateFile) {
+            $ActiveAccount = (Get-Content $StateFile -Raw).Trim()
         }
+        $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
 
-        Test-Path $ScratchDir | Should -Be $false
-    }
-
-    It "leaves profiles.json's scratch entry with last_login_date/time still null" {
-        # The state-file/timestamp write is one of the WhatIf-gated steps;
-        # confirm it did not fire for the scratch profile.
-        $profiles = Get-Content $RealConfigFile | ConvertFrom-Json
-        $profiles.$ScratchProfileName.last_login_date | Should -BeNullOrEmpty
-        $profiles.$ScratchProfileName.last_login_time | Should -BeNullOrEmpty
-    }
-
-    It "output contains [WhatIf] markers, not [+] action markers, for the gated steps" {
-        $outContent = Get-Content "$TestDrive\whatif_out.txt" -Raw -ErrorAction SilentlyContinue
-        if ($outContent) {
-            $outContent | Should -Not -Match '\[\+\] Restoring session data'
-            $outContent | Should -Not -Match '\[\+\] Initializing fresh profile storage'
-            $outContent | Should -Not -Match '\[\+\] Saving current session data'
+        if ($RunningClaude -and ($ActiveAccount -eq $Account)) {
+            Write-Host "----------------------------------------" -ForegroundColor Cyan
+            Write-Host " Profile '$Account' ($Nickname) is already open." -ForegroundColor Green
+            Write-Host " No action taken." -ForegroundColor Gray
+            Write-Host "----------------------------------------" -ForegroundColor Cyan
+            exit 0
         }
     }
+
+    if (-not (Test-Path $Dir)) {
+        if ($WhatIf) {
+            Write-Host "[WhatIf] Would create profile storage dir '$Dir'." -ForegroundColor DarkCyan
+        }
+        else {
+            New-Item -ItemType Directory -Force -Path $Dir | Out-Null
+        }
+    }
+
+    $ExecutablePaths = [System.Collections.Generic.List[string]]::new()
+
+    try {
+        $AppxPkg = Get-AppxPackage *claude* -ErrorAction SilentlyContinue
+        if ($AppxPkg -and $AppxPkg.InstallLocation) {
+            $ExecutablePaths.Add((Join-Path $AppxPkg.InstallLocation "app\claude.exe"))
+            $ExecutablePaths.Add((Join-Path $AppxPkg.InstallLocation "Claude.exe"))
+        }
+    }
+    catch { }
+
+    $ExecutablePaths.Add("$env:LOCALAPPDATA\Programs\Claude\Claude.exe")
+    $ExecutablePaths.Add("$env:LOCALAPPDATA\Microsoft\WindowsApps\Claude.exe")
+
+    $ClaudeExe = $null
+    foreach ($exePath in $ExecutablePaths) {
+        if ($exePath -and (Test-Path $exePath)) {
+            $ClaudeExe = $exePath
+            break
+        }
+    }
+
+    if (-not $ClaudeExe) {
+        Write-Host "Claude Desktop executable (Claude.exe) not found!" -ForegroundColor Red
+        Write-Host "Checked locations:" -ForegroundColor Yellow
+        foreach ($exePath in $ExecutablePaths) {
+            if ($exePath) { Write-Host "  - $exePath" -ForegroundColor Gray }
+        }
+        exit 1
+    }
+
+    # Native AppData directory used by Claude Desktop MSIX / Desktop installer
+    $NativeAppDataDir = "$env:LOCALAPPDATA\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude"
+    if (-not (Test-Path (Split-Path $NativeAppDataDir -Parent))) {
+        $NativeAppDataDir = "$env:APPDATA\Claude"
+    }
+
+    if (-not (Test-Path $ProfilesBaseDir)) {
+        New-Item -ItemType Directory -Force -Path $ProfilesBaseDir | Out-Null
+    }
+
+    # Only strip custom registry protocol overrides when the AppX package owns native protocol
+    # handling. If Claude was installed via the non-Store installer (LOCALAPPDATA\Programs\Claude),
+    # there is no AppX URI activation to fall back on — removing the override here leaves
+    # claude:// with NO handler at all, breaking OAuth/quick-signin callback routing.
+    # Skipped entirely in Concurrent mode: claude:// is a single OS-wide handler, so flipping
+    # it per concurrent launch would fight with whatever other instances are already running.
+    if ($Concurrent) {
+        Write-Host "[!] Concurrent mode: 'claude://' sign-in is a single OS-wide handler and routes to whichever instance last had focus. Sign in to each profile one at a time (others closed) before running them side by side." -ForegroundColor Yellow
+    }
+    else {
+        try {
+            $RegPath = 'HKCU:\Software\Classes\claude'
+            if ($AppxPkg -and (Test-Path $RegPath)) {
+                if ($WhatIf) {
+                    Write-Host "[WhatIf] Would export '$RegPath' to RegistryBackups\ then remove it (AppX present)." -ForegroundColor DarkCyan
+                }
+                else {
+                    $RegBackupDir = Join-Path $ProfilesBaseDir "RegistryBackups"
+                    if (-not (Test-Path $RegBackupDir)) {
+                        New-Item -ItemType Directory -Force -Path $RegBackupDir | Out-Null
+                    }
+                    $RegBackupFile = Join-Path $RegBackupDir "claude-protocol-$(Get-Date -Format 'yyyyMMdd-HHmmss').reg"
+                    & reg.exe export "HKCU\Software\Classes\claude" $RegBackupFile /y 2>$null | Out-Null
+                    Remove-Item -Path $RegPath -Force -Recurse -ErrorAction SilentlyContinue
+                }
+            }
+            elseif (-not $AppxPkg -and -not (Test-Path $RegPath)) {
+                Write-Host "[!] No AppX package and no 'claude://' registry handler found — quick sign-in callback may not route back to the app." -ForegroundColor Yellow
+            }
+        }
+        catch { }
+    }
+
+    # Close existing running Claude processes (skipped in Concurrent mode by design)
+    if (-not $Concurrent -and $RunningClaude) {
+        if ($WhatIf) {
+            Write-Host "[WhatIf] Would stop $($RunningClaude.Count) running Claude process(es)." -ForegroundColor DarkCyan
+        }
+        else {
+            Write-Host "Closing running Claude process(es) to switch profiles..." -ForegroundColor Yellow
+            $RunningClaude | Stop-Process -Force
+            Start-Sleep -Milliseconds 800
+        }
+    }
+
+    if (-not $Concurrent) {
+        # Ephemeral Chromium cache folders to exclude from sync to prevent disk cache corruptions (Error -8)
+        $CacheExcludeDirs = @("Cache", "GPUCache", "Code Cache", "Script Cache", "Crashpad", "blob_storage", "DawnCache", "Cache_Data")
+
+        # Save currently active profile session back to its storage folder
+        if (Test-Path $StateFile) {
+            $PrevAccount = (Get-Content $StateFile -Raw).Trim()
+            if ($PrevAccount -and ($PrevAccount -ne $Account) -and (Test-Path $NativeAppDataDir)) {
+                $PrevStorageDir = Join-Path $ProfilesBaseDir $PrevAccount
+                if ($WhatIf) {
+                    Write-Host "[WhatIf] Would mirror '$NativeAppDataDir' -> '$PrevStorageDir' (backup for '$PrevAccount')." -ForegroundColor DarkCyan
+                }
+                else {
+                    if (-not (Test-Path $PrevStorageDir)) {
+                        New-Item -ItemType Directory -Force -Path $PrevStorageDir | Out-Null
+                    }
+                    Write-Host "[+] Saving current session data to profile '$PrevAccount'..." -ForegroundColor Gray
+                    & robocopy $NativeAppDataDir $PrevStorageDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+                }
+            }
+        }
+
+        # Restore target profile session into Native AppData directory
+        if (-not (Test-Path $TargetStorageDir)) {
+            if (-not $WhatIf) {
+                New-Item -ItemType Directory -Force -Path $TargetStorageDir | Out-Null
+            }
+        }
+
+        if (-not (Test-Path $NativeAppDataDir)) {
+            if (-not $WhatIf) {
+                New-Item -ItemType Directory -Force -Path $NativeAppDataDir | Out-Null
+            }
+        }
+
+        $TargetFiles = Get-ChildItem -Path $TargetStorageDir -ErrorAction SilentlyContinue
+        if ($TargetFiles) {
+            if ($WhatIf) {
+                Write-Host "[WhatIf] Would mirror '$TargetStorageDir' -> '$NativeAppDataDir' (restore for '$Account')." -ForegroundColor DarkCyan
+            }
+            else {
+                Write-Host "[+] Restoring session data for profile '$Account'..." -ForegroundColor Cyan
+                & robocopy $TargetStorageDir $NativeAppDataDir /MIR /XD $CacheExcludeDirs /R:1 /W:1 /NJH /NJS /NDL /NC /NS | Out-Null
+            }
+        }
+        else {
+            if ($WhatIf) {
+                Write-Host "[WhatIf] Would clear '$NativeAppDataDir' to initialize fresh profile storage for '$Account'." -ForegroundColor DarkCyan
+            }
+            else {
+                Write-Host "[+] Initializing fresh profile storage for '$Account'..." -ForegroundColor Cyan
+                Get-ChildItem -Path $NativeAppDataDir -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+            }
+        }
+
+        # Clear stale Chromium disk cache files to force clean initialization (prevents Error -8)
+        foreach ($cDir in $CacheExcludeDirs) {
+            $cPath = Join-Path $NativeAppDataDir $cDir
+            if (Test-Path $cPath) {
+                if ($WhatIf) {
+                    Write-Host "[WhatIf] Would remove cache dir '$cPath'." -ForegroundColor DarkCyan
+                }
+                else {
+                    Remove-Item -Path $cPath -Recurse -Force -ErrorAction SilentlyContinue
+                }
+            }
+        }
+    }
+    else {
+        # Concurrent mode: no shared directory to swap - Claude launches directly against
+        # $Dir via --user-data-dir further down, so there is nothing to mirror here. Reusing
+        # $Dir as both the swap-mode backup target and the concurrent live data dir is
+        # intentional (one naming scheme, no third directory layout) - but do not run a
+        # non-Concurrent switch INTO this same profile while a concurrent instance of it is
+        # still live, since that would robocopy /MIR over a directory the running instance
+        # has open file handles on.
+        if ($WhatIf) {
+            Write-Host "[WhatIf] Concurrent mode: would launch directly against '$Dir' (no swap/mirror)." -ForegroundColor DarkCyan
+        }
+        else {
+            Write-Host "[+] Concurrent mode: launching directly against '$Dir' (no swap/mirror needed)." -ForegroundColor Gray
+        }
+    }
+
+    # Update last-login timestamp (both modes). The single-slot .active_profile tracker
+    # is swap-mode only — Concurrent mode intentionally never claims it, since "one active
+    # profile" doesn't apply when several may be running, and claiming it here would corrupt
+    # a later non-concurrent switch's backup-save logic (see the "no shared directory" note above).
+    $Now = Get-Date
+    $CurrentDate = $Now.ToString("yyyy-MM-dd")
+    $CurrentTime = $Now.ToString("HH:mm:ss")
+    if ($WhatIf) {
+        if ($Concurrent) {
+            Write-Host "[WhatIf] Would update last_login to '$CurrentDate $CurrentTime' for '$Account' (active-profile tracker left untouched in Concurrent mode)." -ForegroundColor DarkCyan
+        }
+        else {
+            Write-Host "[WhatIf] Would set active profile to '$Account' and update last_login to '$CurrentDate $CurrentTime'." -ForegroundColor DarkCyan
+        }
+    }
+    else {
+        if (-not $Concurrent) {
+            $Account | Set-Content $StateFile -Encoding UTF8
+        }
+
+        # Same named Mutex as cooldown-reminder.ps1's Update-FirstLoginDate:
+        # serializes profiles.json access across processes. -Concurrent mode
+        # runs multiple independent PowerShell processes against this file,
+        # so we re-read fresh under the lock (rather than reusing the $Profiles
+        # loaded at script start) to avoid clobbering another process's
+        # concurrent write — its own last_login update, or a first_login_date
+        # write from its cooldown-reminder.ps1 invocation.
+        $MutexName = "Global\ClaudeDesktopProfilesJsonLock"
+        $Mutex = $null
+        $AcquiredLock = $false
+        $LockError = $null
+        try {
+            $Mutex = New-Object System.Threading.Mutex($false, $MutexName)
+            try {
+                $AcquiredLock = $Mutex.WaitOne([TimeSpan]::FromSeconds(10))
+            }
+            catch [System.Threading.AbandonedMutexException] {
+                # Previous holder crashed while holding the lock. .NET still
+                # grants ownership despite the exception — treat as acquired.
+                $AcquiredLock = $true
+            }
+        }
+        catch {
+            # Any other failure constructing the mutex or waiting on it (e.g.
+            # Global namespace creation denied under session isolation).
+            # Captured explicitly rather than inferred from $Mutex being
+            # non-null, so a genuine timeout can never be conflated with this.
+            $LockError = $_
+        }
+
+        if ($AcquiredLock) {
+            try {
+                $FreshProfiles = Get-Content $ConfigFile -Raw | ConvertFrom-Json
+                $FreshProfileInfo = $FreshProfiles.$Account
+                if ($FreshProfileInfo) {
+                    $FreshProfileInfo | Add-Member -NotePropertyName "last_login_date" -NotePropertyValue $CurrentDate -Force
+                    $FreshProfileInfo | Add-Member -NotePropertyName "last_login_time" -NotePropertyValue $CurrentTime -Force
+
+                    $TempConfigPath = "$ConfigFile.tmp"
+                    $FreshProfiles | ConvertTo-Json -Depth 5 | Set-Content $TempConfigPath -Encoding UTF8
+                    Move-Item -Path $TempConfigPath -Destination $ConfigFile -Force
+                }
+                else {
+                    Write-Warning "Profile '$Account' vanished from profiles.json between load and write. last_login not updated this run."
+                }
+            }
+            catch {
+                # Failure while HOLDING a successfully-acquired lock — the lock was
+                # never the issue, so falling back to a stale unlocked write here
+                # wouldn't help and would misattribute the cause. Log and skip;
+                # next launch will pick this profile's last_login up correctly.
+                Write-Warning "Write to profiles.json failed while holding lock ($_). last_login not updated this run."
+            }
+            finally {
+                $Mutex.ReleaseMutex()
+            }
+        }
+        elseif ($LockError) {
+            # Mutex itself could not be constructed/acquired — genuinely no lock
+            # available. Fall back to the pre-hardening behavior (best-effort
+            # unlocked write) rather than silently dropping the update, since
+            # this write previously never failed and callers may depend on it.
+            Write-Warning "profiles.json lock unavailable ($LockError). Falling back to unlocked write."
+            try {
+                $ProfileInfo | Add-Member -NotePropertyName "last_login_date" -NotePropertyValue $CurrentDate -Force
+                $ProfileInfo | Add-Member -NotePropertyName "last_login_time" -NotePropertyValue $CurrentTime -Force
+                $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
+            }
+            catch {
+                Write-Warning "Unlocked fallback write also failed ($_). last_login not updated this run."
+            }
+        }
+        else {
+            # $Mutex constructed fine and WaitOne definitively returned $false —
+            # a genuine 10s timeout, lock is healthy but contended by another
+            # process. Skip rather than write stale data underneath a real lock.
+            Write-Warning "Timed out waiting for profiles.json lock (10s). last_login not updated this run."
+        }
+
+        if ($Mutex) {
+            $Mutex.Dispose()
+        }
+
+        # Cooldown reminders (toast + cooldown tracking) are best-effort and must
+        # never block or fail the launch itself.
+        try {
+            $ReminderScript = Join-Path $PSScriptRoot "cooldown-reminder.ps1"
+            if (Test-Path $ReminderScript) {
+                & $ReminderScript -LoginTime $Now -Nickname $Nickname -ProfileName $Account -ConfigFile $ConfigFile -DisableToast:$NoCooldownAlarm -EnableGCal:$GCalReminder
+            }
+        }
+        catch {
+            Write-Warning "Cooldown reminder setup failed: $_"
+        }
+    }
+
+    Write-Host "----------------------------------------" -ForegroundColor Cyan
+    Write-Host " Launching Claude Desktop (Native)" -ForegroundColor Green
+    Write-Host " Profile    : $Account" -ForegroundColor Yellow
+    Write-Host " Nickname   : $Nickname" -ForegroundColor Yellow
+    Write-Host " Last Login : $CurrentDate $CurrentTime" -ForegroundColor Yellow
+    Write-Host " Active     : $NativeAppDataDir" -ForegroundColor Gray
+    Write-Host " Storage    : $TargetStorageDir" -ForegroundColor Gray
+    Write-Host " Exe        : $ClaudeExe" -ForegroundColor Gray
+    Write-Host "----------------------------------------" -ForegroundColor Cyan
+
+    # Redirect stdout/stderr to per-profile logs to suppress internal Electron/Node.js deprecation warnings (DEP0169)
+    $LogsDir = Join-Path $ProfilesBaseDir "Logs\$Account"
+    if ($WhatIf) {
+        Write-Host "[WhatIf] Would launch '$ClaudeExe' with logs under '$LogsDir'." -ForegroundColor DarkCyan
+        Write-Host "[WhatIf] Dry run complete. No files, registry, or processes were modified." -ForegroundColor Green
+    }
+    else {
+        if (-not (Test-Path $LogsDir)) {
+            New-Item -ItemType Directory -Force -Path $LogsDir | Out-Null
+        }
+        $OutLog = Join-Path $LogsDir "claude_out.log"
+        $ErrLog = Join-Path $LogsDir "claude_err.log"
+        if ($Concurrent) {
+            Start-Process $ClaudeExe -ArgumentList "--user-data-dir=`"$Dir`"" -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+        }
+        else {
+            Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+        }
+    }
+
+    # Auto-sync repo (profiles.json last_login, etc.) via sync.ps1 on every launch.
+    # Spawned as a separate pwsh process (not dot-sourced/called in-process) so that
+    # sync.ps1's internal `exit` calls (e.g. secret-scan abort) cannot terminate this
+    # launcher's own session.
+    if ($WhatIf) {
+        Write-Host "[WhatIf] Would auto-sync repository via sync.ps1 (pull, commit, push)." -ForegroundColor DarkCyan
+    }
+    else {
+        Write-Host "[+] Auto-syncing repository via sync.ps1..." -ForegroundColor Cyan
+        & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "sync.ps1") -Message "chore(sync): auto-sync after launching profile '$Account' ($Nickname)"
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "[!] Auto-sync via sync.ps1 exited with code $LASTEXITCODE. Repo may be out of sync." -ForegroundColor Yellow
+        }
+    }
+}
+else {
+    Write-Host "Account '$Account' not found in profiles.json" -ForegroundColor Red
+    exit 1
 }

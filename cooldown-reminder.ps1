@@ -49,7 +49,37 @@ $ScriptDir = $PSScriptRoot
 function Update-FirstLoginDate {
     param([string]$ConfigPath, [string]$ProfileName, [datetime]$LoginTime)
 
+    # Named Mutex serializes read-modify-write across separate processes.
+    # Required because -Concurrent launches run as independent PowerShell
+    # processes that can call this function at the same instant — without a
+    # lock, two processes can each read a stale copy of profiles.json, and
+    # whichever writes last silently discards the other's update (its own
+    # first_login_date, or launch_user_n.ps1's last_login_date/time write
+    # that landed just before this call). "Global\" scopes the mutex across
+    # all user sessions on the machine, matching the shared-file scope.
+    $MutexName = "Global\ClaudeDesktopProfilesJsonLock"
+    $Mutex = $null
+    $AcquiredLock = $false
+
     try {
+        $Mutex = New-Object System.Threading.Mutex($false, $MutexName)
+        try {
+            $AcquiredLock = $Mutex.WaitOne([TimeSpan]::FromSeconds(10))
+        }
+        catch [System.Threading.AbandonedMutexException] {
+            # A previous holder crashed while holding the lock without releasing
+            # it. .NET still grants ownership to this thread despite raising the
+            # exception, so we DO hold the lock — proceed normally rather than
+            # treating this as a failure. (Realistic here: profile-switch logic
+            # elsewhere in this codebase force-kills Claude processes, and a
+            # PowerShell process could be killed mid-write the same way.)
+            $AcquiredLock = $true
+        }
+        if (-not $AcquiredLock) {
+            Write-Warning "cooldown-reminder: timed out waiting for profiles.json lock (10s). Skipping first_login_date tracking this run."
+            return
+        }
+
         $AllProfiles = Get-Content $ConfigPath -Raw | ConvertFrom-Json
         $TargetProfile = $AllProfiles.$ProfileName
 
@@ -73,6 +103,14 @@ function Update-FirstLoginDate {
     }
     catch {
         Write-Warning "cooldown-reminder: failed to track first_login_date ($_). Continuing."
+    }
+    finally {
+        if ($AcquiredLock) {
+            $Mutex.ReleaseMutex()
+        }
+        if ($Mutex) {
+            $Mutex.Dispose()
+        }
     }
 }
 
