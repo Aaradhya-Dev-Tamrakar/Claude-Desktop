@@ -90,11 +90,11 @@ function Merge-McpServers {
     # available without extra dependencies.
     $Merged = $ProfileConfig | ConvertTo-Json -Depth 10 | ConvertFrom-Json
 
-    if (-not $Merged.PSObject.Properties.Name.Contains("mcpServers")) {
+    if (-not ($Merged.PSObject.Properties.Name -contains "mcpServers")) {
         $Merged | Add-Member -NotePropertyName "mcpServers" -NotePropertyValue ([PSCustomObject]@{}) -Force
     }
 
-    if ($SharedConfig -and $SharedConfig.PSObject.Properties.Name.Contains("mcpServers")) {
+    if ($SharedConfig -and ($SharedConfig.PSObject.Properties.Name -contains "mcpServers")) {
         foreach ($serverName in $SharedConfig.mcpServers.PSObject.Properties.Name) {
             $Merged.mcpServers | Add-Member -NotePropertyName $serverName -NotePropertyValue $SharedConfig.mcpServers.$serverName -Force
         }
@@ -140,10 +140,16 @@ function Sync-TeamMcpConfig {
         }
     }
 
-    $Merged = Merge-McpServers -ProfileConfig $ProfileConfig -SharedConfig $SharedConfig
+    try {
+        $Merged = Merge-McpServers -ProfileConfig $ProfileConfig -SharedConfig $SharedConfig
+    }
+    catch {
+        Write-Warning "Failed to merge shared MCP servers ($_). Team MCP sync skipped this launch."
+        return
+    }
 
     if ($WhatIf) {
-        $sharedCount = @($SharedConfig.mcpServers.PSObject.Properties.Name).Count
+        $sharedCount = ($SharedConfig.mcpServers.PSObject.Properties | Measure-Object).Count
         Write-Host "[WhatIf] Would merge $sharedCount shared MCP server(s) from team-mcp.json into '$ProfileConfigPath'." -ForegroundColor DarkCyan
     }
     else {
