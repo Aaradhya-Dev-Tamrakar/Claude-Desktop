@@ -5,6 +5,7 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 ## Features
 
 - **Multi-Profile Management**: Launch distinct Claude Desktop sessions via automated profile session swapping into native AppData paths.
+- **Concurrent Multi-Monitor Sessions**: `-Mode Concurrent` (or `-Concurrent`) launches one or more profiles as independent, simultaneously-running windows via `--user-data-dir`, instead of swapping the single native install — drag each to its own monitor for side-by-side team use on one machine. `-Users <name1,name2,...>` launches a whole list non-interactively; per-account failures (missing exe, unknown profile) don't stop the rest of the list.
 - **Native MSIX & OAuth Compatibility**: 100% compatible with Windows MSIX packages and browser OAuth deep links (`claude://`) without dual-window or authentication loop issues.
 - **Dynamic Executable Resolution**: Automatically locates `Claude.exe` across MSIX/Windows Store App packages (`Get-AppxPackage *claude*`) and traditional local installation directories (`AppData\Local\Programs\Claude` and `WindowsApps`).
 - **Automatic Session Backup & Persistence**: Automatically saves and syncs cookies, tokens, and local storage per profile on every switch.
@@ -15,7 +16,7 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 
 ## Files
 
-- **`launch_user_n.ps1`**: Profile launcher script. Resolves executable paths, swaps profile session data, launches Claude Desktop natively, and (unless `-NoTeamSync`) force-merges `team-mcp.json` into the launching profile's `claude_desktop_config.json` and stages `team-context.md` + `team-memory.md` (concatenated) on the clipboard.
+- **`launch_user_n.ps1`**: Profile launcher script. Two modes: **Isolated** (default) resolves the executable path and swaps a single profile's session data into the native AppData install; **Concurrent** (`-Mode Concurrent` / `-Concurrent`, optionally with `-Users <name1,name2,...>`) launches one or more profiles as independent windows via `--user-data-dir`, with no swap/mirror and no shared `claude://` handler changes. With no `-Mode`/`-Concurrent`/`-Users` given, prompts once for a mode. Unless `-NoTeamSync`, force-merges `team-mcp.json` into each launching profile's `claude_desktop_config.json` and stages `team-context.md` + `team-memory.md` (concatenated) on the clipboard.
 - **`launch.bat`**: Double-click launcher for Windows File Explorer.
 - **`profiles.json`**: Configuration file mapping account profile names to display nicknames, user data storage paths, and last logged-in timestamps.
 - **`team-mcp.json`**: Shared MCP server config, force-merged into every profile's `claude_desktop_config.json` on launch (shared entries win on name collision; a profile's own extra servers are never removed). Currently wires in `notebooklm-mcp` (see `mcp-servers/notebooklm-mcp/`) — add further entries here to roll them out to every profile at once.
@@ -37,6 +38,25 @@ Double-click **`launch.bat`** in Windows File Explorer, or run via PowerShell:
 pwsh -File .\launch_user_n.ps1 -Account user1
 pwsh -File .\launch_user_n.ps1 -Account user2
 ```
+
+With no arguments, the script prompts once for a mode (Isolated or Concurrent), then walks the normal profile picker.
+
+### Concurrent Mode (Multiple Windows, Multiple Monitors)
+
+Launch two or more profiles side by side, each its own independent window — each keeps its own `--user-data-dir`, so nothing is swapped or mirrored:
+
+```powershell
+pwsh -File .\launch_user_n.ps1 -Mode Concurrent -Users tisha,shreejan
+```
+
+Or one at a time:
+
+```powershell
+pwsh -File .\launch_user_n.ps1 -Concurrent -Account tisha
+pwsh -File .\launch_user_n.ps1 -Concurrent -Account shreejan
+```
+
+`claude://` sign-in is a single OS-wide handler shared by every window — sign in to each profile one at a time (others closed) before running them concurrently. A profile that fails to launch (missing exe, unknown name) doesn't block the rest of the `-Users` list.
 
 Preview what a profile switch would do without touching any files, the registry, or running processes:
 
