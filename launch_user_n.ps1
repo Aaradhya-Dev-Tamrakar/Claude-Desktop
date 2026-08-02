@@ -4,6 +4,9 @@ param (
     [switch]$Concurrent,
     [switch]$NoCooldownAlarm,
     [switch]$GCalReminder,
+    # Skip syncing team-mcp.json / team-context.md into this launch. Use for
+    # a one-off launch you don't want the shared MCP config force-merged into.
+    [switch]$NoTeamSync,
     # Dot-source-and-return-early hook for Pester: stops after function
     # definitions, before any interactive prompt or side-effecting logic.
     # Never set by real launches (launch.bat / manual pwsh invocation).
@@ -66,6 +69,128 @@ function Get-ValidatedProfilePath {
     }
 
     return $Check.ExpandedFull
+}
+
+function Merge-McpServers {
+    # Pure merge: union of $Shared.mcpServers into $Profile.mcpServers, with
+    # $Shared entries taking precedence on key collision. Everything else in
+    # $Profile (any keys not named "mcpServers", and any profile-only server
+    # entries not present in $Shared) passes through untouched — this is a
+    # deliberate union-with-precedence, not a replace, so a profile's own
+    # extra/private MCP connectors are never silently deleted by a team sync.
+    # No file I/O, no side effects: takes two already-parsed PSCustomObjects
+    # (as ConvertFrom-Json would produce), returns a new merged PSCustomObject.
+    param(
+        [Parameter(Mandatory = $true)]$ProfileConfig,
+        [Parameter(Mandatory = $true)]$SharedConfig
+    )
+
+    # Clone so the caller's original $ProfileConfig is never mutated —
+    # ConvertTo-Json/ConvertFrom-Json round-trip is the simplest deep clone
+    # available without extra dependencies.
+    $Merged = $ProfileConfig | ConvertTo-Json -Depth 10 | ConvertFrom-Json
+
+    if (-not $Merged.PSObject.Properties.Name.Contains("mcpServers")) {
+        $Merged | Add-Member -NotePropertyName "mcpServers" -NotePropertyValue ([PSCustomObject]@{}) -Force
+    }
+
+    if ($SharedConfig -and $SharedConfig.PSObject.Properties.Name.Contains("mcpServers")) {
+        foreach ($serverName in $SharedConfig.mcpServers.PSObject.Properties.Name) {
+            $Merged.mcpServers | Add-Member -NotePropertyName $serverName -NotePropertyValue $SharedConfig.mcpServers.$serverName -Force
+        }
+    }
+
+    return $Merged
+}
+
+function Sync-TeamMcpConfig {
+    # I/O wrapper around Merge-McpServers: reads team-mcp.json from the repo
+    # and the profile's own claude_desktop_config.json, merges, writes back.
+    # Best-effort — matches the rest of this script's philosophy (see
+    # cooldown-reminder.ps1's doc comment): a broken or missing team-mcp.json,
+    # or a malformed existing config file, must never block the actual launch.
+    param(
+        [Parameter(Mandatory = $true)][string]$RepoRoot,
+        [Parameter(Mandatory = $true)][string]$TargetConfigDir,
+        [switch]$WhatIf
+    )
+
+    $SharedConfigPath = Join-Path $RepoRoot "team-mcp.json"
+    if (-not (Test-Path $SharedConfigPath)) {
+        return  # No team-mcp.json checked in yet — nothing to sync, silently skip.
+    }
+
+    try {
+        $SharedConfig = Get-Content $SharedConfigPath -Raw | ConvertFrom-Json
+    }
+    catch {
+        Write-Warning "team-mcp.json is not valid JSON ($_). Skipping team MCP sync this launch."
+        return
+    }
+
+    $ProfileConfigPath = Join-Path $TargetConfigDir "claude_desktop_config.json"
+    $ProfileConfig = [PSCustomObject]@{}
+    if (Test-Path $ProfileConfigPath) {
+        try {
+            $ProfileConfig = Get-Content $ProfileConfigPath -Raw | ConvertFrom-Json
+        }
+        catch {
+            Write-Warning "Existing claude_desktop_config.json is not valid JSON ($_). Treating as empty for this merge rather than overwriting blind."
+            $ProfileConfig = [PSCustomObject]@{}
+        }
+    }
+
+    $Merged = Merge-McpServers -ProfileConfig $ProfileConfig -SharedConfig $SharedConfig
+
+    if ($WhatIf) {
+        $sharedCount = @($SharedConfig.mcpServers.PSObject.Properties.Name).Count
+        Write-Host "[WhatIf] Would merge $sharedCount shared MCP server(s) from team-mcp.json into '$ProfileConfigPath'." -ForegroundColor DarkCyan
+    }
+    else {
+        try {
+            if (-not (Test-Path $TargetConfigDir)) {
+                New-Item -ItemType Directory -Force -Path $TargetConfigDir | Out-Null
+            }
+            $Merged | ConvertTo-Json -Depth 10 | Set-Content $ProfileConfigPath -Encoding UTF8
+            Write-Host "[+] Synced shared MCP config into '$ProfileConfigPath'." -ForegroundColor Gray
+        }
+        catch {
+            Write-Warning "Failed to write merged claude_desktop_config.json ($_). Team MCP sync skipped this launch."
+        }
+    }
+}
+
+function Send-TeamContextToClipboard {
+    # Copies team-context.md's content to the clipboard so it's one paste
+    # away as a seed message / custom-instructions block. Not injected into
+    # the app automatically: Claude Desktop's chat-side custom instructions
+    # and Memory are account-level and server-side (synced via whichever
+    # account is authenticated in this profile), not a local file this
+    # script can write into — so clipboard-and-paste is the honest local
+    # equivalent, not a guess at an unconfirmed config path.
+    param(
+        [Parameter(Mandatory = $true)][string]$RepoRoot,
+        [switch]$WhatIf
+    )
+
+    $ContextPath = Join-Path $RepoRoot "team-context.md"
+    if (-not (Test-Path $ContextPath)) {
+        return  # No team-context.md checked in yet — nothing to copy, silently skip.
+    }
+
+    if ($WhatIf) {
+        Write-Host "[WhatIf] Would copy 'team-context.md' to the clipboard." -ForegroundColor DarkCyan
+        return
+    }
+
+    try {
+        $Content = Get-Content $ContextPath -Raw
+        Set-Clipboard -Value $Content
+        Write-Host "[+] team-context.md copied to clipboard — paste as your first message or into Custom Instructions." -ForegroundColor Gray
+    }
+    catch {
+        Write-Warning "Failed to copy team-context.md to clipboard ($_). Open the file manually if needed."
+    }
 }
 
 function Add-NewProfile {
@@ -589,6 +714,19 @@ if ($ProfileInfo) {
         catch {
             Write-Warning "Cooldown reminder setup failed: $_"
         }
+    }
+
+    # Team interlink: force-merge shared MCP servers into this profile's
+    # claude_desktop_config.json, and stage team-context.md on the clipboard
+    # for manual paste into Custom Instructions / first message. Both are
+    # best-effort no-ops if team-mcp.json / team-context.md aren't checked in
+    # yet. Runs for both modes: $NativeAppDataDir is what swap-mode Claude
+    # reads (already restored by the mirror step above); $Dir is what
+    # Concurrent mode reads directly via --user-data-dir.
+    if (-not $NoTeamSync) {
+        $TeamConfigDir = if ($Concurrent) { $Dir } else { $NativeAppDataDir }
+        Sync-TeamMcpConfig -RepoRoot $PSScriptRoot -TargetConfigDir $TeamConfigDir -WhatIf:$WhatIf
+        Send-TeamContextToClipboard -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
     }
 
     Write-Host "----------------------------------------" -ForegroundColor Cyan
