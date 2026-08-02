@@ -432,12 +432,12 @@ if ($ProfileInfo) {
         $ProfileInfo | Add-Member -NotePropertyName "last_login_time" -NotePropertyValue $CurrentTime -Force
         $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
 
-        # Cooldown reminders (toast + optional GCal) are best-effort and must
+        # Cooldown reminders (toast + cooldown tracking) are best-effort and must
         # never block or fail the launch itself.
         try {
             $ReminderScript = Join-Path $PSScriptRoot "cooldown-reminder.ps1"
             if (Test-Path $ReminderScript) {
-                & $ReminderScript -LoginTime $Now -Nickname $Nickname -DisableToast:$NoCooldownAlarm -EnableGCal:$GCalReminder
+                & $ReminderScript -LoginTime $Now -Nickname $Nickname -ProfileName $Account -ConfigFile $ConfigFile -DisableToast:$NoCooldownAlarm -EnableGCal:$GCalReminder
             }
         }
         catch {
