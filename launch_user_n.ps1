@@ -571,11 +571,22 @@ function Invoke-ProfileLaunch {
         # Skipped entirely in Concurrent mode: claude:// is a single OS-wide handler, so flipping
         # it per concurrent launch would fight with whatever other instances are already running.
         if ($Concurrent) {
+            # The warning only matters once a second claude.exe is about to come up
+            # alongside a first — with zero instances running, this launch can't
+            # collide with anything, so the generic "sign in one at a time" advice
+            # is noise. Check actual state instead of firing unconditionally.
+            #
             # Printed once per Invoke-ProfileLaunch call in a single-account run,
             # but a multi-account Concurrent list would otherwise repeat this
             # identical warning once per profile — dedupe via a script-scoped flag.
             if (-not $script:ConcurrentSignInWarningShown) {
-                Write-Host "[!] Concurrent mode: 'claude://' sign-in is a single OS-wide handler and routes to whichever instance last had focus. Sign in to each profile one at a time (others closed) before running them side by side." -ForegroundColor Yellow
+                $OtherRunningClaude = @(Get-CimInstance Win32_Process -Filter "Name = 'claude.exe'" -ErrorAction SilentlyContinue)
+                if ($OtherRunningClaude.Count -gt 0) {
+                    Write-Host "[!] Concurrent mode: $($OtherRunningClaude.Count) other Claude instance(s) already running. 'claude://' sign-in is a single OS-wide handler and will route to whichever instance last had focus — if '$Account' ($Nickname) still needs sign-in, close the other instances first, sign in, then relaunch both." -ForegroundColor Yellow
+                }
+                else {
+                    Write-Host "[i] Concurrent mode: no other Claude instances running yet. If '$Account' ($Nickname) needs sign-in, do it now while it's the only instance open — once you add more profiles side by side, 'claude://' sign-in will route to whichever instance last had focus." -ForegroundColor Cyan
+                }
                 $script:ConcurrentSignInWarningShown = $true
             }
         }
