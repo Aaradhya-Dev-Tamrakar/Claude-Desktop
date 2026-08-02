@@ -103,4 +103,4 @@ else {
     if ($LASTEXITCODE -ne 0) {
         Write-Host "[!] Auto-sync via sync.ps1 exited with code $LASTEXITCODE. Repo may be out of sync." -ForegroundColor Yellow
     }
-}
+}

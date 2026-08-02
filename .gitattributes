@@ -1,0 +1,13 @@
+# Windows-native scripts: CRLF (matches launch_user_n.ps1 / sync.ps1, the
+# two files this repo's own tooling touches most, and is the native format
+# Windows editors expect for .ps1/.bat).
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+
+# Everything else: LF (already the state of every non-.ps1 tracked file).
+*.md text eol=lf
+*.json text eol=lf
+*.py text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+LICENSE text eol=lf

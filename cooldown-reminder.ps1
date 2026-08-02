@@ -273,4 +273,4 @@ if (-not $DisableToast) {
 # GCal integration paused (not invoked by default; uncomment if $EnableGCal to re-enable)
 # if ($EnableGCal) {
 #     New-CooldownCalendarEvent -ReadyTime $ReadyTime -Nickname $Nickname -ScriptDir $ScriptDir
-# }
+# }
