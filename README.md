@@ -15,13 +15,15 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 
 ## Files
 
-- **`launch_user_n.ps1`**: Profile launcher script. Resolves executable paths, swaps profile session data, and launches Claude Desktop natively.
+- **`launch_user_n.ps1`**: Profile launcher script. Resolves executable paths, swaps profile session data, launches Claude Desktop natively, and (unless `-NoTeamSync`) force-merges `team-mcp.json` into the launching profile's `claude_desktop_config.json` and stages `team-context.md` on the clipboard.
 - **`launch.bat`**: Double-click launcher for Windows File Explorer.
 - **`profiles.json`**: Configuration file mapping account profile names to display nicknames, user data storage paths, and last logged-in timestamps.
+- **`team-mcp.json`**: Shared MCP server config, force-merged into every profile's `claude_desktop_config.json` on launch (shared entries win on name collision; a profile's own extra servers are never removed). Ships as an empty `{"mcpServers": {}}` stub — add entries here to roll them out to every profile at once.
+- **`team-context.md`** _(not shipped — create it yourself)_: If present, its full content is copied to the clipboard on every launch for pasting as a first message or into Custom Instructions. No stub is checked in, since a placeholder file here would get pasted into Custom Instructions verbatim.
 - **`sync.ps1`**: Automated Git repository synchronization tool.
 - **`cooldown-reminder.ps1`**: Auto-invoked by `launch_user_n.ps1` after every non-`-WhatIf` login. Tracks each profile's `first_login_time`, anchors a 5-hour cooldown to it, and registers a local Windows toast alarm for when the cooldown expires.
 - **`reset_profiles.ps1`**: Wipes all profile storage, logs, session state, and the `claude://` registry override, then resets `profiles.json` to `{}`. Prompts for a typed `RESET` confirmation unless `-WhatIf`.
-- **`tests/launch_user_n.Tests.ps1`**: Pester specs for `launch_user_n.ps1`'s pure/mockable logic (path-traversal guard, profile table formatting). Run via `Invoke-Pester -Path .\tests\launch_user_n.Tests.ps1`.
+- **`tests/launch_user_n.Tests.ps1`**: Pester specs for `launch_user_n.ps1`'s pure/mockable logic (path-traversal guard, profile table formatting, shared-MCP-server merge). Run via `Invoke-Pester -Path .\tests\launch_user_n.Tests.ps1`.
 
 ## Usage
 
