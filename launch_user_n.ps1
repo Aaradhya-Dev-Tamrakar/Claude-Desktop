@@ -56,7 +56,15 @@ function Add-NewProfile {
 
     $Name = $SuggestedName
     if (-not $Name) {
-        $Name = Read-Host "Enter profile name (e.g. user3, personal, client)"
+        $NextUserNum = 1
+        while ($Profiles.psobject.properties.Name -contains "user$NextUserNum") {
+            $NextUserNum++
+        }
+        $DefaultName = "user$NextUserNum"
+        $Name = Read-Host "Enter profile name (e.g. personal, client) [Enter for '$DefaultName']"
+        if ([string]::IsNullOrWhiteSpace($Name)) {
+            $Name = $DefaultName
+        }
     }
 
     if ([string]::IsNullOrWhiteSpace($Name)) {
@@ -131,7 +139,7 @@ function Show-ProfileTable {
     }
 
     $numW = [Math]::Max(3, ($rows.Num | Measure-Object -Property Length -Maximum).Maximum)
-    $profW = [Math]::Max(7, ($rows.Profile | Measure-Object -Property Length -Maximum).Maximum)
+    $profW = [Math]::Max(6, ($rows.Profile | Measure-Object -Property Length -Maximum).Maximum)
     $nickW = [Math]::Max(8, ($rows.Nickname | Measure-Object -Property Length -Maximum).Maximum)
     $timeW = [Math]::Max(10, ($rows.LastTime | Measure-Object -Property Length -Maximum).Maximum)
     $dateW = [Math]::Max(10, ($rows.LastDate | Measure-Object -Property Length -Maximum).Maximum)
@@ -152,7 +160,7 @@ function Show-ProfileTable {
     $innerWidth = (New-Border "+" "+" "+").Length - 2
 
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
-    Write-Host (New-Row @("#", "Profile", "Nickname", "Last Time", "Last Date", "Today Rank")) -ForegroundColor Cyan
+    Write-Host (New-Row @("#", "User#", "Nickname", "Last Time", "Last Date", "Today Rank")) -ForegroundColor Cyan
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     foreach ($r in $rows) {
         Write-Host (New-Row @($r.Num, $r.Profile, $r.Nickname, $r.LastTime, $r.LastDate, $r.TodayRank)) -ForegroundColor Yellow
