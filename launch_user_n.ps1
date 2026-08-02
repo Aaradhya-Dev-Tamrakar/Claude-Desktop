@@ -443,9 +443,89 @@ if ($ProfileInfo) {
         if (-not $Concurrent) {
             $Account | Set-Content $StateFile -Encoding UTF8
         }
-        $ProfileInfo | Add-Member -NotePropertyName "last_login_date" -NotePropertyValue $CurrentDate -Force
-        $ProfileInfo | Add-Member -NotePropertyName "last_login_time" -NotePropertyValue $CurrentTime -Force
-        $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
+
+        # Same named Mutex as cooldown-reminder.ps1's Update-FirstLoginDate:
+        # serializes profiles.json access across processes. -Concurrent mode
+        # runs multiple independent PowerShell processes against this file,
+        # so we re-read fresh under the lock (rather than reusing the $Profiles
+        # loaded at script start) to avoid clobbering another process's
+        # concurrent write — its own last_login update, or a first_login_date
+        # write from its cooldown-reminder.ps1 invocation.
+        $MutexName = "Global\ClaudeDesktopProfilesJsonLock"
+        $Mutex = $null
+        $AcquiredLock = $false
+        $LockError = $null
+        try {
+            $Mutex = New-Object System.Threading.Mutex($false, $MutexName)
+            try {
+                $AcquiredLock = $Mutex.WaitOne([TimeSpan]::FromSeconds(10))
+            }
+            catch [System.Threading.AbandonedMutexException] {
+                # Previous holder crashed while holding the lock. .NET still
+                # grants ownership despite the exception — treat as acquired.
+                $AcquiredLock = $true
+            }
+        }
+        catch {
+            # Any other failure constructing the mutex or waiting on it (e.g.
+            # Global namespace creation denied under session isolation).
+            # Captured explicitly rather than inferred from $Mutex being
+            # non-null, so a genuine timeout can never be conflated with this.
+            $LockError = $_
+        }
+
+        if ($AcquiredLock) {
+            try {
+                $FreshProfiles = Get-Content $ConfigFile -Raw | ConvertFrom-Json
+                $FreshProfileInfo = $FreshProfiles.$Account
+                if ($FreshProfileInfo) {
+                    $FreshProfileInfo | Add-Member -NotePropertyName "last_login_date" -NotePropertyValue $CurrentDate -Force
+                    $FreshProfileInfo | Add-Member -NotePropertyName "last_login_time" -NotePropertyValue $CurrentTime -Force
+
+                    $TempConfigPath = "$ConfigFile.tmp"
+                    $FreshProfiles | ConvertTo-Json -Depth 5 | Set-Content $TempConfigPath -Encoding UTF8
+                    Move-Item -Path $TempConfigPath -Destination $ConfigFile -Force
+                }
+                else {
+                    Write-Warning "Profile '$Account' vanished from profiles.json between load and write. last_login not updated this run."
+                }
+            }
+            catch {
+                # Failure while HOLDING a successfully-acquired lock — the lock was
+                # never the issue, so falling back to a stale unlocked write here
+                # wouldn't help and would misattribute the cause. Log and skip;
+                # next launch will pick this profile's last_login up correctly.
+                Write-Warning "Write to profiles.json failed while holding lock ($_). last_login not updated this run."
+            }
+            finally {
+                $Mutex.ReleaseMutex()
+            }
+        }
+        elseif ($LockError) {
+            # Mutex itself could not be constructed/acquired — genuinely no lock
+            # available. Fall back to the pre-hardening behavior (best-effort
+            # unlocked write) rather than silently dropping the update, since
+            # this write previously never failed and callers may depend on it.
+            Write-Warning "profiles.json lock unavailable ($LockError). Falling back to unlocked write."
+            try {
+                $ProfileInfo | Add-Member -NotePropertyName "last_login_date" -NotePropertyValue $CurrentDate -Force
+                $ProfileInfo | Add-Member -NotePropertyName "last_login_time" -NotePropertyValue $CurrentTime -Force
+                $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigFile -Encoding UTF8
+            }
+            catch {
+                Write-Warning "Unlocked fallback write also failed ($_). last_login not updated this run."
+            }
+        }
+        else {
+            # $Mutex constructed fine and WaitOne definitively returned $false —
+            # a genuine 10s timeout, lock is healthy but contended by another
+            # process. Skip rather than write stale data underneath a real lock.
+            Write-Warning "Timed out waiting for profiles.json lock (10s). last_login not updated this run."
+        }
+
+        if ($Mutex) {
+            $Mutex.Dispose()
+        }
 
         # Cooldown reminders (toast + cooldown tracking) are best-effort and must
         # never block or fail the launch itself.
