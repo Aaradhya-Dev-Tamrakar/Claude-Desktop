@@ -39,8 +39,9 @@
   "user7": {
     "nickname": "adtmr",
     "path": "%USERPROFILE%\\.claude-profiles\\user7",
-    "last_login_date": "2026-08-01",
-    "last_login_time": "04:35:04"
+    "last_login_date": "2026-08-02",
+    "last_login_time": "14:20:22",
+    "first_login_time": "2026-08-02 14:20:22"
   },
   "user8": {
     "nickname": "majprj01",
