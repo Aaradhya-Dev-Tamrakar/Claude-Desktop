@@ -14,6 +14,7 @@ $ConfigFile = Join-Path $PSScriptRoot "profiles.json"
 
 if (-not (Test-Path $ConfigFile)) {
     Write-Host "profiles.json file is missing!" -ForegroundColor Red
+    Read-Host "Press Enter to close this window"
     exit 1
 }
 
@@ -37,6 +38,7 @@ function Get-ValidatedProfilePath {
         Write-Host "    Base    : $BaseFull" -ForegroundColor Gray
         Write-Host "    Resolved: $ExpandedFull" -ForegroundColor Gray
         Write-Host "    Refusing to use this path. Fix 'path' for '$ProfileName' in profiles.json." -ForegroundColor Red
+        Read-Host "Press Enter to close this window"
         exit 1
     }
 
@@ -59,6 +61,7 @@ function Add-NewProfile {
 
     if ([string]::IsNullOrWhiteSpace($Name)) {
         Write-Host "Profile name cannot be empty." -ForegroundColor Red
+        Read-Host "Press Enter to close this window"
         exit 1
     }
 
@@ -185,6 +188,7 @@ elseif (-not ($Profiles.psobject.properties.Name -contains $Account)) {
         $Profiles = Get-Content $ConfigFile | ConvertFrom-Json
     }
     else {
+        Read-Host "Press Enter to close this window"
         exit 1
     }
 }
@@ -211,6 +215,9 @@ if ($ProfileInfo) {
             Write-Host " Profile '$Account' ($Nickname) is already running as a concurrent instance." -ForegroundColor Green
             Write-Host " No action taken." -ForegroundColor Gray
             Write-Host "----------------------------------------" -ForegroundColor Cyan
+            if (-not $WhatIf) {
+                Read-Host "Press Enter to close this window"
+            }
             exit 0
         }
     }
@@ -230,6 +237,9 @@ if ($ProfileInfo) {
             Write-Host " Profile '$Account' ($Nickname) is already open." -ForegroundColor Green
             Write-Host " No action taken." -ForegroundColor Gray
             Write-Host "----------------------------------------" -ForegroundColor Cyan
+            if (-not $WhatIf) {
+                Read-Host "Press Enter to close this window"
+            }
             exit 0
         }
     }
@@ -271,6 +281,7 @@ if ($ProfileInfo) {
         foreach ($exePath in $ExecutablePaths) {
             if ($exePath) { Write-Host "  - $exePath" -ForegroundColor Gray }
         }
+        Read-Host "Press Enter to close this window"
         exit 1
     }
 
@@ -496,5 +507,10 @@ if ($ProfileInfo) {
 }
 else {
     Write-Host "Account '$Account' not found in profiles.json" -ForegroundColor Red
+    Read-Host "Press Enter to close this window"
     exit 1
+}
+
+if (-not $WhatIf) {
+    Read-Host "Press Enter to close this window"
 }
