@@ -6,6 +6,13 @@
         "{{REPO_ROOT}}\\mcp-servers\\notebooklm-mcp\\run_server.py"
       ],
       "env": {}
+    },
+    "orchestrator-mcp": {
+      "command": "python3",
+      "args": [
+        "{{REPO_ROOT}}\\mcp-servers\\orchestrator-mcp\\run_server.py"
+      ],
+      "env": {}
     }
   }
 }
