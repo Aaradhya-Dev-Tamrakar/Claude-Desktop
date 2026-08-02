@@ -14,6 +14,43 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 - **Intelligent Commit Messaging**: Dynamically generates conventional commit messages (`feat`, `refactor`, `chore`) derived from staged git diffs, hunk context headers, and line churn statistics (`+ins/-del`).
 - **PowerShell 7 (`pwsh`) Compatible**: Fully compatible with PowerShell 7 (`pwsh`) and Windows PowerShell 5.1.
 
+## Repo Structure
+
+```Claude-Desktop/
+├── launch_user_n.ps1              # Profile launcher (Isolated / Concurrent)
+├── launch.bat                     # Double-click entry point for File Explorer
+├── sync.ps1                       # Git sync: pull --rebase --autostash, commit, push
+├── cooldown-reminder.ps1          # Post-login 5h cooldown toast, invoked by launch_user_n.ps1
+├── reset_profiles.ps1             # Wipes all profile state, resets profiles.json to {}
+├── profiles.json                  # Account name -> nickname/paths/last-login map
+├── team-mcp.json                  # Shared MCP config, force-merged into every profile
+├── team-context.md                # Static identity scaffold, clipboard-delivered on launch
+├── team-memory.md                 # Hand-appended memory log, clipboard-delivered on launch
+├── gcal-credentials.json.example  # Google Calendar OAuth credential template
+├── gcal-token.json.example        # Google Calendar token template
+├── AGENTS.md                      # Repo conventions for agent contributors
+├── README.md
+├── LICENSE
+├── .gitattributes
+├── .gitignore
+│
+├── mcp-servers/
+│   ├── notebooklm-mcp/
+│   │   └── run_server.py          # uvx-shim launcher for the published NotebookLM CLI
+│   └── orchestrator-mcp/
+│       └── run_server.py          # Hand-written MCP server, 11 tools, requires `pip install mcp`
+│
+├── orchestrator-state/
+│   ├── SCHEMA.md                  # File contract for tasks/live-status/checkpoints
+│   ├── tasks/.gitkeep
+│   ├── live-status/.gitkeep
+│   └── checkpoints/.gitkeep
+│
+└── tests/
+    ├── launch_user_n.Tests.ps1        # Pester specs (path guard, profile table, MCP merge, placeholder expansion)
+    └── orchestrator_mcp_test.py       # pytest specs, 16 cases, each against a throwaway git repo
+```
+
 ## Files
 
 - **`launch_user_n.ps1`**: Profile launcher script. Two modes: **Isolated** (default) resolves the executable path and swaps a single profile's session data into the native AppData install; **Concurrent** (`-Mode Concurrent` / `-Concurrent`, optionally with `-Users <name1,name2,...>`) launches one or more profiles as independent windows via `--user-data-dir`, with no swap/mirror and no shared `claude://` handler changes. With no `-Mode`/`-Concurrent`/`-Users` given, prompts once for a mode. Unless `-NoTeamSync`, force-merges `team-mcp.json` into each launching profile's `claude_desktop_config.json` and stages `team-context.md` + `team-memory.md` (concatenated) on the clipboard.
