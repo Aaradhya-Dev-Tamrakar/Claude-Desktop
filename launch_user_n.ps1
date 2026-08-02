@@ -117,7 +117,6 @@ function Show-ProfileTable {
         if (-not $lastLoginDate) { $lastLoginDate = "Never" }
         if (-not $lastLoginTime) { $lastLoginTime = "-" }
         [PSCustomObject]@{
-            Num      = "[$($i + 1)]"
             Profile  = $key
             Nickname = $Profiles.$key.nickname
             LastTime = $lastLoginTime
@@ -138,13 +137,12 @@ function Show-ProfileTable {
         $row | Add-Member -NotePropertyName "TodayRank" -NotePropertyValue $(if ($rankMap.ContainsKey($row.Profile)) { [string]$rankMap[$row.Profile] } else { "-" }) -Force
     }
 
-    $numW = [Math]::Max(3, ($rows.Num | Measure-Object -Property Length -Maximum).Maximum)
     $profW = [Math]::Max(6, ($rows.Profile | Measure-Object -Property Length -Maximum).Maximum)
     $nickW = [Math]::Max(8, ($rows.Nickname | Measure-Object -Property Length -Maximum).Maximum)
     $timeW = [Math]::Max(10, ($rows.LastTime | Measure-Object -Property Length -Maximum).Maximum)
     $dateW = [Math]::Max(10, ($rows.LastDate | Measure-Object -Property Length -Maximum).Maximum)
     $rankW = [Math]::Max(10, ($rows.TodayRank | Measure-Object -Property Length -Maximum).Maximum)
-    $widths = @($numW, $profW, $nickW, $timeW, $dateW, $rankW)
+    $widths = @($profW, $nickW, $timeW, $dateW, $rankW)
 
     function New-Border($L, $C, $R) {
         $L + (($widths | ForEach-Object { "-" * ($_ + 2) }) -join $C) + $R
@@ -160,10 +158,10 @@ function Show-ProfileTable {
     $innerWidth = (New-Border "+" "+" "+").Length - 2
 
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
-    Write-Host (New-Row @("#", "User#", "Nickname", "Last Time", "Last Date", "Today Rank")) -ForegroundColor Cyan
+    Write-Host (New-Row @("User#", "Nickname", "Last Time", "Last Date", "Today Rank")) -ForegroundColor Cyan
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     foreach ($r in $rows) {
-        Write-Host (New-Row @($r.Num, $r.Profile, $r.Nickname, $r.LastTime, $r.LastDate, $r.TodayRank)) -ForegroundColor Yellow
+        Write-Host (New-Row @($r.Profile, $r.Nickname, $r.LastTime, $r.LastDate, $r.TodayRank)) -ForegroundColor Yellow
     }
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     Write-Host ("| " + "[N] Add New Profile (+)".PadRight($innerWidth - 2) + " |") -ForegroundColor Magenta
