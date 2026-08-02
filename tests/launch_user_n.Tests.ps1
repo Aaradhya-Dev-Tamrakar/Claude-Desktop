@@ -23,6 +23,9 @@
       - Merge-McpServers           (pure union-with-precedence merge; takes
                                      two already-parsed PSCustomObjects, no
                                      file I/O, matches its own doc comment)
+      - Expand-TeamMcpPlaceholders (pure {{REPO_ROOT}} token substitution
+                                     across command/args/env string values;
+                                     deep-clones input, no file I/O)
 
     NOT covered (would require mocking Read-Host, Test-Path, Get-Content,
     Set-Content, and ConvertTo-Json against a real profiles.json — out of
@@ -166,6 +169,70 @@ Describe "Merge-McpServers" {
             $result = Merge-McpServers -ProfileConfig $profileConfig -SharedConfig $sharedConfig
 
             $result.mcpServers."private-tool".command | Should -Be "local-only"
+        }
+    }
+}
+
+Describe "Expand-TeamMcpPlaceholders" {
+
+    Context "command field" {
+        It "replaces {{REPO_ROOT}} in a server's command string" {
+            $sharedConfig = '{"mcpServers":{"tool":{"command":"{{REPO_ROOT}}\\bin\\tool.exe"}}}' | ConvertFrom-Json
+
+            $result = Expand-TeamMcpPlaceholders -SharedConfig $sharedConfig -RepoRoot "D:\repo"
+
+            $result.mcpServers.tool.command | Should -Be "D:\repo\bin\tool.exe"
+        }
+    }
+
+    Context "args field" {
+        It "replaces {{REPO_ROOT}} in every matching args element, leaving others untouched" {
+            $sharedConfig = '{"mcpServers":{"tool":{"command":"python3","args":["{{REPO_ROOT}}\\run_server.py","--flag"]}}}' | ConvertFrom-Json
+
+            $result = Expand-TeamMcpPlaceholders -SharedConfig $sharedConfig -RepoRoot "D:\repo"
+
+            $result.mcpServers.tool.args[0] | Should -Be "D:\repo\run_server.py"
+            $result.mcpServers.tool.args[1] | Should -Be "--flag"
+        }
+    }
+
+    Context "env field" {
+        It "replaces {{REPO_ROOT}} in env values" {
+            $sharedConfig = '{"mcpServers":{"tool":{"command":"x","env":{"DATA_DIR":"{{REPO_ROOT}}\\data"}}}}' | ConvertFrom-Json
+
+            $result = Expand-TeamMcpPlaceholders -SharedConfig $sharedConfig -RepoRoot "D:\repo"
+
+            $result.mcpServers.tool.env.DATA_DIR | Should -Be "D:\repo\data"
+        }
+    }
+
+    Context "no mcpServers property" {
+        It "returns the config unchanged when SharedConfig has no mcpServers key" {
+            $sharedConfig = '{}' | ConvertFrom-Json
+
+            $result = Expand-TeamMcpPlaceholders -SharedConfig $sharedConfig -RepoRoot "D:\repo"
+
+            $result.PSObject.Properties.Name | Should -Not -Contain "mcpServers"
+        }
+    }
+
+    Context "no placeholder present" {
+        It "leaves a command with no {{REPO_ROOT}} token untouched" {
+            $sharedConfig = '{"mcpServers":{"tool":{"command":"npx"}}}' | ConvertFrom-Json
+
+            $result = Expand-TeamMcpPlaceholders -SharedConfig $sharedConfig -RepoRoot "D:\repo"
+
+            $result.mcpServers.tool.command | Should -Be "npx"
+        }
+    }
+
+    Context "immutability of the caller's input" {
+        It "does not mutate the original SharedConfig object" {
+            $sharedConfig = '{"mcpServers":{"tool":{"command":"{{REPO_ROOT}}\\tool.exe"}}}' | ConvertFrom-Json
+
+            Expand-TeamMcpPlaceholders -SharedConfig $sharedConfig -RepoRoot "D:\repo" | Out-Null
+
+            $sharedConfig.mcpServers.tool.command | Should -Be "{{REPO_ROOT}}\tool.exe"
         }
     }
 }
