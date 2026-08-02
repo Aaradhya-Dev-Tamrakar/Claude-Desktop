@@ -137,7 +137,7 @@ function Show-ProfileTable {
         $row | Add-Member -NotePropertyName "TodayRank" -NotePropertyValue $(if ($rankMap.ContainsKey($row.Profile)) { [string]$rankMap[$row.Profile] } else { "-" }) -Force
     }
 
-    $profW = [Math]::Max(6, ($rows.Profile | Measure-Object -Property Length -Maximum).Maximum)
+    $profW = [Math]::Max(5, ([string]$rows.Count).Length)
     $nickW = [Math]::Max(8, ($rows.Nickname | Measure-Object -Property Length -Maximum).Maximum)
     $timeW = [Math]::Max(10, ($rows.LastTime | Measure-Object -Property Length -Maximum).Maximum)
     $dateW = [Math]::Max(10, ($rows.LastDate | Measure-Object -Property Length -Maximum).Maximum)
@@ -160,8 +160,10 @@ function Show-ProfileTable {
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     Write-Host (New-Row @("User#", "Nickname", "Last Time", "Last Date", "Today Rank")) -ForegroundColor Cyan
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
+    $displayNum = 0
     foreach ($r in $rows) {
-        Write-Host (New-Row @($r.Profile, $r.Nickname, $r.LastTime, $r.LastDate, $r.TodayRank)) -ForegroundColor Yellow
+        $displayNum++
+        Write-Host (New-Row @([string]$displayNum, $r.Nickname, $r.LastTime, $r.LastDate, $r.TodayRank)) -ForegroundColor Yellow
     }
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     Write-Host ("| " + "[N] Add New Profile (+)".PadRight($innerWidth - 2) + " |") -ForegroundColor Magenta
