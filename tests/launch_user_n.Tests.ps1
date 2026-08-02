@@ -20,11 +20,20 @@
                                      Write-Host output, since New-Border/
                                      New-Row are nested and not directly
                                      callable)
+      - Merge-McpServers           (pure union-with-precedence merge; takes
+                                     two already-parsed PSCustomObjects, no
+                                     file I/O, matches its own doc comment)
 
     NOT covered (would require mocking Read-Host, Test-Path, Get-Content,
     Set-Content, and ConvertTo-Json against a real profiles.json — out of
     scope for this pass):
-      - Add-NewProfile            (interactive; mutates profiles.json)
+      - Add-NewProfile              (interactive; mutates profiles.json)
+      - Sync-TeamMcpConfig          (I/O wrapper around Merge-McpServers —
+                                      reads team-mcp.json and
+                                      claude_desktop_config.json, writes the
+                                      merged result back)
+      - Send-TeamContextToClipboard (I/O; reads team-context.md, writes to
+                                      the system clipboard via Set-Clipboard)
       - Everything past the -TestHook return: executable resolution,
         robocopy session swap, registry claude:// handling, the
         mutex-guarded last_login/first_login_time writes, sync.ps1
@@ -87,6 +96,76 @@ Describe "Get-ValidatedProfilePath (accept path only — reject path exits and i
         $result = Get-ValidatedProfilePath -RawPath $raw -ProfileName "user1"
         $expected = [System.IO.Path]::GetFullPath([System.Environment]::ExpandEnvironmentVariables($raw))
         $result | Should -Be $expected
+    }
+}
+
+Describe "Merge-McpServers" {
+
+    Context "merging into a profile with no existing mcpServers" {
+        It "adds all shared servers when the profile config has none" {
+            $profileConfig = '{}' | ConvertFrom-Json
+            $sharedConfig = '{"mcpServers":{"github":{"command":"npx","args":["-y","@modelcontextprotocol/server-github"]}}}' | ConvertFrom-Json
+
+            $result = Merge-McpServers -ProfileConfig $profileConfig -SharedConfig $sharedConfig
+
+            $result.mcpServers.github.command | Should -Be "npx"
+        }
+    }
+
+    Context "precedence on key collision" {
+        It "overwrites a profile's existing server with the shared version of the same name" {
+            $profileConfig = '{"mcpServers":{"github":{"command":"old-command"}}}' | ConvertFrom-Json
+            $sharedConfig = '{"mcpServers":{"github":{"command":"new-command"}}}' | ConvertFrom-Json
+
+            $result = Merge-McpServers -ProfileConfig $profileConfig -SharedConfig $sharedConfig
+
+            $result.mcpServers.github.command | Should -Be "new-command"
+        }
+    }
+
+    Context "profile-only servers" {
+        It "preserves a server that exists only in the profile, not in shared" {
+            $profileConfig = '{"mcpServers":{"private-tool":{"command":"local-only"}}}' | ConvertFrom-Json
+            $sharedConfig = '{"mcpServers":{"github":{"command":"npx"}}}' | ConvertFrom-Json
+
+            $result = Merge-McpServers -ProfileConfig $profileConfig -SharedConfig $sharedConfig
+
+            $result.mcpServers."private-tool".command | Should -Be "local-only"
+            $result.mcpServers.github.command | Should -Be "npx"
+        }
+    }
+
+    Context "non-mcpServers keys" {
+        It "passes through unrelated top-level profile keys untouched" {
+            $profileConfig = '{"someOtherSetting":"keepme","mcpServers":{}}' | ConvertFrom-Json
+            $sharedConfig = '{"mcpServers":{"github":{"command":"npx"}}}' | ConvertFrom-Json
+
+            $result = Merge-McpServers -ProfileConfig $profileConfig -SharedConfig $sharedConfig
+
+            $result.someOtherSetting | Should -Be "keepme"
+        }
+    }
+
+    Context "immutability of the caller's input" {
+        It "does not mutate the original ProfileConfig object" {
+            $profileConfig = '{"mcpServers":{}}' | ConvertFrom-Json
+            $sharedConfig = '{"mcpServers":{"github":{"command":"npx"}}}' | ConvertFrom-Json
+
+            Merge-McpServers -ProfileConfig $profileConfig -SharedConfig $sharedConfig | Out-Null
+
+            $profileConfig.mcpServers.PSObject.Properties.Name | Should -Not -Contain "github"
+        }
+    }
+
+    Context "shared config with no mcpServers property" {
+        It "returns the profile's own servers unchanged when SharedConfig has no mcpServers key" {
+            $profileConfig = '{"mcpServers":{"private-tool":{"command":"local-only"}}}' | ConvertFrom-Json
+            $sharedConfig = '{}' | ConvertFrom-Json
+
+            $result = Merge-McpServers -ProfileConfig $profileConfig -SharedConfig $sharedConfig
+
+            $result.mcpServers."private-tool".command | Should -Be "local-only"
+        }
     }
 }
 
@@ -204,6 +283,9 @@ Describe "TestHook contract" {
         # gives a named failure point if -TestHook regresses.
         Get-Command Test-ProfilePathWithinBase -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Get-ValidatedProfilePath -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Merge-McpServers -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Sync-TeamMcpConfig -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Send-TeamContextToClipboard -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Show-ProfileTable -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Add-NewProfile -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
     }
