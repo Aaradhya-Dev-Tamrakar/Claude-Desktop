@@ -48,15 +48,26 @@ $ScriptDir = $PSScriptRoot
 # ---------------------------------------------------------------------------
 function Update-FirstLoginDate {
     param([string]$ConfigPath, [string]$ProfileName, [datetime]$LoginTime)
-    
+
     try {
-        $Profiles = Get-Content $ConfigPath -Raw | ConvertFrom-Json
-        $Profile = $Profiles.$ProfileName
-        
-        if (-not $Profile.first_login_date) {
+        $AllProfiles = Get-Content $ConfigPath -Raw | ConvertFrom-Json
+        $TargetProfile = $AllProfiles.$ProfileName
+
+        if (-not $TargetProfile) {
+            Write-Warning "cooldown-reminder: profile '$ProfileName' not found in '$ConfigPath'. Skipping first_login_date tracking."
+            return
+        }
+
+        if (-not $TargetProfile.first_login_date) {
             $FirstLoginDate = $LoginTime.ToString("yyyy-MM-dd")
-            $Profile | Add-Member -NotePropertyName "first_login_date" -NotePropertyValue $FirstLoginDate -Force
-            $Profiles | ConvertTo-Json -Depth 5 | Set-Content $ConfigPath -Encoding UTF8
+            $TargetProfile | Add-Member -NotePropertyName "first_login_date" -NotePropertyValue $FirstLoginDate -Force
+
+            # Atomic write: serialize to a temp file, then move into place, so a
+            # crash mid-write cannot corrupt profiles.json for all profiles.
+            $TempPath = "$ConfigPath.tmp"
+            $AllProfiles | ConvertTo-Json -Depth 5 | Set-Content $TempPath -Encoding UTF8
+            Move-Item -Path $TempPath -Destination $ConfigPath -Force
+
             Write-Host "[+] Profile first login date recorded: $FirstLoginDate" -ForegroundColor Green
         }
     }
@@ -69,7 +80,7 @@ function Update-FirstLoginDate {
 # 1. Local toast alarm via a self-deleting Scheduled Task
 # ---------------------------------------------------------------------------
 function Register-CooldownToast {
-    param([datetime]$LoginTime, [datetime]$ReadyTime, [string]$Nickname)
+    param([datetime]$ReadyTime, [string]$Nickname)
 
     if (-not (Get-Module -ListAvailable -Name BurntToast)) {
         try {
@@ -83,13 +94,21 @@ function Register-CooldownToast {
 
     $TaskName = "ClaudeCooldown_$($Nickname)_$($ReadyTime.ToString('yyyyMMddHHmmss'))"
     $ToastText = "Claude cooldown ready for '$Nickname' — you can log back in now."
-    
-    # Calculate and display time remaining until cooldown expires
+
+    # Calculate and display time remaining until cooldown expires.
+    # Guard against a past/zero ReadyTime (e.g. script re-run after cooldown
+    # already elapsed) so output reads "0h 0m / already available" instead of
+    # a confusing negative duration.
     $Now = Get-Date
     $TimeRemaining = $ReadyTime - $Now
+    if ($TimeRemaining.TotalSeconds -le 0) {
+        Write-Host "[i] Cooldown already elapsed — profile is available now." -ForegroundColor Cyan
+        Write-Host "[i] Skipping toast alarm registration (nothing to wait for)." -ForegroundColor DarkGray
+        return
+    }
     $HoursRemaining = [Math]::Floor($TimeRemaining.TotalHours)
     $MinutesRemaining = $TimeRemaining.Minutes
-    
+
     Write-Host "[i] Cooldown time remaining: $HoursRemaining h $MinutesRemaining min (expires $($ReadyTime.ToString('yyyy-MM-dd HH:mm:ss')))" -ForegroundColor Cyan
 
     # Inline PowerShell payload for the scheduled task: fire the toast, then
@@ -126,7 +145,7 @@ Update-FirstLoginDate -ConfigPath $ConfigFile -ProfileName $ProfileName -LoginTi
 
 # Register local toast alarm (default on, shows cooldown time remaining)
 if (-not $DisableToast) {
-    Register-CooldownToast -LoginTime $LoginTime -ReadyTime $ReadyTime -Nickname $Nickname
+    Register-CooldownToast -ReadyTime $ReadyTime -Nickname $Nickname
 }
 
 # GCal integration paused (not invoked by default; uncomment if $EnableGCal to re-enable)

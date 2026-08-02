@@ -6,6 +6,10 @@ param (
     [switch]$GCalReminder
 )
 
+if ($GCalReminder) {
+    Write-Warning "GCalReminder: Google Calendar integration is currently paused. This switch has no effect until re-enabled in cooldown-reminder.ps1."
+}
+
 $ConfigFile = Join-Path $PSScriptRoot "profiles.json"
 
 if (-not (Test-Path $ConfigFile)) {
