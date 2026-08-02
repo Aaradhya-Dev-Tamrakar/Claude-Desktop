@@ -449,7 +449,7 @@ if ($ProfileInfo) {
         # runs multiple independent PowerShell processes against this file,
         # so we re-read fresh under the lock (rather than reusing the $Profiles
         # loaded at script start) to avoid clobbering another process's
-        # concurrent write — its own last_login update, or a first_login_date
+        # concurrent write — its own last_login update, or a first_login_time
         # write from its cooldown-reminder.ps1 invocation.
         $MutexName = "Global\ClaudeDesktopProfilesJsonLock"
         $Mutex = $null
