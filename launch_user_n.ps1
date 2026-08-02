@@ -3,7 +3,11 @@ param (
     [switch]$WhatIf,
     [switch]$Concurrent,
     [switch]$NoCooldownAlarm,
-    [switch]$GCalReminder
+    [switch]$GCalReminder,
+    # Dot-source-and-return-early hook for Pester: stops after function
+    # definitions, before any interactive prompt or side-effecting logic.
+    # Never set by real launches (launch.bat / manual pwsh invocation).
+    [switch]$TestHook
 )
 
 if ($GCalReminder) {
@@ -21,10 +25,14 @@ if (-not (Test-Path $ConfigFile)) {
 $Profiles = Get-Content $ConfigFile | ConvertFrom-Json
 $AccountKeys = @($Profiles.psobject.properties.Name)
 
-function Get-ValidatedProfilePath {
+function Test-ProfilePathWithinBase {
+    # Pure predicate: does $RawPath resolve inside the approved
+    # .claude-profiles base directory? No side effects (no Write-Host,
+    # Read-Host, or exit), so this is the unit under test for the
+    # path-traversal guard; Get-ValidatedProfilePath below is just this
+    # plus the exit-on-reject wrapper.
     param(
-        [Parameter(Mandatory = $true)][string]$RawPath,
-        [Parameter(Mandatory = $true)][string]$ProfileName
+        [Parameter(Mandatory = $true)][string]$RawPath
     )
 
     $BaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
@@ -33,16 +41,31 @@ function Get-ValidatedProfilePath {
     $Expanded = [System.Environment]::ExpandEnvironmentVariables($RawPath)
     $ExpandedFull = [System.IO.Path]::GetFullPath($Expanded)
 
-    if (-not $ExpandedFull.StartsWith($BaseFull, [System.StringComparison]::OrdinalIgnoreCase)) {
+    return [PSCustomObject]@{
+        IsValid      = $ExpandedFull.StartsWith($BaseFull, [System.StringComparison]::OrdinalIgnoreCase)
+        BaseFull     = $BaseFull
+        ExpandedFull = $ExpandedFull
+    }
+}
+
+function Get-ValidatedProfilePath {
+    param(
+        [Parameter(Mandatory = $true)][string]$RawPath,
+        [Parameter(Mandatory = $true)][string]$ProfileName
+    )
+
+    $Check = Test-ProfilePathWithinBase -RawPath $RawPath
+
+    if (-not $Check.IsValid) {
         Write-Host "[!] Profile '$ProfileName' path resolves outside the approved base directory." -ForegroundColor Red
-        Write-Host "    Base    : $BaseFull" -ForegroundColor Gray
-        Write-Host "    Resolved: $ExpandedFull" -ForegroundColor Gray
+        Write-Host "    Base    : $($Check.BaseFull)" -ForegroundColor Gray
+        Write-Host "    Resolved: $($Check.ExpandedFull)" -ForegroundColor Gray
         Write-Host "    Refusing to use this path. Fix 'path' for '$ProfileName' in profiles.json." -ForegroundColor Red
         Read-Host "Press Enter to close this window"
         exit 1
     }
 
-    return $ExpandedFull
+    return $Check.ExpandedFull
 }
 
 function Add-NewProfile {
@@ -168,6 +191,10 @@ function Show-ProfileTable {
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     Write-Host ("| " + "[N] Add New Profile (+)".PadRight($innerWidth - 2) + " |") -ForegroundColor Magenta
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
+}
+
+if ($TestHook) {
+    return
 }
 
 if (-not $Account) {
