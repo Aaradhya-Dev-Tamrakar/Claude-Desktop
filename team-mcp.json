@@ -3,7 +3,7 @@
     "notebooklm-mcp": {
       "command": "python3",
       "args": [
-        "D:\\Aaradhya-Dev-Tamrakar\\Claude-Desktop\\mcp-servers\\notebooklm-mcp\\run_server.py"
+        "{{REPO_ROOT}}\\mcp-servers\\notebooklm-mcp\\run_server.py"
       ],
       "env": {}
     }

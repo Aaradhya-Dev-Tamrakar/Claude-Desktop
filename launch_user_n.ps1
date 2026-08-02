@@ -141,6 +141,58 @@ function Merge-McpServers {
     return $Merged
 }
 
+function Expand-TeamMcpPlaceholders {
+    # Rewrites the literal "{{REPO_ROOT}}" token in every mcpServers entry's
+    # command/args/env string values to $RepoRoot (this machine's actual
+    # launch_user_n.ps1 location, i.e. $PSScriptRoot). Lets team-mcp.json
+    # reference paths inside the repo without hardcoding one contributor's
+    # absolute clone path (e.g. "D:\Aaradhya-Dev-Tamrakar\Claude-Desktop\..."
+    # — breaks for every profile whose clone isn't at that exact drive/path).
+    # Runs on the already-parsed $SharedConfig, before Merge-McpServers, so
+    # claude_desktop_config.json never sees the placeholder itself.
+    # Deep-clones first (same ConvertTo-Json/ConvertFrom-Json round-trip as
+    # Merge-McpServers) so the caller's original $SharedConfig is untouched —
+    # matches Merge-McpServers' purity contract rather than mutating in place.
+    param(
+        [Parameter(Mandatory = $true)]$SharedConfig,
+        [Parameter(Mandatory = $true)][string]$RepoRoot
+    )
+
+    $Expanded = $SharedConfig | ConvertTo-Json -Depth 10 | ConvertFrom-Json
+
+    if (-not ($Expanded.PSObject.Properties.Name -contains "mcpServers")) {
+        return $Expanded
+    }
+
+    $Placeholder = "{{REPO_ROOT}}"
+
+    foreach ($serverName in $Expanded.mcpServers.PSObject.Properties.Name) {
+        $server = $Expanded.mcpServers.$serverName
+
+        if ($server.PSObject.Properties.Name -contains "command" -and $server.command -is [string]) {
+            $server.command = $server.command.Replace($Placeholder, $RepoRoot)
+        }
+
+        if ($server.PSObject.Properties.Name -contains "args" -and $server.args) {
+            for ($i = 0; $i -lt $server.args.Count; $i++) {
+                if ($server.args[$i] -is [string]) {
+                    $server.args[$i] = $server.args[$i].Replace($Placeholder, $RepoRoot)
+                }
+            }
+        }
+
+        if ($server.PSObject.Properties.Name -contains "env" -and $server.env) {
+            foreach ($envKey in $server.env.PSObject.Properties.Name) {
+                if ($server.env.$envKey -is [string]) {
+                    $server.env.$envKey = $server.env.$envKey.Replace($Placeholder, $RepoRoot)
+                }
+            }
+        }
+    }
+
+    return $Expanded
+}
+
 function Sync-TeamMcpConfig {
     # I/O wrapper around Merge-McpServers: reads team-mcp.json from the repo
     # and the profile's own claude_desktop_config.json, merges, writes back.
@@ -163,6 +215,14 @@ function Sync-TeamMcpConfig {
     }
     catch {
         Write-Warning "team-mcp.json is not valid JSON ($_). Skipping team MCP sync this launch."
+        return
+    }
+
+    try {
+        $SharedConfig = Expand-TeamMcpPlaceholders -SharedConfig $SharedConfig -RepoRoot $RepoRoot
+    }
+    catch {
+        Write-Warning "Failed to expand {{REPO_ROOT}} placeholders in team-mcp.json ($_). Team MCP sync skipped this launch."
         return
     }
 
