@@ -100,6 +100,8 @@ function Show-ProfileTable {
         return
     }
 
+    $TodayStr = (Get-Date).ToString("yyyy-MM-dd")
+
     $rows = for ($i = 0; $i -lt $AccountKeys.Count; $i++) {
         $key = $AccountKeys[$i]
         $lastLoginDate = $Profiles.$key.last_login_date
@@ -112,7 +114,20 @@ function Show-ProfileTable {
             Nickname = $Profiles.$key.nickname
             LastTime = $lastLoginTime
             LastDate = $lastLoginDate
+            IsToday  = ($lastLoginDate -eq $TodayStr)
         }
+    }
+
+    # Rank today's logins by Last Time descending (most recent = 1). Tuple
+    # position (row order) is untouched — this only assigns a rank label.
+    # Profiles not logged in today (or never) get "-".
+    $todayRanked = $rows | Where-Object { $_.IsToday } | Sort-Object -Property LastTime -Descending
+    $rankMap = @{}
+    for ($r = 0; $r -lt $todayRanked.Count; $r++) {
+        $rankMap[$todayRanked[$r].Profile] = ($r + 1)
+    }
+    foreach ($row in $rows) {
+        $row | Add-Member -NotePropertyName "TodayRank" -NotePropertyValue $(if ($rankMap.ContainsKey($row.Profile)) { [string]$rankMap[$row.Profile] } else { "-" }) -Force
     }
 
     $numW = [Math]::Max(3, ($rows.Num | Measure-Object -Property Length -Maximum).Maximum)
@@ -120,7 +135,8 @@ function Show-ProfileTable {
     $nickW = [Math]::Max(8, ($rows.Nickname | Measure-Object -Property Length -Maximum).Maximum)
     $timeW = [Math]::Max(10, ($rows.LastTime | Measure-Object -Property Length -Maximum).Maximum)
     $dateW = [Math]::Max(10, ($rows.LastDate | Measure-Object -Property Length -Maximum).Maximum)
-    $widths = @($numW, $profW, $nickW, $timeW, $dateW)
+    $rankW = [Math]::Max(10, ($rows.TodayRank | Measure-Object -Property Length -Maximum).Maximum)
+    $widths = @($numW, $profW, $nickW, $timeW, $dateW, $rankW)
 
     function New-Border($L, $C, $R) {
         $L + (($widths | ForEach-Object { "-" * ($_ + 2) }) -join $C) + $R
@@ -136,10 +152,10 @@ function Show-ProfileTable {
     $innerWidth = (New-Border "+" "+" "+").Length - 2
 
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
-    Write-Host (New-Row @("#", "Profile", "Nickname", "Last Time", "Last Date")) -ForegroundColor Cyan
+    Write-Host (New-Row @("#", "Profile", "Nickname", "Last Time", "Last Date", "Today Rank")) -ForegroundColor Cyan
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     foreach ($r in $rows) {
-        Write-Host (New-Row @($r.Num, $r.Profile, $r.Nickname, $r.LastTime, $r.LastDate)) -ForegroundColor Yellow
+        Write-Host (New-Row @($r.Num, $r.Profile, $r.Nickname, $r.LastTime, $r.LastDate, $r.TodayRank)) -ForegroundColor Yellow
     }
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     Write-Host ("| " + "[N] Add New Profile (+)".PadRight($innerWidth - 2) + " |") -ForegroundColor Magenta
