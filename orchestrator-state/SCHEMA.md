@@ -130,6 +130,42 @@ the actual context handoff — `merge_results` reads these, not
   `submit_checkpoint` call for the same `task_id` overwrites — there is
   no checkpoint history, only the latest.
 
+## orchestrator-state/memory/\<account\>\_\_\<entry_id\>.json
+
+One file per entry, never per account — an account pushes many entries
+over time, so per-account-per-file would make every push a
+read-modify-write on a growing shared file (the exact hazard this
+schema exists to avoid). `entry_id` is a timestamp (`pushed_at` with
+`:` and `-` stripped), collision-checked against the directory and
+suffixed `_2`, `_3`, ... on collision — same "scan fresh, don't trust a
+counter file" approach as `tasks/`' `_next_task_id`. This is the
+MCP-native, automatable replacement for the old
+`Send-TeamContextAndMemoryToClipboard` workflow (manually pasting
+`team-memory.md` into a profile's chat): `push_memory_entry` writes,
+`read_team_memory` aggregates and sorts by `pushed_at`, `sync.ps1`
+carries the files between machines same as everything else here.
+
+```json
+{
+  "account": "user1",
+  "text": "note or context another account should see",
+  "pushed_at": "2026-08-05T14:22:41Z"
+}
+```
+
+- `account`: who pushed it. Free string, same validation as
+  `owner_account` elsewhere.
+- `text`: free text, no length limit enforced by the schema.
+- `pushed_at`: set once at push time, never modified — this file is
+  never edited after creation, only ever a new file added, so there is
+  no write race at all, not even the narrowed one `claim_task` has.
+
+`team-memory.md` and `team-context.md` at the repo root still exist and
+are still the human-facing / static-identity path
+(`Send-TeamContextAndMemoryToClipboard` is unchanged) — this directory
+is an additive, chat-callable path for dynamic notes, not a replacement
+for those two files.
+
 ## Directory listing as the index
 
 There is no separate `index.json` tracking "which task ids exist" — the

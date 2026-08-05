@@ -95,6 +95,8 @@ class TestToolRegistration:
                 "unblock_task",
                 "push_live_status",
                 "read_all_live_status",
+                "push_memory_entry",
+                "read_team_memory",
                 "submit_checkpoint",
                 "list_tasks",
                 "merge_results",

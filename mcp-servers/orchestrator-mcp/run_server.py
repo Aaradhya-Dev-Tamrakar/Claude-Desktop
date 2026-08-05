@@ -38,9 +38,11 @@ STATE_ROOT = REPO_ROOT / "orchestrator-state"
 TASKS_DIR = STATE_ROOT / "tasks"
 LIVE_STATUS_DIR = STATE_ROOT / "live-status"
 CHECKPOINTS_DIR = STATE_ROOT / "checkpoints"
+MEMORY_DIR = STATE_ROOT / "memory"
 
 _TASK_ID_RE = re.compile(r"^task_\d{4}-\d{2}-\d{2}_\d{3}$")
 _ACCOUNT_RE = re.compile(r"^[A-Za-z0-9_.\-]{1,64}$")
+_MEMORY_FILENAME_RE = re.compile(r"^[A-Za-z0-9_.\-]{1,64}$")
 
 TaskStatus = Literal["pending", "claimed", "blocked", "done", "merged"]
 TaskKind = Literal["code", "text"]
@@ -51,7 +53,7 @@ def _now_iso() -> str:
 
 
 def _ensure_dirs() -> None:
-    for d in (TASKS_DIR, LIVE_STATUS_DIR, CHECKPOINTS_DIR):
+    for d in (TASKS_DIR, LIVE_STATUS_DIR, CHECKPOINTS_DIR, MEMORY_DIR):
         d.mkdir(parents=True, exist_ok=True)
 
 
@@ -86,6 +88,21 @@ def _checkpoint_path(task_id: str) -> Path:
 def _live_status_path(account: str) -> Path:
     _validate_account(account)
     return LIVE_STATUS_DIR / f"{account}.json"
+
+
+def _memory_entry_path(account: str, entry_id: str) -> Path:
+    # One file per (account, entry_id) pair — never a shared file two
+    # accounts write to, same constraint as tasks/live-status (see
+    # SCHEMA.md). entry_id is a timestamp + a short random suffix (see
+    # push_memory_entry), not a per-account sequence counter, so two
+    # accounts pushing in the same millisecond still land in different
+    # files with no read-modify-write on either side.
+    _validate_account(account)
+    if not _MEMORY_FILENAME_RE.match(entry_id):
+        raise ValueError(
+            f"invalid entry_id {entry_id!r}: must match {_MEMORY_FILENAME_RE.pattern}"
+        )
+    return MEMORY_DIR / f"{account}__{entry_id}.json"
 
 
 def _read_json(path: Path) -> dict[str, Any] | None:
@@ -373,6 +390,68 @@ def read_all_live_status() -> list[dict[str, Any]]:
         data = _read_json(path)
         if data is not None:
             out.append(data)
+    return out
+
+
+@srv.tool(
+    name="push_memory_entry",
+    description=(
+        "Append a team-memory entry (an account's note/context worth other "
+        "accounts seeing). Writes a new file under orchestrator-state/memory/ "
+        "— never edits an existing entry, so there is no shared-file write "
+        "race (see SCHEMA.md). This is the MCP-native replacement for "
+        "manually pasting team-memory.md via the clipboard: any account can "
+        "push a note here and any other account picks it up on next "
+        "sync.ps1 pull via read_team_memory. Role: any."
+    ),
+)
+def push_memory_entry(account: str, text: str) -> dict[str, Any]:
+    _ensure_dirs()
+    _validate_account(account)
+    if not text or not text.strip():
+        raise ValueError("text must be non-empty")
+
+    now = _now_iso()
+    # Timestamp-derived entry_id, collision-checked against the directory
+    # (same "scan fresh, don't trust a counter file" approach as
+    # _next_task_id) rather than a random suffix, so entries sort
+    # chronologically by filename with no separate index.
+    base = now.replace(":", "").replace("-", "")
+    entry_id = base
+    suffix = 2
+    while _memory_entry_path(account, entry_id).exists():
+        entry_id = f"{base}_{suffix}"
+        suffix += 1
+
+    entry = {
+        "account": account,
+        "text": text,
+        "pushed_at": now,
+    }
+    _write_json(_memory_entry_path(account, entry_id), entry)
+    return entry
+
+
+@srv.tool(
+    name="read_team_memory",
+    description=(
+        "Read all team-memory entries across every account, sorted "
+        "chronologically by pushed_at. Pass since (ISO 8601 UTC, e.g. "
+        "'2026-08-05T00:00:00Z') to only return entries pushed at or after "
+        "that time. Role: any."
+    ),
+)
+def read_team_memory(since: str | None = None) -> list[dict[str, Any]]:
+    _ensure_dirs()
+    out = []
+    for path in sorted(MEMORY_DIR.glob("*.json")):
+        entry = _read_json(path)
+        if entry is None:
+            continue
+        if since is not None and entry["pushed_at"] < since:
+            continue
+        out.append(entry)
+    out.sort(key=lambda e: e["pushed_at"])
     return out
 
 
