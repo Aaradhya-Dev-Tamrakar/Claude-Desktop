@@ -38,17 +38,18 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 │   ├── notebooklm-mcp/
 │   │   └── run_server.py          # uvx-shim launcher for the published NotebookLM CLI
 │   └── orchestrator-mcp/
-│       └── run_server.py          # Hand-written MCP server, 11 tools, requires `pip install mcp`
+│       └── run_server.py          # Hand-written MCP server, 13 tools, requires `pip install mcp`
 │
 ├── orchestrator-state/
-│   ├── SCHEMA.md                  # File contract for tasks/live-status/checkpoints
+│   ├── SCHEMA.md                  # File contract for tasks/live-status/checkpoints/memory
 │   ├── tasks/.gitkeep
 │   ├── live-status/.gitkeep
-│   └── checkpoints/.gitkeep
+│   ├── checkpoints/.gitkeep
+│   └── memory/.gitkeep
 │
 └── tests/
     ├── launch_user_n.Tests.ps1        # Pester specs (path guard, profile table, MCP merge, placeholder expansion)
-    └── orchestrator_mcp_test.py       # pytest specs, 16 cases, each against a throwaway git repo
+    └── orchestrator_mcp_test.py       # pytest specs, 22 cases, each against a throwaway git repo
 ```
 
 ## Files
@@ -58,14 +59,14 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 - **`profiles.json`**: Configuration file mapping account profile names to display nicknames, user data storage paths, and last logged-in timestamps.
 - **`team-mcp.json`**: Shared MCP server config, force-merged into every profile's `claude_desktop_config.json` on launch (shared entries win on name collision; a profile's own extra servers are never removed). Currently wires in `notebooklm-mcp` and `orchestrator-mcp` (see `mcp-servers/`) — add further entries here to roll them out to every profile at once. Use the literal token `{{REPO_ROOT}}` anywhere a `command`/`args`/`env` value needs to reference a path inside the repo; `Expand-TeamMcpPlaceholders` resolves it to each machine's actual clone path at sync time, so no entry should ever hardcode one contributor's absolute path.
 - **`mcp-servers/notebooklm-mcp/run_server.py`**: `uvx` launcher for the NotebookLM MCP server, referenced by `team-mcp.json`. Falls back through common per-platform `uvx` install locations when it's missing from `PATH` (Claude Desktop launches with a restricted `PATH`). Auth is shared across all profiles via `%USERPROFILE%\.notebooklm-mcp-cli\` (every profile runs as the same Windows user) — run `nlm login` once, no per-profile setup needed.
-- **`mcp-servers/orchestrator-mcp/run_server.py`**: Hand-written MCP server (not a `uvx` shim — requires `pip install mcp` locally, unlike `notebooklm-mcp`) coordinating orchestrator/divider/executor roles across profiles. Tools: `create_task`/`decompose_task` (orchestrator/divider), `claim_task`/`release_task`/`mark_blocked`/`unblock_task`/`submit_checkpoint` (executor), `push_live_status`/`read_all_live_status` (cheap frequent status, no history), `list_tasks`/`merge_results` (orchestrator — text tasks return findings for the orchestrator's own LLM to synthesize, code tasks get `git merge --no-ff`'d with a clean `git merge --abort` on the first conflict). State is plain JSON under `orchestrator-state/`, synced by `sync.ps1` like every other file — see `orchestrator-state/SCHEMA.md` for the full file contract and why every entity is its own file rather than one shared file multiple accounts write to.
+- **`mcp-servers/orchestrator-mcp/run_server.py`**: Hand-written MCP server (not a `uvx` shim — requires `pip install mcp` locally, unlike `notebooklm-mcp`) coordinating orchestrator/divider/executor roles across profiles. Tools: `create_task`/`decompose_task` (orchestrator/divider), `claim_task`/`release_task`/`mark_blocked`/`unblock_task`/`submit_checkpoint` (executor), `push_live_status`/`read_all_live_status` (cheap frequent status, no history), `push_memory_entry`/`read_team_memory` (MCP-native cross-profile memory sync — chat-callable replacement for pasting `team-memory.md`/`team-context.md` via `Send-TeamContextAndMemoryToClipboard`; one file per entry under `orchestrator-state/memory/`, never per-account, so pushes never read-modify-write a shared file), `list_tasks`/`merge_results` (orchestrator — text tasks return findings for the orchestrator's own LLM to synthesize, code tasks get `git merge --no-ff`'d with a clean `git merge --abort` on the first conflict). State is plain JSON under `orchestrator-state/`, synced by `sync.ps1` like every other file — see `orchestrator-state/SCHEMA.md` for the full file contract and why every entity is its own file rather than one shared file multiple accounts write to.
 - **`team-context.md`**: Static identity/context scaffold. Its full content is copied to the clipboard on every launch for pasting as a first message or into Custom Instructions. Edit it directly with what you actually want repeated into every profile — it ships as a plain-text placeholder, so if it still reads like a template when pasted, that's the signal it hasn't been filled in yet.
 - **`team-memory.md`**: Growing, hand-appended memory log — same clipboard/Custom-Instructions delivery as `team-context.md`, concatenated with it. Distributed via `sync.ps1` like everything else, so an entry added from one profile reaches every other profile's clipboard on its next launch. Nothing is written to it automatically; it only grows when you add a line.
 - **`sync.ps1`**: Automated Git repository synchronization tool.
 - **`cooldown-reminder.ps1`**: Auto-invoked by `launch_user_n.ps1` after every non-`-WhatIf` login. Tracks each profile's `first_login_time`, anchors a 5-hour cooldown to it, and registers a local Windows toast alarm for when the cooldown expires.
 - **`reset_profiles.ps1`**: Wipes all profile storage, logs, session state, and the `claude://` registry override, then resets `profiles.json` to `{}`. Prompts for a typed `RESET` confirmation unless `-WhatIf`.
 - **`tests/launch_user_n.Tests.ps1`**: Pester specs for `launch_user_n.ps1`'s pure/mockable logic (path-traversal guard, profile table formatting, shared-MCP-server merge, `{{REPO_ROOT}}` placeholder expansion). Run via `Invoke-Pester -Path .\tests\launch_user_n.Tests.ps1`.
-- **`tests/orchestrator_mcp_test.py`**: pytest specs for `orchestrator-mcp/run_server.py` — text- and code-task lifecycles, a deliberate merge conflict (asserting the repo is left clean, never mid-merge), blocked/unblock, claim-race rejection, live-status independence, and input validation. Each test runs against its own throwaway git repo, never this repo's actual state. Run via `pip install pytest mcp --break-system-packages && pytest tests/orchestrator_mcp_test.py -v`.
+- **`tests/orchestrator_mcp_test.py`**: pytest specs for `orchestrator-mcp/run_server.py` — text- and code-task lifecycles, a deliberate merge conflict (asserting the repo is left clean, never mid-merge), blocked/unblock, claim-race rejection, live-status independence, team-memory push/read (round-trip, chronological sort across accounts, `since` filter, same-account repeat-push with no id collision), and input validation. Each test runs against its own throwaway git repo, never this repo's actual state. Run via `pip install pytest mcp --break-system-packages && pytest tests/orchestrator_mcp_test.py -v`.
 
 ## Usage
 
