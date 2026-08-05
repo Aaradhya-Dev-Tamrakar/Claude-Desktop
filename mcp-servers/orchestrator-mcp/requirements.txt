@@ -1,4 +1,1 @@
-# run_server.py has no direct Python deps of its own — it shells out via
-# `uvx --from notebooklm-mcp-cli notebooklm-mcp`. The only requirement is
-# `uv` on PATH (installed via astral-sh.uv). uvx resolves/installs
-# notebooklm-mcp-cli into an isolated env automatically on first run.
+mcp==2.0.0

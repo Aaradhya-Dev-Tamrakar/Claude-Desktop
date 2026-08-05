@@ -19,6 +19,7 @@ from __future__ import annotations
 import importlib.util
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import pytest
@@ -281,6 +282,62 @@ class TestLiveStatus:
         all_status = rs.read_all_live_status()
         assert len(all_status) == 1  # not 2 — overwrites, no history
         assert all_status[0]["note"] == "second note"
+
+
+class TestTeamMemory:
+    def test_push_then_read_round_trip(self, repo):
+        rs, _ = repo
+        rs.push_memory_entry(account="user1", text="first fact")
+        entries = rs.read_team_memory()
+        assert len(entries) == 1
+        assert entries[0]["account"] == "user1"
+        assert entries[0]["text"] == "first fact"
+
+    def test_multiple_accounts_all_returned_sorted(self, repo):
+        rs, _ = repo
+        rs.push_memory_entry(account="user1", text="first fact")
+        time.sleep(1.1)
+        rs.push_memory_entry(account="user2", text="second fact")
+        time.sleep(1.1)
+        rs.push_memory_entry(account="user1", text="third fact")
+        entries = rs.read_team_memory()
+        assert len(entries) == 3
+        assert [e["text"] for e in entries] == ["first fact", "second fact", "third fact"]
+        assert [e["pushed_at"] for e in entries] == sorted(e["pushed_at"] for e in entries)
+
+    def test_since_filter_excludes_earlier_entries(self, repo):
+        rs, _ = repo
+        e1 = rs.push_memory_entry(account="user1", text="first fact")
+        time.sleep(1.1)
+        e2 = rs.push_memory_entry(account="user2", text="second fact")
+        time.sleep(1.1)
+        e3 = rs.push_memory_entry(account="user1", text="third fact")
+
+        since_e2 = rs.read_team_memory(since=e2["pushed_at"])
+        assert [e["text"] for e in since_e2] == ["second fact", "third fact"]
+
+        since_e3 = rs.read_team_memory(since=e3["pushed_at"])
+        assert [e["text"] for e in since_e3] == ["third fact"]
+
+    def test_same_account_repeat_push_no_collision(self, repo):
+        rs, _ = repo
+        e1 = rs.push_memory_entry(account="user1", text="note A")
+        e2 = rs.push_memory_entry(account="user1", text="note B")
+        entries = rs.read_team_memory()
+        assert len(entries) == 2
+        assert {e["text"] for e in entries} == {"note A", "note B"}
+
+    def test_empty_text_rejected(self, repo):
+        rs, _ = repo
+        with pytest.raises(ValueError):
+            rs.push_memory_entry(account="user1", text="")
+        with pytest.raises(ValueError):
+            rs.push_memory_entry(account="user1", text="   ")
+
+    def test_invalid_account_rejected(self, repo):
+        rs, _ = repo
+        with pytest.raises(ValueError):
+            rs.push_memory_entry(account="../../etc/passwd", text="x")
 
 
 class TestInputValidation:
