@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-05_003",
+  "parent_id": "task_2026-08-05_001",
+  "kind": "code",
+  "spec": "step2_code, step3_code, step5_code cells: implement SimpleLSTM (nn.LSTM batch_first=True; nn.Linear hidden_dim->num_classes; forward pass calling self.lstm then self.fc(final_hidden)); training loop (forward pass, CrossEntropyLoss, loss.backward(), optimizer.step()); predict() fn (numericalize->tensor->unsqueeze(0)->to(device), forward pass, argmax(1).item()). Depends on step1_code's collate_batch being correct for end-to-end run.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": "task/task_2026-08-05_003",
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-08-05T08:26:42Z",
+  "updated_at": "2026-08-05T08:29:35Z"
+}

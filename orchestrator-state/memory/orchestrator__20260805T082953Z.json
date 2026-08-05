@@ -1,0 +1,5 @@
+{
+  "account": "orchestrator",
+  "text": "task_2026-08-05_001 (LSTMs_for_Text_Classification.ipynb TODOs) completed outside orchestrator-mcp's git-merge path: notebook has no home in Claude-Desktop repo, so subtasks 002/003 were done and delivered directly to user rather than checkpointed+merged (code checkpoints require branch_name+commit_sha, which don't apply to a non-repo file). Tasks released back to pending rather than falsely marked done/merged.",
+  "pushed_at": "2026-08-05T08:29:53Z"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-05_001",
+  "parent_id": null,
+  "kind": "code",
+  "spec": "Complete all TODOs in LSTMs_for_Text_Classification.ipynb (AG_NEWS text classification, PyTorch). Split into data-pipeline and model/training subtasks for parallel completion by user4 and user5.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-08-05T08:26:22Z",
+  "updated_at": "2026-08-05T08:26:22Z"
+}
