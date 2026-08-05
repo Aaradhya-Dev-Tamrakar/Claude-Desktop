@@ -451,17 +451,20 @@ function Resolve-SingleAccount {
     # commits to launching — unlike failures inside Invoke-ProfileLaunch,
     # there is no partial launch to protect by continuing past this.
     param(
-        [string]$PresetAccount
+        [string]$PresetAccount,
+        [switch]$SkipTableDisplay
     )
 
     $Result = $PresetAccount
 
     if (-not $Result) {
-        Write-Host "----------------------------------------" -ForegroundColor Cyan
-        Write-Host " Select a Claude Desktop Profile:" -ForegroundColor Green
-        Write-Host "----------------------------------------" -ForegroundColor Cyan
+        if (-not $SkipTableDisplay) {
+            Write-Host "----------------------------------------" -ForegroundColor Cyan
+            Write-Host " Select a Claude Desktop Profile:" -ForegroundColor Green
+            Write-Host "----------------------------------------" -ForegroundColor Cyan
 
-        Show-ProfileTable -Profiles $script:Profiles -AccountKeys $script:AccountKeys
+            Show-ProfileTable -Profiles $script:Profiles -AccountKeys $script:AccountKeys
+        }
 
         if ($script:AccountKeys.Count -eq 0) {
             $selection = Read-Host "No profiles yet. Press N (or Enter) to add your first profile"
@@ -966,6 +969,11 @@ function Invoke-ProfileLaunch {
 
 if (-not $Mode -and -not $Concurrent -and -not $Users) {
     Write-Host "----------------------------------------" -ForegroundColor Cyan
+    Write-Host " Select a Claude Desktop Profile:" -ForegroundColor Green
+    Write-Host "----------------------------------------" -ForegroundColor Cyan
+    Show-ProfileTable -Profiles $script:Profiles -AccountKeys $script:AccountKeys
+
+    Write-Host "----------------------------------------" -ForegroundColor Cyan
     Write-Host " Run mode:" -ForegroundColor Green
     Write-Host "   [1] Isolated  - one profile, swaps into the shared native install (default)" -ForegroundColor Gray
     Write-Host "   [2] Concurrent - one or more profiles, each its own independent window" -ForegroundColor Gray
@@ -1000,7 +1008,12 @@ if ($Users -and $Users.Count -gt 0) {
 else {
     # Isolated, or Concurrent with a single account via the interactive
     # picker (equivalent to the pre-existing -Account / no-args behavior).
-    $singleAccount = Resolve-SingleAccount -PresetAccount $Account
+    # -SkipTableDisplay: the table was already shown above the mode prompt
+    # when we got here via that prompt (no -Mode/-Concurrent/-Users given
+    # on the CLI — the only route into this else-branch with $Concurrent
+    # still false here). Re-show it if -Mode/-Concurrent bypassed that prompt.
+    $tableAlreadyShown = -not $Mode -and -not $Concurrent
+    $singleAccount = Resolve-SingleAccount -PresetAccount $Account -SkipTableDisplay:$tableAlreadyShown
     Invoke-ProfileLaunch -Account $singleAccount
 }
 
