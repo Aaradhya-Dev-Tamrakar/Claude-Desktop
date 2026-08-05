@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-05_004",
+  "parent_id": null,
+  "kind": "code",
+  "spec": "SPARK: Implement wire format v1 (docs/WIRE_FORMAT_v1.md, locked) across firmware and gateway. Resolves prior schema gap between comms/output.h (FallEvent) and receiver/wire_format.py (EventPayload). confidence = class_probs[1] only. raw_window deferred to v2 (not needed by SHAP stub). peak_features (per-axis max over trigger window) is new — not yet computed anywhere in firmware.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user5",
+  "created_at": "2026-08-05T09:04:51Z",
+  "updated_at": "2026-08-05T09:04:51Z"
+}

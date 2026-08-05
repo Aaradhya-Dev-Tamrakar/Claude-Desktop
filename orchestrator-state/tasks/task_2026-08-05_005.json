@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-05_005",
+  "parent_id": "task_2026-08-05_004",
+  "kind": "code",
+  "spec": "FIRMWARE (branch firmware-skeleton, for user3): Implement SendFallEvent in comms/output.cpp against docs/WIRE_FORMAT_v1.md JSON shape. Add peak_features tracking (per-axis max accel/gyro over the trigger window) — extend ThresholdGate or compute in app_main from the window already passed to TfliteModel::Invoke; gate.cpp currently only tracks scalar magnitude, not per-axis peaks. Send class_probs[1] only as confidence, drop class_probs[0] at the transport boundary (keep it internal to InferenceOutput). No raw_window in v1.",
+  "status": "done",
+  "owner_account": "user3",
+  "branch_name": "firmware-skeleton",
+  "blocked_reason": null,
+  "created_by": "user5",
+  "created_at": "2026-08-05T09:05:00Z",
+  "updated_at": "2026-08-05T09:11:20Z"
+}

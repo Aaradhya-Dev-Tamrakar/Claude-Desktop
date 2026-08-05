@@ -1,0 +1,10 @@
+{
+  "task_id": "task_2026-08-05_006",
+  "kind": "code",
+  "summary": "parse_event() implemented against docs/WIRE_FORMAT_v1.md. EventPayload.timestamp renamed to timestamp_ms (int, per spec); device_id/firmware_version now required. WireFormatError (ValueError) raised on malformed/incomplete payloads; raw_window always None (v1 doesn't send it); unrecognized fields preserved in .extra. receiver.py docstrings updated to reflect format is locked (live BLE pairing still separately blocked). main.py demo path now builds raw JSON bytes and runs them through the real parse_event() instead of constructing EventPayload directly. Verified: py_compile/ast clean, end-to-end python -m gateway.main succeeds, 7-case parse_event test matrix (valid/extra-field/raw_window-ignored/missing-field/missing-channel/malformed-JSON/non-object) all pass. Commit c856975 is local to this session's sandbox clone (rebased gateway-skeleton onto main @ 7f41839, the firmware commit) — human owner (Aaradhya) still needs to extract the delivered zip into their local working copy and push; the sha here won't resolve on origin until that push happens.",
+  "branch_name": "gateway-skeleton",
+  "commit_sha": "c856975",
+  "result_text": null,
+  "submitted_by": "Aaradhya",
+  "submitted_at": "2026-08-05T09:11:34Z"
+}

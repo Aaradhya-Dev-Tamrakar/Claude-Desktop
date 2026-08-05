@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-05_006",
+  "parent_id": "task_2026-08-05_004",
+  "kind": "code",
+  "spec": "GATEWAY (branch gateway-skeleton, for user4): Implement parse_event in receiver/wire_format.py against docs/WIRE_FORMAT_v1.md JSON shape. EventPayload: confidence becomes a plain float (already matches), peak_features stays as-is, raw_window stays Optional[None] reserved for v2 (do not implement parsing for it). Wire receiver.py to call parse_event for real instead of raising WireFormatNotConfirmed.",
+  "status": "done",
+  "owner_account": "Aaradhya",
+  "branch_name": "gateway-skeleton",
+  "blocked_reason": null,
+  "created_by": "user5",
+  "created_at": "2026-08-05T09:05:00Z",
+  "updated_at": "2026-08-05T09:11:34Z"
+}

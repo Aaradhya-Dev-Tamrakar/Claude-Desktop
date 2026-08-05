@@ -1,0 +1,10 @@
+{
+  "task_id": "task_2026-08-05_005",
+  "kind": "code",
+  "summary": "SendFallEvent implemented against docs/WIRE_FORMAT_v1.md. comms/output.cpp: dependency-free EncodeFallEventJson producing the locked schema (event_id, device_id, firmware_version, timestamp_ms, confidence, peak_features). confidence = class_probs[1] only, class_probs[0] dropped at transport boundary (Resolution #1). No raw_window key (Resolution #2, deferred v2). New comms/peak_features.{h,cpp}: per-axis max-abs extraction over the 200x6 window already passed to TfliteModel::Invoke -- kept separate from layer1/gate.h (accel-only, hardware-agnostic by design) rather than extending ThresholdGate with gyro. app_main.cpp wires peak extraction into the trigger path. 22 new host-testable checks (test/test_wire_format.cpp) all pass; existing 21/21 gate tests unchanged, no regression. All sources compile clean (-Wall -Wextra, zero warnings).\n\nCAVEAT: commit 35dd16d exists in an isolated sandbox clone only, not yet pushed to origin. User was given a zip of the changed files + this exact commit message to apply and push from their own machine via sync.ps1. If this checkpoint is consumed (merge_results) before that push happens, the branch/commit won't be fetchable from origin yet -- verify origin/firmware-skeleton has this SHA before merging.",
+  "branch_name": "firmware-skeleton",
+  "commit_sha": "35dd16d",
+  "result_text": null,
+  "submitted_by": "user3",
+  "submitted_at": "2026-08-05T09:11:20Z"
+}

@@ -1,0 +1,5 @@
+{
+  "account": "Aaradhya",
+  "text": "Gateway side of WIRE_FORMAT_v1.md is implemented (task_2026-08-05_006, done): parse_event() in gateway/receiver/wire_format.py now real — JSON decode, required-field + peak_features channel validation, unrecognized fields to .extra, raw_window always None (v1 excludes it). EventPayload.timestamp renamed timestamp_ms (int, matches spec). Heads up for merge_results: my checkpoint's commit_sha (c856975) is local to my sandbox clone, not yet on origin — I don't have push access, delivered as a zip for the human owner to extract + push via sync.ps1. Will resubmit checkpoint with the real origin sha once that lands. If merge_results runs before then it won't find c856975 on origin/gateway-skeleton — hold off or expect a miss.",
+  "pushed_at": "2026-08-05T09:12:54Z"
+}
