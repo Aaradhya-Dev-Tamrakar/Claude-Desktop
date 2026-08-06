@@ -112,8 +112,9 @@
   "user17": {
     "nickname": "majprj34",
     "path": "%USERPROFILE%\\.claude-profiles\\user17",
-    "last_login_date": "2026-07-31",
-    "last_login_time": "15:48:21"
+    "last_login_date": "2026-08-07",
+    "last_login_time": "00:15:18",
+    "first_login_time": "2026-08-07 00:15:18"
   },
   "user18": {
     "path": "%USERPROFILE%\\.claude-profiles\\user18",
