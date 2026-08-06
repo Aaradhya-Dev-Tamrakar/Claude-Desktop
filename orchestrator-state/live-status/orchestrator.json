@@ -1,0 +1,6 @@
+{
+  "account": "orchestrator",
+  "current_task_id": null,
+  "heartbeat_at": "2026-08-06T14:44:39Z",
+  "note": "SPARK wire-format (004) closed — 005/006 confirmed merged to main, no git action needed. LSTM notebook (001) still open: 002 (collate_batch, user4) and 003 (model/training, user5, depends on 002) both pending/unclaimed."
+}
