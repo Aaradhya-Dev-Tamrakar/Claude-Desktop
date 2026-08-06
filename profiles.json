@@ -129,8 +129,8 @@
   "user20": {
     "nickname": "offheart",
     "path": "%USERPROFILE%\\.claude-profiles\\user20",
+    "first_login_time": "2026-08-06 20:00:36",
     "last_login_date": "2026-08-06",
-    "last_login_time": "20:00:36",
-    "first_login_time": "2026-08-06 20:00:36"
+    "last_login_time": "20:09:23"
   }
 }
