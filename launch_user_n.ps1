@@ -985,22 +985,43 @@ if (-not $Mode -and -not $Concurrent -and -not $Users) {
 }
 
 if ($Concurrent -and -not $Users) {
-    # Concurrent chosen but no -Users list — ask how many/which. Comma or
-    # space separated; blank means "just one, use the normal picker below".
-    $usersInput = Read-Host "Profile name(s) for Concurrent mode, comma-separated (blank to pick one from the list)"
+    # Concurrent chosen but no -Users list — ask how many/which. Same table
+    # is on screen as Isolated's picker, so accept the same shorthand: a
+    # bare index (1, 2, 3) as well as a literal profile name, comma/space
+    # separated. Blank means "just one, use the normal picker below".
+    Show-ProfileTable -Profiles $script:Profiles -AccountKeys $script:AccountKeys
+    $usersInput = Read-Host "Profile(s) for Concurrent mode - number(s) or name(s), comma-separated (blank to pick one from the list)"
     if (-not [string]::IsNullOrWhiteSpace($usersInput)) {
         $Users = @($usersInput -split '[,\s]+' | Where-Object { $_ })
     }
 }
 
 if ($Users -and $Users.Count -gt 0) {
-    # Concurrent, explicit list: resolve+validate every name up front (fatal
-    # on a bad name — see Resolve-SingleAccount's doc comment) before
+    # Concurrent, explicit list: resolve+validate every entry up front (fatal
+    # on a bad name/index — see Resolve-SingleAccount's doc comment) before
     # launching any of them, then launch each in turn. A later account's
     # failure inside Invoke-ProfileLaunch does not stop earlier-resolved
     # accounts from having already launched, nor prevent later ones in the
     # list from being attempted.
-    $ResolvedAccounts = foreach ($u in $Users) { Resolve-SingleAccount -PresetAccount $u }
+    # A purely-numeric entry is treated as a 1-based index into the same
+    # table Isolated's picker uses, mirroring its "[1-N or N]" shorthand;
+    # anything else is passed through as a literal profile name.
+    $ResolvedAccounts = foreach ($u in $Users) {
+        if ($u -match '^\d+$') {
+            $idx = [int]$u - 1
+            if ($idx -ge 0 -and $idx -lt $script:AccountKeys.Count) {
+                Resolve-SingleAccount -PresetAccount $script:AccountKeys[$idx]
+            }
+            else {
+                Write-Host "Invalid profile number '$u' (have $($script:AccountKeys.Count) profile(s))." -ForegroundColor Red
+                Read-Host "Press Enter to close this window"
+                exit 1
+            }
+        }
+        else {
+            Resolve-SingleAccount -PresetAccount $u
+        }
+    }
     foreach ($resolvedAccount in $ResolvedAccounts) {
         Invoke-ProfileLaunch -Account $resolvedAccount
     }
