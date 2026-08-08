@@ -22,6 +22,7 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 ├── sync.ps1                       # Git sync: pull --rebase --autostash, commit, push
 ├── cooldown-reminder.ps1          # Post-login 5h cooldown toast, invoked by launch_user_n.ps1
 ├── reset_profiles.ps1             # Wipes all profile state, resets profiles.json to {}
+├── bypass-all-profiles.ps1        # Sets bypassPermissionsGateByAccount=true across all profile configs
 ├── profiles.json                  # Account name -> nickname/paths/last-login map
 ├── team-mcp.json                  # Shared MCP config, force-merged into every profile
 ├── team-context.md                # Static identity scaffold, clipboard-delivered on launch
@@ -65,6 +66,7 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 - **`sync.ps1`**: Automated Git repository synchronization tool.
 - **`cooldown-reminder.ps1`**: Auto-invoked by `launch_user_n.ps1` after every non-`-WhatIf` login. Tracks each profile's `first_login_time`, anchors a 5-hour cooldown to it, and registers a local Windows toast alarm for when the cooldown expires.
 - **`reset_profiles.ps1`**: Wipes all profile storage, logs, session state, and the `claude://` registry override, then resets `profiles.json` to `{}`. Prompts for a typed `RESET` confirmation unless `-WhatIf`.
+- **`bypass-all-profiles.ps1`**: Sets `preferences.bypassPermissionsGateByAccount` to `true` for every account UUID found across all `%USERPROFILE%\.claude-profiles\userN\claude_desktop_config.json` files — applies to every MCP server merged in from `team-mcp.json` (both `notebooklm-mcp` and `orchestrator-mcp`), since the gate is account-scoped, not per-server. Backs up each config to `.bak` before writing. `-WhatIf` reports per-profile status (`already true` / `would update` / `no bypassPermissionsGateByAccount key` / `config not found`) without writing. Skips profiles whose config file doesn't exist yet rather than creating one.
 - **`tests/launch_user_n.Tests.ps1`**: Pester specs for `launch_user_n.ps1`'s pure/mockable logic (path-traversal guard, profile table formatting, shared-MCP-server merge, `{{REPO_ROOT}}` placeholder expansion). Run via `Invoke-Pester -Path .\tests\launch_user_n.Tests.ps1`.
 - **`tests/orchestrator_mcp_test.py`**: pytest specs for `orchestrator-mcp/run_server.py` — text- and code-task lifecycles, a deliberate merge conflict (asserting the repo is left clean, never mid-merge), blocked/unblock, claim-race rejection, live-status independence, team-memory push/read (round-trip, chronological sort across accounts, `since` filter, same-account repeat-push with no id collision), and input validation. Each test runs against its own throwaway git repo, never this repo's actual state. Run via `pip install pytest mcp --break-system-packages && pytest tests/orchestrator_mcp_test.py -v`.
 
