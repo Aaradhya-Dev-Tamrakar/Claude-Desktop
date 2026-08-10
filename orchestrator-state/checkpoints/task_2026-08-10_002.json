@@ -1,0 +1,10 @@
+{
+  "task_id": "task_2026-08-10_002",
+  "kind": "code",
+  "summary": "Fixed chapter3_related_theory.tex line 119: replaced \"trained ... on UCI MHEALTH and SisFall datasets with self-collected Nepal-context data as a fine-tuning set\" with \"trained ... on the SisFall dataset as the primary source, with self-collected Nepal-context data (protocol TBD) as a secondary fine-tuning set\" — matches §2.4 exactly. Re-ran full stale-term sweep across all chapters + Gantt post-fix: only remaining UCI MHEALTH hit is the legitimate chapter2 literature-review citation (Nho et al.); braces/envs balanced.",
+  "branch_name": "main",
+  "commit_sha": "3e8c897",
+  "result_text": null,
+  "submitted_by": "Rupesh",
+  "submitted_at": "2026-08-10T14:30:15Z"
+}

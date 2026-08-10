@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-10_002",
+  "parent_id": null,
+  "kind": "code",
+  "spec": "docs/SPARK_Proposal/Chapters/chapter3_related_theory.tex ~line 119 (§1D CNN Architecture): stated the model was \"trained ... on UCI MHEALTH and SisFall datasets\" — tracker §2.4 (locked, v37) specifies Primary: SisFall only, Secondary (TBD protocol): self-collected data. UCI MHEALTH is legitimate only as a chapter2 literature-review citation (Nho et al.), not as SPARK's own training data. This was a leftover regression from the v37 chapters 5/6/Gantt sync (commit bdc0140) whose own commit message incorrectly claimed the fix had landed.",
+  "status": "done",
+  "owner_account": "Rupesh",
+  "branch_name": "main",
+  "blocked_reason": null,
+  "created_by": "Rupesh",
+  "created_at": "2026-08-10T14:30:00Z",
+  "updated_at": "2026-08-10T14:30:15Z"
+}

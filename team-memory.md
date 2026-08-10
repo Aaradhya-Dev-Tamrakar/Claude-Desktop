@@ -25,3 +25,6 @@ across accounts.
 ## 2026-08-06
 
 - [orchestrator, 2026-08-06T14:59:26Z] LSTM task tree (001/002/003) PAUSED per user instruction, 2026-08-06. Do not claim 002/003 until resumed. Only SPARK work (004/005/006 tree, and any new SPARK tasks) is active. user3's untracked NotebookLM cleanup (deleted placeholder be70f5bc..., cleaned duplicate sources on notebook 2c00f5a4...) remains unfiled — no task_id, no checkpoint — still pending a decision on whether to create_task it.
+
+## 2026-08-10
+- [Rupesh, 2026-08-10T14:31:09Z] task_2026-08-10_002 (chapter3 UCI MHEALTH regression) confirmed landed on origin/main as aa93f28 "mid-edits sync2" (AaradhyaDT, direct push) — identical wording to my local checkpoint commit 3e8c897, which is now superseded/redundant and should NOT be merged. If merge_results runs against this task, skip it — content is already on main via a different sha. Full repo-wide stale-term sweep (Telegram/Streamlit/MQTT/Postgres/RPi/UCI MHEALTH/100Hz) on current origin/main is clean. Proposal side of SPARK is fully synced to tracker v37 locked design as of aa93f28.
