@@ -6,7 +6,7 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 
 - **Multi-Profile Management**: Launch distinct Claude Desktop sessions via automated profile session swapping into native AppData paths.
 - **Concurrent Multi-Monitor Sessions**: `-Mode Concurrent` (or `-Concurrent`) launches one or more profiles as independent, simultaneously-running windows via `--user-data-dir`, instead of swapping the single native install — drag each to its own monitor for side-by-side team use on one machine. `-Users <name1,name2,...>` launches a whole list non-interactively; per-account failures (missing exe, unknown profile) don't stop the rest of the list.
-- **Native MSIX & OAuth Compatibility**: 100% compatible with Windows MSIX packages and browser OAuth deep links (`claude://`) without dual-window or authentication loop issues.
+- **Native MSIX & OAuth Compatibility**: 100% compatible with Windows MSIX packages and browser OAuth deep links (`claude://`) without dual-window or authentication loop issues; concurrent windows don't need to be closed to sign in, only focused.
 - **Dynamic Executable Resolution**: Automatically locates `Claude.exe` across MSIX/Windows Store App packages (`Get-AppxPackage *claude*`) and traditional local installation directories (`AppData\Local\Programs\Claude` and `WindowsApps`).
 - **Automatic Session Backup & Persistence**: Automatically saves and syncs cookies, tokens, and local storage per profile on every switch.
 - **Smart Git Synchronization**: Automatically stages, commits, pulls (with `--rebase` & `--autostash`), and pushes repository changes.
@@ -98,7 +98,7 @@ pwsh -File .\launch_user_n.ps1 -Concurrent -Account aaradhya
 pwsh -File .\launch_user_n.ps1 -Concurrent -Account bei79001
 ```
 
-`claude://` sign-in is a single OS-wide handler shared by every window — sign in to each profile one at a time (others closed) before running them concurrently. A profile that fails to launch (missing exe, unknown name) doesn't block the rest of the `-Users` list.
+`claude://` sign-in is a single OS-wide handler shared by every window, routing to whichever instance last had focus — profiles don't need to be closed to run concurrently, but a profile that still needs sign-in should be given focus first (or run alone) so the callback routes to it, not to whichever other window is topmost. A profile that fails to launch (missing exe, unknown name) doesn't block the rest of the `-Users` list.
 
 Preview what a profile switch would do without touching any files, the registry, or running processes:
 
