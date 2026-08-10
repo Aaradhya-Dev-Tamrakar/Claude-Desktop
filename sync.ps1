@@ -120,6 +120,79 @@ function Get-AutoCommitMessage {
     return "${prefix}: update ${summary}${churn}"
 }
 
+function Sync-MemoryToTeamMemory {
+    param([string]$RepoPath)
+
+    $memoryDir = Join-Path $RepoPath "orchestrator-state\memory"
+    $trackerPath = Join-Path $RepoPath "orchestrator-state\.memory-appended"
+    $teamMemoryPath = Join-Path $RepoPath "team-memory.md"
+
+    if (-not (Test-Path $memoryDir)) { return }
+    if (-not (Test-Path $teamMemoryPath)) { return }
+
+    $appended = @{}
+    if (Test-Path $trackerPath) {
+        Get-Content $trackerPath | Where-Object { $_.Trim() } | ForEach-Object { $appended[$_.Trim()] = $true }
+    }
+
+    $entryFiles = Get-ChildItem -Path $memoryDir -Filter "*.json" -File -ErrorAction SilentlyContinue |
+        Sort-Object Name
+    if (-not $entryFiles) { return }
+
+    $newLines = @()
+    $newIds = @()
+
+    foreach ($f in $entryFiles) {
+        $entryId = $f.BaseName
+        if ($appended.ContainsKey($entryId)) { continue }
+
+        try {
+            $json = Get-Content $f.FullName -Raw | ConvertFrom-Json
+        }
+        catch {
+            Write-Host "[Sync] Skipping unparseable memory entry: $($f.Name)" -ForegroundColor Yellow
+            continue
+        }
+
+        $account = $json.account
+        $text = $json.text
+        $pushedAt = $json.pushed_at
+        if (-not $account -or -not $text -or -not $pushedAt) {
+            Write-Host "[Sync] Skipping malformed memory entry (missing field): $($f.Name)" -ForegroundColor Yellow
+            continue
+        }
+
+        $day = $pushedAt.Substring(0, 10)
+        $line = "- [$account, $pushedAt] $text"
+        $newLines += [PSCustomObject]@{ Day = $day; Line = $line }
+        $newIds += $entryId
+    }
+
+    if ($newLines.Count -eq 0) { return }
+
+    $content = Get-Content $teamMemoryPath -Raw
+    $marker = "<!-- Nothing logged yet. -->"
+
+    $groupedByDay = $newLines | Group-Object Day
+    $block = ""
+    foreach ($group in $groupedByDay) {
+        $block += "`n## $($group.Name)`n"
+        foreach ($item in $group.Group) { $block += "$($item.Line)`n" }
+    }
+
+    if ($content -match [regex]::Escape($marker)) {
+        $content = $content -replace [regex]::Escape($marker), "$block"
+    }
+    else {
+        $content = $content.TrimEnd("`n") + "`n$block"
+    }
+
+    Set-Content -Path $teamMemoryPath -Value $content -NoNewline
+    Add-Content -Path $trackerPath -Value $newIds
+
+    Write-Host "[Sync] Auto-appended $($newIds.Count) orchestrator memory entr$(if ($newIds.Count -eq 1) {'y'} else {'ies'}) to team-memory.md." -ForegroundColor Cyan
+}
+
 $RepoPath = $PSScriptRoot
 if (-not (Test-Path "$RepoPath\.git")) {
     Write-Host "Not a git repo: $RepoPath" -ForegroundColor Red
@@ -133,6 +206,8 @@ if (-not $currentBranch) { $currentBranch = "main" }
 
 Write-Host "[Sync] Pulling latest from origin $currentBranch..." -ForegroundColor Cyan
 git pull --rebase --autostash origin $currentBranch
+
+Sync-MemoryToTeamMemory -RepoPath $RepoPath
 
 if ($PullOnly) {
     Write-Host "[Sync] Pull complete (PullOnly flag set)." -ForegroundColor Green
