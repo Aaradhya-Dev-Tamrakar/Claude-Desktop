@@ -2,9 +2,9 @@
   "user1": {
     "nickname": "adevtmr",
     "path": "%USERPROFILE%\\.claude-profiles\\user1",
-    "first_login_time": "2026-08-09 18:07:28",
-    "last_login_date": "2026-08-09",
-    "last_login_time": "21:48:04"
+    "last_login_date": "2026-08-10",
+    "last_login_time": "17:41:42",
+    "first_login_time": "2026-08-10 17:41:42"
   },
   "user2": {
     "nickname": "dev83",
@@ -30,9 +30,9 @@
   "user5": {
     "nickname": "games2061",
     "path": "%USERPROFILE%\\.claude-profiles\\user5",
+    "first_login_time": "2026-08-10 15:45:41",
     "last_login_date": "2026-08-10",
-    "last_login_time": "15:45:41",
-    "first_login_time": "2026-08-10 15:45:41"
+    "last_login_time": "17:41:48"
   },
   "user6": {
     "nickname": "adt_ieee",
@@ -44,9 +44,9 @@
   "user7": {
     "nickname": "adtmr",
     "path": "%USERPROFILE%\\.claude-profiles\\user7",
-    "last_login_date": "2026-08-09",
-    "last_login_time": "17:44:13",
-    "first_login_time": "2026-08-09 17:44:13"
+    "last_login_date": "2026-08-10",
+    "last_login_time": "17:41:56",
+    "first_login_time": "2026-08-10 17:41:56"
   },
   "user8": {
     "nickname": "majprj01",
