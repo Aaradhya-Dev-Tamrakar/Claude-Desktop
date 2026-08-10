@@ -136,7 +136,7 @@ function Sync-MemoryToTeamMemory {
     }
 
     $entryFiles = Get-ChildItem -Path $memoryDir -Filter "*.json" -File -ErrorAction SilentlyContinue |
-        Sort-Object Name
+    Sort-Object Name
     if (-not $entryFiles) { return }
 
     $newLines = @()
@@ -156,11 +156,12 @@ function Sync-MemoryToTeamMemory {
 
         $account = $json.account
         $text = $json.text
-        $pushedAt = $json.pushed_at
-        if (-not $account -or -not $text -or -not $pushedAt) {
+        $pushedAtRaw = $json.pushed_at
+        if (-not $account -or -not $text -or -not $pushedAtRaw) {
             Write-Host "[Sync] Skipping malformed memory entry (missing field): $($f.Name)" -ForegroundColor Yellow
             continue
         }
+        $pushedAt = if ($pushedAtRaw -is [DateTime]) { $pushedAtRaw.ToString("yyyy-MM-ddTHH:mm:ssZ") } else { [string]$pushedAtRaw }
 
         $day = $pushedAt.Substring(0, 10)
         $line = "- [$account, $pushedAt] $text"
