@@ -140,3 +140,26 @@ Q3 (two-ray path/phase diff): sources 76615938/0a509b56 (Sample Q) + 8f31d474 (G
 Q4 (Doppler shift/spread): sources 76615938/0a509b56 + 8f31d474 + 8e8de605 (Rappaport). f_d=(v/λ)cosθ, B_D=f_m=v/λ, T_C≈0.423/f_m.
 
 MD updated: Blocks 0,1,2,3 complete (Q2,Q7,Q1,Q6,Q11,Q8,Q9/Q12,Q3,Q4). Next: Block4(Q5 delay spread), Block5(Q13,interleaving), Block6(equalizer), Block7(Q15,Q18,Q16).
+
+## 2026-08-11
+- [user5, 2026-08-11T13:15:08Z] **Protocol: No auto-clone on file uploads.** Only clone repo when explicitly provided in prompt. EX751 study: uploaded EX751_answers_1.md + Claude_export (18 answered questions, all NLM-sourced, blocks 0–7 complete). Will await explicit repo link before cloning/merging. Team memory pushes confirmed active.
+- [user5, 2026-08-11T13:16:05Z] **task_2026-08-11_005 (EX751) — Status Update**
+
+**Completion:** All 18 questions answered (Q1–Q18, blocks 0–7 complete).
+
+**Deliverable:** EX751_answers_1.md (405 lines, full derivations + numericals, NLM source citations for each answer).
+
+**Coverage by block:**
+- Block 0 (Ch2): Q2 (co-channel reuse √3N derivation), Q7 (capacity numerical)
+- Block 1 (Ch2): Q1 (handoff/GoS definitions), Q6 (Erlang B trunking capacity loss)
+- Block 2 (Ch3): Q11 (Okumura path loss), Q8 (large-scale vs small-scale fading), Q9/Q12 (indoor propagation factors)
+- Block 3 (Ch3): Q3 (two-ray path difference), Q4 (Doppler shift/spread), Q5 (delay spread → coherence BW chain)
+- Block 5 (Ch4): Q13 (RAKE receiver/diversity), Q10/Q14 (interleaving/MLSE)
+- Block 6 (Ch5): Q10/Q14 (equalizer structures: LTE, DFE, ZF, LMS, RLS)
+- Block 7 (Ch6): Q15 (CDMA/IS-95 spreading), Q18 (FHSS slow/fast hopping), Q16 (DSSS/processing gain)
+
+**Sources:** All traced to NLM notebook c627a211-552e-496b-9ebb-42d22ac05a95 (lecture PDFs, sample questions, reference papers).
+
+**Study plan status:** HTML rescheduled 14:00→16:00 start. Current time 16:00 (4 PM). Work window 16:00–00:00, sleep 00:00–07:00, AM recall 07:00–08:20, final 08:20–09:00, exam 09:00.
+
+**Ready for:** Morning drills + final settlement before exam.

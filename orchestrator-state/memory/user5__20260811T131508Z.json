@@ -1,0 +1,5 @@
+{
+  "account": "user5",
+  "text": "**Protocol: No auto-clone on file uploads.** Only clone repo when explicitly provided in prompt. EX751 study: uploaded EX751_answers_1.md + Claude_export (18 answered questions, all NLM-sourced, blocks 0–7 complete). Will await explicit repo link before cloning/merging. Team memory pushes confirmed active.",
+  "pushed_at": "2026-08-11T13:15:08Z"
+}
