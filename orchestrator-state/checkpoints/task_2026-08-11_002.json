@@ -1,0 +1,10 @@
+{
+  "task_id": "task_2026-08-11_002",
+  "kind": "text",
+  "summary": "One-day EX751 study plan built and delivered — same format as CT653 reference, weighted by sample-paper repeat frequency + the 4 newly-sourced gap topics, fit into today's 10:00-22:00 + tomorrow's 05:00-09:00 window with sleep excluded.",
+  "branch_name": null,
+  "commit_sha": null,
+  "result_text": "Study plan built: ex751_1day_plan_1000start.html, delivered to user.\n\nStructure — matches CT653 reference file format exactly (dark theme, sticky progress header, checkbox JS, same CSS var scheme), extended with a REPEAT tag for sample-paper-frequency-flagged items.\n\nPriority data pulled via nlm query against sample papers + Final assessment topics.txt (source 0a509b56 + 4fec49d0) before building — topics ranked by repeat count across separate exam papers, categorized numerical/derivation/short-answer/diagram.\n\nTime allocation (10:00 today → 09:00 tomorrow, sleep 22:00-05:00 excluded from content):\n- 10:00-22:00 (12h, 8 content blocks + meals/breaks): full first pass, Ch2→Ch3→Ch5→Ch7 in that order, front-loading each chapter's highest-repeat items first, gap-fill topics slotted right after each chapter's core content (not bolted onto the end)\n- 05:00-08:15 (3.25h AM): no new content — numerical redo-from-scratch drill, REPEAT-only short-answer speed pass, then a dedicated cold-check block for exactly the 4 newly-sourced gap topics\n- 08:15-09:00: buffer + final settle, zero content\n\n25 REPEAT-tagged items (topics hitting 2+ separate sample papers), 10 items covering the 4 newly-sourced gaps (each gets one study-depth slot in the main pass + one cold-check slot in the AM pass, since they have zero repeat history to lean on).\n\nVerified via bash: item/tag counts match design (25 REPEAT, 10 NEW, 13 content blocks) before delivery.",
+  "submitted_by": "claude_chat",
+  "submitted_at": "2026-08-11T03:19:44Z"
+}

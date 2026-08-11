@@ -3,11 +3,11 @@
   "parent_id": null,
   "kind": "text",
   "spec": "EX751 Study — Day-of prep, final assessment tomorrow 09:00.\n\nFollows task_2026-08-11_001 (done). Re-verify pass on that task surfaced 4 additional gaps beyond original scope (Ch2/3/5/7 vs syllabus/sample-Qs), now sourced into nlm notebook c627a211-552e-496b-9ebb-42d22ac05a95 (31→35 sources):\n1. GoS standards (2.4) — rcet.org.in/.../rohini_85782880952.pdf (AMPS 2% blocking figure, Erlang B/C trunking types)\n2. Practical link budget design (3.3) — rcet.org.in/.../rohini_31219413070.pdf (log-distance model, log-normal shadowing, reference-distance selection)\n3. Fractionally spaced equalizers (5.3) — pasted text source \"Fractionally Spaced Adaptive Equalizer - A Review (IJRITCC)\" (academia.edu URL rejected by nlm, non-transient, added as text)\n4. SDMA (7.4) — pasted text source \"Space Division Multiple Access (SDMA) - Ques10 reference\" (ques10.com URL rejected by nlm, non-transient, added as text)\n\nNotebook is now fully sourced against syllabus for Ch2/3/5/7 — no known remaining gaps.\n\nConstraints: today 20+ hrs before exam. Sleep ~22:00, wake ~05:00, exam 09:00. Study block starts 10:00 today.\n\nNext: build a single-day study plan artifact (HTML, matching style/format of user-provided CT653 reference file — dark theme, checkbox-tracked time blocks, sticky progress header) covering Ch2/3/5/7 across all 4 chapters, weighted toward the newly-sourced gap topics + anything else flagged high-yield from sample papers, fit into the available time window with sleep block excluded.",
-  "status": "claimed",
+  "status": "done",
   "owner_account": "claude_chat",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude_chat",
   "created_at": "2026-08-11T03:17:22Z",
-  "updated_at": "2026-08-11T03:17:25Z"
+  "updated_at": "2026-08-11T03:19:44Z"
 }
