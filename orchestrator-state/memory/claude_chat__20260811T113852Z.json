@@ -1,0 +1,5 @@
+{
+  "account": "claude_chat",
+  "text": "**Q6 Solved + MD compiled**\n\nQ6 sources: 76615938/f8ea1917 (Sample Q + Erlang B table), 92d133b9/e623b244 (Erlang B formula), 71150add (trunking defs)\n\nN=7, GoS=1%, H=2min, S=57ch, λ=1/hr → Au=0.0333 Erlang/user\nOmni: C=57,GoS1%→A=44.2 Erlang → U=1326 users\n60°sector: 9ch/sector, A=3.783 Erlang/sector×6=22.698 → U=681 users\nLoss: 645 users (48.6%)\n\nAll answers compiled to /mnt/user-data/outputs/EX751_answers.md, ordered per HTML block sequence (Block0: Q2,Q7 done; Block1: Q1,Q6 done). Remaining: Block2(Q11,Q8,Q9/Q12), Block3(Q3,Q4,Q8), Block4(Q5), Block5(Q13,interleaving), Block6(equalizer), Block7(Q15,Q18,Q16).",
+  "pushed_at": "2026-08-11T11:38:52Z"
+}

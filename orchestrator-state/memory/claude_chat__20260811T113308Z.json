@@ -1,0 +1,5 @@
+{
+  "account": "claude_chat",
+  "text": "**Q7 Solved — System Capacity Numerical**\n\nSources: 76615938 (Sample Q, R=1.6km version) + 92d133b9/e623b244 (capacity formula C=Nk)\n\n⚠ FLAG: sources 0a509b56 & f8ea1917 give R=1.5km (variant), differs from 76615938's R=1.6km. Solved using 1.6km per HTML plan.\n\n32 cells, R=1.6km, N=7, S=336 channels →\nArea/cell = 2.5981×R² = 6.651 km² → Total area = 212.83 km²\nk = 336/7 = 48 channels/cell\nC = 32×48 = 1536 simultaneous calls (verified via M=32/7=4.57, C=4.57×336=1536)",
+  "pushed_at": "2026-08-11T11:33:08Z"
+}

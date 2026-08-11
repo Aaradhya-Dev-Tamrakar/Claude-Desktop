@@ -93,3 +93,50 @@ Part 1: Q=√3N via Law of Cosines, 120° angle, D²=3R²(i²+ij+j²)=3R²N → 
 Part 2: 20MHz/25kHz duplex → S=400 channels. S/I=15dB→31.62 ratio. 31.62=1.5N² → N=4.59 → round up to valid N=7 (i²+ij+j² set: 1,3,4,7,9,12). k=400/7≈57 channels/cell.
 
 Full combined answer given to user — complete, no further action needed on Q2.
+
+## 2026-08-11
+- [claude_chat, 2026-08-11T11:33:08Z] **Q7 Solved — System Capacity Numerical**
+
+Sources: 76615938 (Sample Q, R=1.6km version) + 92d133b9/e623b244 (capacity formula C=Nk)
+
+⚠ FLAG: sources 0a509b56 & f8ea1917 give R=1.5km (variant), differs from 76615938's R=1.6km. Solved using 1.6km per HTML plan.
+
+32 cells, R=1.6km, N=7, S=336 channels →
+Area/cell = 2.5981×R² = 6.651 km² → Total area = 212.83 km²
+k = 336/7 = 48 channels/cell
+C = 32×48 = 1536 simultaneous calls (verified via M=32/7=4.57, C=4.57×336=1536)
+- [claude_chat, 2026-08-11T11:34:31Z] **Q1 Solved — Handoff Prioritization + GoS Definitions**
+
+Sources: 76615938 (Sample Q), 92d133b9/e623b244 (Ch1&2 notes), 71150add (Trunking/GoS notes)
+
+Definitions: GoS (block/delay probability), Traffic Intensity (A=λH, Erlangs), Holding Time H, Blocked Call (lost call, congestion).
+
+Two handoff schemes: (1) Guard channels — reserved fraction for handoff only, reduces drops but raises new-call blocking. (2) Channel borrowing — dynamic on-demand allocation, reduces both blocking & forced termination. (Bonus: queuing during dwell-time.)
+
+Working through HTML block order: Block0(Q2,Q7)✓ Block1(Q1,Q6)✓Q1 done,Q6 next. Then Block2(Q11,Q8,Q9/Q12), Block3(Q3,Q4,Q8), Block4(Q5), Block5(Q13,interleaving), Block6(equalizer Q10/Q14), Block7(Q15,Q18,Q16).
+- [claude_chat, 2026-08-11T11:38:52Z] **Q6 Solved + MD compiled**
+
+Q6 sources: 76615938/f8ea1917 (Sample Q + Erlang B table), 92d133b9/e623b244 (Erlang B formula), 71150add (trunking defs)
+
+N=7, GoS=1%, H=2min, S=57ch, λ=1/hr → Au=0.0333 Erlang/user
+Omni: C=57,GoS1%→A=44.2 Erlang → U=1326 users
+60°sector: 9ch/sector, A=3.783 Erlang/sector×6=22.698 → U=681 users
+Loss: 645 users (48.6%)
+
+All answers compiled to /mnt/user-data/outputs/EX751_answers.md, ordered per HTML block sequence (Block0: Q2,Q7 done; Block1: Q1,Q6 done). Remaining: Block2(Q11,Q8,Q9/Q12), Block3(Q3,Q4,Q8), Block4(Q5), Block5(Q13,interleaving), Block6(equalizer), Block7(Q15,Q18,Q16).
+- [claude_chat, 2026-08-11T11:45:16Z] **Block 2 Solved — Q11, Q8, Q9/Q12**
+
+Q11 (Okumura numerical): sources 76615938/0a509b56 (Sample Q) + 8f31d474 (formulas) + 4e1fc953/92d133b9 (dBm conv). L₅₀=155.07dB, EIRP=60dBm, Pr=−85.07dBm.
+
+Q8 (large vs small-scale + fading types): sources 76615938, 8f31d474, 8e8de605. Table comparison + flat/freq-selective (delay spread based) + fast/slow (Doppler based) fading, causes: multipath, mobile speed, object speed, signal BW.
+
+Q9/Q12 (indoor propagation + coherence BW/time defs): sources 8f31d474 (BC≈1/5στ, TC≈0.423/fm), 6b29eccf (AJER building materials paper), 33a6576d (Ques10 ref), 8e8de605 (shadowing). Factors: building materials, multipath, shadowing, distance, frequency, layout.
+
+MD file updated: /mnt/user-data/outputs/EX751_answers.md — Blocks 0,1,2 complete. Next: Block3 (Q3,Q4,Q8-fading already done), Block4(Q5), Block5(Q13,interleaving), Block6(equalizer), Block7(Q15,Q18,Q16).
+- [claude_chat, 2026-08-11T12:35:36Z] **NLM auth recovered (user ran nlm login), Block 3 solved — Q3, Q4**
+
+Q3 (two-ray path/phase diff): sources 76615938/0a509b56 (Sample Q) + 8f31d474 (Ground Reflection Model) + 6b29eccf (AJER corroborating formula). Δ≈2h_th_r/d, θ_Δ=4πh_th_r/(λd).
+
+Q4 (Doppler shift/spread): sources 76615938/0a509b56 + 8f31d474 + 8e8de605 (Rappaport). f_d=(v/λ)cosθ, B_D=f_m=v/λ, T_C≈0.423/f_m.
+
+MD updated: Blocks 0,1,2,3 complete (Q2,Q7,Q1,Q6,Q11,Q8,Q9/Q12,Q3,Q4). Next: Block4(Q5 delay spread), Block5(Q13,interleaving), Block6(equalizer), Block7(Q15,Q18,Q16).

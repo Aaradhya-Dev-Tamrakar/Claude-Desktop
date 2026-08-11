@@ -1,0 +1,5 @@
+{
+  "account": "claude_chat",
+  "text": "**Block 2 Solved — Q11, Q8, Q9/Q12**\n\nQ11 (Okumura numerical): sources 76615938/0a509b56 (Sample Q) + 8f31d474 (formulas) + 4e1fc953/92d133b9 (dBm conv). L₅₀=155.07dB, EIRP=60dBm, Pr=−85.07dBm.\n\nQ8 (large vs small-scale + fading types): sources 76615938, 8f31d474, 8e8de605. Table comparison + flat/freq-selective (delay spread based) + fast/slow (Doppler based) fading, causes: multipath, mobile speed, object speed, signal BW.\n\nQ9/Q12 (indoor propagation + coherence BW/time defs): sources 8f31d474 (BC≈1/5στ, TC≈0.423/fm), 6b29eccf (AJER building materials paper), 33a6576d (Ques10 ref), 8e8de605 (shadowing). Factors: building materials, multipath, shadowing, distance, frequency, layout.\n\nMD file updated: /mnt/user-data/outputs/EX751_answers.md — Blocks 0,1,2 complete. Next: Block3 (Q3,Q4,Q8-fading already done), Block4(Q5), Block5(Q13,interleaving), Block6(equalizer), Block7(Q15,Q18,Q16).",
+  "pushed_at": "2026-08-11T11:45:16Z"
+}

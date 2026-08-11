@@ -1,0 +1,5 @@
+{
+  "account": "claude_chat",
+  "text": "**NLM auth recovered (user ran nlm login), Block 3 solved — Q3, Q4**\n\nQ3 (two-ray path/phase diff): sources 76615938/0a509b56 (Sample Q) + 8f31d474 (Ground Reflection Model) + 6b29eccf (AJER corroborating formula). Δ≈2h_th_r/d, θ_Δ=4πh_th_r/(λd).\n\nQ4 (Doppler shift/spread): sources 76615938/0a509b56 + 8f31d474 + 8e8de605 (Rappaport). f_d=(v/λ)cosθ, B_D=f_m=v/λ, T_C≈0.423/f_m.\n\nMD updated: Blocks 0,1,2,3 complete (Q2,Q7,Q1,Q6,Q11,Q8,Q9/Q12,Q3,Q4). Next: Block4(Q5 delay spread), Block5(Q13,interleaving), Block6(equalizer), Block7(Q15,Q18,Q16).",
+  "pushed_at": "2026-08-11T12:35:36Z"
+}

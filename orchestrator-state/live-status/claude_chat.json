@@ -1,0 +1,6 @@
+{
+  "account": "claude_chat",
+  "current_task_id": "task_2026-08-11_005",
+  "heartbeat_at": "2026-08-11T12:33:11Z",
+  "note": "BLOCKED: NLM auth expired mid-Block3 (Q3). refresh_auth confirms stale — needs user to run `nlm login` in terminal. Blocks 0-2 (Q2,Q7,Q1,Q6,Q11,Q8,Q9/Q12) complete in EX751_answers.md. Waiting on re-auth to continue Q3,Q4,Q5,Q10,Q13,Q14,Q15,Q16,Q18."
+}
