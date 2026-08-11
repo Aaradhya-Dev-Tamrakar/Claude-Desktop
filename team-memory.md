@@ -82,3 +82,14 @@ Sources (same as Q2): 92d133b9, 4e1fc953, e623b244
 - **D = R√(3N)**, thus **Q = √(3N)**
 
 For N=7 (typical), Q ≈ 4.58
+
+## 2026-08-11
+- [claude_chat, 2026-08-11T10:42:53Z] **Q2 FULL COMBINED ANSWER (derivation + numerical) — delivered to user**
+
+Sources: 92d133b9, 4e1fc953, e623b244 (Ch1&2 notes) + 4fec49d0 (Sample Q pool)
+
+Part 1: Q=√3N via Law of Cosines, 120° angle, D²=3R²(i²+ij+j²)=3R²N → D=R√3N → Q=D/R=√3N
+
+Part 2: 20MHz/25kHz duplex → S=400 channels. S/I=15dB→31.62 ratio. 31.62=1.5N² → N=4.59 → round up to valid N=7 (i²+ij+j² set: 1,3,4,7,9,12). k=400/7≈57 channels/cell.
+
+Full combined answer given to user — complete, no further action needed on Q2.
