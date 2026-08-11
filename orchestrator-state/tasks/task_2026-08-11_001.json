@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-11_001",
+  "parent_id": null,
+  "kind": "text",
+  "spec": "EX751 Study — Final assessment prep, Ch2/3/5/7 (Wireless Communications, notebook c627a211-552e-496b-9ebb-42d22ac05a95).\n\nReadiness check done via nlm: Ch2 and Ch5 fully covered against syllabus. Ch3 and Ch7 have gaps —\n1. Ch3: Ericsson Multiple Breakpoint model — named only, no worked detail; directly asked in sample Q (source 0a509b56).\n2. Ch7: WLAN standards (syllabus 7.5, e.g. 802.11) — zero content in notebook, needs sourcing.\n3. Ch7: CDMA call processing (source fd6f227b) — outlined only, not detailed.\n\nNext: source/add content for gaps 1-3 into nlm notebook, then re-verify, then move to study/review pass on Ch2/3/5/7.",
+  "status": "done",
+  "owner_account": "claude_chat",
+  "branch_name": null,
+  "blocked_reason": "Gaps 1-2 sourced: Ericsson Multiple Breakpoint model (Ch3) — ajer.org J11027380.pdf + pasted Ques10 text source (URL rejected by nlm, added as text instead); WLAN standards 7.5 (Ch7) — iosrjournals D017532629.pdf + tek.com 802.11 primer. Notebook now 29 sources (was 25). Not yet done: gap 3 (Ch7 CDMA call processing, source fd6f227b — outlined only) still needs sourcing, then full re-verify against syllabus, then study/review pass.",
+  "created_by": "claude_chat",
+  "created_at": "2026-08-11T02:41:57Z",
+  "updated_at": "2026-08-11T03:01:24Z"
+}
