@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-11_005",
+  "parent_id": null,
+  "kind": "text",
+  "spec": "EX751 Wireless Communications — final assessment tomorrow 09:00, Ch2/3/5/7.\n\nStudy plan (2PM start, replanned from original 10AM version): /mnt/user-data/outputs/ex751_1day_plan_1400start.html\nNotebookLM: https://notebook.google.com/notebook/c627a211-552e-496b-9ebb-42d22ac05a95 (id c627a211-552e-496b-9ebb-42d22ac05a95, 36 sources)\n\nState as of this task's creation:\n- Plan verified against notebook scope (Ch2/3/5/7 confirmed via \"Final assessment - EX751 topics.txt\")\n- Per-block YouTube resource links attached for REPEAT items across Ch2/3/5/7 (block indices 0,1,3,4,7,9,11,12 in the HTML's `resources` object) — verified via search snippet/timecode match; direct YouTube fetch was blocked by persistent 429 all session\n- Cross-checked plan against two sample-question sources pulled from the notebook: \"EX751 Final Assessment Sample questions.pdf\" (18 Q) and \"Sample Question Wireless Communication.pdf\" (10 Q, Ch2/3 only)\n- 5 confirmed gaps folded into the 2PM replan: GoS/traffic-intensity/holding-time/blocked-call definitions (Sample Q1), indoor propagation model factors (Q9/Q12, zero prior coverage), delay-spread→coherence-BW chained numerical (Q5), CDMA encode/decode walkthrough (Q15), FHSS slow-vs-fast-hop types (Q18)\n- 6 items dropped from original plan for having no backing in either sample-question source: Ericsson Multiple Breakpoint model, fractionally-spaced equalizer, SDMA, Fresnel zone diffraction, generic link-budget-design item, FDMA-vs-TDMA comparison (mismatched — Q18 asks CDMA-vs-TDMA)\n- Known no-video gaps remaining (marked ⚠ inline in the HTML, block indices 1,7,9,11,12): AMPS 2% blocking figure / blocked-calls-cleared-vs-delayed distinction; interleaving as standalone topic; MLSE as standalone (covered via composite Ansys video instead — direct hit, not a gap); FHMA transmitter/receiver diagram as standalone; hybrid multiple access; CDMA characteristics/near-far/soft-handoff/soft-capacity as standalone; SDMA (dropped from plan, so moot)\n\nWorking window: 14:00–22:00, sleep 22:00–05:00 (7h fixed), 05:00–08:15 AM recall block, 08:45–09:00 final settle before 09:00 exam.\n\nNext steps if this task is picked up: watch/study against the plan's checkboxes; if time runs short, the 21:55–22:00 CDMA block explicitly says \"buffer overflow to AM if short on time\" and the AM 07:20–08:15 block has a catch-up check item for exactly that case.",
+  "status": "claimed",
+  "owner_account": "user7",
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "claude-desktop",
+  "created_at": "2026-08-11T08:13:45Z",
+  "updated_at": "2026-08-11T08:15:23Z"
+}
