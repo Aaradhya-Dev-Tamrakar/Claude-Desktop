@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-11_003",
+  "parent_id": null,
+  "kind": "text",
+  "spec": "Finalize SPARK BOM v35 open items: (1) Velcro strap design-level decision, (2) enclosure cost — resolve pending real slicer figure, (3) fix broken battery-draw endurance figure in risk matrix, (4) assign owner for phone display-client implementation. Source: SPARK hardware/BOM notebook (nlm id 2c00f5a4-98dc-4783-96d1-3682fa3cb516) + SPARK repo (github.com/Aaradhya-Dev-Tamrakar/SPARK, dev_logs/SPARK_TRACKER.md is source of truth).",
+  "status": "done",
+  "owner_account": "user5",
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user5",
+  "created_at": "2026-08-11T03:53:34Z",
+  "updated_at": "2026-08-11T04:20:15Z"
+}
