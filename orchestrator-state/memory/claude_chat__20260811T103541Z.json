@@ -1,0 +1,5 @@
+{
+  "account": "claude_chat",
+  "text": "**Q2 Derivation Deep-Dive: √(3N) = D**\n\nSources (same as Q2): 92d133b9, 4e1fc953, e623b244\n\n**Law of Cosines Application:**\n- d_adj = √3R (adjacent cell center distance)\n- Path to co-channel cell: move i cells (distance i√3R), rotate 60°, move j cells (distance j√3R)\n- **Critical: Interior angle = 120°** (because 180° − 60° = 120°)\n- D² = (i√3R)² + (j√3R)² − 2(i√3R)(j√3R)cos(120°)\n- cos(120°) = −0.5, so: D² = 3R²(i² + ij + j²) = 3R²N\n- **D = R√(3N)**, thus **Q = √(3N)**\n\nFor N=7 (typical), Q ≈ 4.58",
+  "pushed_at": "2026-08-11T10:35:41Z"
+}

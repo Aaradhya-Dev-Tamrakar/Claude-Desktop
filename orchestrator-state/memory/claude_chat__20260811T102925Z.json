@@ -1,0 +1,5 @@
+{
+  "account": "claude_chat",
+  "text": "**CORRECTION: Q2 Source Attribution**\n\nEarlier listed source 0a509b56 as Q2 source — **INCORRECT**.\n\nActual Q2 sources (NLM notebook c627a211-552e-496b-9ebb-42d22ac05a95):\n1. **4e1fc953-2972-45de-a2b6-c79e919bd53b** — Chapter 1 and 2.pdf (SSD, Suramya Sharma Dahal)\n2. **92d133b9-13fd-41dd-ae28-d3aade2a175f** — Chapter 1 and 2.pdf (SSD, 7/5/2026 version)\n3. **e623b244-ab1c-4625-8f13-0c710b509233** — Chapter 2 Cellular Systems--Cellular Concepts.pdf (Tribhuvan University, SSD)\n4. **4fec49d0-9844-40e6-ba08-da24b87c5f0c** — EX751 Final Assessment Sample questions.pdf (exam-format Q2, 15 dB S/I)\n\nAll derive Q=√3N and optimal N=7.",
+  "pushed_at": "2026-08-11T10:29:25Z"
+}

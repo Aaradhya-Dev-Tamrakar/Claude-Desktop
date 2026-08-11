@@ -135,5 +135,12 @@
     "first_login_time": "2026-08-11 07:16:41",
     "last_login_date": "2026-08-11",
     "last_login_time": "08:20:52"
+  },
+  "user21": {
+    "path": "%USERPROFILE%\\.claude-profiles\\user21",
+    "nickname": "a.claude2",
+    "last_login_date": "2026-08-11",
+    "last_login_time": "16:23:30",
+    "first_login_time": "2026-08-11 16:23:30"
   }
 }

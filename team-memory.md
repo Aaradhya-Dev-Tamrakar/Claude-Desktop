@@ -42,3 +42,43 @@ across accounts.
 **Next:** Aaradhya pulls abbreviations.tex, recompiles thesis_report.pdf, commits & pushes.
 
 All outstanding editorial work resolved. Repo clean for March 2027 milestone.
+
+## 2026-08-11
+- [claude_chat, 2026-08-11T10:27:27Z] **EX751 Study Session — 16:00 UTC start (task_2026-08-11_005)**
+
+Protocol: All answers now cite source (NLM notebook c627a211-552e-496b-9ebb-42d22ac05a95) + push to team memory.
+
+**Q2 Solved — Frequency Reuse Ratio Derivation + Optimal N**
+
+Sources:
+- 0a509b56-bbee-4d53-82fe-bc1616eb412c (Sample Q PDF — "Derive the formula for co-channel reuse ratio")
+- 4fec49d0-9844-40e6-ba08-da24b87c5f0c (Question pool, exact exam format)
+- 4e1fc953, 92d133b9, e623b244 (Lecture notes, Suramya Sharma Dahal, Tribhuvan Univ)
+
+Answer: **Q = √3N** derived via Law of Cosines (120° angle, hexagonal grid). **Optimal N=7** for 15 dB S/I, 400 duplex channels → **57 channels/cell**.
+
+Next: Ch2 GoS/Erlang (Q1, Q6) block 17:15–18:05. On track, 2h elapsed.
+- [claude_chat, 2026-08-11T10:29:25Z] **CORRECTION: Q2 Source Attribution**
+
+Earlier listed source 0a509b56 as Q2 source — **INCORRECT**.
+
+Actual Q2 sources (NLM notebook c627a211-552e-496b-9ebb-42d22ac05a95):
+1. **4e1fc953-2972-45de-a2b6-c79e919bd53b** — Chapter 1 and 2.pdf (SSD, Suramya Sharma Dahal)
+2. **92d133b9-13fd-41dd-ae28-d3aade2a175f** — Chapter 1 and 2.pdf (SSD, 7/5/2026 version)
+3. **e623b244-ab1c-4625-8f13-0c710b509233** — Chapter 2 Cellular Systems--Cellular Concepts.pdf (Tribhuvan University, SSD)
+4. **4fec49d0-9844-40e6-ba08-da24b87c5f0c** — EX751 Final Assessment Sample questions.pdf (exam-format Q2, 15 dB S/I)
+
+All derive Q=√3N and optimal N=7.
+- [claude_chat, 2026-08-11T10:35:41Z] **Q2 Derivation Deep-Dive: √(3N) = D**
+
+Sources (same as Q2): 92d133b9, 4e1fc953, e623b244
+
+**Law of Cosines Application:**
+- d_adj = √3R (adjacent cell center distance)
+- Path to co-channel cell: move i cells (distance i√3R), rotate 60°, move j cells (distance j√3R)
+- **Critical: Interior angle = 120°** (because 180° − 60° = 120°)
+- D² = (i√3R)² + (j√3R)² − 2(i√3R)(j√3R)cos(120°)
+- cos(120°) = −0.5, so: D² = 3R²(i² + ij + j²) = 3R²N
+- **D = R√(3N)**, thus **Q = √(3N)**
+
+For N=7 (typical), Q ≈ 4.58

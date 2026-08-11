@@ -1,0 +1,5 @@
+{
+  "account": "claude_chat",
+  "text": "**EX751 Study Session — 16:00 UTC start (task_2026-08-11_005)**\n\nProtocol: All answers now cite source (NLM notebook c627a211-552e-496b-9ebb-42d22ac05a95) + push to team memory.\n\n**Q2 Solved — Frequency Reuse Ratio Derivation + Optimal N**\n\nSources:\n- 0a509b56-bbee-4d53-82fe-bc1616eb412c (Sample Q PDF — \"Derive the formula for co-channel reuse ratio\")\n- 4fec49d0-9844-40e6-ba08-da24b87c5f0c (Question pool, exact exam format)\n- 4e1fc953, 92d133b9, e623b244 (Lecture notes, Suramya Sharma Dahal, Tribhuvan Univ)\n\nAnswer: **Q = √3N** derived via Law of Cosines (120° angle, hexagonal grid). **Optimal N=7** for 15 dB S/I, 400 duplex channels → **57 channels/cell**.\n\nNext: Ch2 GoS/Erlang (Q1, Q6) block 17:15–18:05. On track, 2h elapsed.",
+  "pushed_at": "2026-08-11T10:27:27Z"
+}
