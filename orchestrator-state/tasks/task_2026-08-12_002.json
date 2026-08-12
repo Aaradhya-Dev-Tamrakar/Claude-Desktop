@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-12_002",
+  "parent_id": null,
+  "kind": "text",
+  "spec": "SPARK Phone Display Client & Application Integration — Build client-side receiver for MQTT fall alerts + confirm gateway-side FastAPI publishing.\n\n**Current state:** SPARK stack architecture defined (ESP32-S3 wearable → MQTT → gateway FastAPI/PostgreSQL); wearable firmware complete; gateway backend (MQTT listener, inference orchestration, SHAP explainability) complete. Missing: phone display client to consume alerts.\n\n**Required deliverables:**\n1. Phone display client (Android/iOS via React Native, Flutter, or native) — listen to MQTT topics or HTTP GET /alerts endpoint, display incoming fall events with timestamp, location, wearable ID, confidence score\n2. Confirm gateway FastAPI /alerts endpoint publishes to MQTT broker (or make it do so if not already wired)\n3. Integration test: wearable → MQTT → gateway inference → client receives alert\n4. Scope of display: minimal viable (alert popup + event log) — polish/UX is secondary to functional integration\n\n**Sources:**\n- SPARK repo main branch (github.com/Aaradhya-Dev-Tamrakar/SPARK)\n- dev_logs/SPARK_TRACKER.md (§3 Application Stack, Action #25 phone client assignment TBD)\n- Gateway API docs (if present in repo)\n\n**Deliverable:** Working phone client + integration test results. Owner to be assigned from team (Rupesh, Sankalpa, Sonia, or external if needed).",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "Aaradhya",
+  "created_at": "2026-08-12T12:33:50Z",
+  "updated_at": "2026-08-12T12:33:50Z"
+}
