@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-12_003",
+  "parent_id": null,
+  "kind": "text",
+  "spec": "Clean up main SPARK research notebook (2c00f5a4-98dc-4783-96d1-3682fa3cb516) — Delete 19 methodology/citation-verification sources now hosted in secondary notebook.\n\n**Current state:** \n- Main SPARK notebook: 48 sources (includes 19 methodology/citation-verification sources)\n- Secondary SPARK notebook (3b67fc33-d1db-4609-9947-cd4e5bdac235): 45 sources (original 4 + 41 newly researched methodology sources via deep search)\n\n**Task:** Delete these 19 sources from main notebook (they are now redundant; secondary notebook is the authoritative archive for research methodology):\n\n1. 8 ways to determine the credibility of research reports - EAIE\n2. AI Citation Checkers: Can They Catch Broken, Fake, or Misused...\n3. Applying the CRAAP Test & Evaluating Sources - Scribbr\n4. CRAAP Test | Social Sciences and Humanities - EBSCO\n5. Checking Citations for Retractions Before Journal Submission\n6. Citation Accuracy Checklist: How to Cross-Verify References\n7. Evaluating Resources: A Step-by-Step Guide — WCIU Library\n8. Handling Retracted Articles in Citations for Researchers - SciSpace\n9. How clinicians can validate scientific contents? - PMC\n10. How to Check Citations: APA, MLA, Chicago & IEEE Verification\n11. Q. What is a CRAAP test? - LibAnswers\n12. Reference Checker: Check Citation Errors Instantly - Paperpal\n13. The Architecture of Scholarly Integrity...\n14. Top 3 Reference and Citation Checkers for Researchers\n15. Triangulation in Qualitative Research - Delve\n16. Triangulation in Research | Guide, Types, Examples - Scribbr\n17. What Is a CRAAP Test? - Jenni AI\n18. What is Cross-Referencing? - LISEN\n19. What is Triangulation in Mixed Methods Research? - ATLAS.ti\n\n**After deletion:** Main notebook reduces to ~29 sources (pure fall-detection literature + SPARK proposal/tracker docs). Secondary notebook remains authoritative for methodology + hardware reference.\n\n**Deliverable:** Confirm deletion completion; verify main notebook source count.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "Aaradhya",
+  "created_at": "2026-08-12T12:48:35Z",
+  "updated_at": "2026-08-12T12:48:35Z"
+}
