@@ -1,6 +1,6 @@
 {
   "account": "claude_chat",
-  "current_task_id": "task_2026-08-11_005",
-  "heartbeat_at": "2026-08-11T12:33:11Z",
-  "note": "BLOCKED: NLM auth expired mid-Block3 (Q3). refresh_auth confirms stale — needs user to run `nlm login` in terminal. Blocks 0-2 (Q2,Q7,Q1,Q6,Q11,Q8,Q9/Q12) complete in EX751_answers.md. Waiting on re-auth to continue Q3,Q4,Q5,Q10,Q13,Q14,Q15,Q16,Q18."
+  "current_task_id": "task_2026-08-11_004",
+  "heartbeat_at": "2026-08-12T08:03:02Z",
+  "note": "Re-verified fuseAiF_wk14_agentic_routing at HEAD 9d68e3a (one commit past task's recorded bcf3c8d, same session's own cleanup — no drift). Confirms all 4 open items still hold: (1) cell 42 valid-preds classification report still unexecuted, genuinely unrecoverable from here too — same root cause (raw preds/labels arrays only existed in original Colab kernel); (2) v1 split files still stale vs 55-cell root, unchanged; (3) recommendation still 201/150-200 words; (4) root notebook still not re-verified from a truly blank kernel — depends on prior split-run history + reconstructed slm_results.json. README.md is also stale independent of this task's scope: still says Approach 2 \"blocked\" with the bug unfixed, though the get_peft_model_state_dict fix is confirmed present in both support_routing.ipynb and split/support_routing_partB_slms_v2.ipynb, and slm_results.json has real macro_f1/accuracy for both Qwen models. No new commits, no fixes applied — reconciliation only."
 }
