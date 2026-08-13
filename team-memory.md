@@ -364,3 +364,51 @@ LinkedIn: https://www.linkedin.com/in/aaradhya-dev-tamrakar/
 Role/affiliation caps: MAKERSPACE AMBASSADOR — WEB/IT · KATHMANDU ENGINEERING COLLEGE
 
 Status: bio approved by user, ready for insertion. Still blocked — makerspace-main repo (KEC-innovation/makerspace-main) needs auth to clone in this sandbox (no GitHub token configured), and team.html has no existing Ambassador card markup to match against — only a "Currently Hiring" placeholder under Advisors. Need either repo access or the target team.html Ambassador-section markup pasted in to deliver the actual file edit + commit message.
+
+## 2026-08-13
+- [user_3, 2026-08-13T06:37:57Z] [task_2026-08-13_002 — export from account "user_3"]
+
+NOTE ON FORMAT: this account has no memory_list/memory_read tool exposed — I cannot enumerate or read a /profile.md, /areas/*.md, /people/*.md, /topics/*.md, /preferences.md tree the way the task spec assumes. What follows is Claude's own memory-system content available in this session's context (a flatter structure, not the orch per-account file tree). Treat as a different-shaped source, not a literal /topics export.
+
+## Work context
+- BEI Year III/Part II student at Kathmandu Engineering College (KEC, IOE), expected graduation January 2027
+- Roles: IEEE KEC Vice Chair, Fusemachines AI Fellow (AIF 2026), Event Manager at EPC Club, STEAM Instructor Intern at Robo Tech Nepal, KEC Maker's Space contributor
+
+## Personal context
+- DOB Jan 6, 2005, Kathmandu
+- Games (Valorant, Warhammer 40K), does 3D printing, interests in RF/microwave engineering and aviation systems
+- Family: father (53, NLIC Senior Agency Manager), mother (48, IOM health screening), younger brother (+2 Science/Computer, Damak, Jhapa); family land in Damak, Jhapa (illiquid)
+
+## Top of mind (as of this session)
+- Exam prep: EX751 (Wireless Communications) and CT653 (Artificial Intelligence)
+- SPARK project (wearable fall detection, ESP32-S3, KEC Makerspace team) — tracker v36, procurement consolidated
+- Fusemachines Week 14 assignment: agentic routing/intent classification (encoder vs decoder SLM benchmarking, Bitext dataset)
+
+## SPARK project
+- Team: Aaradhya, Rupesh Kadel, Sankalpa Lamsal, Sonia Thapa; supervisor Dipen Manandhar
+- Hardware locked: ESP32-S3 MCU, MPU6050 IMU, 1100 mAh LiPo, laptop-only gateway
+- Repo: Aaradhya-Dev-Tamrakar/SPARK
+- NotebookLM notebook id: 2c00f5a4-98dc-4783-96d1-3682fa3cb516
+
+## Portfolio website
+- GitHub Pages at Aaradhya-Dev-Tamrakar.github.io (v38+)
+- NotebookLM knowledge base id: 95a79d26-2f87-42cd-8cb9-8361a1e56059
+- Canonical count validator: scripts/verify.py (baseline v38: achievements=36, projects=22, journey=34)
+
+## Fusemachines AI Fellowship
+- Week 14: encoder vs decoder SLM benchmarking, repo fuseAiF_wk14_agentic_routing
+- Capstone: BiasAperture (AI fairness diagnostic tool), teammate Tisha Manandhar, supervisor Shreejan Kisee
+
+## Courses
+- EX725 (Aeronautical Telecommunication): ILS presentation, RF lab reports (Labs 3-4)
+- EX751, CT653 exam prep (current)
+
+## Tools and environment
+- Windows (username: Aaradhya), PowerShell 7, WSL2, OneDrive-redirected Desktop
+- GitHub: AaradhyaDT / Aaradhya-Dev-Tamrakar
+- Communication style preference: terse, directive, execution-first, minimal re-prompting
+
+## Canteen price list
+- College Staff: Veg Khana = Rs. 100; Hostel Students: Rs. 5 less on all Khana items
+
+Status: this account's export complete under the above caveat. This is Claude's persistent-memory content, not a native /topics/ file tree — flag for whoever runs consolidation.
