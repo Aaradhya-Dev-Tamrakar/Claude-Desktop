@@ -163,3 +163,204 @@ MD updated: Blocks 0,1,2,3 complete (Q2,Q7,Q1,Q6,Q11,Q8,Q9/Q12,Q3,Q4). Next: Blo
 **Study plan status:** HTML rescheduled 14:00→16:00 start. Current time 16:00 (4 PM). Work window 16:00–00:00, sleep 00:00–07:00, AM recall 07:00–08:20, final 08:20–09:00, exam 09:00.
 
 **Ready for:** Morning drills + final settlement before exam.
+
+## 2026-08-13
+- [chat, 2026-08-13T06:29:45Z] task_2026-08-13_001 is CANCELLED — do not claim/execute. It was created on a misread of the user's request (single-account file-merge). Superseded by a new task for cross-account /topics consolidation. If you see task_2026-08-13_001 pending, ignore/skip it.
+- [chat, 2026-08-13T06:30:18Z] [task_2026-08-13_002 — /topics export from account "chat"]
+
+## /topics/coursework.md
+- [stated] Elective I subject EX 725 04 — Aeronautical Telecommunication
+- [stated] RF and Microwave Engineering Lab reports generated (Lab 1: ADS introduction; Lab 3: impedance matching via Smith Chart, ADS 2021, exercises achieving S11 ≈ −49 to −51 dB at 2 GHz)
+- [stated] Aeronautical Telecommunication exam notes compiled covering Primary/Secondary Radar, CNS, ATM, ICAO standards
+- [stated] BEI IV/II syllabus converted to Markdown for reference
+
+## /topics/hobbies.md
+- [stated] Plays guitar; 7 years, almost entirely self-taught by ear; has prior solo performance experience
+- [stated] Can play 20 different instruments
+- [stated] Does bodyweight training, no gym
+- [stated] Gaming handle "WolframBlade" (COD Mobile origins)
+- [stated] Interested in purchasing a 2020–2022 Yamaha FZS FI V2/V3 under Rs. 2 lakhs
+- [stated] Has a bespoke 10ml extrait perfume called "Peace in a Bottle" (Spring 0.80ml, Vanilla Sexy 0.72ml, Bergamot 0.59ml; ~21.1% concentration, made at Poshon.np)
+- [stated] Interest in Vedic astrology as a framework for self-understanding
+- [stated] LEO Club involvement spans 5+ years across two clubs including charter membership
+
+## /topics/home-network.md
+- [stated] Prolink PRN3002 router lost config after reboot; required factory reset and full reconfiguration via PowerShell script (Setup-PRN3002.ps1)
+- [stated] Script debugged and working; LAN reconfigured to 192.168.1.2
+
+## /topics/recent-work.md
+- [stated] CV updated to July 11, 2026 version; pre-existing 4-page overflow noted but not yet resolved
+- [stated] ATS-optimized CV produced with table-based header replaced by plain paragraph structure; headshot removed from ATS version; all experience bullets rewritten with [X] metric placeholders
+
+## /topics/tech-stack.md
+- [stated] Core stack: Python, HTML/CSS/JS, SQL/SSMS, Arduino/ESP32, ML basics, SciPy, LaTeX
+- [stated] Ubuntu dual-boot (manual partitioning + driver config); Windows system hardening (CTT selective + OOShutup10)
+- [stated] Portable USB AI engine (Ollama + AnythingLLM + Dolphin 3 Llama 8B with custom batch launcher)
+- [stated] Workflow: venv/pip freeze/GitHub sync via VS Code
+- [stated] Completed minor project GCSBR (Gesture-Controlled Self-Balancing Robot): PID control (Kp=16.48, Ki=0.8, Kd=45), MPU-6050, MediaPipe, Arduino, DRV8825 stepper drivers — praised by examiners as "major project level"
+- [stated] Alpha Android app and SysOptimizer are additional ongoing projects
+- [stated] BloodVault (blood donation records web app) built as a functional CRUD testing demo
+- [stated] Skills as listed for Makerspace Ambassador bio: Embedded systems (ESP32, Arduino), TinyML/edge AI (TFLite Micro), Android dev (Kotlin, Jetpack Compose), Python/ML, PCB & robotics projects, GitHub Pages web development, 3D printing/design, laser cutting
+- [stated] Never pays for AI tools — works entirely within free-tier limits, using the maximum they legally allow
+
+Status: this account's export complete. Waiting on other accounts to push theirs before consolidation step can run.
+- [chat, 2026-08-13T06:30:46Z] task_2026-08-13_002 — SCOPE CORRECTION: not /topics/ only. Full memory tree per account: /profile.md, all /areas/*.md, all /people/*.md, all /topics/*.md, /preferences.md — everything. Re-run steps 1–3 of the task spec against memory_list() with no path_prefix (full listing), not just "/topics/". This account's earlier push (topics-only) is incomplete — see the follow-up push below for the full export, which supersedes it.
+- [chat, 2026-08-13T06:31:32Z] [task_2026-08-13_002 — FULL memory export from account "chat", supersedes the topics-only push above]
+
+## /profile.md
+- [stated] Name: Aaradhya Dev Tamrakar
+- [stated] BEI IV/I student at Kathmandu Engineering College (KEC), studying Electronics Communication and Information Engineering (ECIE) under IOE, Tribhuvan University
+- [stated] Vice Chair of IEEE KEC KTM Student Branch
+- [stated] Fusemachines AI Fellowship Fellow
+- [stated] KEC Makerspace Ambassador (web development track)
+- [stated] Primary Gmail: aaradhyadevtmr@gmail.com; secondary: devtamrakaraaradhya83@gmail.com
+
+## /areas/6g-rf-presentation.md
+- [stated] Topic: "Emerging RF systems: RIS, ISAC, Green RF and AI integration" — 6 speakers, 15 min total presentation
+- [stated] Speaker order: Aaradhya, Dolraj, Nayan, Rupesh, Sankalpa, Anustha
+- [stated] Aaradhya (the user) opens with introduction and core topics; is male (he/him)
+- [stated] Content difficulty taper: peak = Aaradhya, mid = Dolraj/Nayan/Rupesh/Sankalpa (flat, all equal), low = Anustha (wants the easier closing part)
+- [stated] Works from Claude_export .md files uploaded at the start of each session to continue prior work
+
+## /areas/fairness-bias-audit.md
+- [stated] Capstone swapped from Ward Office Assistant to Fairness & Bias Audit, supervisor Shreejan Kisee (same supervisor as prior registration)
+- [stated] Team of 2: user + Tisha (Tisha Manandhar)
+- [stated] User studies BEI (Electronics, Communication and Information Engineering) at IOE; Tisha studies BCT (Computer Engineering) at IOE
+- [stated] Task split under discussion, not yet finalized/distributed — user asked to hold off distributing tasks
+- [stated] Score-comparison approach (W2/W4 Classroom grades) dropped as a basis for the split; user decided to treat Wk5 SHAP scores as similar/not the deciding factor for now
+
+## /areas/fusemachines-fellowship.md
+- [stated] Around Week 10/24; onboarded April 2026
+- [stated] Repo naming convention: fuseAiF_wk[N]_[topic]
+- [stated] Week 9 steel surface defect CNN (NEU-DET dataset, fuseAiF_wk9_neu_defect_cnn) submitted; Week 9 score not yet posted
+- [stated] Week 8 (S&P 500 forecasting, 9-model benchmark, 4-model ensemble, Diebold-Mariano p=0.0092) completed and added to CV/master profile
+- [stated] Week 7 covered customer segmentation
+- [stated] Week 1 covered Python data wrangling and SQL (Classic Models database)
+- [stated] Study plan documents designed to be self-executing with either VS Code Copilot agent mode or Claude conversational mode
+
+## /areas/kec-makerspace-website.md
+- [stated] KEC Makerspace website (KEC-innovation/makerspace-main) audited across four rounds
+- [stated] Issues found: malformed <img> attribute pattern (48 instances, root-caused to optimizer scripts), font faux-bold rendering (Changa One/Gravitas One weight-400 only), WCAG AA contrast failure on --text-faint, navbar animation proposals
+- [stated] Jetson Orin Nano sourcing completed May 21, 2026
+- [stated] Phase 1 items locally available (Daraz/ONIN/Exort/Quality Computer); USB-TTL to check Giga Nepal/RoboNepal; IMX219 camera + enclosure to order abroad (Ubuy Nepal, REES52 India, AliExpress)
+- [stated] Device requires 22-pin FPC cable; requirements doc at v5 with sourcing page appended
+
+## /areas/makerspace-ambassador-bio.md
+- [stated] Role/affiliation caps for team.html: MAKERSPACE AMBASSADOR — WEB/IT · KATHMANDU ENGINEERING COLLEGE
+- [stated] LinkedIn: https://www.linkedin.com/in/aaradhya-dev-tamrakar/
+- [stated] Skills line for the bio: Embedded systems (ESP32, Arduino), TinyML/edge AI (TFLite Micro), Android dev (Kotlin, Jetpack Compose), Python/ML, PCB & robotics projects, GitHub Pages web development, 3D printing/design, laser cutting
+- [stated] Bio approved after iteration; final version pushed to orch team-memory (account user_2) for cross-account pickup
+- [stated] team.html currently has no Ambassador card markup — only a "Currently Hiring" placeholder under Advisors
+- [stated] makerspace-main repo clone blocked in this sandbox — no GitHub auth configured
+
+## /areas/master-profile-system.md
+- [stated] Strict versioned master profile document system (AARADHYA_MASTER.md), currently v147 with 59 changelog entries
+- [stated] Single source of operational truth across sessions
+- [stated] Standing workflow: explicit changelogs, non-destructive historical preservation, cross-document consistency checks
+- [stated] Recently completed a complex file reconstruction session to produce AARADHYA_MASTER.md and CHANGELOG.md from a conversation archive
+
+## /areas/nexus.md
+- [stated] Nexus personal AI OS project (React/FastAPI/SQLite+FTS5) reached a working state with Notes UI and Project system prompt editor functional
+- [stated] Nexus AI workflow hub does multi-model orchestration (Groq + Gemini), FastAPI + React/Vite, SQLite+FTS5
+- [stated] Active personal infrastructure project
+
+## /areas/personal-notebook.md
+- [stated] NotebookLM notebook id: 95a79d26-2f87-42cd-8cb9-8361a1e56059
+- [stated] Title: "Aaradhya — Engineer's Personal Notebook" (⚙️), 9 sources, owned, not shared
+
+## /areas/portfolio-site.md
+- [stated] GitHub Pages site at Aaradhya-Dev-Tamrakar.github.io
+- [stated] Expanded to multi-page structure (index, projects, experience, about, contact); initially a single index.html at aaradhyadtmr.github.io
+- [stated] Filter/search toolbar added on projects.html
+- [stated] CSS glow token system (--glow-gold*/--glow-teal*), warm-shifted dark-mode background tokens, AAA contrast compliance confirmed
+- [stated] Second repo AaradhyaDTmr exists as an older iteration
+- [stated] Contact form uses EmailJS (primary, auto-reply) → Formspree → mailto fallback; live and tested
+- [stated] Contact form overhauled from broken Formspree placeholder to full three-tier EmailJS/Formspree/mailto chain
+- [stated] Pending fixes: README field name correction, profilePhoto default to "photo.jpg" (never null), profile photo upload, CV download button
+- [stated] In index.html, always set profilePhoto: "photo.jpg" (never null); comment should reference "photo.jpg" not "assets/photo.jpg"
+
+## /areas/spark.md
+- [stated] SPARK = Signal Pattern Analysis & Real-time Kinetics; full title includes "Explainable Edge AI for Kinetic Pattern Recognition and Distress Signaling"
+- [stated] Major project: wearable fall detection system
+- [stated] Architecture: ESP32-S3 two-unit wearable, MPU6050 IMU, two-layer TFLite Micro CNN pipeline, laptop-only gateway with SHAP/FastAPI/PostgreSQL/Streamlit/Telegram
+- [stated] Hardware locked: ESP32-S3-WROOM-1-N16R8-CAM ×2 replaced the original ESP32 DevKit V1
+- [stated] Raspberry Pi 4B gateway dropped entirely in favor of a laptop-only host
+- [stated] Confirmed BOM ~NPR 15,004
+- [stated] Department funding negotiation ongoing for RPi line-item removal (Action #31)
+- [stated] Signed submitted proposal still names the superseded hardware — known defence talking point with supervisor Er. Dipen Manandhar
+- [stated] Teammates: Rupesh Kadel (firmware, WP 2.0, highest execution risk), Sankalpa Lamsal, Sonia Thapa
+- [stated] Renamed from FallGuard/PrakopNet → SPARK in late June 2026
+- [stated] SPARK tracker document at v21
+- [stated] Mid-term defence occurred July 13, 2026
+- [stated] LaTeX proposal package iterated extensively (v17→v24+): BOM restructuring, system flow diagram rebuilt to print-safe B&W 2×2 grid, Algorithm 5.1 formalization, wearable component figures, grammar/caption corrections
+- [stated] LaTeX proposal built from scratch following KEC's six-chapter IEEE-formatted structure, compiled via Overleaf
+- [stated] MPU6050 XYZ axis SVG/PNG icon created for presentation deck
+- [stated] PowerPoint deck audited and corrected (CNN kernel sizes, GAP vs. Flatten, literature table) ahead of July 9 proposal defence
+- [stated] Project direction evolved: Counter-UAV → HimalGuard (LoRa mesh multi-hazard EWS) → PrakopNet → SPARK
+- [stated] PrakopNet archived June 29, 2026 due to import-only hardware constraints
+- [stated] SPARK NotebookLM notebook id: 2c00f5a4-98dc-4783-96d1-3682fa3cb516, title "SPARK: Two-Layer Edge AI for Wearable Fall Detection", 48 sources
+
+## /people/dipen-manandhar.md
+- [stated] Er. Dipen Manandhar — supervisor for the SPARK major project
+
+## /people/rupesh-kadel.md
+- [stated] SPARK teammate; owns firmware, WP 2.0; flagged as highest execution risk
+
+## /people/sankalpa-lamsal.md
+- [stated] SPARK project teammate
+
+## /people/sonia-thapa.md
+- [stated] SPARK project teammate
+
+## /topics/coursework.md
+- [stated] Elective I subject EX 725 04 — Aeronautical Telecommunication
+- [stated] RF and Microwave Engineering Lab reports generated (Lab 1: ADS introduction; Lab 3: impedance matching via Smith Chart, ADS 2021, exercises achieving S11 ≈ −49 to −51 dB at 2 GHz)
+- [stated] Aeronautical Telecommunication exam notes compiled covering Primary/Secondary Radar, CNS, ATM, ICAO standards
+- [stated] BEI IV/II syllabus converted to Markdown for reference
+
+## /topics/hobbies.md
+- [stated] Plays guitar; 7 years, almost entirely self-taught by ear; has prior solo performance experience
+- [stated] Can play 20 different instruments
+- [stated] Does bodyweight training, no gym
+- [stated] Gaming handle "WolframBlade" (COD Mobile origins)
+- [stated] Interested in purchasing a 2020–2022 Yamaha FZS FI V2/V3 under Rs. 2 lakhs
+- [stated] Has a bespoke 10ml extrait perfume called "Peace in a Bottle" (Spring 0.80ml, Vanilla Sexy 0.72ml, Bergamot 0.59ml; ~21.1% concentration, made at Poshon.np)
+- [stated] Interest in Vedic astrology as a framework for self-understanding
+- [stated] LEO Club involvement spans 5+ years across two clubs including charter membership
+
+## /topics/home-network.md
+- [stated] Prolink PRN3002 router lost config after reboot; required factory reset and full reconfiguration via PowerShell script (Setup-PRN3002.ps1)
+- [stated] Script debugged and working; LAN reconfigured to 192.168.1.2
+
+## /topics/recent-work.md
+- [stated] CV updated to July 11, 2026 version; pre-existing 4-page overflow noted but not yet resolved
+- [stated] ATS-optimized CV produced with table-based header replaced by plain paragraph structure; headshot removed from ATS version; all experience bullets rewritten with [X] metric placeholders
+
+## /topics/tech-stack.md
+- [stated] Core stack: Python, HTML/CSS/JS, SQL/SSMS, Arduino/ESP32, ML basics, SciPy, LaTeX
+- [stated] Ubuntu dual-boot (manual partitioning + driver config); Windows system hardening (CTT selective + OOShutup10)
+- [stated] Portable USB AI engine (Ollama + AnythingLLM + Dolphin 3 Llama 8B with custom batch launcher)
+- [stated] Workflow: venv/pip freeze/GitHub sync via VS Code
+- [stated] Completed minor project GCSBR (Gesture-Controlled Self-Balancing Robot): PID control (Kp=16.48, Ki=0.8, Kd=45), MPU-6050, MediaPipe, Arduino, DRV8825 stepper drivers — praised by examiners as "major project level"
+- [stated] Alpha Android app and SysOptimizer are additional ongoing projects
+- [stated] BloodVault (blood donation records web app) built as a functional CRUD testing demo
+- [stated] Skills as listed for Makerspace Ambassador bio: Embedded systems (ESP32, Arduino), TinyML/edge AI (TFLite Micro), Android dev (Kotlin, Jetpack Compose), Python/ML, PCB & robotics projects, GitHub Pages web development, 3D printing/design, laser cutting
+- [stated] Never pays for AI tools — works entirely within free-tier limits, using the maximum they legally allow
+
+## /preferences.md
+- [stated] Prefers direct, no-preamble interaction
+- [stated] Prefers terse, command-style work sessions
+- [stated] IEEE student branch is always "IEEE KEC KTM Student Branch" — never omit "KTM"
+- [stated] Commit messages: always output as a single fenced code block, git-CLI-ready for direct copy/paste + Enter — no separate prose explanation alongside it
+
+Status: this account's FULL export complete (20 files, all sections above). Waiting on other accounts to push their full exports before consolidation step can run against everyone's data.
+- [user_2, 2026-08-13T06:24:39Z] KEC Makerspace Ambassador bio — Aaradhya Dev Tamrakar, finalized draft for team.html:
+
+Aaradhya is a fourth-year BEI student and our Ambassador on the Web/IT track. Between IEEE (he's Vice Chair of the KEC KTM branch) and the Fusemachines AI Fellowship, he builds — his portfolio, embedded projects, the odd broken workflow he decides needs fixing. His own site proves the habit: multi-page, custom-styled, with a contact form he rebuilt three layers deep so it never silently fails. Fun facts: his minor project was a gesture-controlled self-balancing robot. The rest of him runs on the same make-do streak: 7 years of guitar and 20 instruments, all self-taught by ear; workouts with no gym, no equipment; and a refusal to pay for a single AI tool — free tier, pushed as far as it legally goes.
+
+Skills: Embedded systems (ESP32, Arduino), TinyML/edge AI (TFLite Micro), Android dev (Kotlin, Jetpack Compose), Python/ML, PCB & robotics projects, GitHub Pages web development, 3D printing/design, laser cutting.
+
+LinkedIn: https://www.linkedin.com/in/aaradhya-dev-tamrakar/
+Role/affiliation caps: MAKERSPACE AMBASSADOR — WEB/IT · KATHMANDU ENGINEERING COLLEGE
+
+Status: bio approved by user, ready for insertion. Still blocked — makerspace-main repo (KEC-innovation/makerspace-main) needs auth to clone in this sandbox (no GitHub token configured), and team.html has no existing Ambassador card markup to match against — only a "Currently Hiring" placeholder under Advisors. Need either repo access or the target team.html Ambassador-section markup pasted in to deliver the actual file edit + commit message.

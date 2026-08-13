@@ -1,0 +1,5 @@
+{
+  "account": "chat",
+  "text": "task_2026-08-13_002 — SCOPE CORRECTION: not /topics/ only. Full memory tree per account: /profile.md, all /areas/*.md, all /people/*.md, all /topics/*.md, /preferences.md — everything. Re-run steps 1–3 of the task spec against memory_list() with no path_prefix (full listing), not just \"/topics/\". This account's earlier push (topics-only) is incomplete — see the follow-up push below for the full export, which supersedes it.",
+  "pushed_at": "2026-08-13T06:30:46Z"
+}

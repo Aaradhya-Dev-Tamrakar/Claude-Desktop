@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-13_001",
+  "parent_id": null,
+  "kind": "text",
+  "spec": "Export and consolidate all of Aaradhya's memory files into a single memory file.\n\nScope: every file currently in memory — /profile.md, all /areas/*.md, all /people/*.md, all /topics/*.md, /preferences.md (as of 2026-08-13: 6g-rf-presentation, fairness-bias-audit, fusemachines-fellowship, kec-makerspace-website, makerspace-ambassador-bio, master-profile-system, nexus, personal-notebook, portfolio-site, spark, dipen-manandhar, rupesh-kadel, sankalpa-lamsal, sonia-thapa, profile, coursework, hobbies, home-network, recent-work, tech-stack, preferences — verify full current list via memory_list before starting, as more may exist by execution time).\n\nSteps:\n1. memory_list() to get the authoritative current file list.\n2. memory_read every file.\n3. Merge all content into one new file (target path: propose /consolidated.md unless a better convention exists) — preserve every [stated] line verbatim, organized under clear section headers per original file/subject so content remains navigable despite being in one file. Keep each line's existing tag ([stated]/[observed]/[inferred] as applicable). Do not drop, summarize, or reword any line — this is a structural merge, not a content edit.\n4. Do NOT delete the original files as part of this task — flag them as superseded/ready-for-deletion in the task result, but leave actual deletion for Aaradhya to explicitly confirm separately (deletion requires an explicit per-file user request per memory-system rules; do not delete on this task's authority alone).\n5. Watch the per-file size cap — 15+ files merged may approach or exceed it. If the merge doesn't fit in one file, report that back rather than silently truncating content, and propose a split (e.g. two consolidated files) instead.\n\nContext: user explicitly requested full merge-to-one, fully aware this discards the current one-file-per-subject organization. Not a partial/selective consolidation — all files, no exceptions.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "chat",
+  "created_at": "2026-08-13T06:28:32Z",
+  "updated_at": "2026-08-13T06:28:32Z"
+}
