@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-14_001",
   "kind": "text",
   "spec": "TRACK 8 — Knowledge graph structural findings & repository-wide architectural coherence (this track's job is literally to answer graphify-out/GRAPH_REPORT.md's own 'Suggested Questions' section, which the graph tool generated but left unanswered). Files: graphify-out/GRAPH_REPORT.md in full (82 communities, 21 shown/61 thin omitted, 147 isolated nodes noted). Specifically answer, with actual code inspection backing each answer (not just restating the graph's numbers): (1) why does bootSite() bridge Community 0 to Communities 75/76/78 — walk the actual call sites; (2) are the 29 INFERRED (model-guessed, not AST-confirmed) edges from bootSite() to initAccessControl()/initAudioCues() actually correct relationships, confirm or refute each; (3) what (if anything) connects the 147 isolated/≤1-edge nodes (e.g. ACCESS_CONTROL_PAYLOADS, CMDK_PAGES, SITE, SOCIAL_ICONS) to the rest of the system — are these genuinely orphaned dead code, or does Graphify's static AST extraction simply miss dynamic/runtime references (e.g. string-key lookups, template-literal-constructed property access) that a human reading the source can see but the graph extraction cannot; (4) give a real opinion, backed by specific node/file evidence, on whether Community 0 (cohesion 0.05) and Community 1 (cohesion 0.06, 37 nodes, mostly achievement/cert entities) genuinely warrant splitting, or whether low cohesion here is inherent to what these communities represent (boot orchestration touching many subsystems; a flat list of loosely-related credential records) rather than a real design smell.",
-  "status": "done",
+  "status": "merged",
   "owner_account": "claude-track8",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-analysis-lead",
   "created_at": "2026-08-14T07:22:43Z",
-  "updated_at": "2026-08-14T07:49:16Z"
+  "updated_at": "2026-08-14T08:06:48Z"
 }

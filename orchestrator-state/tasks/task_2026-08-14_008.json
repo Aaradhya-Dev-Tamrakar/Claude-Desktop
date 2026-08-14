@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-14_001",
   "kind": "text",
   "spec": "TRACK 7 — Git/CI history integrity & cross-file version-state divergence. Files: .github/workflows/*.yml (3 workflows: stamp-last-commit, update-search-index, verify), sync.ps1, dev-logs/PortfolioWebsite_TRACKER.md (422 lines, v1-v46), assets/js/last-commit.json, graphify-out/GRAPH_REPORT.md's 'Graph Freshness' block. CONFIRMED starting finding (verify and expand, don't just restate): three different commit SHAs are each asserted as 'current' — local clone HEAD is 04f3c36 ('chore: stamp last commit [skip ci]'), assets/js/last-commit.json stamps b0eae20 (one commit ahead of local HEAD — meaning either the local clone is genuinely behind origin/main, or the stamping bot committed after this clone was pulled), and graphify-out/GRAPH_REPORT.md's freshness line claims 13d686ad. Determine the actual chronological order of these three commits (git log traversal) and characterize what caused the graph to reference the oldest of the three — was graphify update . simply never re-run after the two most recent commits, and if so does that mean the God Nodes / community structure the graph reports (e.g. bootSite() at 33 edges) could already be stale relative to live code. Separately, sanity-check sync.ps1's stated conflict-avoidance premise (avoiding merge conflicts on last-commit.json since a bot rewrites it every push) against the -PullOnly --autostash flag actually doing what's claimed. Review the 3 GitHub Actions workflows for race conditions between the commit-back bot and a human's next local pull.",
-  "status": "done",
+  "status": "merged",
   "owner_account": "claude-track7",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-analysis-lead",
   "created_at": "2026-08-14T07:22:43Z",
-  "updated_at": "2026-08-14T07:48:49Z"
+  "updated_at": "2026-08-14T08:06:48Z"
 }

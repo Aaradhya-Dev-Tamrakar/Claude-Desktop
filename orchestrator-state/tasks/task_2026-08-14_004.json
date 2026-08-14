@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-14_001",
   "kind": "text",
   "spec": "TRACK 3 — Command palette, search index & interactive terminal (maps to graphify Communities 78 + tour-adjacent 76). Files: assets/js/modules/cmdk.js (277 lines), assets/js/modules/terminal.js (296 lines), assets/js/modules/tour.js (432 lines), scripts/extract_index.py. Review the dual search-index strategy: SEARCH_STATIC_INDEX (pre-compiled, bundled into script.js, CI-regenerated via .github/workflows/update-search-index.yml on push) vs live DOM-scan fallback on achievements.html/projects.html — assess actual staleness window (a push updates the static index via CI, but what's the gap between an in-browser edit and index catch-up, and does the fallback genuinely cover every page the static index covers or only the two list pages). Audit the ~15 adtTerminal commands (skills/radar/resume/projects/run/glossary/experience/achievements/contact/whatsnew/healthcheck/accent/theme/matrix/clear) for consistent error handling on malformed/unknown input. Review tour.js's overlay lifecycle (ensureTourOverlay/closeTourOverlay/startTour/exitTour) for cleanup completeness across page navigation. Do not re-check search-index sync (verify.py's check_search_index_sync already does basic sync verification) — focus on staleness *window* and fallback *coverage*, which is behavioral, not structural.",
-  "status": "done",
+  "status": "merged",
   "owner_account": "claude-track3",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-analysis-lead",
   "created_at": "2026-08-14T07:22:43Z",
-  "updated_at": "2026-08-14T07:49:22Z"
+  "updated_at": "2026-08-14T08:06:48Z"
 }
