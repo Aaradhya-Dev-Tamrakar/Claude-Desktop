@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-14_001",
   "kind": "text",
   "spec": "TRACK 6 — Python automation & MCP server correctness. Files: scripts/site_automation.py (main() CLI + audit/rebuild_search_index/update_knowledge_graph/get_site_stats/sync_metadata/update_tracker), mcp-server/site_mcp.py, mcp-server/mcp_config.json. CONFIRMED bug to verify and characterize fully (already spotted, don't just re-find it — trace its actual blast radius): handle_resource_read() in site_mcp.py branches for site://projects and site://achievements call re.finditer()/re.sub() but the file has no 'import re' anywhere — confirm via grep that this is really absent (not imported transitively through site_automation), then determine exactly which resource reads and which tool calls (if any tools route through this function) are affected. Separately audit process_request()'s JSON-RPC error handling: does every method branch return a spec-compliant response or error object, are malformed 'params' (missing keys, wrong types) handled gracefully across all 6 tools' inputSchema-declared-but-unvalidated-at-runtime arguments, and does update_dev_tracker's user-supplied 'highlights' list get sanitized before being written into a markdown file (a malformed highlight string containing markdown syntax could break tracker.md structure). Do not re-check JS syntax or Python import errors elsewhere (verify.py doesn't check Python, but scope this track to mcp-server/ + scripts/ only, not JS).",
-  "status": "pending",
-  "owner_account": null,
+  "status": "done",
+  "owner_account": "claude-track6",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-analysis-lead",
   "created_at": "2026-08-14T07:22:43Z",
-  "updated_at": "2026-08-14T07:22:43Z"
+  "updated_at": "2026-08-14T07:54:59Z"
 }
