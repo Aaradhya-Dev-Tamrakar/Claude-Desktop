@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-14_001",
+  "parent_id": null,
+  "kind": "text",
+  "spec": "Deep multi-track analysis of the repo Aaradhya-Dev-Tamrakar/Aaradhya-Dev-Tamrakar.github.io (main branch, portfolio site at aaradhya-dev-tamrakar.github.io). 8 parallel human/agent reviewers, each covers a disjoint area (see 8 child subtasks). Each reviewer should read CLAUDE.md/AGENTS.md/README.md first for repo conventions, consult graphify-out/GRAPH_REPORT.md per AGENTS.md's own rule (god nodes, community structure, cohesion scores) before grepping raw source, and should NOT re-run or duplicate what scripts/verify.py's 17 automated checks already cover (id/href integrity, tag balance, JS syntax, version consistency, JSON-LD, manifest, SW cache completeness, robots.txt, global ID uniqueness) — findings should be things verify.py does not already catch. Known open items to fold into relevant tracks, not re-discover from scratch: (1) local clone HEAD 04f3c36 is one commit behind assets/js/last-commit.json's stamped SHA b0eae20, and graphify-out/GRAPH_REPORT.md's \"Graph Freshness\" claims commit 13d686ad — three different commits referenced as current across three files; (2) mcp-server/site_mcp.py's handle_resource_read() uses re.finditer/re.sub in the site://projects and site://achievements branches but never imports the re module — those two resource reads will throw NameError at runtime. Each reviewer delivers findings as structured text (severity-tagged: blocker/high/medium/low/nit, file:line refs, one-line fix suggestion where obvious) — this is analysis and feedback, not code edits; no commits, no sync.ps1 invocation expected from any track. Parent will merge_results (text-kind: gathers child result_text for synthesis, does not auto-synthesize) once all 8 report done.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "claude-analysis-lead",
+  "created_at": "2026-08-14T07:20:15Z",
+  "updated_at": "2026-08-14T07:20:15Z"
+}

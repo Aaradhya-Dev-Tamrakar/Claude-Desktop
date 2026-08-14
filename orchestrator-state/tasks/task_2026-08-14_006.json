@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-14_006",
+  "parent_id": "task_2026-08-14_001",
+  "kind": "text",
+  "spec": "TRACK 5 — Content, credential-claim & SEO/AEO integrity. Files: achievements.html (86KB, ~36-37 certs per tracker), projects.html (58KB, ~22-30 projects per tracker, count varies across tracker entries — note the discrepancy), about.html, index.html JSON-LD blocks, sitemap.xml, robots.txt. Cross-reference every achievement/project card's stated data-cert or data-download webp/PDF path against actual files present in assets/certificates/ and assets/docs/ — flag any card whose referenced file is genuinely missing (note: verify.py's check_asset_references likely already catches hard 404s, so focus on soft issues: near-duplicate or inconsistent title text between the HTML card and the source certificate's filename/PDF title, cards where dates in the visible UI don't match filename-embedded dates). Audit the JSON-LD Person/WebSite schema's large alternateName arrays (added v39) for anything that reads as keyword-stuffing versus genuine name variants — this is a judgment call, flag it as such. Check robots.txt's AI-bot allowlist (GPTBot, Google-Extended, anthropic-ai, ClaudeBot, PerplexityBot, Applebot-Extended) against what's actually current for each bot's documented user-agent string, since bot UA strings change over time and this file may have drifted since v39.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "claude-analysis-lead",
+  "created_at": "2026-08-14T07:22:43Z",
+  "updated_at": "2026-08-14T07:22:43Z"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-14_005",
+  "parent_id": "task_2026-08-14_001",
+  "kind": "text",
+  "spec": "TRACK 4 — Accessibility & motion/performance UX audit. Files: assets/css/style.css (96KB, single stylesheet), plus any prefers-reduced-motion / focus-visible logic referenced in dev-logs/PortfolioWebsite_TRACKER.md v27/v44/v45 entries (grain overlay dark-mode scoping, double-ring focus-visible, reduced-motion cursor reset, Page Visibility API rAF gating). This is a genuine WCAG-style audit, not a repeat of verify.py's PWA/manifest metadata check — go deeper: keyboard-only navigation through the command palette and terminal, screen-reader label coverage on interactive widgets (skill radar canvas, cert lightbox, VIP allowlist manager), color-contrast on both light and dark theme tokens, and whether every rAF/canvas animation added since v27 (about-photo-fx particle burst, skill radar, matrix rain in terminal) actually has its own reduced-motion + visibilitychange guard or whether some were added after v27 without inheriting that pattern (tracker says v27's guard was 'the first JS-side reduced-motion check' — check whether later canvas features got equivalent guards or regressed).",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "claude-analysis-lead",
+  "created_at": "2026-08-14T07:22:43Z",
+  "updated_at": "2026-08-14T07:22:43Z"
+}
