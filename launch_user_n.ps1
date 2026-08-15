@@ -15,10 +15,13 @@ param (
     [switch]$Concurrent,
     [switch]$NoCooldownAlarm,
     [switch]$GCalReminder,
-    # Skip syncing team-mcp.json / team-context.md / team-memory.md into this
-    # launch. Use for a one-off launch you don't want the shared MCP config
-    # force-merged into.
+    # Skip syncing team-mcp.json into this launch. Use for a one-off launch
+    # you don't want the shared MCP config force-merged into. Does not affect
+    # the team-context.md / team-memory.md clipboard paste — see -NoClipboardSync.
     [switch]$NoTeamSync,
+    # Skip staging team-context.md + team-memory.md on the clipboard for this
+    # launch. Independent of -NoTeamSync: the MCP config merge still runs.
+    [switch]$NoClipboardSync,
     # Dot-source-and-return-early hook for Pester: stops after function
     # definitions, before any interactive prompt or side-effecting logic.
     # Never set by real launches (launch.bat / manual pwsh invocation).
@@ -890,16 +893,20 @@ function Invoke-ProfileLaunch {
         }
 
         # Team interlink: force-merge shared MCP servers into this profile's
-        # claude_desktop_config.json, and stage team-context.md + team-memory.md
-        # on the clipboard for manual paste into Custom Instructions / first
-        # message. All are best-effort no-ops if team-mcp.json / team-context.md
-        # / team-memory.md aren't checked in yet. Runs for both modes:
-        # $NativeAppDataDir is what swap-mode Claude reads (already restored by
-        # the mirror step above); $Dir is what Concurrent mode reads directly
-        # via --user-data-dir.
+        # claude_desktop_config.json, and (independently) stage team-context.md
+        # + team-memory.md on the clipboard for manual paste into Custom
+        # Instructions / first message. Each half has its own opt-out
+        # (-NoTeamSync / -NoClipboardSync) so clipboard paste can be disabled
+        # without losing the MCP merge. All are best-effort no-ops if
+        # team-mcp.json / team-context.md / team-memory.md aren't checked in
+        # yet. Runs for both modes: $NativeAppDataDir is what swap-mode Claude
+        # reads (already restored by the mirror step above); $Dir is what
+        # Concurrent mode reads directly via --user-data-dir.
         if (-not $NoTeamSync) {
             $TeamConfigDir = if ($Concurrent) { $Dir } else { $NativeAppDataDir }
             Sync-TeamMcpConfig -RepoRoot $PSScriptRoot -TargetConfigDir $TeamConfigDir -WhatIf:$WhatIf
+        }
+        if (-not $NoClipboardSync) {
             Send-TeamContextAndMemoryToClipboard -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
         }
 
