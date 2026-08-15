@@ -425,3 +425,25 @@ Report-mode overrides vs base skill:
 4. Fixed report structure, formal register (no contractions, no "the real problem is" style casual confidence), exact benchmark figures, precise regulatory citations, LaTeX conventions (keywords A–Z, `10 mm` spacing) folded in.
 
 Packaged as .skill, delivered to user for install. Any account drafting SPARK/BiasAperture/thesis prose should consult this variant.
+
+## 2026-08-15
+- [claude_chat, 2026-08-15T09:32:08Z] BiasAperture (github.com/Aaradhya-Dev-Tamrakar/BiasAperture) — parallelization plan, WBS/schedule per report/src/chapters/systemArchitectureAndMethodology.tex §Work Breakdown Structure + §Project Plan and Schedule (repo's own source of truth, not invented). 2 people (Aaradhya, Tisha) working the actual WBS Stream A/B split; 4+ orch accounts available as compute lanes on top of that, not additional owners.
+
+WP1 — Classifier Selection & Schema Lock (WBS 1.1/1.2, Together, blocking). Fixes classifier baseline + internal schema: image_id, race/gender/age subgroup fields, predicted/true labels; detection-engine output additionally needs metric name, point estimate, CI bounds, p-value, subgroup sample size. Ends M1. Nothing in WP2/WP3 should start against this schema until locked.
+
+WP2 (1.3, Stream A) / WP3 (1.4, Stream B) — parallel from M1.
+- Stream A: dataset acquisition + integrity check, inference run, schema curation, stratified dev subset (FairFace primary; UTKFace only if descope budget allows).
+- Stream B: HTML/Jinja2 report template, Model Cards/Datasheets structure, hand-written mock metrics dictionary validating against WP1's field set.
+Converge M2.
+
+WP4 (1.5, Together) — Statistical Detection Engine. Consumes Stream A's test matrix, produces the schema-shaped metrics dict Stream B's template expects. AIF360 + Fairlearn backends, 4 disparity metrics (demographic parity diff, equalized odds diff, equal opportunity diff, disparate impact ratio), chi-squared test, bootstrap CI, sample-size guard. Ends M3.
+
+WP5 (1.6, Together) — Integration: mock-to-real swap of Stream B's dict, orchestration module.
+
+WP6/WP7 (1.7/1.8, Together) — V&V (runtime targets, report-completeness rule, case-study run) → M4; then scope-boundary statement, final report, submission package.
+
+Compute-lane assignment for the 4+ accounts: 1 acct executing Stream A, 1 acct executing Stream B, 1 acct running continuous schema-conformance check of both streams' output against WP1's locked field list (catch drift before M2, not at integration), 1 acct floating for WP1/WP4/WP5 Together phases or starting docs (1.8) early since scope-boundary statement doesn't depend on stream convergence.
+
+Descoping order if behind schedule (report's own cutlist, in order): 1) web UI, keep CLI only, 2) UTKFace, keep FairFace only, 3) PDF export, keep HTML only, 4) direct in-process inference, keep predictions-file ingestion only, 5) AIF360, keep Fairlearn only (last resort, only cut that weakens cross-validated claim). Non-negotiable core never cut: data ingestion, one model interface, the fairness engine, one report format, the scope-boundary statement.
+
+Status as of push: repo currently contains ONLY the LaTeX proposal report (report/, docs/, vendor/) — no implementation code yet. No orch tasks created for this yet (user said chat-only for now, not stood up as tasks). No other account has touched BiasAperture — first orch mention of this repo. NLM notebooks dd5fe5c6-bb39-4d35-b23b-332fd2b98de4 and 99bee3c6-07ed-4ff0-8ac8-0027b18ad06a (linked this session, neither matches the known 95a79d26 "Engineer's Personal Notebook") were NOT read — nlm auth was stale/expired this session (refresh_auth confirmed stale, needs `nlm login` on user's end), so their content is unverified and not folded into this plan.
