@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-15_001",
+  "parent_id": null,
+  "kind": "code",
+  "spec": "BiasAperture — WP2/WP3 kickoff following WP1 (M1) closure. Repo: github.com/Aaradhya-Dev-Tamrakar/BiasAperture, main @ ccf3c1a. WP1 status/plan logged in full at nlm note_id fae8a43c-4b4f-4d7c-b808-4f8a77600815, notebook dd5fe5c6-bb39-4d35-b23b-332fd2b98de4 (\"WP1 (M1) — Complete, Pushed, Verified\").\n\nLocked M1 contract everything below must build against (src/bias_aperture/schema.py, src/bias_aperture/model_interface.py, docs/schema-lock-m1.md): SubjectRecord (image_id, race[7 FairFace race_7 labels], gender[2], age[9]), MetricResult (Core Four fairness metrics + NFR-003 n>=30 sample-size guard enforced at construction), ModelInterface abstract contract with PredictionsFileInterface implemented and InProcessInterface stubbed NotImplementedError.\n\nStructure: 2 real parallel lanes (WP2 Stream A, WP3 Stream B) + 1 continuous verification lane (checks Stream A/B output against WP1's field list as it's produced, not after) + 1 lane that front-loads schema-independent docs work. WP1's schema itself is NOT reopened by this task — any field-set/label-vocab change discovered as necessary during WP2/WP3 must be re-synced with both streams before merging, not made unilaterally.\n\nTeam: Aaradhya Dev Tamrakar + Tisha Manandhar (2-person team, unlike SPARK's larger roster — do not assume SPARK's Rupesh/Sankalpa/Sonia division of labor applies here). Owner/division of labor for WP2 vs WP3 not yet confirmed — flag as open in decomposition rather than assuming.\n\nParent will decompose into child tasks per lane once owner assignment is confirmed. Do NOT reopen or duplicate WP1 scope (schema/classifier baseline are locked, already pushed and verified — 14/14 pytest passing at HEAD).",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "claude_chat",
+  "created_at": "2026-08-15T11:33:11Z",
+  "updated_at": "2026-08-15T11:33:11Z"
+}
