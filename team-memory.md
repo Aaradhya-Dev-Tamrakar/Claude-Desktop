@@ -412,3 +412,16 @@ NOTE ON FORMAT: this account has no memory_list/memory_read tool exposed — I c
 - College Staff: Veg Khana = Rs. 100; Hostel Students: Rs. 5 less on all Khana items
 
 Status: this account's export complete under the above caveat. This is Claude's persistent-memory content, not a native /topics/ file tree — flag for whoever runs consolidation.
+
+## 2026-08-15
+- [claude_chat, 2026-08-15T04:36:10Z] **Skill update — assume-reader-intelligence (writing style)**
+
+Added `references/project-reports.md` variant for SPARK/BiasAperture/thesis/IOE report writing. SKILL.md frontmatter now also triggers on report/thesis writing requests, pointing to the reference file.
+
+Report-mode overrides vs base skill:
+1. Cut term definitions harder — examiners (Dipen Manandhar/SPARK, Shreejan Kisee/BiasAperture) are domain experts, don't define CNN/TFLite/IMU/SHAP/fairness metrics/EU AI Act/NIST AI RMF etc. Only define project-specific coined terms.
+2. Do NOT cut methodology/design-choice justification for density (base skill's "let reader infer" rule doesn't apply here) — reasoning is the gradable deliverable, not just the conclusion.
+3. Epistemic hedges (scope limits, dataset/validity caveats) are required content by default, not defensive padding to trim.
+4. Fixed report structure, formal register (no contractions, no "the real problem is" style casual confidence), exact benchmark figures, precise regulatory citations, LaTeX conventions (keywords A–Z, `10 mm` spacing) folded in.
+
+Packaged as .skill, delivered to user for install. Any account drafting SPARK/BiasAperture/thesis prose should consult this variant.
