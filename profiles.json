@@ -16,9 +16,9 @@
   "user3": {
     "nickname": "xavier",
     "path": "%USERPROFILE%\\.claude-profiles\\user3",
-    "first_login_time": "2026-08-15 22:22:40",
-    "last_login_date": "2026-08-15",
-    "last_login_time": "22:26:41"
+    "last_login_date": "2026-08-17",
+    "last_login_time": "22:20:33",
+    "first_login_time": "2026-08-17 22:20:33"
   },
   "user4": {
     "path": "%USERPROFILE%\\.claude-profiles\\user4",
