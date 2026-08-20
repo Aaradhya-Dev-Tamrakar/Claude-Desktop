@@ -1,9 +1,8 @@
 # Context
 
-This file is copied to the clipboard on every profile launch (paste it as
-your first message or into Custom Instructions). Edit it directly — it is
-not a config file, just plain text pasted as-is into whichever account you
-launch.
+Paste this manually as your first message or into Custom Instructions
+when needed. Edit it directly — it is not a config file, just plain text
+pasted as-is into whichever account you launch.
 
 Because it's pasted identically into every profile (IEEE, personal, gaming,
 family, project accounts alike), keep anything account-specific out of here

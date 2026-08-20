@@ -35,9 +35,6 @@
                                                reads team-mcp.json and
                                                claude_desktop_config.json, writes the
                                                merged result back)
-      - Send-TeamContextAndMemoryToClipboard (I/O; reads team-context.md and
-                                               team-memory.md, writes to the
-                                               system clipboard via Set-Clipboard)
       - Everything past the -TestHook return: executable resolution,
         robocopy session swap, registry claude:// handling, the
         mutex-guarded last_login/first_login_time writes, sync.ps1
@@ -353,7 +350,6 @@ Describe "TestHook contract" {
         Get-Command Get-ValidatedProfilePath -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Merge-McpServers -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Sync-TeamMcpConfig -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
-        Get-Command Send-TeamContextAndMemoryToClipboard -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Show-ProfileTable -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Add-NewProfile -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
     }

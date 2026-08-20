@@ -161,10 +161,10 @@ carries the files between machines same as everything else here.
   no write race at all, not even the narrowed one `claim_task` has.
 
 `team-memory.md` and `team-context.md` at the repo root still exist and
-are still the human-facing / static-identity path
-(`Send-TeamContextAndMemoryToClipboard` is unchanged) — this directory
-is an additive, chat-callable path for dynamic notes, not a replacement
-for those two files.
+are still the human-facing / static-identity path (paste manually as
+needed — the old auto-clipboard-copy-on-launch has been removed) — this
+directory is an additive, chat-callable path for dynamic notes, not a
+replacement for those two files.
 
 ## Directory listing as the index
 
