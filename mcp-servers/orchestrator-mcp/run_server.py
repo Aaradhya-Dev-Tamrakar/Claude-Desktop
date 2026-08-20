@@ -39,6 +39,7 @@ TASKS_DIR = STATE_ROOT / "tasks"
 LIVE_STATUS_DIR = STATE_ROOT / "live-status"
 CHECKPOINTS_DIR = STATE_ROOT / "checkpoints"
 MEMORY_DIR = STATE_ROOT / "memory"
+TEAM_CONTEXT_PATH = REPO_ROOT / "team-context.md"
 
 _TASK_ID_RE = re.compile(r"^task_\d{4}-\d{2}-\d{2}_\d{3}$")
 _ACCOUNT_RE = re.compile(r"^[A-Za-z0-9_.\-]{1,64}$")
@@ -400,8 +401,8 @@ def read_all_live_status() -> list[dict[str, Any]]:
         "accounts seeing). Writes a new file under orchestrator-state/memory/ "
         "— never edits an existing entry, so there is no shared-file write "
         "race (see SCHEMA.md). This is the MCP-native replacement for "
-        "manually pasting team-memory.md via the clipboard: any account can "
-        "push a note here and any other account picks it up on next "
+        "manually pasting team-memory.md into a profile's chat: any account "
+        "can push a note here and any other account picks it up on next "
         "sync.ps1 pull via read_team_memory. Role: any."
     ),
 )
@@ -453,6 +454,28 @@ def read_team_memory(since: str | None = None) -> list[dict[str, Any]]:
         out.append(entry)
     out.sort(key=lambda e: e["pushed_at"])
     return out
+
+
+@srv.tool(
+    name="read_team_context",
+    description=(
+        "Read team-context.md (the static identity/context scaffold) from "
+        "the repo root. Chat-callable replacement for the old auto-copy-to-"
+        "clipboard-on-launch step (removed): call this instead of pasting "
+        "the file manually as a first message. The file itself is still "
+        "hand-edited (no push tool for it, unlike push_memory_entry — it's "
+        "meant to be static), so this only ever reflects whatever's "
+        "currently checked in. Returns exists=False if the file hasn't been "
+        "checked in yet. Role: any."
+    ),
+)
+def read_team_context() -> dict[str, Any]:
+    if not TEAM_CONTEXT_PATH.exists():
+        return {"exists": False, "content": ""}
+    return {
+        "exists": True,
+        "content": TEAM_CONTEXT_PATH.read_text(encoding="utf-8"),
+    }
 
 
 @srv.tool(

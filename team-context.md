@@ -1,8 +1,8 @@
 # Context
 
-Paste this manually as your first message or into Custom Instructions
-when needed. Edit it directly — it is not a config file, just plain text
-pasted as-is into whichever account you launch.
+Call the orchestrator-mcp `read_team_context` tool to pull this into a
+chat, or paste it manually as a first message / into Custom Instructions.
+Edit it directly — it is not a config file, just plain text.
 
 Because it's pasted identically into every profile (IEEE, personal, gaming,
 family, project accounts alike), keep anything account-specific out of here

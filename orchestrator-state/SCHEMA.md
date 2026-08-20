@@ -161,10 +161,12 @@ carries the files between machines same as everything else here.
   no write race at all, not even the narrowed one `claim_task` has.
 
 `team-memory.md` and `team-context.md` at the repo root still exist and
-are still the human-facing / static-identity path (paste manually as
-needed — the old auto-clipboard-copy-on-launch has been removed) — this
-directory is an additive, chat-callable path for dynamic notes, not a
-replacement for those two files.
+are still the human-facing / static-identity source files — edited by
+hand, no automatic writes. `read_team_context` gives chat-callable read
+access to `team-context.md` (no push counterpart: the file is meant to
+stay static, unlike memory entries). This directory is an additive,
+chat-callable path for dynamic notes, not a replacement for those two
+files.
 
 ## Directory listing as the index
 
