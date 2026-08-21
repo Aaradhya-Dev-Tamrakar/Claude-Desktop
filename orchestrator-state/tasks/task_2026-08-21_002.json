@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-21_002",
+  "parent_id": "task_2026-08-21_001",
+  "kind": "text",
+  "spec": "TRACK 1 — Novelty Claim 1 narrowing (Action #26, §2.3). Claim: dual-layer gated architecture (hardware threshold gate → CNN confirmation). v18's general web search already found multi-stage/gated/ensemble fall-detection prior art; Action #26 wants the *next* step — a formal IEEE Xplore/Scopus/ACM query specifically for MCU-class (ESP32/Arduino/Cortex-M tier, not server/GPU-tier) two-stage gated pipelines, 2023–2026. Deliverable: a shortlist of the closest 5-10 papers with what specifically differs from SPARK's design (hardware-gate-before-ML vs. software-only cascades, TFLite-Micro-scale vs. larger models, etc.), and a concrete proposed narrowed sentence for Claim 1's thesis wording that survives against that shortlist. Don't re-run v18's general search from scratch — start from its premise (prior art exists, broad claim doesn't hold) and go deeper/more formal.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "claude-spark-orchestrator",
+  "created_at": "2026-08-21T01:49:55Z",
+  "updated_at": "2026-08-21T01:49:55Z"
+}

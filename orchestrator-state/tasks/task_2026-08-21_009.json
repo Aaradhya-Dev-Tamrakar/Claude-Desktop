@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-21_009",
+  "parent_id": "task_2026-08-21_001",
+  "kind": "text",
+  "spec": "TRACK 8 — Elderly-vs-young-adult fall-kinematics validity (Action #23, docs/DATA_COLLECTION_PROTOCOL.md §2.2). SPARK's end-use population is elderly (per proposal scope, cited in Action #34's Velcro-closure rationale), but the human-subject collection protocol's inclusion criteria recruit healthy adults 18-35 (KEC student/faculty volunteers performing *simulated* falls). Research literature on how age affects fall kinematics (descent velocity, impact profile, pre-fall recovery attempts) and how comparable studies — including SisFall itself, which has both young and elderly subject groups — have handled or limited the young-adult-simulated-fall-as-elderly-proxy gap. Deliverable: a candid assessment of how much this limits SPARK's claims, and any protocol adjustments (e.g. slower/more deliberate fall execution instructions) that published studies use to partially compensate.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "claude-spark-orchestrator",
+  "created_at": "2026-08-21T01:49:55Z",
+  "updated_at": "2026-08-21T01:49:55Z"
+}

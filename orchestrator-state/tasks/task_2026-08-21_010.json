@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-21_010",
+  "parent_id": "task_2026-08-21_001",
+  "kind": "text",
+  "spec": "TRACK 9 — Sample-size adequacy for wearable fall-classifier fine-tuning (Action #23). Protocol's subject count is still TBD (HOD discussion held, confirmation pending). Research literature-grounded minimum-subject-count guidance for fine-tuning/calibrating a pretrained wearable fall classifier on a new cohort — what sample sizes comparable published studies used and what they found was/wasn't sufficient. Deliverable: a recommended subject-count range (with citations) Aaradhya can bring into the still-pending HOD conversation, distinct from Track 8's kinematics-validity question — this track is purely about statistical adequacy of N.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "claude-spark-orchestrator",
+  "created_at": "2026-08-21T01:49:55Z",
+  "updated_at": "2026-08-21T01:49:55Z"
+}

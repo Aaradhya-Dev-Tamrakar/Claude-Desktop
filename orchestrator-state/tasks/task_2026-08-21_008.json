@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-21_008",
+  "parent_id": "task_2026-08-21_001",
+  "kind": "text",
+  "spec": "TRACK 7 — Data-collection protocol completion vs. SisFall taxonomy (Action #23, docs/DATA_COLLECTION_PROTOCOL.md). Finding to verify and act on: the protocol doc's own section headers claim '(15 Trials)' for falls and '(19 Trials)' for ADLs — matching the tracker's '15 falls across 8 mechanisms, 19 ADLs' — but the doc only enumerates F01-F08 (8 rows) and D01-D14 (14 rows); F09-F15 and D15-D19 are missing entirely. Verify SisFall's actual published fall/ADL taxonomy against its primary source (Sucerquia et al. 2017 or the dataset's own documentation — don't trust secondhand summaries) since SPARK's secondary dataset is explicitly meant to complement SisFall, and propose the missing F09-F15/D15-D19 entries in the same table format as the existing ones, consistent with the coordinate frame (§3.2) and safety constraints (§2.1) already locked in the doc. Deliverable: draft table rows only (this is research/drafting, not a repo edit — leave applying it to a follow-up task).",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "claude-spark-orchestrator",
+  "created_at": "2026-08-21T01:49:55Z",
+  "updated_at": "2026-08-21T01:49:55Z"
+}

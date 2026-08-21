@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-21_003",
+  "parent_id": "task_2026-08-21_001",
+  "kind": "text",
+  "spec": "TRACK 2 — Novelty Claim 3 narrowing (Action #26, §2.3). Claim: per-event SHAP explainability computed at a local (non-cloud) gateway. v18 found 2024-2025 papers applying SHAP to fall-detection data generally. Action #26 wants a formal IEEE Xplore/Scopus/ACM pass specifically on *local/edge-computed* (not cloud-API-computed) explainability for wearable fall/activity classifiers — gradient-based (X×∇X, matching gateway/shap_pipeline/explainer.py's CnnShapExplainer) vs. KernelSHAP vs. other local-XAI methods on resource-constrained gateways. Deliverable: shortlist of closest papers, what differs (on-device/local-laptop vs. cloud SHAP-as-a-service), and a proposed narrowed Claim 3 sentence. Don't re-run v18's general search — go deeper/more formal from its starting point.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "claude-spark-orchestrator",
+  "created_at": "2026-08-21T01:49:55Z",
+  "updated_at": "2026-08-21T01:49:55Z"
+}

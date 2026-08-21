@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-21_012",
+  "parent_id": "task_2026-08-21_001",
+  "kind": "text",
+  "spec": "TRACK 11 — MPU6050 low-power wake-on-motion + firmware reuse-vs-rewrite (Actions #21/R-05, #24). R-05's battery-draw figure (110-140mA active, ~8-10hr) is an estimate assuming continuous 200Hz polling — MPU6050 has a built-in Motion Detection Interrupt / low-power wake-on-motion mode that could reduce this if adopted, which isn't mentioned anywhere in the tracker. Research (a) MPU6050's documented low-power/interrupt-driven modes and whether they're compatible with SPARK's Layer 1 gate design (§2.5) without breaking the 200Hz continuous-sampling assumption Layer 1's threshold math depends on, and (b) enough about FallGuard's legacy MPU6050 driver pattern vs. current best-practice I2C/DMP access to give Rupesh a real recommendation for Action #24's still-open reuse-vs-rewrite decision. Deliverable: findings on both, flagged separately since they're different decisions.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "claude-spark-orchestrator",
+  "created_at": "2026-08-21T01:49:55Z",
+  "updated_at": "2026-08-21T01:49:55Z"
+}

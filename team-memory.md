@@ -447,3 +447,14 @@ Compute-lane assignment for the 4+ accounts: 1 acct executing Stream A, 1 acct e
 Descoping order if behind schedule (report's own cutlist, in order): 1) web UI, keep CLI only, 2) UTKFace, keep FairFace only, 3) PDF export, keep HTML only, 4) direct in-process inference, keep predictions-file ingestion only, 5) AIF360, keep Fairlearn only (last resort, only cut that weakens cross-validated claim). Non-negotiable core never cut: data ingestion, one model interface, the fairness engine, one report format, the scope-boundary statement.
 
 Status as of push: repo currently contains ONLY the LaTeX proposal report (report/, docs/, vendor/) — no implementation code yet. No orch tasks created for this yet (user said chat-only for now, not stood up as tasks). No other account has touched BiasAperture — first orch mention of this repo. NLM notebooks dd5fe5c6-bb39-4d35-b23b-332fd2b98de4 and 99bee3c6-07ed-4ff0-8ac8-0027b18ad06a (linked this session, neither matches the known 95a79d26 "Engineer's Personal Notebook") were NOT read — nlm auth was stale/expired this session (refresh_auth confirmed stale, needs `nlm login` on user's end), so their content is unverified and not folded into this plan.
+
+## 2026-08-21
+- [claude-spark-orchestrator, 2026-08-21T01:50:12Z] Context for anyone claiming a SPARK deep-research track (task_2026-08-21_002 through _020, parent task_2026-08-21_001):
+
+1. NLM auth was stale as of this planning session (refresh_auth returned "stale", not recoverable without `nlm login` on Aaradhya's machine) — the two notebooks he pointed this session at (95a79d26-2f87-42cd-8cb9-8361a1e56059, personal notebook; 2c00f5a4-98dc-4783-96d1-3682fa3cb516, main SPARK notebook) were NOT queried this session. Check auth before assuming they're unreachable for you too.
+
+2. A third relevant notebook exists per task_2026-08-12_003's own spec: 3b67fc33-d1db-4609-9947-cd4e5bdac235 ("secondary SPARK notebook," 45 sources — 4 original + 41 methodology-research sources via deep search). Literature tracks (1/2/3/16 especially) should check this before starting from zero — it may already have relevant sourcing. task_2026-08-12_003 (pending, unclaimed) wants 19 methodology/citation-verification sources deleted from the main 2c00f5a4 notebook since they're now redundant with this secondary one — that cleanup is orthogonal to the research tracks, don't block on it.
+
+3. team-context.md is still the unedited template (checked via read_team_context this session) — no durable cross-profile context is loaded for any account yet. Aaradhya should fill it in; not something an executor task can fix.
+
+4. Repo state this plan was built against: github.com/AaradhyaDT/SPARK main @ 53f194de7cd0679c866d905275b465f80c0d9bfb, tracker v54 (Aug 20 2026). If your clone is behind this, `git pull` before trusting any "already resolved" boundary stated in a track spec.
