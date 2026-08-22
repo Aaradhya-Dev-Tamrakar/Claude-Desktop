@@ -3,11 +3,11 @@
   "parent_id": null,
   "kind": "text",
   "spec": "SPARK Battery-Draw Endurance Fix (Action #21, R-05) — Reconcile broken math in risk matrix.\n\n**Current state:** Tracker specifies 5mA@200Hz sampling → claimed 8-10hr endurance with 1000mAh battery. Math is broken: 1000mAh / 5mA = 200 hours, not 8-10 hours.\n\n**Required action:** Verify actual current draw profile (measure or spec from datasheets: ESP32-S3 @ 200Hz + MPU6050 active sampling) and recalculate endurance figure. Confirm whether:\n1. 5mA is correct → endurance is ~200hr (not 8-10hr) — update risk matrix\n2. 5mA is wrong → correct to achieve 8-10hr target (e.g., ~100-125mA average) — update tracker\n3. 200Hz is not sustainable → reduce sampling rate, recalculate both figures\n\n**Sources:**\n- dev_logs/SPARK_TRACKER.md (v31+, Action #21 / R-05)\n- ThesisReports/chapter3 risk matrix (if present)\n- ESP32-S3 datasheet (current draw tables, modes)\n- MPU6050 datasheet (active sampling current, configurable ODR)\n\n**Deliverable:** Updated tracker entry + corrected risk matrix figure with rationale (measured vs. calculated, assumptions documented).",
-  "status": "pending",
-  "owner_account": null,
+  "status": "done",
+  "owner_account": "claude-spark-orchestrator",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "Aaradhya",
   "created_at": "2026-08-12T12:31:19Z",
-  "updated_at": "2026-08-12T12:31:19Z"
+  "updated_at": "2026-08-22T06:17:00Z"
 }

@@ -1,0 +1,10 @@
+{
+  "task_id": "task_2026-08-12_001",
+  "kind": "text",
+  "summary": "Closed as stale — already resolved v36, no work remaining.",
+  "branch_name": null,
+  "commit_sha": null,
+  "result_text": "Closing without new work. This task's premise (broken 5mA/200hr-vs-8-10hr math) was already fixed in tracker v36 (Action #21, R-05), well before this task's creation timestamp propagated to anyone acting on it. Current state as of v54 (github.com/AaradhyaDT/SPARK @ 53f194d): R-05 cites an estimated ~110–140mA active-draw range (BLE + 200Hz IMU polling), which reconciles against the sourced 1100mAh LiPo (v34) at ~8–10hr endurance (1100÷110–140 ≈ 7.9–10hr) — internally consistent. Still explicitly flagged in the tracker as an *estimate*, not a measured value (no INA219 telemetry in this design; real profiling blocked on Action #24 firmware existing) — that residual verification need is now covered by SPARK deep-research Track 12 (task_2026-08-21_013, ESP32-S3 current-draw benchmark literature) rather than this task. No tracker edit needed from this task specifically.",
+  "submitted_by": "claude-spark-orchestrator",
+  "submitted_at": "2026-08-22T06:17:00Z"
+}
