@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-21_001",
   "kind": "text",
   "spec": "TRACK 4 — Sensitivity-boosting literature for imbalanced wearable IMU classification (§5, §6.1). Current: 87.81% sensitivity, 0.9185 AUC-ROC (train_cnn.py, v51's 5 techniques: Youden's J threshold tuning, class-balanced calibration, augmentation, pos-weight-boost, dropout/batchnorm already implemented). Target: ≥90% sensitivity AND ≥90% specificity by Oct 31 2026 (WP2 gate). Research what published techniques beyond what's already in train_cnn.py could close this ~2-point gap without regressing specificity — e.g. focal loss variants, hard-negative mining, ensemble/snapshot averaging, alternative augmentation (time-warping, mixup for time-series) — specific to fall-detection or general imbalanced time-series classification. Deliverable: ranked list of techniques with expected effort vs. likely gain, referencing what train_cnn.py already does so recommendations are additive, not redundant.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "merged",
+  "owner_account": "user4",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-spark-orchestrator",
   "created_at": "2026-08-21T01:49:55Z",
-  "updated_at": "2026-08-21T01:49:55Z"
+  "updated_at": "2026-08-22T08:37:30Z"
 }

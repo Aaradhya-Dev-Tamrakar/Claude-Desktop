@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-21_001",
   "kind": "text",
   "spec": "TRACK 19 — R-04 risk-matrix mitigation sourcing (Action #22, §2.7). R-04 (external sensor interference) cites 'isolated data collection environment' as its mitigation with no source or cross-reference — flagged since v16, never patched. Research whether this is a defensible claim worth a real citation (e.g. EMI/vibration-isolation practice in IMU-based studies) or should just be reworded to something the tracker can actually support without a citation. Deliverable: either a source, or proposed reworded mitigation text — smallest track on this board, good for whichever account picks up last.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "merged",
+  "owner_account": "user19",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-spark-orchestrator",
   "created_at": "2026-08-21T01:49:55Z",
-  "updated_at": "2026-08-21T01:49:55Z"
+  "updated_at": "2026-08-22T08:37:30Z"
 }

@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-21_001",
   "kind": "text",
   "spec": "TRACK 17 — Commercial/existing-solution landscape scan (thesis Ch1 motivation). Research existing commercial fall-detection products (Apple Watch fall detection, dedicated medical-alert wearables like MobileHelp/Medical Guardian, etc.) — what they detect, sensor placement, false-positive handling, price/accessibility barriers relevant to a Nepal context. Deliverable: a short landscape summary sharpening SPARK's Ch1 'gap' framing (why a low-cost, local, explainable, MCU-class system is a distinct contribution vs. these existing options) — commercial products, not academic literature, complementing Track 16.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "merged",
+  "owner_account": "user17",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-spark-orchestrator",
   "created_at": "2026-08-21T01:49:55Z",
-  "updated_at": "2026-08-21T01:49:55Z"
+  "updated_at": "2026-08-22T08:37:30Z"
 }

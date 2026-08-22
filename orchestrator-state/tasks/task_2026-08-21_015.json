@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-21_001",
   "kind": "text",
   "spec": "TRACK 14 — Cloud archival architecture patterns for opt-in cold storage (Action #29, Ch.6 future work). Research architecture patterns for optional cloud archival of local clinical fall-event records (JSON + PDF) that preserve the 'local-first, cloud-opt-in' framing Novelty Claim 3 depends on (local SHAP computation must not become cloud-dependent). Include a light pass on any Nepal-relevant health-data-handling norms or expectations, even for an academic prototype, worth a sentence in the thesis limitations/future-work section. Deliverable: a short architecture sketch (not implementation) plus the data-handling note.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "merged",
+  "owner_account": "user14",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-spark-orchestrator",
   "created_at": "2026-08-21T01:49:55Z",
-  "updated_at": "2026-08-21T01:49:55Z"
+  "updated_at": "2026-08-22T08:37:30Z"
 }

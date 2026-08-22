@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-21_001",
   "kind": "text",
   "spec": "TRACK 16 — Broad related-work synthesis for thesis Ch1-2 (§6.4). Distinct from Tracks 1-2's narrow prior-art hunts for specific novelty claims — this is a systematic-review-style survey of wearable fall-detection systems 2023-2026 generally (sensor modalities, ML approaches, edge vs. cloud deployment trends, reported performance ranges) to ground thesis Chapter 2's related-work section. Deliverable: a structured literature landscape (grouped by approach) SPARK's design can be positioned against, with the strongest 15-20 citations. Don't duplicate Tracks 1/2's specific claim-narrowing searches — this is the broader context those narrow searches sit inside.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "merged",
+  "owner_account": "user16",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-spark-orchestrator",
   "created_at": "2026-08-21T01:49:55Z",
-  "updated_at": "2026-08-21T01:49:55Z"
+  "updated_at": "2026-08-22T08:37:30Z"
 }

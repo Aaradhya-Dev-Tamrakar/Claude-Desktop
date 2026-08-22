@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-21_001",
   "kind": "text",
   "spec": "TRACK 10 — TPU 95A self-tapping screw-boss wall-thickness design guidelines (Actions #17, #39). M2.5 self-tapping fasteners are sourced (Action #39, v45) but length/wall-thickness safety is explicitly flagged as unverified pending a CAD model that doesn't exist yet — real failure mode to avoid is a screw bottoming through the inner wall toward skin. Research published design guidance (manufacturer boss-design guides, self-tapping-screw-in-elastomeric-FDM-part literature) for minimum wall thickness / boss outer diameter as a function of screw diameter (M2.5) in flexible TPU 95A specifically (not rigid PLA/ABS guidance, which doesn't transfer directly). Cross-check against the 2mm wall spec already logged in dev_logs/design-assets/CAD_SOFTWARE_GUIDE.md. Deliverable: a concrete boss wall-thickness/diameter spec Sankalpa can design the CAD model against, closing part of Action #17's blocker.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "merged",
+  "owner_account": "user10",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-spark-orchestrator",
   "created_at": "2026-08-21T01:49:55Z",
-  "updated_at": "2026-08-21T01:49:55Z"
+  "updated_at": "2026-08-22T08:37:30Z"
 }

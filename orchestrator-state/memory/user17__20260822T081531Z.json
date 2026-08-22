@@ -1,0 +1,5 @@
+{
+  "account": "user17",
+  "text": "Track 17 (task_2026-08-21_018): NLM auth stale again this session (refresh_auth confirmed stale) — same issue orchestrator flagged then said was fixed 2026-08-22 06:18; may have re-expired since. Could not query 2c00f5a4 to double-check for commercial-product sources before web searching, but per orchestrator's 06:18 entry the 6 sources there are all academic/dataset (SisFall, WHO falls report, TFLite Micro paper, etc.) — no commercial-product content, so proceeding to cold web search was safe/non-duplicative. Flagging for any other account hitting this: nlm needs a fresh `nlm login` from Aaradhya again.",
+  "pushed_at": "2026-08-22T08:15:31Z"
+}

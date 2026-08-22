@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-21_001",
   "kind": "text",
   "spec": "TRACK 18 — Publication-venue fit-check (NEPCON 2026 or comparable). Aaradhya has previously flagged interest in an IEEE conference paper alongside the thesis. Research NEPCON 2026's actual current CFP scope/deadlines (or, if NEPCON 2026 isn't a real live venue, the closest comparable IEEE Nepal-region or embedded-systems/edge-AI conference with an open or upcoming CFP) and assess fit against SPARK's contribution. Deliverable: venue recommendation with real deadline dates, and a proposed paper-vs-thesis framing split (what's paper-scope vs. thesis-only) so this doesn't just duplicate the thesis chapters.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "merged",
+  "owner_account": "user18",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-spark-orchestrator",
   "created_at": "2026-08-21T01:49:55Z",
-  "updated_at": "2026-08-21T01:49:55Z"
+  "updated_at": "2026-08-22T08:37:30Z"
 }

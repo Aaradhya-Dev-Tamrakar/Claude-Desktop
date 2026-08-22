@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-21_001",
   "kind": "text",
   "spec": "TRACK 5 — TFLite Micro-compatible architecture alternatives (§2.4, §7). Current: 1D CNN, 18.5KB INT8 quantized, must fit ESP32-S3 flash/latency budget (≤120KB stated ceiling, <100ms inference target, R-01). Research lightweight alternatives evaluated in published fall/HAR (human activity recognition) literature at comparable parameter budgets — TCN, depthwise-separable conv variants, lightweight attention/SE blocks — that report accuracy/sensitivity gains over plain 1D CNN at similar or smaller footprint. Deliverable: comparison table (architecture, reported params/size, reported sensitivity/specificity/AUC if available, TFLite-Micro deployability) and a recommendation on whether swapping is worth it given WP2's Oct 31 deadline, or whether Track 4's training-level techniques are the better time investment.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "merged",
+  "owner_account": "user5",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-spark-orchestrator",
   "created_at": "2026-08-21T01:49:55Z",
-  "updated_at": "2026-08-21T01:49:55Z"
+  "updated_at": "2026-08-22T08:37:30Z"
 }

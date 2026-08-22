@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-21_001",
   "kind": "text",
   "spec": "TRACK 12 — ESP32-S3 current-draw benchmarks under BLE+200Hz IMU load (Action #21/R-05). Current 110-140mA figure is explicitly flagged in the tracker as an estimate, not measured (no INA219 telemetry in this design; real measurement blocked on Action #24 firmware existing). Research published ESP32-S3 current-draw data (Espressif's own datasheet/technical reference current-consumption tables, plus independent benchmark writeups) specifically for BLE-advertising + continuous sensor-polling workloads comparable to SPARK's, to sharpen the estimate before real hardware profiling is possible. Deliverable: a tighter estimated range with sourcing, flagged as still-an-estimate, feeding back into §2.7 R-05 once Aaradhya reviews it.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "merged",
+  "owner_account": "user12",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-spark-orchestrator",
   "created_at": "2026-08-21T01:49:55Z",
-  "updated_at": "2026-08-21T01:49:55Z"
+  "updated_at": "2026-08-22T08:37:30Z"
 }

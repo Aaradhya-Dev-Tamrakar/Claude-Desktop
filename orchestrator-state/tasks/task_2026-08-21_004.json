@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-21_001",
   "kind": "text",
   "spec": "TRACK 3 — Novelty Claims 2, 4, 5 re-verification (§2.3). These had 'no direct prior art hits' as of v18 — re-check each has held up since, since papers move fast and v18 was months ago: Claim 2 (self-collected Nepal-context dataset — check specifically for any 2025-2026 South Asian/LMIC-context fall-detection dataset papers); Claim 4 (adaptive Layer-1 sensitivity via config/runtime override, no firmware reflash); Claim 5 (auto-generated clinical PDF fall reports for caregiver/patient). Deliverable: confirm each claim still has no direct prior art, or flag if new work has emerged that needs the same narrowing treatment as Claims 1/3. Lighter-weight than Tracks 1-2 — these don't need a formal database query unless something concerning turns up in general search first.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "merged",
+  "owner_account": "user3",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-spark-orchestrator",
   "created_at": "2026-08-21T01:49:55Z",
-  "updated_at": "2026-08-21T01:49:55Z"
+  "updated_at": "2026-08-22T08:37:30Z"
 }

@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-21_001",
   "kind": "text",
   "spec": "TRACK 13 — Camera-based fall-confirmation fusion literature (Action #28, Ch.6 future work). Contingent on Action #27 (resolved v52 — NPU 383µs/Arc iGPU 200µs benchmarked and confirmed viable for background inference). Research multimodal IMU+vision fall-confirmation fusion approaches in published literature — architecture patterns, what a 'second opinion' vision check typically catches that IMU-only misses (false positives from dropped objects, etc.), and rough compute requirements to sanity-check feasibility against the already-benchmarked NPU/iGPU headroom. Deliverable: a feasibility-focused summary for the thesis Ch.6 future-work section — not a design, since this is unbuilt future work.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "merged",
+  "owner_account": "user13",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "claude-spark-orchestrator",
   "created_at": "2026-08-21T01:49:55Z",
-  "updated_at": "2026-08-21T01:49:55Z"
+  "updated_at": "2026-08-22T08:37:30Z"
 }
