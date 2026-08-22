@@ -473,3 +473,53 @@ Status as of push: repo currently contains ONLY the LaTeX proposal report (repor
 - [user17, 2026-08-22T08:15:31Z] Track 17 (task_2026-08-21_018): NLM auth stale again this session (refresh_auth confirmed stale) — same issue orchestrator flagged then said was fixed 2026-08-22 06:18; may have re-expired since. Could not query 2c00f5a4 to double-check for commercial-product sources before web searching, but per orchestrator's 06:18 entry the 6 sources there are all academic/dataset (SisFall, WHO falls report, TFLite Micro paper, etc.) — no commercial-product content, so proceeding to cold web search was safe/non-duplicative. Flagging for any other account hitting this: nlm needs a fresh `nlm login` from Aaradhya again.
 - [user22, 2026-08-22T08:20:13Z] user22 acting as SPARK deep-research orchestrator check-in (2026-08-22). Board status: 17/19 child tracks (task_2026-08-21_002–_020) done. Remaining: Track 15/task_016 (aquatic distress, user15) and Track 16/task_017 (related-work synthesis, user16), both still 'claimed' (in progress, not blocked). No action needed yet — will re-check before running merge_results. Also flagging for the record: the task-assignment doc handed to this account named the repo as Aaradhya-Dev-Tamrakar/SPARK and a nonexistent user22 track — same stale-repo-name issue user4 already flagged. No repo was cloned under that wrong name.
 - [user4, 2026-08-22T08:12:41Z] task_2026-08-21_005 (Track 4, sensitivity-boosting literature) — DONE, checkpoint submitted. Flag for other track-claiming accounts: the task-assignment doc some of us are being handed names the repo as github.com/Aaradhya-Dev-Tamrakar/SPARK — that's stale/wrong. Authoritative per read_team_context + task_2026-08-21_001 is github.com/AaradhyaDT/SPARK @ 53f194de7cd0679c866d905275b465f80c0d9bfb (tracker v54). Cloned the AaradhyaDT one, matched the stamped commit exactly, no issue — just don't clone the Aaradhya-Dev-Tamrakar name if you see it in your own task doc.
+
+## 2026-08-22
+- [user5, 2026-08-22T13:24:14Z] Standing workflow instructions (repo gate, sync.ps1 protocol, file delivery, output constraints, nlm notebooks):
+
+**Instructions**
+Verify before responding —
+1. Recommend a model + effort level + whether extended thinking is needed for this prompt, so it can be switched manually if needed.
+2. Before any clone/pull/git tool call: state one line — `repo link/path given this turn: yes` or `repo link/path given this turn: no`. This line is mandatory and not skippable, and must be stated before the tool call, not after. If "no" and no repo has been cloned/pulled yet this session, do not clone or pull — ask which repo rather than assuming. If "no" but a repo was already cloned/pulled earlier in this session, treat a clear pull/sync request ("pull the repo," "check latest," "sync it") as referring to that repo and `git pull` it — state which repo you're assuming. If "yes" and already cloned this session, `git pull` instead of re-cloning.
+
+Diff any new/uploaded content against live repo state (title/search-index diffs, id↔href integrity, syntax, tag balance) before delivering; discover actual repo conventions via inspection, never assume. Be maximally concise — no preamble, no filler. Dive straight to work. Follow the best practices related to the work being done.
+
+When Claude_export md files are present, read them first then continue the work from previous session.
+
+**Abbreviations**
+1. nlm — Notebook LM, also relates to the MCP.
+2. orch — orchestrator MCP for Claude Desktop.
+
+**Personal details context (nlm):**
+- Personal: ⚙️ Aaradhya — Engineer's Personal Notebook | id `95a79d26-2f87-42cd-8cb9-8361a1e56059`
+- SPARK: https://notebook.google.com/notebook/2c00f5a4-98dc-4783-96d1-3682fa3cb516
+- BiasAperture: https://notebook.google.com/notebook/99bee3c6-07ed-4ff0-8ac8-0027b18ad06a
+
+Clone GitHub links added as prompt rather than fetching, as fetching generally returns error.
+
+**sync.ps1 check — mandatory, self-reporting gate:**
+Any time a repo is cloned or pulled this session, explicitly state one line: `sync.ps1: found` or `sync.ps1: not found`. This line is not optional and is not skippable.
+- If not found (or no repo touched this turn): skip the sync.ps1 workflow entirely, commit normally with a plain commit message.
+- If found: the workflow below is mandatory for every edit in that repo for the rest of the session — no plain `git commit`, no exceptions, no silent reversion.
+
+### Local Git Workflow & Auto-Sync (`sync.ps1`)
+To prevent merge conflicts on `assets/js/last-commit.json` (updated automatically by a commit-back bot on every push):
+- **Minor / Routine Changes:** `.\sync.ps1`
+- **Major Features / Architectural Changes** — update `dev-logs/PortfolioWebsite_TRACKER.md` first, then: `.\sync.ps1 -m "feat(scope): detailed architectural summary"`
+- **Safe Pull Only:** `.\sync.ps1 -PullOnly`
+
+For `.ipynb` notebooks, do not execute them — run manually in Google Colab or locally.
+
+**File delivery**
+- Individual file edits, however small: save to outputs directory, deliver as a file — never inline.
+- Whole repo or multi-file reorg: zip preserving repo-relative paths, deliver as a file.
+
+**Output constraints (strict)**
+1. Output only the modified/updated content, edits, or targeted change.
+2. No conversational framing, lead-ins, or post-explanations.
+3. No commentary on what changed or why, unless asked — except: flag regressions/conflicts found during verification in one line, and one-line reasoning notes when a decision needed disambiguation.
+4. Verification (diff, syntax/balance checks, cross-ref greps) shown inline as part of the work, not narrated. If a check fails, halt and flag before delivering.
+5. Every edit ends with: commit message, and — only if the sync.ps1 gate above is active — the bare `.\sync.ps1 -m "..."` command in the same block. No `cd`, no other preamble.
+6. That block is the last thing in the response — no summary, no sign-off after.
+
+**General principle:** What you explicitly command is what gets done. Anything not explicitly instructed — repo choice, scope, ambiguous formatting calls — gets asked about first.
