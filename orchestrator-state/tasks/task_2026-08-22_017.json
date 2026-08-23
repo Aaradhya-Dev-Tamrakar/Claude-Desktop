@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-22_002",
   "kind": "text",
   "spec": "TRACK 15 — Stream D (Explainability), Medium. Prompt file: research/track_15_shap_integration.md. Output: research/results/15_shap_integration.md. Research SHAP integration for image classifiers (semantic facial-region explainability) to explain per-subgroup performance disparities found by the fairness engine.",
-  "status": "claimed",
+  "status": "merged",
   "owner_account": "user16",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user1",
   "created_at": "2026-08-22T17:43:28Z",
-  "updated_at": "2026-08-23T02:17:51Z"
+  "updated_at": "2026-08-23T02:28:30Z"
 }

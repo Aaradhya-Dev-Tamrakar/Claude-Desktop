@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-22_002",
   "kind": "text",
   "spec": "TRACK 14 — Stream C (Fairness Engine), Medium. Prompt file: research/track_14_eod_eop.md. Output: research/results/14_eod_eop_implementation.md. Research Equalized Odds and Equal Opportunity implementation (Hardt et al.) for the fairness engine, including per-group TPR/FPR computation against M1's schema.",
-  "status": "claimed",
+  "status": "merged",
   "owner_account": "user15",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user1",
   "created_at": "2026-08-22T17:43:25Z",
-  "updated_at": "2026-08-23T02:16:39Z"
+  "updated_at": "2026-08-23T02:28:30Z"
 }

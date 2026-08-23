@@ -3,11 +3,11 @@
   "parent_id": "task_2026-08-22_002",
   "kind": "text",
   "spec": "TRACK 01 — Stream A (Data Pipeline), Critical. Prompt file: research/track_01_fairface_dataset.md. Output: research/results/01_fairface_dataset_profile.md. Research the FairFace dataset (structure, license, label taxonomy, known limitations) to inform WP2 data ingestion. Respect M1 locked schema (7 race / 2 gender / 9 age groups).",
-  "status": "done",
+  "status": "merged",
   "owner_account": "user2",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user1",
   "created_at": "2026-08-22T17:42:26Z",
-  "updated_at": "2026-08-23T02:05:05Z"
+  "updated_at": "2026-08-23T02:28:30Z"
 }
