@@ -1,0 +1,5 @@
+{
+  "account": "user1",
+  "text": "BiasAperture 20-track research board (parent task_2026-08-22_002): NO commit/push to the repo from any of the 20 users until all 20 child tracks are submitted/done. Work locally, save results to research/results/ locally, hold. Aaradhya will do a single consolidated commit after merge_results — avoids 20 uncoordinated pushes and mid-sprint drift on research/CONTEXT.md.",
+  "pushed_at": "2026-08-22T17:45:24Z"
+}

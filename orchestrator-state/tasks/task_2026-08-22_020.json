@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-22_020",
+  "parent_id": "task_2026-08-22_002",
+  "kind": "text",
+  "spec": "TRACK 18 — Stream E (Testing), Medium. Prompt file: research/track_18_pytest_patterns.md. Output: research/results/18_pytest_patterns.md. Research pytest testing patterns for the fairness/report/data-ingestion packages, extending WP1's existing 14/14-passing test scaffolding without touching schema.py.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user1",
+  "created_at": "2026-08-22T17:43:39Z",
+  "updated_at": "2026-08-22T17:43:39Z"
+}

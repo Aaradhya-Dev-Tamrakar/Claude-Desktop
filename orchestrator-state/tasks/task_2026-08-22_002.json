@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-22_002",
+  "parent_id": null,
+  "kind": "text",
+  "spec": "BiasAperture — 20-track parallel research sprint (Claude Desktop, 20 users) to unblock WP2-WP5. Repo: github.com/Aaradhya-Dev-Tamrakar/BiasAperture, main. Scaffolding already committed (3ce9bf4): research/CONTEXT.md (system context, paste first in every session), research/RUNNER_GUIDE.md, research/track_01..20_*.md (per-track prompts), research/results/ (output target dir). SOP per user: paste CONTEXT.md, paste assigned track's Prompt section, save Claude's markdown output to research/results/<output_file>. 20 child tasks below, one per track/user, disjoint and independent. Constraint every track must respect: M1 locked schema (7 race groups, 2 gender groups, 9 age groups, n>=30 sample-size rule) — no track may propose changing it. No code/repo edits or sync.ps1 from any track — pure research, deliverable via submit_checkpoint result_text (or saved markdown path). Parent will merge_results once all 20 children are done, then a synthesis pass (same two-phase pattern as prior 8-track portfolio and 19-track SPARK research boards) feeds WP2-WP5 implementation.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user1",
+  "created_at": "2026-08-22T17:42:17Z",
+  "updated_at": "2026-08-22T17:42:17Z"
+}

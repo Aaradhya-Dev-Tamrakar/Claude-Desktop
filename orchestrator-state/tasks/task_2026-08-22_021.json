@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-22_021",
+  "parent_id": "task_2026-08-22_002",
+  "kind": "text",
+  "spec": "TRACK 19 — Stream F (Defense & Reg), Medium. Prompt file: research/track_19_nist_rmf.md. Output: research/results/19_nist_rmf_mapping.md. Map NIST AI RMF functions (Govern/Map/Measure/Manage) onto BiasAperture's audit workflow, for the compliance-defense section of reports.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user1",
+  "created_at": "2026-08-22T17:43:43Z",
+  "updated_at": "2026-08-22T17:43:43Z"
+}

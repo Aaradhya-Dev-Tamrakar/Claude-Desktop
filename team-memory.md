@@ -523,3 +523,8 @@ For `.ipynb` notebooks, do not execute them — run manually in Google Colab or 
 6. That block is the last thing in the response — no summary, no sign-off after.
 
 **General principle:** What you explicitly command is what gets done. Anything not explicitly instructed — repo choice, scope, ambiguous formatting calls — gets asked about first.
+
+## 2026-08-22
+- [user1, 2026-08-22T17:45:02Z] BiasAperture 20-track research board (task_2026-08-22_002): constraint — no git commit/push to the repo from any of the 20 users until all 20 child tracks (task_2026-08-22_003..022) are done. Each user works in their local clone, saves output to research/results/XX_*.md, and holds it uncommitted. Single consolidated commit/push happens only after the full board is done, to avoid mid-sprint drift on the shared CONTEXT.md ground truth.
+- [user1, 2026-08-22T17:45:24Z] BiasAperture 20-track research board (parent task_2026-08-22_002): NO commit/push to the repo from any of the 20 users until all 20 child tracks are submitted/done. Work locally, save results to research/results/ locally, hold. Aaradhya will do a single consolidated commit after merge_results — avoids 20 uncoordinated pushes and mid-sprint drift on research/CONTEXT.md.
+- [user1, 2026-08-22T17:46:25Z] BiasAperture 20-track research board (parent task_2026-08-22_002) — correction: no repo write access needed for any of the 20 users, and no git push at all. Handoff is via submit_checkpoint(result_text=<markdown output>) only. Aaradhya does the single consolidated commit himself after merge_results. Supersedes prior note about "save locally and hold."
