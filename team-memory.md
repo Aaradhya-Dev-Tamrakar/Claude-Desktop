@@ -531,3 +531,6 @@ For `.ipynb` notebooks, do not execute them — run manually in Google Colab or 
 
 ## 2026-08-23
 - [user1, 2026-08-23T01:52:13Z] BiasAperture 20-track research board (parent task_2026-08-22_002) — account mapping correction: user1 is the ORCHESTRATOR (Aaradhya), not a research seat. The 20 research accounts are user2..user21, mapped to Track 01..20 respectively (offset by +1 from the original table). Track 01 (task_2026-08-22_003) released back to pending for user2 to claim. Orchestrator (user1) role: dispatch prompts, monitor via list_tasks/read_all_live_status, run merge_results once all 20 are done, do the single consolidated commit. Does not claim/submit_checkpoint on any track itself.
+
+## 2026-08-23
+- [user1, 2026-08-23T02:50:32Z] Streams A–F synthesis + master cross-track conflict log (21 discrepancies, 5 blocking) completed for task_2026-08-22_002, after hitting the message limit mid-sprint and resuming. Source data was recovered from session paste after merge_results had already consumed the 20 raw checkpoints (merge_results is single-consumption — once pulled, checkpoint text isn't returned again). Noting for continuity: capture raw track content to durable storage (repo push or local file) at/before merge time in future sprints, since neither the orchestrator nor a fresh container retains it afterward.
