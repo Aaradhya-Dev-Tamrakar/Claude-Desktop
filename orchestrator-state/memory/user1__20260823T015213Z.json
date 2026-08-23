@@ -1,0 +1,5 @@
+{
+  "account": "user1",
+  "text": "BiasAperture 20-track research board (parent task_2026-08-22_002) — account mapping correction: user1 is the ORCHESTRATOR (Aaradhya), not a research seat. The 20 research accounts are user2..user21, mapped to Track 01..20 respectively (offset by +1 from the original table). Track 01 (task_2026-08-22_003) released back to pending for user2 to claim. Orchestrator (user1) role: dispatch prompts, monitor via list_tasks/read_all_live_status, run merge_results once all 20 are done, do the single consolidated commit. Does not claim/submit_checkpoint on any track itself.",
+  "pushed_at": "2026-08-23T01:52:13Z"
+}
