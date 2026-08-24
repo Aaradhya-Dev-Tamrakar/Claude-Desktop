@@ -1,0 +1,10 @@
+{
+  "task_id": "task_2026-08-10_001",
+  "kind": "text",
+  "summary": "Superseded — all 4 items resolved by later tasks, closing as duplicate.",
+  "branch_name": null,
+  "commit_sha": null,
+  "result_text": "All 4 items resolved elsewhere, tracker now v56:\n(1) Velcro strap design decision — resolved by task_2026-08-11_003 (done).\n(2) Enclosure cost real figure — resolved by task_2026-08-11_003 (done).\n(3) Battery-draw endurance math fix (Action #21/R-05) — resolved by task_2026-08-12_001 (done); current figure ~110-140mA/~8-10hr, internally consistent, re-confirmed by task_2026-08-21_001 Track 12.\n(4) BOM order placement (Actions #16/#18) — all 3 ESP32-S3 + MPU6050 departmental-ordered per tracker v56 §0.\nNo remaining action. Closing as superseded duplicate, not re-executing.",
+  "submitted_by": "claude_chat",
+  "submitted_at": "2026-08-24T01:45:39Z"
+}

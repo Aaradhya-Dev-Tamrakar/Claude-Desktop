@@ -3,11 +3,11 @@
   "parent_id": null,
   "kind": "text",
   "spec": "SPARK BOM/procurement reconciliation (dev_logs/SPARK_TRACKER.md, docs/SPARK_BOM_Procurement.xlsx, docs/SPARK_Component_Order_Form.xlsx) — tracker at v35. Remaining open work before submission: (1) Velcro strap vs. enclosure-design conflict in §2.2 unresolved — locked design says Velcro is part of enclosure, no separate purchase, but BOM carries a separate Velcro strap line (NPR 1,000); needs a design decision. (2) Enclosure cost NPR 160 is an unmeasured 40g guess — no CAD model exists yet to slice for a real figure. (3) Action #21 — R-05 battery-draw endurance figure (~5mA@200Hz → 8-10hr) is mathematically broken (doesn't reconcile: 1000mAh/5mA=200hr not 8-10hr), still not fixed. (4) No BOM line has confirmed order placement yet (Actions #16/#18 open) — everything is priced/sourced only.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "done",
+  "owner_account": "claude_chat",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user5",
   "created_at": "2026-08-10T10:51:24Z",
-  "updated_at": "2026-08-12T12:33:43Z"
+  "updated_at": "2026-08-24T01:45:39Z"
 }
