@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-26_001",
+  "parent_id": null,
+  "kind": "code",
+  "spec": "fuseAiF_wk15_ai_assistant_rag — Build and productionize an AI assistant using Gemini API, RAG (Qdrant + sentence-transformers), tool calling, local vLLM (CPU) serving, Streamlit UI, and Docker/Docker Compose deployment. Two phases: Task 1 (build), Task 2 (productionize).",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "aaradhya",
+  "created_at": "2026-08-26T08:54:17Z",
+  "updated_at": "2026-08-26T08:54:17Z"
+}

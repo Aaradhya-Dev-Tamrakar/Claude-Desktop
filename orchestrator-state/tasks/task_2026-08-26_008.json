@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-26_008",
+  "parent_id": "task_2026-08-26_001",
+  "kind": "code",
+  "spec": "Task 2b: Performance engineering — async/concurrent request handling in FastAPI, prompt/response caching (in-memory LRU, Redis optional).",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "aaradhya",
+  "created_at": "2026-08-26T08:54:24Z",
+  "updated_at": "2026-08-26T08:54:24Z"
+}

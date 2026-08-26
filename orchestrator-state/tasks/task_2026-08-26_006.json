@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-26_006",
+  "parent_id": "task_2026-08-26_001",
+  "kind": "code",
+  "spec": "Task 1e: Dockerfile for the core assistant app + README (Task 1 deliverable) + architecture diagram v1.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "aaradhya",
+  "created_at": "2026-08-26T08:54:24Z",
+  "updated_at": "2026-08-26T08:54:24Z"
+}

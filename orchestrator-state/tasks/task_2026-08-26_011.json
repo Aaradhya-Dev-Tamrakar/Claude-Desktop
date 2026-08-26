@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-26_011",
+  "parent_id": "task_2026-08-26_001",
+  "kind": "code",
+  "spec": "Task 2e: Docker Compose (app + qdrant + vllm profile + optional redis), deployment instructions, updated architecture diagram, final README pass.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "aaradhya",
+  "created_at": "2026-08-26T08:54:24Z",
+  "updated_at": "2026-08-26T08:54:24Z"
+}

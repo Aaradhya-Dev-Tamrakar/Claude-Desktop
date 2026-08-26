@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-26_004",
+  "parent_id": "task_2026-08-26_001",
+  "kind": "code",
+  "spec": "Task 1c: RAG pipeline — document ingestion + chunking (recursive character splitter, ~500-1000 tokens), sentence-transformers embeddings, Qdrant vector store setup and retriever, wire into chat endpoint.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "aaradhya",
+  "created_at": "2026-08-26T08:54:24Z",
+  "updated_at": "2026-08-26T08:54:24Z"
+}

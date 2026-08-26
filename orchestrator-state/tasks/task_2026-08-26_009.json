@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-08-26_009",
+  "parent_id": "task_2026-08-26_001",
+  "kind": "code",
+  "spec": "Task 2c: Reliability layer — retry (tenacity), rate limiting (slowapi), fallback provider (Gemini primary -> Ollama local fallback), error handling & graceful degradation.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "aaradhya",
+  "created_at": "2026-08-26T08:54:24Z",
+  "updated_at": "2026-08-26T08:54:24Z"
+}
