@@ -1,0 +1,1 @@
+{"nodes": [{"id": "worker_researcher", "label": "Researcher / Attribute Extractor", "file_type": "rationale", "source_file": "worker-prompts/researcher.md", "source_location": null}], "edges": [], "hyperedges": []}

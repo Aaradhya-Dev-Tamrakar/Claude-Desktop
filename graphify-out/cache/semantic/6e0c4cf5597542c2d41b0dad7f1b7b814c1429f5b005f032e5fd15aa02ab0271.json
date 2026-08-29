@@ -1,0 +1,1 @@
+{"nodes": [{"id": "server_requirements", "label": "Server Requirements", "file_type": "code", "source_file": "server/requirements.txt", "source_location": null}], "edges": [{"source": "server_requirements", "target": "mcp_library", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "server/requirements.txt"}], "hyperedges": []}

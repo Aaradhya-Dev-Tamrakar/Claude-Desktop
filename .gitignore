@@ -35,7 +35,14 @@ __pycache__/
 !.env.example
 
 # Local generated state / analysis artifacts
-graphify-out/
+graphify-out/*
+!graphify-out/.graphify*
+!graphify-out/cache/
+!graphify-out/graph.json
+!graphify-out/graph.html
+!graphify-out/GRAPH_REPORT.md
+!graphify-out/manifest.json
+!graphify-out/wiki/
 .gemini/
 GEMINI.md
 
