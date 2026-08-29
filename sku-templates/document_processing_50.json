@@ -1,0 +1,16 @@
+{
+  "sku_id": "document_processing_50",
+  "display_name": "50-Document Summarization & Extraction Batch",
+  "pipeline": ["research", "draft", "qa", "format"],
+  "input_format": "pdf_or_text",
+  "input_columns": ["doc_id", "document_text", "target_fields"],
+  "output_format": "json",
+  "output_columns": ["doc_id", "executive_summary", "extracted_entities", "key_takeaways"],
+  "quality_rules": [
+    "No fabricated entity values",
+    "Executive summary strictly <= 200 words",
+    "Preserve all original dates and financial figures exactly"
+  ],
+  "estimated_minutes_per_record": 4,
+  "records_per_batch": 50
+}

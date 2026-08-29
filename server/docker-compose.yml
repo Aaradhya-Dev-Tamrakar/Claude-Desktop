@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  orchestrator:
+    build:
+      context: ..
+      dockerfile: server/Dockerfile
+    container_name: ai_production_orchestrator
+    restart: always
+    environment:
+      - DATABASE_PATH=/app/server/data/production.db
+      - API_AUTH_KEY=${API_AUTH_KEY:-dev-secret-key-change-in-prod}
+    volumes:
+      - production_data:/app/server/data
+      - ../sku-templates:/app/sku-templates
+      - ../worker-prompts:/app/worker-prompts
+    ports:
+      - "8000:8000"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare_tunnel
+    restart: always
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN:-}
+    depends_on:
+      - orchestrator
+
+volumes:
+  production_data:
+    driver: local

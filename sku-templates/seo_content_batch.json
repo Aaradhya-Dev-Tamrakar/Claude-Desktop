@@ -1,0 +1,17 @@
+{
+  "sku_id": "seo_content_batch",
+  "display_name": "SEO & AEO Article Production Batch",
+  "pipeline": ["research", "draft", "seo_optimize", "qa", "format"],
+  "input_format": "json",
+  "input_columns": ["topic", "target_keywords", "audience", "reference_urls"],
+  "output_format": "markdown",
+  "output_columns": ["title", "meta_description", "markdown_body", "faq_schema"],
+  "quality_rules": [
+    "Articles between 1200-1800 words",
+    "Include H2/H3 subheadings every 250 words",
+    "Include an FAQ section with schema markup format",
+    "Cite reference facts accurately"
+  ],
+  "estimated_minutes_per_record": 15,
+  "records_per_batch": 10
+}

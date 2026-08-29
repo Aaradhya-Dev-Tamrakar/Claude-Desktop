@@ -1,0 +1,18 @@
+{
+  "sku_id": "100_product_descriptions",
+  "display_name": "100 Product Descriptions E-Commerce Package",
+  "pipeline": ["research", "draft", "seo_optimize", "qa", "format"],
+  "input_format": "csv",
+  "input_columns": ["product_name", "category", "raw_specs", "brand", "target_keywords"],
+  "output_format": "csv",
+  "output_columns": ["product_name", "description", "meta_title", "meta_description", "seo_score"],
+  "quality_rules": [
+    "No invented specifications, dimensions, certifications, or compatibility claims",
+    "Brand name must match input exactly (case-sensitive)",
+    "Description 80-150 words",
+    "SEO keyword density 1.0-2.0%",
+    "No superlatives without source attribution"
+  ],
+  "estimated_minutes_per_record": 2,
+  "records_per_batch": 100
+}

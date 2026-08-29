@@ -1,0 +1,16 @@
+{
+  "sku_id": "30_day_social_package",
+  "display_name": "30-Day Social Media Content Package",
+  "pipeline": ["research", "draft", "qa", "format"],
+  "input_format": "json",
+  "input_columns": ["brand_voice", "themes", "target_audience", "cta_links"],
+  "output_format": "json",
+  "output_columns": ["day", "platform", "post_copy", "hook", "hashtags", "call_to_action"],
+  "quality_rules": [
+    "Adhere to platform character limits (LinkedIn <= 3000, X <= 280)",
+    "Include 3-5 relevant hashtags per post",
+    "Include strong hook in the first 2 lines"
+  ],
+  "estimated_minutes_per_record": 5,
+  "records_per_batch": 30
+}
