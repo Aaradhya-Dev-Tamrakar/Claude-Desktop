@@ -39,6 +39,9 @@ TASKS_DIR = STATE_ROOT / "tasks"
 LIVE_STATUS_DIR = STATE_ROOT / "live-status"
 CHECKPOINTS_DIR = STATE_ROOT / "checkpoints"
 MEMORY_DIR = STATE_ROOT / "memory"
+JOBS_DIR = STATE_ROOT / "jobs"
+QA_REVIEWS_DIR = STATE_ROOT / "qa-reviews"
+WORKER_ROLES_PATH = STATE_ROOT / "worker_roles.json"
 TEAM_CONTEXT_PATH = REPO_ROOT / "team-context.md"
 
 _TASK_ID_RE = re.compile(r"^task_\d{4}-\d{2}-\d{2}_\d{3}$")
@@ -54,7 +57,7 @@ def _now_iso() -> str:
 
 
 def _ensure_dirs() -> None:
-    for d in (TASKS_DIR, LIVE_STATUS_DIR, CHECKPOINTS_DIR, MEMORY_DIR):
+    for d in (TASKS_DIR, LIVE_STATUS_DIR, CHECKPOINTS_DIR, MEMORY_DIR, JOBS_DIR, QA_REVIEWS_DIR):
         d.mkdir(parents=True, exist_ok=True)
 
 
@@ -671,6 +674,139 @@ def _mark_merged(task: dict[str, Any]) -> None:
     task["status"] = "merged"
     task["updated_at"] = _now_iso()
     _write_json(_task_path(task["id"]), task)
+
+
+@srv.tool(
+    name="create_job",
+    description="Create a client production job (parent entity for pipeline-staged tasks). Role: orchestrator.",
+)
+def create_job(
+    sku: str,
+    client: str,
+    input_uri: str,
+    pipeline: list[str] | None = None,
+    quality_rules: list[str] | None = None,
+    created_by: str = "orchestrator",
+) -> dict[str, Any]:
+    _ensure_dirs()
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    existing = list(JOBS_DIR.glob(f"job_{today}_*.json"))
+    job_id = f"job_{today}_{len(existing) + 1:03d}"
+    now = _now_iso()
+    
+    job_data = {
+        "id": job_id,
+        "sku": sku,
+        "client": client,
+        "input_uri": input_uri,
+        "status": "intake",
+        "pipeline": pipeline or ["research", "draft", "seo_optimize", "qa", "format"],
+        "quality_rules": quality_rules or [],
+        "created_by": created_by,
+        "created_at": now,
+        "updated_at": now,
+    }
+    _write_json(JOBS_DIR / f"{job_id}.json", job_data)
+    return job_data
+
+
+@srv.tool(
+    name="list_jobs",
+    description="List client production jobs, optionally filtered by status.",
+)
+def list_jobs(status: str | None = None) -> list[dict[str, Any]]:
+    _ensure_dirs()
+    jobs = []
+    for p in sorted(JOBS_DIR.glob("job_*.json")):
+        j = _read_json(p)
+        if status is None or j.get("status") == status:
+            jobs.append(j)
+    return jobs
+
+
+@srv.tool(
+    name="submit_qa_review",
+    description="Submit a QA verification pass/fail/revision review for a task. Role: QA reviewer.",
+)
+def submit_qa_review(
+    task_id: str,
+    reviewer_account: str,
+    verdict: Literal["pass", "fail", "revision_needed"],
+    checks_passed: dict[str, bool] | None = None,
+    rejection_reason: str | None = None,
+) -> dict[str, Any]:
+    _ensure_dirs()
+    _validate_task_id(task_id)
+    _validate_account(reviewer_account)
+    
+    task_file = _task_path(task_id)
+    if not task_file.exists():
+        raise ValueError(f"Task '{task_id}' does not exist")
+    
+    now = _now_iso()
+    review_data = {
+        "task_id": task_id,
+        "reviewer_account": reviewer_account,
+        "verdict": verdict,
+        "checks_passed": checks_passed or {},
+        "rejection_reason": rejection_reason,
+        "reviewed_at": now,
+    }
+    
+    review_file = QA_REVIEWS_DIR / f"{task_id}_review_{now.replace(':', '').replace('-', '')}.json"
+    _write_json(review_file, review_data)
+    
+    # Update task state based on verdict
+    task = _read_json(task_file)
+    if verdict in ("fail", "revision_needed"):
+        task["status"] = "pending"
+        task["owner_account"] = None
+        task["updated_at"] = now
+        _write_json(task_file, task)
+    elif verdict == "pass":
+        task["status"] = "merged"
+        task["updated_at"] = now
+        _write_json(task_file, task)
+        
+    return review_data
+
+
+@srv.tool(
+    name="read_worker_roles",
+    description="Read the worker role capability registry and system prompt mappings.",
+)
+def read_worker_roles() -> dict[str, Any]:
+    if WORKER_ROLES_PATH.exists():
+        return _read_json(WORKER_ROLES_PATH)
+    return {}
+
+
+@srv.tool(
+    name="get_job_metrics",
+    description="Retrieve live progress and quality metrics for a production job.",
+)
+def get_job_metrics(job_id: str) -> dict[str, Any]:
+    _ensure_dirs()
+    job_file = JOBS_DIR / f"{job_id}.json"
+    if not job_file.exists():
+        raise ValueError(f"Job '{job_id}' not found")
+        
+    tasks = [t for t in list_tasks() if t.get("job_id") == job_id]
+    total = len(tasks)
+    completed = sum(1 for t in tasks if t.get("status") in ("done", "merged"))
+    pending = sum(1 for t in tasks if t.get("status") == "pending")
+    in_progress = sum(1 for t in tasks if t.get("status") == "claimed")
+    
+    reviews = list(QA_REVIEWS_DIR.glob(f"task_*_{job_id}_*.json"))
+    
+    return {
+        "job_id": job_id,
+        "total_tasks": total,
+        "completed_tasks": completed,
+        "pending_tasks": pending,
+        "in_progress_tasks": in_progress,
+        "total_reviews": len(reviews),
+    }
 
 
 def main() -> None:

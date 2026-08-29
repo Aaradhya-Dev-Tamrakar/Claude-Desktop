@@ -1,0 +1,44 @@
+{
+  "orchestrator": {
+    "description": "Decomposes jobs into pipeline-staged tasks, monitors execution, synthesizes results, handles escalations",
+    "system_prompt_file": "worker-prompts/orchestrator.md",
+    "capabilities": ["orchestration", "decomposition", "monitoring", "synthesis"],
+    "max_concurrent_tasks": 1
+  },
+  "researcher": {
+    "description": "Extracts facts, attributes, specifications, and reference data from raw inputs with zero hallucination",
+    "system_prompt_file": "worker-prompts/researcher.md",
+    "capabilities": ["research", "extraction", "fact_checking"],
+    "max_concurrent_tasks": 3
+  },
+  "writer": {
+    "description": "Transforms extracted research and attributes into polished, high-converting copy according to constraints",
+    "system_prompt_file": "worker-prompts/writer.md",
+    "capabilities": ["writing", "drafting", "copywriting"],
+    "max_concurrent_tasks": 2
+  },
+  "seo_optimizer": {
+    "description": "Optimizes text for SEO keyword density, AEO answer engine structure, and meta tags",
+    "system_prompt_file": "worker-prompts/seo-optimizer.md",
+    "capabilities": ["seo", "aeo", "meta_optimization"],
+    "max_concurrent_tasks": 2
+  },
+  "qa_reviewer": {
+    "description": "Adversarial verification gatekeeper checking hallucinations, word counts, formatting, and brand rules",
+    "system_prompt_file": "worker-prompts/qa-reviewer.md",
+    "capabilities": ["qa", "verification", "adversarial_testing"],
+    "max_concurrent_tasks": 2
+  },
+  "formatter": {
+    "description": "Packages finalized, QA-approved copy into target client schemas (CSV, JSON, Markdown, HTML)",
+    "system_prompt_file": "worker-prompts/formatter.md",
+    "capabilities": ["formatting", "packaging", "schema_validation"],
+    "max_concurrent_tasks": 3
+  },
+  "overflow_worker": {
+    "description": "General-purpose fallback worker handling bursts and backlog across drafting and research",
+    "system_prompt_file": "worker-prompts/writer.md",
+    "capabilities": ["writing", "research", "formatting"],
+    "max_concurrent_tasks": 2
+  }
+}

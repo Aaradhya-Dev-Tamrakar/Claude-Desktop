@@ -102,6 +102,11 @@ class TestToolRegistration:
                 "submit_checkpoint",
                 "list_tasks",
                 "merge_results",
+                "create_job",
+                "list_jobs",
+                "submit_qa_review",
+                "read_worker_roles",
+                "get_job_metrics",
             ]
         )
         assert names == expected
@@ -381,3 +386,41 @@ class TestInputValidation:
         rs, _ = repo
         with pytest.raises(ValueError):
             rs.create_task(spec="x", kind="text", created_by="user1", parent_id="task_9999-01-01_999")
+
+
+class TestJobProductionLifecycle:
+    def test_create_and_list_jobs(self, repo):
+        rs, _ = repo
+        job = rs.create_job(
+            sku="100_product_descriptions",
+            client="Test Client",
+            input_uri="data/input.csv",
+            quality_rules=["No hallucinations", "Length <= 150"],
+            created_by="user1"
+        )
+        assert job["id"].startswith("job_")
+        assert job["sku"] == "100_product_descriptions"
+        assert job["status"] == "intake"
+        
+        all_jobs = rs.list_jobs()
+        assert len(all_jobs) >= 1
+        assert any(j["id"] == job["id"] for j in all_jobs)
+
+    def test_submit_qa_review_lifecycle(self, repo):
+        rs, _ = repo
+        task = rs.create_task(spec="Draft product copy", kind="text", created_by="user1")
+        rs.claim_task(task_id=task["id"], account="user2")
+        rs.submit_checkpoint(task_id=task["id"], account="user2", summary="Draft finished", result_text="High quality copy")
+        
+        # Test QA pass
+        review = rs.submit_qa_review(
+            task_id=task["id"],
+            reviewer_account="user6",
+            verdict="pass",
+            checks_passed={"no_hallucinations": True, "length_ok": True}
+        )
+        assert review["verdict"] == "pass"
+        
+        # Verify task is marked merged
+        tasks = rs.list_tasks(status="merged")
+        assert any(t["id"] == task["id"] for t in tasks)
