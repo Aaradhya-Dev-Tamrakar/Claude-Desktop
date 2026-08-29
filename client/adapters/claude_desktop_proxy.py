@@ -6,25 +6,33 @@ from typing import Any
 import httpx
 
 from client.adapters.base_adapter import BaseWorkerAdapter
+from client.adapters.claude_desktop_cdp import ClaudeDesktopCDPAdapter
 
 class ClaudeDesktopProxyAdapter(BaseWorkerAdapter):
     """
     Adapter representing a local Windows Claude Desktop profile session.
-    Interfaces via Anthropic API, local MCP session, or simulated profile prompt engine.
+    Interfaces via Anthropic API, local CDP session (free tier), or simulated profile engine fallback.
     """
-    def __init__(self, worker_id: str, nickname: str, profile_path: str = "", api_key: str | None = None, model: str = "claude-3-5-sonnet-20241022"):
+    def __init__(self, worker_id: str, nickname: str, profile_path: str = "", api_key: str | None = None, model: str = "claude-3-5-sonnet-20241022", cdp_port: int | None = None):
         super().__init__(worker_id, nickname, ["writing", "research", "code", "qa", "seo", "formatting"])
         self.profile_path = profile_path
         self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY", "")
         self.model = model
+        self.cdp_port = cdp_port or int(os.getenv("CLAUDE_CDP_PORT", "0"))
+        self._cdp_adapter = ClaudeDesktopCDPAdapter(worker_id, nickname, cdp_port=self.cdp_port) if self.cdp_port > 0 else None
 
     async def check_health(self) -> bool:
-        # Healthy if API key present or local profile path configured/fallback available
+        if self._cdp_adapter:
+            return await self._cdp_adapter.check_health()
         return True
 
     async def execute_task(self, task_id: str, spec: str, stage: str, context: dict[str, Any]) -> dict[str, Any]:
-        """Execute task using Anthropic Claude API or structured prompt transformer."""
-        # 1. If real Anthropic API key is available, call Claude API
+        """Execute task using Anthropic Claude API, CDP bridge, or structured prompt transformer."""
+        # 1. If CDP port is active, use Chrome DevTools Protocol to automate free Claude Desktop
+        if self._cdp_adapter and await self._cdp_adapter.check_health():
+            return await self._cdp_adapter.execute_task(task_id, spec, stage, context)
+
+        # 2. If real Anthropic API key is available, call Claude API
         if self.api_key:
             try:
                 headers = {

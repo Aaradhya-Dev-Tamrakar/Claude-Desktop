@@ -18,6 +18,9 @@ param (
     # Skip syncing team-mcp.json into this launch. Use for a one-off launch
     # you don't want the shared MCP config force-merged into.
     [switch]$NoTeamSync,
+    # Port to enable Chrome DevTools Protocol (CDP) for headless/unattended automation.
+    # When > 0, passes --remote-debugging-port=<Port> to Claude.exe.
+    [int]$RemoteDebuggingPort = 0,
     # Dot-source-and-return-early hook for Pester: stops after function
     # definitions, before any interactive prompt or side-effecting logic.
     # Never set by real launches (launch.bat / manual pwsh invocation).
@@ -876,8 +879,16 @@ function Invoke-ProfileLaunch {
             }
             $OutLog = Join-Path $LogsDir "claude_out.log"
             $ErrLog = Join-Path $LogsDir "claude_err.log"
+            $ProcessArgs = @()
             if ($Concurrent) {
-                Start-Process $ClaudeExe -ArgumentList "--user-data-dir=`"$Dir`"" -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+                $ProcessArgs += "--user-data-dir=`"$Dir`""
+            }
+            if ($RemoteDebuggingPort -gt 0) {
+                $ProcessArgs += "--remote-debugging-port=$RemoteDebuggingPort"
+            }
+
+            if ($ProcessArgs.Count -gt 0) {
+                Start-Process $ClaudeExe -ArgumentList ($ProcessArgs -join " ") -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
             }
             else {
                 Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog

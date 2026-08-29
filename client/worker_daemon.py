@@ -9,20 +9,24 @@ import httpx
 from client.adapters.gemini_free_adapter import GeminiFreeAdapter
 from client.adapters.ollama_local_adapter import OllamaLocalAdapter
 from client.adapters.claude_desktop_proxy import ClaudeDesktopProxyAdapter
+from client.adapters.claude_desktop_cdp import ClaudeDesktopCDPAdapter
 from client.adapters.base_adapter import BaseWorkerAdapter
 
 ORCHESTRATOR_URL = os.getenv("ORCHESTRATOR_URL", "http://localhost:8000/api/v1")
 NODE_ID = os.getenv("NODE_ID", "local-node-01")
 WORKER_ID = os.getenv("WORKER_ID", "gemini_free_worker_01")
-PROVIDER = os.getenv("PROVIDER", "gemini_free")  # 'gemini_free', 'ollama_local', 'claude_desktop'
+PROVIDER = os.getenv("PROVIDER", "gemini_free")  # 'gemini_free', 'ollama_local', 'claude_desktop', 'claude_desktop_cdp'
+CDP_PORT = int(os.getenv("CDP_PORT", os.getenv("CLAUDE_CDP_PORT", "9222")))
 
 def get_adapter() -> BaseWorkerAdapter:
     if PROVIDER == "gemini_free":
         return GeminiFreeAdapter(worker_id=WORKER_ID, nickname="Gemini Free Worker")
     elif PROVIDER == "ollama_local":
         return OllamaLocalAdapter(worker_id=WORKER_ID, nickname="Ollama Qwen Worker")
+    elif PROVIDER == "claude_desktop_cdp":
+        return ClaudeDesktopCDPAdapter(worker_id=WORKER_ID, nickname="Claude Desktop CDP", cdp_port=CDP_PORT)
     else:
-        return ClaudeDesktopProxyAdapter(worker_id=WORKER_ID, nickname="Claude Desktop Proxy", profile_path="")
+        return ClaudeDesktopProxyAdapter(worker_id=WORKER_ID, nickname="Claude Desktop Proxy", profile_path="", cdp_port=CDP_PORT)
 
 async def main_loop():
     adapter = get_adapter()
