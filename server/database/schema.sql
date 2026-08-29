@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS jobs (
 
 -- 2. WORKERS TABLE (Registered Execution Endpoints)
 CREATE TABLE IF NOT EXISTS workers (
-    id TEXT PRIMARY KEY,                       -- e.g. "node_win_user1", "gemini_free_01"
-    provider TEXT NOT NULL,                    -- 'claude_desktop', 'gemini_free', 'ollama_local', 'chatgpt_web'
+    id TEXT PRIMARY KEY,                       -- e.g. "node_win_user1", "groq_worker_01"
+    provider TEXT NOT NULL,                    -- 'claude_desktop', 'groq', 'ollama_local', 'gemini_free'
     node_id TEXT NOT NULL,                     -- e.g. "aaradhya-win-pc", "oracle-cloud-a1"
     nickname TEXT NOT NULL,
     status TEXT NOT NULL DEFAULT 'offline',    -- 'idle', 'busy', 'cooldown', 'offline'

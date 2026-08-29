@@ -11,10 +11,21 @@ class GroqAdapter(BaseWorkerAdapter):
     """
     Adapter for Groq-hosted LLMs via the OpenAI-compatible chat completions API.
     """
-    def __init__(self, worker_id: str, nickname: str, api_key: str | None = None, model: str = "llama-3.3-70b-versatile"):
+
+    MODEL_OPTIONS = [
+        "llama-3.3-70b-versatile",
+        "llama-3.1-8b-instant",
+        "llama-3.1-70b-versatile",
+        "mixtral-8x7b-32768",
+        "gemma2-9b-it",
+        "deepseek-r1-distill-llama-70b",
+    ]
+
+    def __init__(self, worker_id: str, nickname: str, api_key: str | None = None, model: str | None = None):
         super().__init__(worker_id, nickname, ["research", "writing", "qa", "seo", "formatting"])
         self.api_key = api_key or os.getenv("GROQ_API_KEY", "")
-        self.model = model
+        resolved_model = model or os.getenv("GROQ_MODEL") or "llama-3.3-70b-versatile"
+        self.model = resolved_model
         self.endpoint = "https://api.groq.com/openai/v1/chat/completions"
 
     async def check_health(self) -> bool:

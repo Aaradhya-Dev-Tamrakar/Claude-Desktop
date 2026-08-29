@@ -44,7 +44,7 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 │   └── adapters/                  # LLM provider adapters
 │       ├── base_adapter.py        # Abstract adapter interface
 │       ├── claude_desktop_proxy.py # Claude Desktop UI/MCP bridge adapter
-│       ├── gemini_free_adapter.py # Google Gemini free tier API adapter
+│       ├── groq_adapter.py       # Groq-hosted LLM execution adapter
 │       └── ollama_local_adapter.py # Local Ollama LLM provider adapter
 │
 ├── server/                        # Cloud-native FastAPI coordination backend
@@ -116,7 +116,7 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 - **`launch.bat`**: Double-click launcher for Windows File Explorer.
 - **`profiles.json`**: Configuration file mapping account profile names to display nicknames, user data storage paths, and last logged-in timestamps.
 - **`server/`**: Cloud-native FastAPI orchestration backend. Manages persistent state in PostgreSQL (`schema.sql`), provides REST APIs for batch jobs and task lifecycles (`routes_jobs.py`, `routes_tasks.py`), expands SKU templates into DAG workflows (`pipeline_engine.py`), matches worker capabilities under rate/cooldown constraints (`scheduler.py`), and monitors worker liveness (`supervisor.py`).
-- **`client/`**: Distributed autonomous worker daemon (`worker_daemon.py`) connecting to the server API, claiming tasks matching its configured provider capabilities, and executing work via pluggable LLM adapters (`claude_desktop_proxy.py`, `gemini_free_adapter.py`, `ollama_local_adapter.py`).
+- **`client/`**: Distributed autonomous worker daemon (`worker_daemon.py`) connecting to the server API, claiming tasks matching its configured provider capabilities, and executing work via pluggable LLM adapters (`claude_desktop_proxy.py`, `groq_adapter.py`, `ollama_local_adapter.py`).
 - **`sku-templates/`**: Pre-configured JSON workflow definitions outlining multi-stage agent pipelines (research, draft, optimize, QA, format) for high-throughput batch content creation.
 - **`worker-prompts/`**: Role-specific system prompts defining operational guidelines and constraints for autonomous worker roles (`orchestrator`, `researcher`, `writer`, `formatter`, `seo-optimizer`, `qa-reviewer`).
 - **`team-mcp.json`**: Shared MCP server config, force-merged into every profile's `claude_desktop_config.json` on launch (shared entries win on name collision; a profile's own extra servers are never removed). Currently wires in `notebooklm-mcp` and `orchestrator-mcp` (see `mcp-servers/`) — add further entries here to roll them out to every profile at once. Use the literal token `{{REPO_ROOT}}` anywhere a `command`/`args`/`env` value needs to reference a path inside the repo; `Expand-TeamMcpPlaceholders` resolves it to each machine's actual clone path at sync time, so no entry should ever hardcode one contributor's absolute path.
@@ -214,9 +214,25 @@ python client/worker_daemon.py --worker-id worker-ollama-1 --provider ollama --m
 # Start a Gemini API worker
 python client/worker_daemon.py --worker-id worker-gemini-1 --provider gemini --model gemini-2.5-flash --capabilities research,seo,qa
 
+# Start a Groq worker (set GROQ_API_KEY first)
+export GROQ_API_KEY="your_api_key"
+export GROQ_MODEL="llama-3.1-8b-instant"
+python client/worker_daemon.py --worker-id worker-groq-1 --provider groq
+
 # Start a Claude Desktop proxy worker
 python client/worker_daemon.py --worker-id worker-claude-1 --provider claude-desktop --account user1 --capabilities reasoning,synthesis
 ```
+
+Common Groq model choices include:
+
+- `llama-3.1-8b-instant` (default for the repo)
+- `llama-3.3-70b-versatile` (quality fallback)
+- `llama-3.1-70b-versatile`
+- `mixtral-8x7b-32768`
+- `gemma2-9b-it`
+- `deepseek-r1-distill-llama-70b`
+
+Set the exact one you want via `GROQ_MODEL` in your environment or by passing a model override in code if you instantiate `GroqAdapter` directly.
 
 ### Running Usage Watchdog
 

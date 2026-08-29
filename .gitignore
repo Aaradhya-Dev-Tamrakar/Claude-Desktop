@@ -30,6 +30,15 @@ __pycache__/
 *.pyc
 *.pyo
 
+.env
+.env.*
+!.env.example
+
+# Local generated state / analysis artifacts
+graphify-out/
+.gemini/
+GEMINI.md
+
 # Google Calendar OAuth client secret & cached token — never commit
 gcal-credentials.json
 gcal-token.json
