@@ -240,7 +240,18 @@ def submit_task_checkpoint(
     description="Return backend health plus a quick status summary for jobs, tasks, and workers.",
 )
 def get_system_health() -> dict[str, Any]:
-    health = _request_json("GET", "/health")
+    health_url = API_URL.removesuffix("/api/v1")
+    health_response = httpx.get(f"{health_url}/health", timeout=30.0)
+    try:
+        health_payload = health_response.json()
+    except ValueError:
+        health_payload = {"raw": health_response.text}
+    if health_response.status_code >= 400:
+        detail = health_payload.get("detail") if isinstance(health_payload, dict) else health_payload
+        raise RuntimeError(f"Orchestrator API request failed ({health_response.status_code}): {detail}")
+    if not isinstance(health_payload, dict):
+        raise TypeError(f"Expected a JSON object from {health_url!r}/health, got {type(health_payload).__name__}")
+    health = health_payload
     jobs = _request_list("GET", "/jobs")
     tasks = _request_list("GET", "/tasks", params={"limit": "200"})
     workers = _request_list("GET", "/workers")
