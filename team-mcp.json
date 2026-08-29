@@ -13,6 +13,15 @@
         "{{REPO_ROOT}}\\mcp-servers\\orchestrator-mcp\\run_server.py"
       ],
       "env": {}
+    },
+    "cloud-orchestrator-mcp": {
+      "command": "python",
+      "args": [
+        "{{REPO_ROOT}}\\mcp-servers\\cloud-orchestrator-mcp\\run_server.py"
+      ],
+      "env": {
+        "ORCHESTRATOR_API_URL": "http://localhost:8000/api/v1"
+      }
     }
   }
 }
