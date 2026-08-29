@@ -7,6 +7,7 @@ from typing import Any
 import httpx
 
 from client.adapters.gemini_free_adapter import GeminiFreeAdapter
+from client.adapters.groq_adapter import GroqAdapter
 from client.adapters.ollama_local_adapter import OllamaLocalAdapter
 from client.adapters.claude_desktop_proxy import ClaudeDesktopProxyAdapter
 from client.adapters.claude_desktop_cdp import ClaudeDesktopCDPAdapter
@@ -15,12 +16,14 @@ from client.adapters.base_adapter import BaseWorkerAdapter
 ORCHESTRATOR_URL = os.getenv("ORCHESTRATOR_URL", "http://localhost:8000/api/v1")
 NODE_ID = os.getenv("NODE_ID", "local-node-01")
 WORKER_ID = os.getenv("WORKER_ID", "gemini_free_worker_01")
-PROVIDER = os.getenv("PROVIDER", "gemini_free")  # 'gemini_free', 'ollama_local', 'claude_desktop', 'claude_desktop_cdp'
+PROVIDER = os.getenv("PROVIDER", "gemini_free")  # 'gemini_free', 'groq', 'ollama_local', 'claude_desktop', 'claude_desktop_cdp'
 CDP_PORT = int(os.getenv("CDP_PORT") or os.getenv("CLAUDE_CDP_PORT") or "9222")
 
 def get_adapter() -> BaseWorkerAdapter:
     if PROVIDER == "gemini_free":
         return GeminiFreeAdapter(worker_id=WORKER_ID, nickname="Gemini Free Worker")
+    elif PROVIDER == "groq":
+        return GroqAdapter(worker_id=WORKER_ID, nickname="Groq Worker")
     elif PROVIDER == "ollama_local":
         return OllamaLocalAdapter(worker_id=WORKER_ID, nickname="Ollama Qwen Worker")
     elif PROVIDER == "claude_desktop_cdp":
