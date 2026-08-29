@@ -129,4 +129,78 @@ class PipelineEngine:
 
         return next_task_id
 
+    @staticmethod
+    async def check_and_finalize_job(
+        job_id: str,
+        db: aiosqlite.Connection
+    ) -> bool:
+        """
+        Checks whether all tasks for a job have reached terminal state (done/merged).
+        If all stages are complete, aggregates deliverables and marks job 'completed'.
+        """
+        now = _now_iso()
+        cursor = await db.execute("SELECT * FROM jobs WHERE id = ?", (job_id,))
+        job = await cursor.fetchone()
+        if not job:
+            return False
+
+        # Count active non-terminal tasks
+        active_cursor = await db.execute(
+            """
+            SELECT COUNT(*) FROM tasks 
+            WHERE job_id = ? AND status IN ('pending', 'claimed', 'blocked')
+            """,
+            (job_id,)
+        )
+        active_count = (await active_cursor.fetchone())[0]
+        if active_count > 0:
+            return False
+
+        # Check total tasks
+        total_cursor = await db.execute("SELECT COUNT(*) FROM tasks WHERE job_id = ?", (job_id,))
+        total_count = (await total_cursor.fetchone())[0]
+        if total_count == 0:
+            return False
+
+        # Verify final stage tasks are done or merged
+        pipeline = json.loads(job["pipeline"])
+        final_stage = pipeline[-1]
+        final_stage_order = len(pipeline)
+
+        final_tasks_cursor = await db.execute(
+            """
+            SELECT id, status FROM tasks 
+            WHERE job_id = ? AND stage = ? AND stage_order = ?
+            """,
+            (job_id, final_stage, final_stage_order)
+        )
+        final_tasks = await final_tasks_cursor.fetchall()
+        if not final_tasks or any(t["status"] not in ("done", "merged") for t in final_tasks):
+            return False
+
+        # Mark job as completed
+        await db.execute(
+            "UPDATE jobs SET status = 'completed', updated_at = ? WHERE id = ?",
+            (now, job_id)
+        )
+
+        # Update metrics
+        completed_cursor = await db.execute(
+            "SELECT COUNT(*) FROM tasks WHERE job_id = ? AND status IN ('done', 'merged')",
+            (job_id,)
+        )
+        completed_count = (await completed_cursor.fetchone())[0]
+
+        await db.execute(
+            """
+            UPDATE job_metrics 
+            SET total_tasks = ?, completed_tasks = ?, finished_at = ?
+            WHERE job_id = ?
+            """,
+            (total_count, completed_count, now, job_id)
+        )
+        await db.commit()
+        return True
+
 pipeline_engine = PipelineEngine()
+

@@ -45,6 +45,8 @@ CREATE TABLE IF NOT EXISTS tasks (
     priority INTEGER NOT NULL DEFAULT 5,       -- 1 (highest) to 10 (lowest)
     owner_worker_id TEXT REFERENCES workers(id) ON DELETE SET NULL,
     claimed_at DATETIME,
+    lease_expires_at DATETIME,
+    claim_token TEXT,
     completed_at DATETIME,
     blocked_reason TEXT,
     created_at DATETIME DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now')),

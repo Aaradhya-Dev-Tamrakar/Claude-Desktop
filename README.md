@@ -8,7 +8,7 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 - **Concurrent Multi-Monitor Sessions**: `-Mode Concurrent` (or `-Concurrent`) launches one or more profiles as independent, simultaneously-running windows via `--user-data-dir`, instead of swapping the single native install — drag each to its own monitor for side-by-side team use on one machine. `-Users <name1,name2,...>` launches a whole list non-interactively; per-account failures (missing exe, unknown profile) don't stop the rest of the list.
 - **Native MSIX & OAuth Compatibility**: 100% compatible with Windows MSIX packages and browser OAuth deep links (`claude://`) without dual-window or authentication loop issues; concurrent windows don't need to be closed to sign in, only focused.
 - **Dynamic Executable Resolution**: Automatically locates `Claude.exe` across MSIX/Windows Store App packages (`Get-AppxPackage *claude*`) and traditional local installation directories (`AppData\Local\Programs\Claude` and `WindowsApps`).
-- **Cloud-Native Autonomous Worker Fleet (v2)**: Distributed task execution engine featuring a FastAPI coordinator backend, PostgreSQL persistence, quota-aware scheduler, heartbeat supervisor, and autonomous client worker daemons supporting Claude Desktop proxy, Gemini free-tier, and local Ollama adapters.
+- **Cloud-Native Autonomous Worker Fleet (v2)**: Distributed task execution engine featuring a FastAPI coordinator backend, high-concurrency SQLite WAL persistence with atomic leasing, quota-aware scheduler, heartbeat supervisor, and autonomous client worker daemons supporting Claude Desktop proxy, Gemini free-tier, and local Ollama adapters.
 - **Automated SKU Pipeline Decomposition**: Declarative SKU templates (`sku-templates/`) expanding high-level batch production jobs into dependency-ordered DAG task execution graphs with automated handoffs.
 - **Automatic Session Backup & Persistence**: Automatically saves and syncs cookies, tokens, and local storage per profile on every switch.
 - **Smart Git Synchronization**: Automatically stages, commits, pulls (with `--rebase` & `--autostash`), and pushes repository changes.
@@ -50,22 +50,23 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 ├── server/                        # Cloud-native FastAPI coordination backend
 │   ├── main.py                    # Application entrypoint & background supervisor lifecycle
 │   ├── Dockerfile                 # Container packaging definition
-│   ├── docker-compose.yml         # Compose stack (FastAPI app + PostgreSQL)
-│   ├── requirements.txt           # Backend dependencies (fastapi, asyncpg, uvicorn, pydantic)
+│   ├── docker-compose.yml         # Compose stack (FastAPI orchestrator + cloudflared tunnel)
+│   ├── requirements.txt           # Backend dependencies (fastapi, aiosqlite, uvicorn, pydantic, httpx)
 │   ├── api/                       # REST API routes
 │   │   ├── routes_jobs.py         # Batch job submission & template expansion
-│   │   ├── routes_tasks.py        # Task lifecycle, claiming, checkpoints & completion
+│   │   ├── routes_tasks.py        # Task lifecycle, atomic leasing, checkpoints & QA reviews
 │   │   └── routes_workers.py      # Worker registration, heartbeat & active status
 │   ├── core/                      # Core backend logic
 │   │   ├── config.py              # Settings & database connection strings
-│   │   ├── database.py            # asyncpg connection pool management
-│   │   ├── pipeline_engine.py     # SKU template decomposition into DAG tasks
-│   │   ├── scheduler.py           # Quota-aware task-to-worker capability matching
-│   │   └── supervisor.py          # Dead worker watchdog & stranded task recovery
+│   │   ├── database.py            # SQLite WAL connection & migration manager
+│   │   ├── pipeline_engine.py     # SKU template decomposition into DAG tasks & stage advancement
+│   │   ├── scheduler.py           # Quota-aware task-to-worker capability matching & atomic leasing
+│   │   └── supervisor.py          # Dead worker watchdog & stranded task / expired lease recovery
 │   ├── database/
-│   │   └── schema.sql             # PostgreSQL DDL for jobs, tasks, workers, checkpoints
+│   │   └── schema.sql             # SQLite WAL DDL for jobs, tasks, workers, checkpoints, QA reviews
 │   └── models/
 │       └── schemas.py             # Pydantic request/response models
+
 │
 ├── sku-templates/                 # Production pipeline definitions
 │   ├── 100_product_descriptions.json # E-commerce catalog batch template

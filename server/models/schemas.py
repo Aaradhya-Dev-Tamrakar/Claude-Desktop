@@ -60,6 +60,8 @@ class TaskResponse(BaseModel):
     priority: int
     owner_worker_id: str | None
     claimed_at: str | None
+    lease_expires_at: str | None = None
+    claim_token: str | None = None
     completed_at: str | None
     blocked_reason: str | None
     created_at: str
@@ -67,14 +69,27 @@ class TaskResponse(BaseModel):
 
 class TaskClaimRequest(BaseModel):
     worker_id: str
+    lease_seconds: int = 300
     branch_name: str | None = None
+
+class TaskClaimResponse(BaseModel):
+    task: TaskResponse
+    claim_token: str
+    lease_expires_at: str
+
+class TaskLeaseRenewRequest(BaseModel):
+    worker_id: str
+    claim_token: str | None = None
+    lease_seconds: int = 300
 
 class TaskReleaseRequest(BaseModel):
     worker_id: str
+    claim_token: str | None = None
 
 class TaskBlockRequest(BaseModel):
     worker_id: str
     reason: str
+
 
 # ----------------- WORKERS -----------------
 class WorkerRegister(BaseModel):
@@ -116,6 +131,8 @@ class CheckpointSubmit(BaseModel):
     branch_name: str | None = None
     commit_sha: str | None = None
     submitted_by: str
+    claim_token: str | None = None
+
 
 class CheckpointResponse(BaseModel):
     task_id: str

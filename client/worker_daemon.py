@@ -61,10 +61,13 @@ async def main_loop():
                         stage = t["stage"]
                         
                         # Try to claim
-                        claim_r = await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/claim", json={"worker_id": WORKER_ID})
+                        claim_r = await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/claim", json={"worker_id": WORKER_ID, "lease_seconds": 300})
                         if claim_r.status_code == 200:
+                            claim_data = claim_r.json()
+                            claim_token = claim_data.get("claim_token")
+                            task_info = claim_data.get("task", t)
                             print(f"[>] Claimed task {task_id} (stage: {stage}). Executing...")
-                            exec_res = await adapter.execute_task(task_id, t["spec"], stage, {})
+                            exec_res = await adapter.execute_task(task_id, task_info["spec"], stage, {})
                             
                             if exec_res.get("success"):
                                 # Submit checkpoint
@@ -73,18 +76,20 @@ async def main_loop():
                                     "kind": "text",
                                     "summary": exec_res["summary"],
                                     "result_text": exec_res["result_text"],
-                                    "submitted_by": WORKER_ID
+                                    "submitted_by": WORKER_ID,
+                                    "claim_token": claim_token
                                 }
                                 await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/checkpoint", json=cp_payload)
                                 print(f"[+] Task {task_id} completed and checkpoint submitted!")
                             elif exec_res.get("error") == "RATE_LIMIT_429":
                                 print(f"[!] Rate limit 429 encountered! Triggering cooldown...")
                                 await client.post(f"{ORCHESTRATOR_URL}/workers/{WORKER_ID}/heartbeat", json={"trigger_cooldown": True})
-                                await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID})
+                                await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID, "claim_token": claim_token})
                                 break
                             else:
                                 print(f"[!] Task execution failed: {exec_res.get('error')}")
-                                await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID})
+                                await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID, "claim_token": claim_token})
+
                         
                 await asyncio.sleep(10)
             except asyncio.CancelledError:

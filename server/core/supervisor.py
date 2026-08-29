@@ -58,7 +58,7 @@ async def run_supervisor_cycle() -> dict[str, int]:
                 await db.execute(
                     """
                     UPDATE tasks 
-                    SET status = 'pending', owner_worker_id = NULL, claimed_at = NULL, updated_at = ?
+                    SET status = 'pending', owner_worker_id = NULL, claimed_at = NULL, lease_expires_at = NULL, claim_token = NULL, updated_at = ?
                     WHERE id = ?
                     """,
                     (now_iso, task_id)
@@ -69,6 +69,33 @@ async def run_supervisor_cycle() -> dict[str, int]:
                 )
                 reclaimed_tasks += 1
 
+        # 3. Reclaim tasks with explicitly expired leases (even if worker heartbeat hasn't timed out yet)
+        expired_tasks_cursor = await db.execute(
+            """
+            SELECT id, owner_worker_id FROM tasks 
+            WHERE status = 'claimed' AND lease_expires_at IS NOT NULL AND lease_expires_at < ?
+            """,
+            (now_iso,)
+        )
+        expired_tasks = await expired_tasks_cursor.fetchall()
+        for t in expired_tasks:
+            task_id = t["id"]
+            owner = t["owner_worker_id"]
+            await db.execute(
+                """
+                UPDATE tasks 
+                SET status = 'pending', owner_worker_id = NULL, claimed_at = NULL, lease_expires_at = NULL, claim_token = NULL, updated_at = ?
+                WHERE id = ? AND status = 'claimed' AND lease_expires_at < ?
+                """,
+                (now_iso, task_id, now_iso)
+            )
+            if owner:
+                await db.execute(
+                    "UPDATE task_attempts SET status = 'timeout', finished_at = ? WHERE task_id = ? AND worker_id = ? AND status = 'running'",
+                    (now_iso, task_id, owner)
+                )
+            reclaimed_tasks += 1
+
         await db.commit()
 
     return {
@@ -76,3 +103,4 @@ async def run_supervisor_cycle() -> dict[str, int]:
         "offline_workers": offline_workers,
         "uncooled_workers": uncooled_workers
     }
+
