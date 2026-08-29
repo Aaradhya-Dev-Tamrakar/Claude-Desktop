@@ -15,7 +15,7 @@
       "env": {}
     },
     "cloud-orchestrator-mcp": {
-      "command": "python",
+      "command": "{{REPO_ROOT}}\\.venv\\Scripts\\python.exe",
       "args": [
         "{{REPO_ROOT}}\\mcp-servers\\cloud-orchestrator-mcp\\run_server.py"
       ],
