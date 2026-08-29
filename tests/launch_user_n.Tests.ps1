@@ -260,7 +260,7 @@ Describe "Show-ProfileTable" {
 
         It "includes all five expected column headers" {
             foreach ($col in @("User#", "Nickname", "Last Time", "Last Date", "Today Rank")) {
-                $script:Output | Should -Match [regex]::Escape($col)
+                $script:Output | Should -Match $col
             }
         }
     }

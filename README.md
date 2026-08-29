@@ -19,14 +19,16 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 ```Claude-Desktop/
 ├── launch_user_n.ps1              # Profile launcher (Isolated / Concurrent)
 ├── launch.bat                     # Double-click entry point for File Explorer
-├── sync.ps1                       # Git sync: pull --rebase --autostash, commit, push
+├── sync.ps1                       # Git sync: pull --rebase --autostash, memory auto-sync, commit, push
 ├── cooldown-reminder.ps1          # Post-login 5h cooldown toast, invoked by launch_user_n.ps1
+├── usage-watchdog.ps1             # Tray UIA usage watchdog polling & auto-checkpointing on threshold
 ├── reset_profiles.ps1             # Wipes all profile state, resets profiles.json to {}
 ├── bypass-all-profiles.ps1        # Sets bypassPermissionsGateByAccount=true across all profile configs
 ├── profiles.json                  # Account name -> nickname/paths/last-login map
 ├── team-mcp.json                  # Shared MCP config, force-merged into every profile
-├── team-context.md                # Static identity scaffold, synced via sync.ps1
-├── team-memory.md                 # Hand-appended memory log, synced via sync.ps1
+├── team-claude-config.json        # Sanitized team-wide Claude desktop config template (mcpServers + preferences)
+├── team-context.md                # Static identity scaffold, read via read_team_context
+├── team-memory.md                 # Shared memory log, auto-appended by sync.ps1 + manual entries
 ├── gcal-credentials.json.example  # Google Calendar OAuth credential template
 ├── gcal-token.json.example        # Google Calendar token template
 ├── AGENTS.md                      # Repo conventions for agent contributors
@@ -35,11 +37,19 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 ├── .gitattributes
 ├── .gitignore
 │
+├── Claude Skills + MCP/
+│   ├── Cross-Linking Hub.md       # Map of GitHub repos to NotebookLM notebooks and central hub
+│   ├── archive-org.skill          # Skill: Archive.org search and snapshot retrieval
+│   ├── assume-reader-intelligence.skill # Skill: Terse, high-signal communication style
+│   ├── pwsh-sandbox-setup.skill   # Skill: PowerShell sandbox execution conventions
+│   ├── repo-conventions.skill     # Skill: Repository structure and sync conventions
+│   └── notebooklm-mcp-0.9.5.mcpb  # Packaged NotebookLM MCP extension bundle
+│
 ├── mcp-servers/
 │   ├── notebooklm-mcp/
 │   │   └── run_server.py          # uvx-shim launcher for the published NotebookLM CLI
 │   └── orchestrator-mcp/
-│       └── run_server.py          # Hand-written MCP server, 13 tools, requires `pip install mcp`
+│       └── run_server.py          # Hand-written MCP server, 14 tools, requires `pip install mcp`
 │
 ├── orchestrator-state/
 │   ├── SCHEMA.md                  # File contract for tasks/live-status/checkpoints/memory
@@ -50,25 +60,28 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 │
 └── tests/
     ├── launch_user_n.Tests.ps1        # Pester specs (path guard, profile table, MCP merge, placeholder expansion)
-    └── orchestrator_mcp_test.py       # pytest specs, 22 cases, each against a throwaway git repo
+    └── orchestrator_mcp_test.py       # pytest specs for orchestrator-mcp coordination server
 ```
 
 ## Files
 
-- **`launch_user_n.ps1`**: Profile launcher script. Two modes: **Isolated** (default) resolves the executable path and swaps a single profile's session data into the native AppData install; **Concurrent** (`-Mode Concurrent` / `-Concurrent`, optionally with `-Users <name1,name2,...>`) launches one or more profiles as independent windows via `--user-data-dir`, with no swap/mirror and no shared `claude://` handler changes. With no `-Mode`/`-Concurrent`/`-Users` given, prompts once for a mode. Unless `-NoTeamSync`, force-merges `team-mcp.json` into each launching profile's `claude_desktop_config.json`.
+- **`launch_user_n.ps1`**: Profile launcher script. Two modes: **Isolated** (default) resolves the executable path and swaps a single profile's session data into the native AppData install; **Concurrent** (`-Mode Concurrent` / `-Concurrent`, optionally with `-Users <name1,name2,...>`) launches one or more profiles as independent windows via `--user-data-dir`, with no swap/mirror and no shared `claude://` handler changes. With no `-Mode`/`-Concurrent`/`-Users` given, prompts once for a mode. Unless `-NoTeamSync`, force-merges `team-mcp.json` into each launching profile's `claude_desktop_config.json`. Supports `-NoCooldownAlarm` to skip scheduling the 5-hour reminder toast, and `-WhatIf` for dry-run simulation.
 - **`launch.bat`**: Double-click launcher for Windows File Explorer.
 - **`profiles.json`**: Configuration file mapping account profile names to display nicknames, user data storage paths, and last logged-in timestamps.
 - **`team-mcp.json`**: Shared MCP server config, force-merged into every profile's `claude_desktop_config.json` on launch (shared entries win on name collision; a profile's own extra servers are never removed). Currently wires in `notebooklm-mcp` and `orchestrator-mcp` (see `mcp-servers/`) — add further entries here to roll them out to every profile at once. Use the literal token `{{REPO_ROOT}}` anywhere a `command`/`args`/`env` value needs to reference a path inside the repo; `Expand-TeamMcpPlaceholders` resolves it to each machine's actual clone path at sync time, so no entry should ever hardcode one contributor's absolute path.
+- **`team-claude-config.json`**: Sanitized baseline desktop configuration template declaring shared MCP servers (`site-mcp`, `notebooklm-mcp`, `orchestrator-mcp`) and global preferences (`coworkBrowserToolsEnabled`, `coworkWebSearchEnabled`, `coworkPreferredBrowser`), omitting account-specific authentication tokens.
+- **`Claude Skills + MCP/`**: Directory housing custom Claude skill definitions (`.skill`), extension bundles (`.mcpb`), and `Cross-Linking Hub.md` (the authoritative mapping of leaf GitHub repositories and NotebookLM notebooks to the central Engineer's Personal Notebook hub).
 - **`mcp-servers/notebooklm-mcp/run_server.py`**: `uvx` launcher for the NotebookLM MCP server, referenced by `team-mcp.json`. Falls back through common per-platform `uvx` install locations when it's missing from `PATH` (Claude Desktop launches with a restricted `PATH`). Auth is shared across all profiles via `%USERPROFILE%\.notebooklm-mcp-cli\` (every profile runs as the same Windows user) — run `nlm login` once, no per-profile setup needed.
-- **`mcp-servers/orchestrator-mcp/run_server.py`**: Hand-written MCP server (not a `uvx` shim — requires `pip install mcp` locally, unlike `notebooklm-mcp`) coordinating orchestrator/divider/executor roles across profiles. Tools: `create_task`/`decompose_task` (orchestrator/divider), `claim_task`/`release_task`/`mark_blocked`/`unblock_task`/`submit_checkpoint` (executor), `push_live_status`/`read_all_live_status` (cheap frequent status, no history), `push_memory_entry`/`read_team_memory` (MCP-native cross-profile memory sync — chat-callable replacement for manually pasting `team-memory.md`/`team-context.md`; one file per entry under `orchestrator-state/memory/`, never per-account, so pushes never read-modify-write a shared file), `read_team_context` (chat-callable read of `team-context.md`, same replacement purpose — no push counterpart, the file is meant to stay hand-edited), `list_tasks`/`merge_results` (orchestrator — text tasks return findings for the orchestrator's own LLM to synthesize, code tasks get `git merge --no-ff`'d with a clean `git merge --abort` on the first conflict). State is plain JSON under `orchestrator-state/`, synced by `sync.ps1` like every other file — see `orchestrator-state/SCHEMA.md` for the full file contract and why every entity is its own file rather than one shared file multiple accounts write to.
-- **`team-context.md`**: Static identity/context scaffold. Edit it directly with what you actually want repeated into every profile — it ships as a plain-text placeholder, so if it still reads like a template, that's the signal it hasn't been filled in yet. Paste its content manually as a first message or into Custom Instructions when needed.
-- **`team-memory.md`**: Growing, hand-appended memory log. Distributed via `sync.ps1` like everything else, so an entry added from one profile reaches every other profile's clone on its next pull. Nothing is written to it automatically; it only grows when you add a line.
-- **`sync.ps1`**: Automated Git repository synchronization tool.
-- **`cooldown-reminder.ps1`**: Auto-invoked by `launch_user_n.ps1` after every non-`-WhatIf` login. Tracks each profile's `first_login_time`, anchors a 5-hour cooldown to it, and registers a local Windows toast alarm for when the cooldown expires.
+- **`mcp-servers/orchestrator-mcp/run_server.py`**: Hand-written MCP server (not a `uvx` shim — requires `pip install mcp` locally, unlike `notebooklm-mcp`) coordinating orchestrator/divider/executor roles across profiles. Exposes 14 tools: `create_task`/`decompose_task` (orchestrator/divider), `claim_task`/`release_task`/`mark_blocked`/`unblock_task`/`submit_checkpoint` (executor), `push_live_status`/`read_all_live_status` (cheap frequent status, no history), `push_memory_entry`/`read_team_memory` (MCP-native cross-profile memory sync — chat-callable replacement for manual pasting; one file per entry under `orchestrator-state/memory/`, never per-account, so pushes never read-modify-write a shared file), `read_team_context` (chat-callable read of `team-context.md` from repo root), `list_tasks`/`merge_results` (orchestrator — text tasks return findings for the orchestrator's own LLM to synthesize, code tasks get `git merge --no-ff`'d with a clean `git merge --abort` on the first conflict). State is plain JSON under `orchestrator-state/`, synced by `sync.ps1` like every other file — see `orchestrator-state/SCHEMA.md` for the full file contract.
+- **`team-context.md`**: Static identity/context scaffold. Edit it directly with standing project context and durable preferences — callable directly in chat via orchestrator-mcp's `read_team_context` tool, or pasted manually into Custom Instructions.
+- **`team-memory.md`**: Shared team memory log distributed across profiles via `sync.ps1`. New orchestrator memory entries (`orchestrator-state/memory/*.json`) are automatically appended under date headers by `sync.ps1` (`Sync-MemoryToTeamMemory`, tracked via `.memory-appended`), and hand-written entries can also be added directly.
+- **`sync.ps1`**: Automated Git repository synchronization tool. Performs `git pull --rebase --autostash`, automatically syncs new `orchestrator-state/memory/` entries into `team-memory.md`, scans staged changes for potential credentials/secrets, generates conventional commit messages with churn stats, and pushes to origin. Supports `-Message` (`-m`) and `-PullOnly`.
+- **`cooldown-reminder.ps1`**: Auto-invoked by `launch_user_n.ps1` after every non-`-WhatIf` login. Tracks each profile's `first_login_time` under a cross-process named mutex, anchors a 5-hour cooldown to it, and registers a local Windows toast alarm via BurntToast for when the cooldown expires. Supports `-DisableToast` to opt out.
+- **`usage-watchdog.ps1`**: Monitors live Claude Desktop usage by inspecting the system tray flyout ("Usage: NN%") via Windows UI Automation (`System.Windows.Automation`). When usage meets or exceeds `-Threshold` (default 80%), it automatically logs `push_live_status` and `push_memory_entry` to orchestrator-mcp. Throttled to fire once per cooldown cycle (persisted in `profiles.json`). Supports `-Account`, `-Threshold`, `-IntervalSeconds`, `-Once`, and `-WhatIf`.
 - **`reset_profiles.ps1`**: Wipes all profile storage, logs, session state, and the `claude://` registry override, then resets `profiles.json` to `{}`. Prompts for a typed `RESET` confirmation unless `-WhatIf`.
-- **`bypass-all-profiles.ps1`**: Sets `preferences.bypassPermissionsGateByAccount` to `true` for every account UUID found across all `%USERPROFILE%\.claude-profiles\userN\claude_desktop_config.json` files — applies to every MCP server merged in from `team-mcp.json` (both `notebooklm-mcp` and `orchestrator-mcp`), since the gate is account-scoped, not per-server. Backs up each config to `.bak` before writing. `-WhatIf` reports per-profile status (`already true` / `would update` / `no bypassPermissionsGateByAccount key` / `config not found`) without writing. Skips profiles whose config file doesn't exist yet rather than creating one.
-- **`tests/launch_user_n.Tests.ps1`**: Pester specs for `launch_user_n.ps1`'s pure/mockable logic (path-traversal guard, profile table formatting, shared-MCP-server merge, `{{REPO_ROOT}}` placeholder expansion). Run via `Invoke-Pester -Path .\tests\launch_user_n.Tests.ps1`.
-- **`tests/orchestrator_mcp_test.py`**: pytest specs for `orchestrator-mcp/run_server.py` — text- and code-task lifecycles, a deliberate merge conflict (asserting the repo is left clean, never mid-merge), blocked/unblock, claim-race rejection, live-status independence, team-memory push/read (round-trip, chronological sort across accounts, `since` filter, same-account repeat-push with no id collision), and input validation. Each test runs against its own throwaway git repo, never this repo's actual state. Run via `pip install pytest mcp --break-system-packages && pytest tests/orchestrator_mcp_test.py -v`.
+- **`bypass-all-profiles.ps1`**: Sets `preferences.bypassPermissionsGateByAccount` to `true` for every account UUID found across all `%USERPROFILE%\.claude-profiles\userN\claude_desktop_config.json` files — applies to every MCP server merged in from `team-mcp.json` (both `notebooklm-mcp` and `orchestrator-mcp`), since the gate is account-scoped, not per-server. Backs up each config to `.bak` before writing. `-WhatIf` reports per-profile status (`already true` / `would update` / `no bypassPermissionsGateByAccount key` / `config not found`) without writing.
+- **`tests/launch_user_n.Tests.ps1`**: Pester specs for `launch_user_n.ps1`'s pure/mockable logic (path-traversal guard, profile table formatting, shared-MCP-server merge, `{{REPO_ROOT}}` placeholder expansion). Run via `pwsh -ExecutionPolicy Bypass -Command "Invoke-Pester -Path .\tests\launch_user_n.Tests.ps1"`.
+- **`tests/orchestrator_mcp_test.py`**: pytest specs for `orchestrator-mcp/run_server.py` — tool registration (14 tools), text- and code-task lifecycles, team context reading, deliberate merge conflicts (verifying clean abort), task blocking/unblocking, claim-race rejection, live-status isolation, team-memory push/read (round-trip, chronological sort across accounts, `since` filter, same-account repeat-push with no id collision), and input validation. Each test runs against its own throwaway git repo. Run via `pytest tests/orchestrator_mcp_test.py -v`.
 
 ## Usage
 
@@ -83,19 +96,25 @@ pwsh -File .\launch_user_n.ps1 -Account user2
 
 With no arguments, the script prompts once for a mode (Isolated or Concurrent), then walks the normal profile picker.
 
+To launch a profile while suppressing the 5-hour cooldown toast alarm:
+
+```powershell
+pwsh -File .\launch_user_n.ps1 -Account user1 -NoCooldownAlarm
+```
+
 ### Concurrent Mode (Multiple Windows, Multiple Monitors)
 
 Launch two or more profiles side by side, each its own independent window — each keeps its own `--user-data-dir`, so nothing is swapped or mirrored:
 
 ```powershell
-pwsh -File .\launch_user_n.ps1 -Mode Concurrent -Users aaradhya,bei79001
+pwsh -File .\launch_user_n.ps1 -Mode Concurrent -Users user1,user2
 ```
 
 Or one at a time:
 
 ```powershell
-pwsh -File .\launch_user_n.ps1 -Concurrent -Account aaradhya
-pwsh -File .\launch_user_n.ps1 -Concurrent -Account bei79001
+pwsh -File .\launch_user_n.ps1 -Concurrent -Account user1
+pwsh -File .\launch_user_n.ps1 -Concurrent -Account user2
 ```
 
 `claude://` sign-in is a single OS-wide handler shared by every window, routing to whichever instance last had focus — profiles don't need to be closed to run concurrently, but a profile that still needs sign-in should be given focus first (or run alone) so the callback routes to it, not to whichever other window is topmost. A profile that fails to launch (missing exe, unknown name) doesn't block the rest of the `-Users` list.
@@ -106,11 +125,26 @@ Preview what a profile switch would do without touching any files, the registry,
 pwsh -File .\launch_user_n.ps1 -Account user1 -WhatIf
 ```
 
-Every non-`-WhatIf` launch auto-runs `sync.ps1` as its last step (pull, commit, push), with a commit message describing the profile switch. `reset_profiles.ps1` does the same after clearing all profiles. `-WhatIf` skips this entirely — no git operations occur during a dry run.
+Every non-`-WhatIf` launch auto-runs `sync.ps1` as its last step (pull, auto-memory sync, commit, push), with a commit message describing the profile switch. `reset_profiles.ps1` does the same after clearing all profiles. `-WhatIf` skips this entirely — no git operations occur during a dry run.
+
+### Running Usage Watchdog
+
+Monitor Claude Desktop tray usage and auto-publish memory checkpoints on threshold breach:
+
+```powershell
+# Continuous monitoring (polls every 120s, alerts at 80% usage)
+pwsh -File .\usage-watchdog.ps1 -Account user1
+
+# Custom threshold and polling interval
+pwsh -File .\usage-watchdog.ps1 -Account user1 -Threshold 85 -IntervalSeconds 60
+
+# Single poll (dry-run without publishing state)
+pwsh -File .\usage-watchdog.ps1 -Account user1 -Once -WhatIf
+```
 
 ### Syncing Git Repository
 
-Run full sync (pull rebase, auto-commit changes, and push):
+Run full sync (pull rebase, auto-memory append to `team-memory.md`, auto-commit changes, and push):
 
 ```powershell
 pwsh -File .\sync.ps1

@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
     Sets bypassPermissionsGateByAccount to true for every account UUID
-    found across all Claude Desktop profile configs (user1..user20).
+    found across all Claude Desktop profile configs (user1..userN).
 
 .USAGE
     .\bypass-all-profiles.ps1

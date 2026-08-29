@@ -16,13 +16,14 @@ Fixed map of Aaradhya's personally maintained repos and notebooks, and how they 
 | Repo | Linked NLM | Notes |
 |---|---|---|
 | `AaradhyaDT/BiasAperture` | BiasAperture — Fairness and Bias Audit Engineering and Implementation Strategy (`99bee3c6-07ed-4ff0-8ac8-0027b18ad06a`) | Direct 1:1 link. |
+| `AaradhyaDT/SPARK` | SPARK: Two-Layer Edge AI for Wearable Fall Detection (`2c00f5a4-98dc-4783-96d1-3682fa3cb516`) | Authoritative research notebook; `3b67fc33` serves as proposal/deck reference. Tracker: `dev_logs/SPARK_TRACKER.md`. |
 | `Aaradhya-Dev-Tamrakar/Aaradhya-Dev-Tamrakar.github.io` | Engineer's Personal Notebook (hub itself) | Portfolio/CV/study-hub repo — feeds directly into the hub notebook, not a separate leaf notebook. |
 | `Aaradhya-Dev-Tamrakar/Claude-Desktop` | none | Standalone. No NLM cross-link exists. |
-| `Aaradhya-Dev-Tamrakar/FuseAIF2026` | none *(unconfirmed)* | SPARK notebook (below) is fellowship-related but not confirmed as tied to this specific repo. Do not assume the link — ask before treating SPARK content as FuseAIF2026 repo content or vice versa. |
+| `Aaradhya-Dev-Tamrakar/FuseAIF2026` | none *(unconfirmed)* | Fellowship-related repo; distinct from SPARK. Do not assume link without confirmation. |
 
 ## Unlinked notebooks
 
-- **SPARK: Two-Layer Edge AI for Wearable Fall Detection** (`2c00f5a4-98dc-4783-96d1-3682fa3cb516`) — no repo currently linked. Do not assume it maps to FuseAIF2026 without confirmation.
+*(None currently active — all primary project notebooks are mapped to leaf repos or the central hub.)*
 
 ## Coursework notebooks (IV/I, exam sequence order)
 

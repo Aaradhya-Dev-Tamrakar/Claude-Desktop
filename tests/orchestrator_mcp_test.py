@@ -98,6 +98,7 @@ class TestToolRegistration:
                 "read_all_live_status",
                 "push_memory_entry",
                 "read_team_memory",
+                "read_team_context",
                 "submit_checkpoint",
                 "list_tasks",
                 "merge_results",
@@ -338,6 +339,24 @@ class TestTeamMemory:
         rs, _ = repo
         with pytest.raises(ValueError):
             rs.push_memory_entry(account="../../etc/passwd", text="x")
+
+
+class TestTeamContext:
+    def test_read_team_context_missing(self, repo):
+        rs, repo_root = repo
+        ctx_file = repo_root / "team-context.md"
+        if ctx_file.exists():
+            ctx_file.unlink()
+        res = rs.read_team_context()
+        assert res == {"exists": False, "content": ""}
+
+    def test_read_team_context_present(self, repo):
+        rs, repo_root = repo
+        ctx_file = repo_root / "team-context.md"
+        ctx_file.write_text("# Project Context\nStanding rules.", encoding="utf-8")
+        res = rs.read_team_context()
+        assert res["exists"] is True
+        assert res["content"] == "# Project Context\nStanding rules."
 
 
 class TestInputValidation:

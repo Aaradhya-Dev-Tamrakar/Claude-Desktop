@@ -139,11 +139,10 @@ schema exists to avoid). `entry_id` is a timestamp (`pushed_at` with
 `:` and `-` stripped), collision-checked against the directory and
 suffixed `_2`, `_3`, ... on collision — same "scan fresh, don't trust a
 counter file" approach as `tasks/`' `_next_task_id`. This is the
-MCP-native, automatable replacement for the old
-`Send-TeamContextAndMemoryToClipboard` workflow (manually pasting
-`team-memory.md` into a profile's chat): `push_memory_entry` writes,
-`read_team_memory` aggregates and sorts by `pushed_at`, `sync.ps1`
-carries the files between machines same as everything else here.
+MCP-native, automatable replacement for the old clipboard-copy workflow:
+`push_memory_entry` writes, `read_team_memory` aggregates and sorts by
+`pushed_at`, and `sync.ps1` carries the files between machines same as
+everything else here.
 
 ```json
 {
@@ -160,13 +159,13 @@ carries the files between machines same as everything else here.
   never edited after creation, only ever a new file added, so there is
   no write race at all, not even the narrowed one `claim_task` has.
 
-`team-memory.md` and `team-context.md` at the repo root still exist and
-are still the human-facing / static-identity source files — edited by
-hand, no automatic writes. `read_team_context` gives chat-callable read
-access to `team-context.md` (no push counterpart: the file is meant to
-stay static, unlike memory entries). This directory is an additive,
-chat-callable path for dynamic notes, not a replacement for those two
-files.
+`team-memory.md` and `team-context.md` at the repo root remain the
+human-readable files. `sync.ps1` automatically appends new entries from
+`orchestrator-state/memory/` to `team-memory.md` during sync (one-directional
+and idempotent via `orchestrator-state/.memory-appended`), while also
+preserving any manual edits. `team-context.md` remains strictly hand-edited
+(static identity scaffold), and is chat-callable via `read_team_context` (no
+push counterpart: the file is meant to stay static, unlike memory entries).
 
 ## Directory listing as the index
 
