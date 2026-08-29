@@ -16,7 +16,7 @@ ORCHESTRATOR_URL = os.getenv("ORCHESTRATOR_URL", "http://localhost:8000/api/v1")
 NODE_ID = os.getenv("NODE_ID", "local-node-01")
 WORKER_ID = os.getenv("WORKER_ID", "gemini_free_worker_01")
 PROVIDER = os.getenv("PROVIDER", "gemini_free")  # 'gemini_free', 'ollama_local', 'claude_desktop', 'claude_desktop_cdp'
-CDP_PORT = int(os.getenv("CDP_PORT", os.getenv("CLAUDE_CDP_PORT", "9222")))
+CDP_PORT = int(os.getenv("CDP_PORT") or os.getenv("CLAUDE_CDP_PORT") or "9222")
 
 def get_adapter() -> BaseWorkerAdapter:
     if PROVIDER == "gemini_free":

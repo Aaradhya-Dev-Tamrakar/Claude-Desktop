@@ -18,7 +18,7 @@ class ClaudeDesktopProxyAdapter(BaseWorkerAdapter):
         self.profile_path = profile_path
         self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY", "")
         self.model = model
-        self.cdp_port = cdp_port or int(os.getenv("CLAUDE_CDP_PORT", "0"))
+        self.cdp_port = cdp_port if cdp_port is not None else int(os.getenv("CLAUDE_CDP_PORT") or "0")
         self._cdp_adapter = ClaudeDesktopCDPAdapter(worker_id, nickname, cdp_port=self.cdp_port) if self.cdp_port > 0 else None
 
     async def check_health(self) -> bool:

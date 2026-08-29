@@ -62,7 +62,6 @@ async def test_cdp_cooldown_detection_returns_429():
     adapter = ClaudeDesktopCDPAdapter("test_w", "Test", cdp_port=9222)
     
     mock_ws = AsyncMock()
-    # Mock WebSocket connect
     with patch.object(adapter, "get_page_ws_url", return_value="ws://127.0.0.1:9222/page/1"), \
          patch("websockets.connect") as mock_ws_connect, \
          patch.object(adapter, "_send_cdp_command", return_value={"result": {}}), \
@@ -103,3 +102,26 @@ async def test_claude_proxy_delegation_to_cdp():
         res = await proxy.execute_task("task_004", "spec", "qa", {})
         assert res["success"] is True
         assert res["result_text"] == "CDP text"
+
+@pytest.mark.asyncio
+async def test_cdp_eval_js_exception():
+    adapter = ClaudeDesktopCDPAdapter("test_w", "Test", cdp_port=9222)
+    mock_ws = AsyncMock()
+    with patch.object(adapter, "_send_cdp_command", return_value={
+        "result": {
+            "exceptionDetails": {"text": "SyntaxError: Unexpected token"}
+        }
+    }):
+        with pytest.raises(RuntimeError, match="CDP JavaScript evaluation failed"):
+            await adapter._eval_js(mock_ws, "invalid.js.expression()")
+
+@pytest.mark.asyncio
+async def test_cdp_ui_error_banner_handling():
+    adapter = ClaudeDesktopCDPAdapter("test_w", "Test", cdp_port=9222)
+    mock_ws = AsyncMock()
+    with patch.object(adapter, "_check_cooldown_banner", return_value=False), \
+         patch.object(adapter, "_eval_js", return_value="Message failed to send"):
+        
+        res = await adapter._wait_for_generation_complete(mock_ws)
+        assert res["success"] is False
+        assert "Claude UI Error" in res["error"]

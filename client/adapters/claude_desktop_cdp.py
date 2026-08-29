@@ -2,8 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import json
-import os
-import re
 from typing import Any
 import httpx
 import websockets
@@ -64,18 +62,29 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
             return None
         return None
 
-    async def _send_cdp_command(self, ws: websockets.WebSocketClientProtocol, method: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
-        """Send a JSON-RPC command over WebSocket and await result."""
+    async def _send_cdp_command(
+        self,
+        ws: websockets.WebSocketClientProtocol,
+        method: str,
+        params: dict[str, Any] | None = None,
+        timeout: float = 30.0
+    ) -> dict[str, Any]:
+        """Send a JSON-RPC command over WebSocket and await result with timeout."""
         self._msg_id += 1
         cmd_id = self._msg_id
         payload = {"id": cmd_id, "method": method, "params": params or {}}
         await ws.send(json.dumps(payload))
         
-        while True:
-            raw = await ws.recv()
-            resp = json.loads(raw)
-            if resp.get("id") == cmd_id:
-                return resp
+        start = asyncio.get_event_loop().time()
+        while (asyncio.get_event_loop().time() - start) < timeout:
+            try:
+                raw = await asyncio.wait_for(ws.recv(), timeout=timeout)
+                resp = json.loads(raw)
+                if resp.get("id") == cmd_id:
+                    return resp
+            except asyncio.TimeoutError:
+                break
+        raise TimeoutError(f"CDP command {method} (id={cmd_id}) timed out after {timeout}s")
 
     async def _eval_js(self, ws: websockets.WebSocketClientProtocol, js_expression: str) -> Any:
         """Evaluate a JavaScript expression in the page and return the unwrapped value."""
@@ -84,6 +93,9 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
             "Runtime.evaluate",
             {"expression": js_expression, "returnByValue": True, "awaitPromise": True}
         )
+        if "exceptionDetails" in res.get("result", {}):
+            desc = res["result"]["exceptionDetails"].get("text", "JS Exception")
+            raise RuntimeError(f"CDP JavaScript evaluation failed: {desc}")
         result_obj = res.get("result", {}).get("result", {})
         return result_obj.get("value")
 
@@ -93,7 +105,7 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
         1. Connect to page
         2. Check for rate limit / 5h cooldown
         3. Reset / start clean conversation
-        4. Inject stage prompt & spec
+        4. Inject stage prompt & spec safely without DOM XSS
         5. Submit and wait for stream completion
         6. Extract response
         """
@@ -132,7 +144,7 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
                     f"Please generate the complete, high-quality production deliverable directly."
                 )
 
-                # 5. Inject prompt into editor and click send
+                # 5. Inject prompt into editor and click send (XSS-safe textContent injection)
                 injected = await self._inject_prompt_and_send(ws, prompt)
                 if not injected:
                     return {
@@ -205,8 +217,7 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
         await self._eval_js(ws, js)
 
     async def _inject_prompt_and_send(self, ws: websockets.WebSocketClientProtocol, prompt: str) -> bool:
-        """Inject prompt into ProseMirror / contenteditable and click send."""
-        # Use JSON dump to safely escape quotes and multiline strings in JS
+        """Inject prompt into ProseMirror / contenteditable and click send safely without innerHTML."""
         prompt_json = json.dumps(prompt)
         js = f"""
         (() => {{
@@ -221,8 +232,14 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
                 editor.dispatchEvent(new Event('input', {{ bubbles: true }}));
                 editor.dispatchEvent(new Event('change', {{ bubbles: true }}));
             }} else {{
-                // Contenteditable / ProseMirror
-                editor.innerHTML = `<p>${{text.replace(/\\n/g, '<br>')}}</p>`;
+                // Contenteditable / ProseMirror - DOM text node creation (XSS immune)
+                editor.textContent = '';
+                const lines = text.split('\\n');
+                lines.forEach((line) => {{
+                    const p = document.createElement('p');
+                    p.textContent = line || '\\u200B';
+                    editor.appendChild(p);
+                }});
                 editor.dispatchEvent(new Event('input', {{ bubbles: true }}));
             }}
             
@@ -245,6 +262,9 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
     async def _wait_for_generation_complete(self, ws: websockets.WebSocketClientProtocol) -> dict[str, Any]:
         """Poll until generation stop button disappears and text settles."""
         start_time = asyncio.get_event_loop().time()
+        # Give 1.5s initial grace period for streaming transition
+        await asyncio.sleep(1.5)
+        
         prev_text = ""
         stable_count = 0
 
@@ -253,7 +273,18 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
             if await self._check_cooldown_banner(ws):
                 return {"success": False, "error": "RATE_LIMIT_429"}
 
-            # 2. Check if Stop Generating button is still active
+            # 2. Check for explicit error banners
+            error_js = """
+            (() => {
+                const err = document.querySelector('[data-testid="error-message"], .text-danger');
+                return err ? (err.innerText || err.textContent) : null;
+            })()
+            """
+            err_msg = await self._eval_js(ws, error_js)
+            if err_msg:
+                return {"success": False, "error": f"Claude UI Error: {err_msg}"}
+
+            # 3. Check if Stop Generating button is still active
             is_streaming_js = """
             (() => {
                 const stopBtn = document.querySelector('button[aria-label*="Stop generating"], button[aria-label*="Stop"]');
@@ -262,7 +293,7 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
             """
             is_streaming = await self._eval_js(ws, is_streaming_js)
 
-            # 3. Extract current assistant text
+            # 4. Extract current assistant text
             get_text_js = """
             (() => {
                 const msgs = document.querySelectorAll('.font-claude-message, [data-is-streaming], div[class*="claude-response"], .grid-cols-1');
