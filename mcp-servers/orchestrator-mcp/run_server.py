@@ -547,13 +547,107 @@ def read_team_context() -> dict[str, Any]:
 
 
 @srv.tool(
+    name="get_context_bundle",
+    description=(
+        "Single-call session bootstrap: returns team context, recent memory, "
+        "the caller's active tasks, pending task count, and active workers. "
+        "Replaces separate calls to read_team_context + read_team_memory + "
+        "list_tasks + read_all_live_status to save massive startup tokens. "
+        "Role: any."
+    ),
+)
+def get_context_bundle(
+    account: str,
+    memory_limit: int = 10,
+    memory_hours: int = 48,
+    include_team_context: bool = True,
+) -> dict[str, Any]:
+    _ensure_dirs()
+    _validate_account(account)
+    now = datetime.now(timezone.utc)
+    since_iso = (now - timedelta(hours=memory_hours)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    team_ctx = read_team_context() if include_team_context else {"exists": False, "content": ""}
+    mem = read_team_memory(since=since_iso, limit=memory_limit)
+
+    my_tasks = []
+    pending_count = 0
+    terminal = {"done", "merged"}
+    for path in sorted(TASKS_DIR.glob("*.json")):
+        t = _read_json(path)
+        if t is None:
+            continue
+        if t.get("status") == "pending":
+            pending_count += 1
+        elif t.get("owner_account") == account and t.get("status") not in terminal:
+            my_tasks.append({
+                "id": t["id"],
+                "kind": t["kind"],
+                "spec": t["spec"],
+                "status": t["status"],
+                "branch_name": t.get("branch_name"),
+                "blocked_reason": t.get("blocked_reason"),
+            })
+
+    active_workers = read_all_live_status(stale_threshold_hours=6)
+
+    return {
+        "account": account,
+        "team_context": team_ctx["content"] if team_ctx["exists"] else "",
+        "recent_memory": mem["entries"],
+        "memory_total_available": mem["total_available"],
+        "my_tasks": my_tasks,
+        "pending_tasks_count": pending_count,
+        "active_workers": [w for w in active_workers if w.get("account") != account],
+    }
+
+
+@srv.tool(
+    name="archive_memory",
+    description=(
+        "Move memory entries older than 'before' (ISO 8601 UTC timestamp) to "
+        "orchestrator-state/memory/archive/ cold storage to keep active memory "
+        "lean and token-efficient. read_team_memory ignores archived entries. "
+        "Pass dry_run=true to preview without moving files. Role: orchestrator."
+    ),
+)
+def archive_memory(before: str, dry_run: bool = True) -> dict[str, Any]:
+    _ensure_dirs()
+    try:
+        before_dt = datetime.strptime(before, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    except (ValueError, TypeError):
+        raise ValueError(f"invalid ISO 8601 UTC timestamp before={before!r} (expected format: YYYY-MM-DDTHH:MM:SSZ)")
+
+    to_archive = []
+    for path in sorted(MEMORY_DIR.glob("*.json")):
+        if path.is_file():
+            entry = _read_json(path)
+            if entry and entry.get("pushed_at", "") < before:
+                to_archive.append(path)
+
+    archived_names = [p.name for p in to_archive]
+    if not dry_run:
+        for p in to_archive:
+            target = MEMORY_ARCHIVE_DIR / p.name
+            p.rename(target)
+
+    return {
+        "before": before,
+        "dry_run": dry_run,
+        "archived_count": len(archived_names),
+        "archived_entries": archived_names,
+    }
+
+
+@srv.tool(
     name="submit_checkpoint",
     description=(
         "Record the full context handoff for a task — the actual merge "
         "input, distinct from push_live_status. For kind='code' tasks, pass "
         "branch_name + commit_sha. For kind='text' tasks, pass result_text. "
-        "Marks the task 'done'. Overwrites any prior checkpoint for this "
-        "task_id (no checkpoint history — see SCHEMA.md). Role: executor."
+        "Pass compact=true (default) to truncate the return payload and save "
+        "tokens (full data is always saved to disk). Marks the task 'done'. "
+        "Role: executor."
     ),
 )
 def submit_checkpoint(
@@ -563,6 +657,7 @@ def submit_checkpoint(
     branch_name: str | None = None,
     commit_sha: str | None = None,
     result_text: str | None = None,
+    compact: bool = True,
 ) -> dict[str, Any]:
     _ensure_dirs()
     _validate_account(account)
@@ -604,6 +699,16 @@ def submit_checkpoint(
     task["status"] = "done"
     task["updated_at"] = _now_iso()
     _write_json(task_path, task)
+
+    if compact and result_text and len(result_text) > 300:
+        return {
+            "task_id": task_id,
+            "kind": kind,
+            "summary": summary,
+            "result_text_preview": result_text[:300] + "... (truncated in return payload; full saved)",
+            "full_saved": True,
+            "status": "done",
+        }
     return checkpoint
 
 
@@ -652,15 +757,17 @@ def list_tasks(
         "them. kind='text' children: returns their result_text + summaries "
         "for the orchestrator's own LLM call to synthesize — this tool "
         "gathers, it does not synthesize (synthesis is not scriptable, see "
-        "SCHEMA.md). kind='code' children: runs `git merge --no-ff "
-        "<branch_name>` for each, in checkpoint order, stopping on the "
-        "first conflict and running `git merge --abort` so the repo is "
-        "left in a known-good state (never mid-merge) rather than "
-        "guessing a resolution. Marks successfully merged tasks 'merged'. "
-        "Role: orchestrator."
+        "SCHEMA.md). Pass max_text_chars to cap result_text length per child. "
+        "kind='code' children: runs `git merge --no-ff <branch_name>` for each, "
+        "in checkpoint order, stopping on the first conflict and running "
+        "`git merge --abort` so the repo is left in a known-good state. "
+        "Marks successfully merged tasks 'merged'. Role: orchestrator."
     ),
 )
-def merge_results(parent_id: str | None = None) -> dict[str, Any]:
+def merge_results(
+    parent_id: str | None = None,
+    max_text_chars: int | None = None,
+) -> dict[str, Any]:
     _ensure_dirs()
     if parent_id is not None:
         _validate_task_id(parent_id)
@@ -691,11 +798,17 @@ def merge_results(parent_id: str | None = None) -> dict[str, Any]:
             continue
 
         if task["kind"] == "text":
+            raw_text = checkpoint.get("result_text") or ""
+            if max_text_chars is not None and len(raw_text) > max_text_chars:
+                text_content = raw_text[:max_text_chars] + f"\n... [truncated to {max_text_chars} chars; total: {len(raw_text)}]"
+            else:
+                text_content = raw_text
+
             text_results.append(
                 {
                     "task_id": task["id"],
                     "summary": checkpoint["summary"],
-                    "result_text": checkpoint["result_text"],
+                    "result_text": text_content,
                 }
             )
             _mark_merged(task)
