@@ -45,8 +45,8 @@
     "semantic_hash": "9163a74b118a56b4f05216c1a842b898"
   },
   "launch_user_n.ps1": {
-    "mtime": 1788146319.889199,
-    "ast_hash": "de7a1e2fea2e785d977bc501a399db6e",
+    "mtime": 1788146473.4479249,
+    "ast_hash": "7b6c31e568cdb097a6e1f29dca9203f5",
     "semantic_hash": ""
   },
   "mcp-servers/cloud-orchestrator-mcp/run_server.py": {
@@ -1030,8 +1030,8 @@
     "semantic_hash": "e9091216a526021912560dd4f61bf1a7"
   },
   "profiles.json": {
-    "mtime": 1788146184.0557213,
-    "ast_hash": "bc56015f0d3ebc5d82b179e3e694dcda",
+    "mtime": 1788146444.4071991,
+    "ast_hash": "561db51ac06eafd53e14cdec18b0b498",
     "semantic_hash": ""
   },
   "reset_profiles.ps1": {

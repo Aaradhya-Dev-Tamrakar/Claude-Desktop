@@ -1,16 +1,16 @@
 # Graph Report - Claude-Desktop  (2026-08-31)
 
 ## Corpus Check
-- 251 files · ~165,256 words
+- 251 files · ~165,306 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 566 nodes · 1144 edges · 43 communities (37 shown, 6 thin omitted)
+- 567 nodes · 1146 edges · 43 communities (37 shown, 6 thin omitted)
 - Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 148 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `25919d37`
+- Built from commit: `a84291b2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -110,8 +110,8 @@ Cohesion: 0.22
 Nodes (36): Any, Path, _checkpoint_path(), claim_task(), create_job(), create_task(), decompose_task(), _ensure_dirs() (+28 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.12
-Nodes (14): Add-NewProfile(), Ensure-LocalOrchestratorServer(), Expand-TeamMcpPlaceholders(), Get-EnrichedProfileRows(), Get-ValidatedProfilePath(), Invoke-ProfileLaunch(), Merge-McpServers(), New-Border() (+6 more)
+Cohesion: 0.11
+Nodes (15): Add-NewProfile(), Ensure-LocalOrchestratorServer(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Get-EnrichedProfileRows(), Get-ValidatedProfilePath(), Invoke-ProfileLaunch(), Merge-McpServers() (+7 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.22

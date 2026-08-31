@@ -914,6 +914,16 @@
       "norm_label": "invoke-profilelaunch()"
     },
     {
+      "label": "Format-CardRow()",
+      "file_type": "code",
+      "source_file": "launch_user_n.ps1",
+      "source_location": "L1339",
+      "_origin": "ast",
+      "id": "launch_user_n_format_cardrow",
+      "community": 6,
+      "norm_label": "format-cardrow()"
+    },
+    {
       "label": "run_server.py",
       "file_type": "code",
       "source_file": "mcp-servers/cloud-orchestrator-mcp/run_server.py",
@@ -7271,6 +7281,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "launch_user_n.ps1",
+      "source_location": "L1339",
+      "weight": 1.0,
+      "source": "launch_user_n",
+      "target": "launch_user_n_format_cardrow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "launch_user_n.ps1",
       "source_location": "L332",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -7522,6 +7542,16 @@
       "confidence_score": 1.0,
       "source": "launch_user_n_invoke_profilelaunch",
       "target": "launch_user_n_ensure_localorchestratorserver"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "launch_user_n.ps1",
+      "source_location": "L1350",
+      "weight": 1.0,
+      "source": "launch_user_n_invoke_profilelaunch",
+      "target": "launch_user_n_format_cardrow",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -17545,5 +17575,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "25919d375ec2b451324555721faa61a719d46e05"
+  "built_at_commit": "a84291b2bc35ad103d500cbe190e76f09661cb39"
 }

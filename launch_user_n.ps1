@@ -1336,17 +1336,25 @@ function Invoke-ProfileLaunch {
         $Role = if ($ProfileInfo.role) { [string]$ProfileInfo.role } else { "-" }
         $modeDesc = if ($Concurrent) { "Concurrent (Side-by-Side)" } else { "Isolated (Session Swap)" }
 
-        Write-Host "╭────────────────────────────────────────────────────────────────────────╮" -ForegroundColor Cyan
-        Write-Host "│  🚀 Launching Claude Desktop (Native)                                  │" -ForegroundColor Green
-        Write-Host "├────────────────────────────────────────────────────────────────────────┤" -ForegroundColor Cyan
-        Write-Host "│  ● Profile    : $($Account.PadRight(56))│" -ForegroundColor Yellow
-        Write-Host "│  ● Nickname   : $($Nickname.PadRight(56))│" -ForegroundColor Yellow
-        Write-Host "│  ● Role       : $($Role.PadRight(56))│" -ForegroundColor Cyan
-        Write-Host "│  ● Mode       : $($modeDesc.PadRight(56))│" -ForegroundColor Gray
-        Write-Host "│  ● Last Login : $("$CurrentDate $CurrentTime".PadRight(56))│" -ForegroundColor Gray
-        Write-Host "│  ● Storage    : $($TargetStorageDir.PadRight(56))│" -ForegroundColor DarkGray
-        Write-Host "│  ● Executable : $($ClaudeExe.PadRight(56))│" -ForegroundColor DarkGray
-        Write-Host "╰────────────────────────────────────────────────────────────────────────╯" -ForegroundColor Cyan
+        function Format-CardRow([string]$Label, [string]$Value) {
+            $val = if ($null -ne $Value) { [string]$Value } else { "" }
+            if ($val.Length -gt 74) {
+                $val = $val.Substring(0, 71) + "..."
+            }
+            "│  ● " + $Label.PadRight(13) + ": " + $val.PadRight(74) + " │"
+        }
+
+        Write-Host ("╭" + ("─" * 94) + "╮") -ForegroundColor Cyan
+        Write-Host ("│" + "  🚀 Launching Claude Desktop (Native)".PadRight(94) + "│") -ForegroundColor Green
+        Write-Host ("├" + ("─" * 94) + "┤") -ForegroundColor Cyan
+        Write-Host (Format-CardRow "Profile" $Account) -ForegroundColor Yellow
+        Write-Host (Format-CardRow "Nickname" $Nickname) -ForegroundColor Yellow
+        Write-Host (Format-CardRow "Role" $Role) -ForegroundColor Cyan
+        Write-Host (Format-CardRow "Mode" $modeDesc) -ForegroundColor Gray
+        Write-Host (Format-CardRow "Last Login" "$CurrentDate $CurrentTime") -ForegroundColor Gray
+        Write-Host (Format-CardRow "Storage" $TargetStorageDir) -ForegroundColor DarkGray
+        Write-Host (Format-CardRow "Executable" $ClaudeExe) -ForegroundColor DarkGray
+        Write-Host ("╰" + ("─" * 94) + "╯") -ForegroundColor Cyan
 
         # Redirect stdout/stderr to per-profile logs to suppress internal Electron/Node.js deprecation warnings (DEP0169)
         $LogsDir = Join-Path $ProfilesBaseDir "Logs\$Account"
