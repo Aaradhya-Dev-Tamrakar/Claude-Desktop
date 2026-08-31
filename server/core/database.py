@@ -4,12 +4,17 @@ import aiosqlite
 from typing import AsyncGenerator
 from server.core.config import settings
 
-async def get_db() -> AsyncGenerator[aiosqlite.Connection, None]:
-    """Dependency for obtaining an async sqlite database connection."""
+async def get_db_conn() -> aiosqlite.Connection:
+    """Obtain a direct async sqlite database connection."""
     db = await aiosqlite.connect(str(settings.DATABASE_PATH))
     db.row_factory = aiosqlite.Row
     await db.execute("PRAGMA foreign_keys = ON;")
     await db.execute("PRAGMA journal_mode = WAL;")
+    return db
+
+async def get_db() -> AsyncGenerator[aiosqlite.Connection, None]:
+    """Dependency for obtaining an async sqlite database connection in FastAPI routes."""
+    db = await get_db_conn()
     try:
         yield db
     finally:

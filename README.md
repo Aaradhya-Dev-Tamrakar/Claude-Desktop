@@ -49,21 +49,24 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 │
 ├── server/                        # Cloud-native FastAPI coordination backend
 │   ├── main.py                    # Application entrypoint & background supervisor lifecycle
+│   ├── mcp_remote.py              # Hosted Streamable HTTP/SSE Remote MCP Server (23 tools)
 │   ├── Dockerfile                 # Container packaging definition
 │   ├── docker-compose.yml         # Compose stack (FastAPI orchestrator + cloudflared tunnel)
-│   ├── requirements.txt           # Backend dependencies (fastapi, aiosqlite, uvicorn, pydantic, httpx)
+│   ├── requirements.txt           # Backend dependencies (fastapi, aiosqlite, uvicorn, pydantic, mcp, httpx)
 │   ├── api/                       # REST API routes
 │   │   ├── routes_jobs.py         # Batch job submission & template expansion
 │   │   ├── routes_tasks.py        # Task lifecycle, atomic leasing, checkpoints & QA reviews
-│   │   └── routes_workers.py      # Worker registration, heartbeat & active status
+│   │   ├── routes_workers.py      # Worker registration, heartbeat & active status
+│   │   └── routes_memory.py       # Shared database memory & durable team context
 │   ├── core/                      # Core backend logic
+│   │   ├── auth.py                # Bearer token / API key security dependency
 │   │   ├── config.py              # Settings & database connection strings
 │   │   ├── database.py            # SQLite WAL connection & migration manager
 │   │   ├── pipeline_engine.py     # SKU template decomposition into DAG tasks & stage advancement
 │   │   ├── scheduler.py           # Quota-aware task-to-worker capability matching & atomic leasing
 │   │   └── supervisor.py          # Dead worker watchdog & stranded task / expired lease recovery
 │   ├── database/
-│   │   └── schema.sql             # SQLite WAL DDL for jobs, tasks, workers, checkpoints, QA reviews
+│   │   └── schema.sql             # SQLite WAL DDL for jobs, tasks, workers, checkpoints, QA reviews, memory, context
 │   └── models/
 │       └── schemas.py             # Pydantic request/response models
 

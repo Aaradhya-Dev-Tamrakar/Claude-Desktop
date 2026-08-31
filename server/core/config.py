@@ -17,6 +17,7 @@ class Settings(BaseModel):
     DATABASE_PATH: Path = SERVER_ROOT / "data" / "production.db"
     SCHEMA_PATH: Path = SERVER_ROOT / "database" / "schema.sql"
     SKU_TEMPLATES_DIR: Path = REPO_ROOT / "sku-templates"
+    TEAM_CONTEXT_PATH: Path = REPO_ROOT / "team-context.md"
     
     # Security
     API_AUTH_KEY: str = os.getenv("API_AUTH_KEY", "dev-secret-key-change-in-prod")
@@ -24,7 +25,9 @@ class Settings(BaseModel):
     # Scheduler & Supervisor Settings
     HEARTBEAT_TIMEOUT_SECONDS: int = 120
     SUPERVISOR_INTERVAL_SECONDS: int = 30
+    SCHEDULER_INTERVAL_SECONDS: int = 15
     DEFAULT_COOLDOWN_MINUTES: int = 300  # 5 hours
+    MCP_PATH: str = "/mcp"
 
 settings = Settings()
 settings.DATA_DIR.mkdir(parents=True, exist_ok=True)

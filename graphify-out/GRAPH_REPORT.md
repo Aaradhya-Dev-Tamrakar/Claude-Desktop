@@ -1,16 +1,16 @@
-# Graph Report - Claude-Desktop  (2026-08-29)
+# Graph Report - Claude-Desktop  (2026-08-31)
 
 ## Corpus Check
-- 247 files · ~159,026 words
+- 251 files · ~163,592 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 495 nodes · 902 edges · 44 communities (36 shown, 8 thin omitted)
-- Extraction: 85% EXTRACTED · 15% INFERRED · 0% AMBIGUOUS · INFERRED: 137 edges (avg confidence: 0.52)
+- 557 nodes · 1129 edges · 46 communities (38 shown, 8 thin omitted)
+- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 149 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c51c62f7`
+- Built from commit: `109a7e3a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -53,18 +53,20 @@
 - [[_COMMUNITY_Community 41|Community 41]]
 - [[_COMMUNITY_Community 42|Community 42]]
 - [[_COMMUNITY_Community 43|Community 43]]
+- [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Community 45|Community 45]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Memory Log` - 55 edges
 2. `ClaudeDesktopCDPAdapter` - 32 edges
-3. `BaseWorkerAdapter` - 24 edges
-4. `Connection` - 21 edges
-5. `ClaudeDesktopProxyAdapter` - 17 edges
-6. `_ensure_dirs()` - 15 edges
-7. `_read_json()` - 15 edges
-8. `_write_json()` - 14 edges
-9. `TaskResponse` - 14 edges
-10. `GroqAdapter` - 13 edges
+3. `get_db_conn()` - 31 edges
+4. `BaseWorkerAdapter` - 24 edges
+5. `_row_to_dict()` - 22 edges
+6. `Connection` - 21 edges
+7. `ClaudeDesktopProxyAdapter` - 17 edges
+8. `_ensure_dirs()` - 15 edges
+9. `_read_json()` - 15 edges
+10. `_write_json()` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Path` --uses--> `ClaudeDesktopProxyAdapter`  [INFERRED]
@@ -81,7 +83,7 @@
 ## Import Cycles
 - 1-file cycle: `server/main.py -> server/main.py`
 
-## Communities (44 total, 8 thin omitted)
+## Communities (46 total, 8 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.16
@@ -104,12 +106,12 @@ Cohesion: 0.20
 Nodes (10): Automate Claude Desktop via CDP:         1. Connect to page         2. Check for, Scan DOM for 5-hour usage limit and cooldown warnings., Click new chat or reset conversation., Inject prompt into ProseMirror / contenteditable and click send safely without i, Poll until generation stop button disappears and text settles., Find the WebSocket debugger URL for the active Claude Desktop UI page., Send a JSON-RPC command over WebSocket and await result with timeout., Evaluate a JavaScript expression in the page and return the unwrapped value. (+2 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.09
-Nodes (23): init_db(), Initialize database tables and indexes from schema.sql with automatic migration, Periodic self-healing supervisor loop:     1. Identifies workers with stale hear, run_supervisor_cycle(), FastAPI, lifespan(), Background supervisor monitoring heartbeats and dead workers., run_supervisor_loop() (+15 more)
+Cohesion: 0.07
+Nodes (27): Verify that incoming request provides a valid API token via Bearer header or X-A, verify_api_key(), init_db(), Initialize database tables and indexes from schema.sql with automatic migration, Periodic self-healing supervisor loop:     1. Identifies workers with stale hear, run_supervisor_cycle(), FastAPI, HTTPAuthorizationCredentials (+19 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.19
-Nodes (18): get_worker(), list_workers(), _now_iso(), Register or update an AI worker node / profile., List all registered worker nodes., Retrieve details for a specific worker., Process heartbeat from a worker, updating usage, cooldown, and status., register_worker() (+10 more)
+Cohesion: 0.27
+Nodes (15): get_worker(), list_workers(), _now_iso(), Register or update an AI worker node / profile., List all registered worker nodes., Retrieve details for a specific worker., Process heartbeat from a worker, updating usage, cooldown, and status., register_worker() (+7 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.24
@@ -203,8 +205,16 @@ Nodes (3): Responsibilities:, Strict Rules:, Worker Role: Researcher / Attribute
 Cohesion: 0.50
 Nodes (3): Responsibilities:, Strict Rules:, Worker Role: Copywriter / Drafting Specialist
 
+### Community 44 - "Community 44"
+Cohesion: 0.21
+Nodes (36): get_db(), get_db_conn(), Dependency for obtaining an async sqlite database connection in FastAPI routes., Obtain a direct async sqlite database connection., Row, Connection, block_task(), claim_task() (+28 more)
+
+### Community 45 - "Community 45"
+Cohesion: 0.22
+Nodes (20): get_all_context(), get_context_by_key(), list_memory(), _now_iso(), push_memory(), Retrieve a single context value by key., Set or update a persistent team context key-value entry., Push a shared team memory entry to the central database. (+12 more)
+
 ## Knowledge Gaps
-- **107 isolated node(s):** `Any`, `TaskStatus`, `Connection`, `Path`, `Path` (+102 more)
+- **108 isolated node(s):** `Any`, `TaskStatus`, `HTTPAuthorizationCredentials`, `Row`, `Path` (+103 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -212,16 +222,16 @@ Nodes (3): Responsibilities:, Strict Rules:, Worker Role: Copywriter / Drafting 
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `ClaudeDesktopProxyAdapter` connect `Community 29` to `Community 0`, `Community 34`, `Community 5`, `Community 30`?**
-  _High betweenness centrality (0.084) - this node is a cross-community bridge._
-- **Why does `FastAPI` connect `Community 5` to `Community 1`, `Community 6`, `Community 7`?**
-  _High betweenness centrality (0.076) - this node is a cross-community bridge._
+  _High betweenness centrality (0.100) - this node is a cross-community bridge._
+- **Why does `FastAPI` connect `Community 5` to `Community 1`, `Community 45`, `Community 6`, `Community 7`?**
+  _High betweenness centrality (0.085) - this node is a cross-community bridge._
 - **Why does `ClaudeDesktopCDPAdapter` connect `Community 29` to `Community 0`, `Community 34`, `Community 4`, `Community 30`?**
-  _High betweenness centrality (0.039) - this node is a cross-community bridge._
+  _High betweenness centrality (0.042) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `ClaudeDesktopCDPAdapter` (e.g. with `BaseWorkerAdapter` and `ClaudeDesktopProxyAdapter`) actually correct?**
   _`ClaudeDesktopCDPAdapter` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 12 inferred relationships involving `BaseWorkerAdapter` (e.g. with `ClaudeDesktopCDPAdapter` and `ClaudeDesktopProxyAdapter`) actually correct?**
   _`BaseWorkerAdapter` has 12 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 11 inferred relationships involving `Connection` (e.g. with `CheckpointResponse` and `CheckpointSubmit`) actually correct?**
-  _`Connection` has 11 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `Any`, `Abstract interface for worker execution endpoints.`, `Executes work specified in `spec`.         Returns dictionary:         {` to the rest of the system?**
-  _170 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _178 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Community 2` be split into smaller, more focused modules?**
+  _Cohesion score 0.047619047619047616 - nodes in this community are weakly interconnected._

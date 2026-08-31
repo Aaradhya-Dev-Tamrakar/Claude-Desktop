@@ -176,3 +176,22 @@ class JobMetricsResponse(BaseModel):
     throughput_tasks_per_hour: float
     started_at: str | None
     finished_at: str | None
+
+# ----------------- SHARED MEMORY & CONTEXT -----------------
+class MemoryCreate(BaseModel):
+    account: str
+    text: str
+
+class MemoryResponse(BaseModel):
+    id: str
+    account: str
+    text: str
+    created_at: str
+
+class ContextUpsert(BaseModel):
+    value: str
+
+class ContextResponse(BaseModel):
+    key: str
+    value: str
+    updated_at: str

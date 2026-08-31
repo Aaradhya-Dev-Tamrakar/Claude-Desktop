@@ -104,6 +104,21 @@ CREATE TABLE IF NOT EXISTS job_metrics (
     finished_at DATETIME
 );
 
+-- 8. SHARED MEMORY (replaces orchestrator-state/memory/ + team-memory.md)
+CREATE TABLE IF NOT EXISTS memory_entries (
+    id TEXT PRIMARY KEY,                       -- e.g. "mem_2026-08-31_001"
+    account TEXT NOT NULL,                     -- profile / worker that pushed the entry
+    text TEXT NOT NULL,                        -- the memory content
+    created_at DATETIME DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))
+);
+
+-- 9. TEAM CONTEXT (durable project context & preferences)
+CREATE TABLE IF NOT EXISTS team_context (
+    key TEXT PRIMARY KEY,                      -- e.g. "identity", "projects", "preferences"
+    value TEXT NOT NULL,
+    updated_at DATETIME DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))
+);
+
 -- Indexes for ultra-fast query and queue operations
 CREATE INDEX IF NOT EXISTS idx_tasks_status_stage ON tasks(status, stage, priority);
 CREATE INDEX IF NOT EXISTS idx_tasks_job_id ON tasks(job_id);
@@ -111,3 +126,4 @@ CREATE INDEX IF NOT EXISTS idx_tasks_owner ON tasks(owner_worker_id);
 CREATE INDEX IF NOT EXISTS idx_workers_status ON workers(status, cooldown_until);
 CREATE INDEX IF NOT EXISTS idx_checkpoints_job_id ON checkpoints(job_id);
 CREATE INDEX IF NOT EXISTS idx_qa_reviews_task_id ON qa_reviews(task_id);
+CREATE INDEX IF NOT EXISTS idx_memory_created ON memory_entries(created_at);

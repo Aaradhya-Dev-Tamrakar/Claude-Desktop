@@ -1030,9 +1030,9 @@
     "semantic_hash": "e9091216a526021912560dd4f61bf1a7"
   },
   "profiles.json": {
-    "mtime": 1788024859.5742826,
-    "ast_hash": "4bc7a241158b443c6084cf27ce1946b1",
-    "semantic_hash": "4bc7a241158b443c6084cf27ce1946b1"
+    "mtime": 1788105910.8228116,
+    "ast_hash": "d7c7dfe174e724dfdd75b351cc95ca9c",
+    "semantic_hash": ""
   },
   "reset_profiles.ps1": {
     "mtime": 1785646326.0,
@@ -1055,14 +1055,14 @@
     "semantic_hash": "ca5ed528061adc8837c11c911752f7d1"
   },
   "server/core/config.py": {
-    "mtime": 1788017996.321491,
-    "ast_hash": "7724ae0b9eac90a3790470a54b2a3e38",
-    "semantic_hash": "7724ae0b9eac90a3790470a54b2a3e38"
+    "mtime": 1788143629.3569899,
+    "ast_hash": "483334b7617a06921b5ce11827a30ffc",
+    "semantic_hash": ""
   },
   "server/core/database.py": {
-    "mtime": 1788017996.321491,
-    "ast_hash": "a2780f17b62ddf247c7ca8c74fb0cbee",
-    "semantic_hash": "a2780f17b62ddf247c7ca8c74fb0cbee"
+    "mtime": 1788143636.044463,
+    "ast_hash": "f2ecb3e2bb73d951cbea67571fa8ff9e",
+    "semantic_hash": ""
   },
   "server/core/pipeline_engine.py": {
     "mtime": 1788017996.3228216,
@@ -1080,19 +1080,19 @@
     "semantic_hash": "60c0c1cf5a8eaef9e965e5f32972240f"
   },
   "server/database/schema.sql": {
-    "mtime": 1788023300.4927685,
-    "ast_hash": "2f120bdfeaa87888fbc44c7402763add",
-    "semantic_hash": "2f120bdfeaa87888fbc44c7402763add"
+    "mtime": 1788143622.3638148,
+    "ast_hash": "1e4b951a41b0f7022c06ea0ae6eee5e6",
+    "semantic_hash": ""
   },
   "server/main.py": {
-    "mtime": 1788017996.3250678,
-    "ast_hash": "797fcd45882484abd39066e8b105dae3",
-    "semantic_hash": "797fcd45882484abd39066e8b105dae3"
+    "mtime": 1788143865.2753425,
+    "ast_hash": "edef064e86de5699245c0ebadd283605",
+    "semantic_hash": ""
   },
   "server/models/schemas.py": {
-    "mtime": 1788017996.3265135,
-    "ast_hash": "06f478d7e63e0493545477ee9a54c64e",
-    "semantic_hash": "06f478d7e63e0493545477ee9a54c64e"
+    "mtime": 1788143664.7225354,
+    "ast_hash": "91efb2bc385ab355b0dbfd4aa1fefefe",
+    "semantic_hash": ""
   },
   "sku-templates/100_product_descriptions.json": {
     "mtime": 1788017996.3280263,
@@ -1175,9 +1175,9 @@
     "semantic_hash": "8d1fb36b155980180a8ff557337ae2a5"
   },
   "README.md": {
-    "mtime": 1788023300.4888146,
-    "ast_hash": "7163d747224bc83a62a53b3bd53e9807",
-    "semantic_hash": "7163d747224bc83a62a53b3bd53e9807"
+    "mtime": 1788143975.2222834,
+    "ast_hash": "ff5b8b050c5d5cba742dc4d15448639b",
+    "semantic_hash": ""
   },
   "orchestrator-state/SCHEMA.md": {
     "mtime": 1788017996.3157141,
@@ -1253,5 +1253,25 @@
     "mtime": 1788017996.3377848,
     "ast_hash": "a4e7fb1e2902d3f32104b7f3fb6878fa",
     "semantic_hash": "a4e7fb1e2902d3f32104b7f3fb6878fa"
+  },
+  "server/api/routes_memory.py": {
+    "mtime": 1788143781.5980954,
+    "ast_hash": "2f41dedadde17d3ece3d17a469d911bc",
+    "semantic_hash": ""
+  },
+  "server/core/auth.py": {
+    "mtime": 1788143657.5180423,
+    "ast_hash": "bbede3e5ff434f5a6ac147d2e14526d7",
+    "semantic_hash": ""
+  },
+  "server/mcp_remote.py": {
+    "mtime": 1788143917.873388,
+    "ast_hash": "05dfce4199f5bb5326ef1dea91ca0845",
+    "semantic_hash": ""
+  },
+  "tests/test_remote_mcp.py": {
+    "mtime": 1788143900.5228693,
+    "ast_hash": "b0230e6d93cb64ec793e0c9e74916e91",
+    "semantic_hash": ""
   }
 }
