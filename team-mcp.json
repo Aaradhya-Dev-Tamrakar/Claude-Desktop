@@ -13,7 +13,9 @@
         "{{REPO_ROOT}}\\mcp-servers\\orchestrator-mcp\\run_server.py"
       ],
       "env": {}
-    },
+    }
+  },
+  "_disabled_mcpServers": {
     "cloud-orchestrator-mcp": {
       "command": "{{REPO_ROOT}}\\.venv\\Scripts\\python.exe",
       "args": [

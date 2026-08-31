@@ -49,3 +49,30 @@ GEMINI.md
 # Google Calendar OAuth client secret & cached token — never commit
 gcal-credentials.json
 gcal-token.json
+
+# Sensitive context & private notes
+*private-context*
+*personal-context*
+*secret-context*
+*.private.md
+*.local.md
+*secrets*
+private/
+secrets/
+
+# Credentials, tokens, keys & auth caches
+*credentials*.json
+*token*.json
+*secret*.json
+*.pem
+*.key
+*.pfx
+*.p12
+*.cert
+*.crt
+storage_state*.json
+cookies*.json
+.notebooklm-mcp-cli/
+*.sqlite-journal
+*.db-journal
+

@@ -1125,9 +1125,9 @@
     "semantic_hash": "f9b930b715a55fc5f939c68b86c2841b"
   },
   "team-mcp.json": {
-    "mtime": 1788024619.4034867,
-    "ast_hash": "f4585fd2132a5b2a9fd646626ea71fe5",
-    "semantic_hash": "f4585fd2132a5b2a9fd646626ea71fe5"
+    "mtime": 1788150600.7895658,
+    "ast_hash": "4d574f6d4f51df73d39828329d9c9cf6",
+    "semantic_hash": ""
   },
   "tests/launch_user_n.Tests.ps1": {
     "mtime": 1788147540.481263,
