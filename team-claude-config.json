@@ -10,16 +10,25 @@
     "notebooklm-mcp": {
       "command": "python",
       "args": [
-        "D:\\Aaradhya-Dev-Tamrakar\\Claude-Desktop\\mcp-servers\\notebooklm-mcp\\run_server.py"
+        "{{REPO_ROOT}}\\mcp-servers\\notebooklm-mcp\\run_server.py"
       ],
       "env": {}
     },
     "orchestrator-mcp": {
       "command": "python",
       "args": [
-        "D:\\Aaradhya-Dev-Tamrakar\\Claude-Desktop\\mcp-servers\\orchestrator-mcp\\run_server.py"
+        "{{REPO_ROOT}}\\mcp-servers\\orchestrator-mcp\\run_server.py"
       ],
       "env": {}
+    },
+    "cloud-orchestrator-mcp": {
+      "command": "{{REPO_ROOT}}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "{{REPO_ROOT}}\\mcp-servers\\cloud-orchestrator-mcp\\run_server.py"
+      ],
+      "env": {
+        "ORCHESTRATOR_API_URL": "http://localhost:8000/api/v1"
+      }
     }
   },
   "preferences": {
