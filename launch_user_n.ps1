@@ -472,14 +472,14 @@ function Select-ProfileInteractive {
     # Initial console clear
     try { [Console]::Clear() } catch { }
 
-    $cols = @(6, 13, 14, 10, 10, 10, 11)
+    $cols = @(6, 13, 16, 10, 10, 10, 11)
     $tblTop = "╭" + (($cols | ForEach-Object { "─" * ($_ + 2) }) -join "┬") + "╮"
     $tblMid = "├" + (($cols | ForEach-Object { "─" * ($_ + 2) }) -join "┼") + "┤"
     $tblBot = "╰" + (($cols | ForEach-Object { "─" * ($_ + 2) }) -join "┴") + "╯"
 
-    $bannerTop = "╭" + ("─" * 94) + "╮"
-    $bannerMid = "│" + "                    🚀  CLAUDE DESKTOP PROFILE LAUNCHER".PadRight(94) + "│"
-    $bannerBot = "╰" + ("─" * 94) + "╯"
+    $bannerTop = "╭" + ("─" * 96) + "╮"
+    $bannerMid = "│" + "                    🚀  CLAUDE DESKTOP PROFILE LAUNCHER".PadRight(96) + "│"
+    $bannerBot = "╰" + ("─" * 96) + "╯"
 
     $lastRenderLineCount = 0
 
@@ -531,33 +531,33 @@ function Select-ProfileInteractive {
             
             $modeLabel = if ($isConcurrent) { "Concurrent (Side-by-Side)" } else { "Isolated (Session Swap)" }
             $modeColor = if ($isConcurrent) { "Magenta" } else { "Cyan" }
-            $modeLine = " Mode: [ $modeLabel ]".PadRight(40) + "◄ Press [Tab] or [M] to toggle"
-            Write-Host $modeLine.PadRight(96) -ForegroundColor $modeColor
+            $modeLine = " Mode: [ $modeLabel ]".PadRight(42) + "◄ Press [Tab] or [M] to toggle"
+            Write-Host $modeLine.PadRight(98) -ForegroundColor $modeColor
             $currentLines++
             
             if ($isConcurrent) {
                 $selCount = $selectedSet.Count
-                $multiLine = " Multi-Launch: $selCount profile(s) selected".PadRight(40) + "([Space] to toggle, [A] select/clear all)"
-                Write-Host $multiLine.PadRight(96) -ForegroundColor Yellow
+                $multiLine = " Multi-Launch: $selCount profile(s) selected".PadRight(42) + "([Space] to toggle, [A] select/clear all)"
+                Write-Host $multiLine.PadRight(98) -ForegroundColor Yellow
             } else {
-                Write-Host (" " * 96)
+                Write-Host (" " * 98)
             }
             $currentLines++
 
             if (-not [string]::IsNullOrEmpty($filterText)) {
                 $filterLine = " 🔍 Filter: $filterText (Press [Esc] to clear, matches: $($filteredRows.Count))"
-                Write-Host $filterLine.PadRight(96) -ForegroundColor Yellow
+                Write-Host $filterLine.PadRight(98) -ForegroundColor Yellow
             } else {
                 $filterLine = " 🔍 Filter: [Type to search by name/role/number...]"
-                Write-Host $filterLine.PadRight(96) -ForegroundColor DarkGray
+                Write-Host $filterLine.PadRight(98) -ForegroundColor DarkGray
             }
             $currentLines++
 
-            Write-Host (" " * 96)
+            Write-Host (" " * 98)
             $currentLines++
 
             # Table Header
-            $headers = @("Sel   ", "Nickname     ", "Role          ", "Last Time ", "Last Date ", "Today Rank", "Status     ")
+            $headers = @("Sel   ", "Nickname     ", "Role            ", "Last Time ", "Last Date ", "Today Rank", "Status     ")
             $hdrRow = "│" + (($headers | ForEach-Object { " " + $_ + " " }) -join "│") + "│"
 
             Write-Host $tblTop -ForegroundColor Cyan
@@ -566,7 +566,7 @@ function Select-ProfileInteractive {
             $currentLines += 3
 
             if ($filteredRows.Count -eq 0) {
-                $emptyMsg = "  (No matching profiles found for '$filterText')".PadRight(94)
+                $emptyMsg = "  (No matching profiles found for '$filterText')".PadRight(96)
                 Write-Host "│$emptyMsg│" -ForegroundColor Yellow
                 $currentLines++
             } else {
@@ -583,8 +583,8 @@ function Select-ProfileInteractive {
                     $nickCell = $row.Nickname.PadRight(13)
                     if ($nickCell.Length -gt 13) { $nickCell = $nickCell.Substring(0, 10) + "..." }
                     
-                    $roleCell = $row.Role.PadRight(14)
-                    if ($roleCell.Length -gt 14) { $roleCell = $roleCell.Substring(0, 11) + "..." }
+                    $roleCell = $row.Role.PadRight(16)
+                    if ($roleCell.Length -gt 16) { $roleCell = $roleCell.Substring(0, 13) + "..." }
                     
                     $timeCell = $row.LastTime.PadRight(10)
                     $dateCell = $row.LastDate.PadRight(10)
@@ -616,20 +616,20 @@ function Select-ProfileInteractive {
 
             if ($filteredRows.Count -gt $maxVisible) {
                 $scrollInfo = " (Showing items $($viewportStart + 1)-$($viewportStart + $visibleRows.Count) of $($filteredRows.Count) — use ↑/↓ to scroll)"
-                Write-Host $scrollInfo.PadRight(96) -ForegroundColor DarkGray
+                Write-Host $scrollInfo.PadRight(98) -ForegroundColor DarkGray
             } else {
-                Write-Host (" " * 96)
+                Write-Host (" " * 98)
             }
             $currentLines++
 
             $footerLine = " [↑/↓] Move │ [Space] Select │ [Tab] Mode │ [Enter] Launch │ [/] Search │ [N] New │ [Q] Exit"
-            Write-Host $footerLine.PadRight(96) -ForegroundColor DarkCyan
+            Write-Host $footerLine.PadRight(98) -ForegroundColor DarkCyan
             $currentLines++
 
             # Clear trailing lines if viewport shrank
             if ($lastRenderLineCount -gt $currentLines) {
                 for ($cl = $currentLines; $cl -lt $lastRenderLineCount; $cl++) {
-                    Write-Host (" " * 96)
+                    Write-Host (" " * 98)
                 }
             }
             $lastRenderLineCount = $currentLines
