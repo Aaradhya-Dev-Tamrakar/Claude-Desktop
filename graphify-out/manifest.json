@@ -45,8 +45,8 @@
     "semantic_hash": "9163a74b118a56b4f05216c1a842b898"
   },
   "launch_user_n.ps1": {
-    "mtime": 1788147559.0037673,
-    "ast_hash": "38baedf0d28afe13735452b0e9e390eb",
+    "mtime": 1788150908.278945,
+    "ast_hash": "765ef6b29597297cb5419373d89e9710",
     "semantic_hash": ""
   },
   "mcp-servers/cloud-orchestrator-mcp/run_server.py": {
@@ -1275,8 +1275,8 @@
     "semantic_hash": "b0230e6d93cb64ec793e0c9e74916e91"
   },
   "tools/VirtualDesktop11-24H2.cs": {
-    "mtime": 1788147321.1998696,
-    "ast_hash": "de63679924d49fdd609e46aa484f6839",
+    "mtime": 1788150870.7223375,
+    "ast_hash": "195aa1cc7b6a63a8207136d92372df82",
     "semantic_hash": ""
   },
   "orchestrator-state/HANDOFF_PROTOCOL.md": {

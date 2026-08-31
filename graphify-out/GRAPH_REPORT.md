@@ -1,16 +1,16 @@
 # Graph Report - Claude-Desktop  (2026-08-31)
 
 ## Corpus Check
-- 253 files · ~179,672 words
+- 253 files · ~179,623 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 783 nodes · 1625 edges · 55 communities (42 shown, 13 thin omitted)
+- 783 nodes · 1625 edges · 56 communities (44 shown, 12 thin omitted)
 - Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 148 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `968246a5`
+- Built from commit: `cac225a9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,6 +19,7 @@
 - [[_COMMUNITY_Community 1|Community 1]]
 - [[_COMMUNITY_Community 2|Community 2]]
 - [[_COMMUNITY_Community 3|Community 3]]
+- [[_COMMUNITY_Community 4|Community 4]]
 - [[_COMMUNITY_Community 5|Community 5]]
 - [[_COMMUNITY_Community 6|Community 6]]
 - [[_COMMUNITY_Community 7|Community 7]]
@@ -61,7 +62,7 @@
 - [[_COMMUNITY_Community 47|Community 47]]
 - [[_COMMUNITY_Community 48|Community 48]]
 - [[_COMMUNITY_Community 49|Community 49]]
-- [[_COMMUNITY_Community 51|Community 51]]
+- [[_COMMUNITY_Community 50|Community 50]]
 - [[_COMMUNITY_Community 52|Community 52]]
 - [[_COMMUNITY_Community 53|Community 53]]
 - [[_COMMUNITY_Community 54|Community 54]]
@@ -95,7 +96,7 @@
 ## Import Cycles
 - 1-file cycle: `server/main.py -> server/main.py`
 
-## Communities (55 total, 13 thin omitted)
+## Communities (56 total, 12 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.18
@@ -112,6 +113,10 @@ Nodes (53): 2026-08-05, 2026-08-06, 2026-08-10, 2026-08-10, 2026-08-11, 2026-08-
 ### Community 3 - "Community 3"
 Cohesion: 0.08
 Nodes (59): get_db(), get_db_conn(), init_db(), Dependency for obtaining an async sqlite database connection in FastAPI routes., Initialize database tables and indexes from schema.sql with automatic migration, Obtain a direct async sqlite database connection., Periodic self-healing supervisor loop:     1. Identifies workers with stale hear, run_supervisor_cycle() (+51 more)
+
+### Community 4 - "Community 4"
+Cohesion: 0.21
+Nodes (5): DesktopManager, IVirtualDesktopManager, IVirtualDesktopPinnedApps, VDeskTool, VirtualDesktop
 
 ### Community 5 - "Community 5"
 Cohesion: 0.22
@@ -238,16 +243,20 @@ Cohesion: 0.67
 Nodes (3): 2026-08-22, 2026-08-22, Local Git Workflow & Auto-Sync (`sync.ps1`)
 
 ### Community 44 - "Community 44"
-Cohesion: 0.10
+Cohesion: 0.11
 Nodes (3): PreserveSig, IVirtualDesktop, IVirtualDesktopManagerInternal
 
-### Community 46 - "Community 46"
+### Community 45 - "Community 45"
 Cohesion: 0.15
-Nodes (7): bool, EnumDelegate, int, string, StringBuilder, Program, uint
+Nodes (3): IntPtr, StringBuilder, UInt32
+
+### Community 46 - "Community 46"
+Cohesion: 0.18
+Nodes (6): bool, EnumDelegate, int, string, Program, uint
 
 ### Community 48 - "Community 48"
-Cohesion: 0.11
-Nodes (9): Guid, MarshalAs, DesktopManager, Guids, IObjectArray, IServiceProvider10, IVirtualDesktopManager, VDeskTool (+1 more)
+Cohesion: 0.18
+Nodes (4): Guid, MarshalAs, Guids, IServiceProvider10
 
 ### Community 52 - "Community 52"
 Cohesion: 0.33
@@ -256,7 +265,7 @@ Nodes (5): Anti-Patterns (Wastes Tokens), Checkpoint Summary Format (max 500 cha
 ## Knowledge Gaps
 - **133 isolated node(s):** `Any`, `TaskStatus`, `HTTPAuthorizationCredentials`, `Row`, `Path` (+128 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -265,7 +274,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.051) - this node is a cross-community bridge._
 - **Why does `FastAPI` connect `Community 13` to `Community 0`, `Community 9`, `Community 3`, `Community 7`?**
   _High betweenness centrality (0.043) - this node is a cross-community bridge._
-- **Why does `IApplicationView` connect `Community 43` to `Community 44`, `Community 45`, `Community 48`, `Community 49`, `Community 53`, `Community 54`, `Community 55`, `Community 56`?**
+- **Why does `IApplicationView` connect `Community 43` to `Community 4`, `Community 44`, `Community 45`, `Community 48`, `Community 49`, `Community 53`, `Community 54`, `Community 55`, `Community 56`?**
   _High betweenness centrality (0.027) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `ClaudeDesktopCDPAdapter` (e.g. with `BaseWorkerAdapter` and `ClaudeDesktopProxyAdapter`) actually correct?**
   _`ClaudeDesktopCDPAdapter` has 4 INFERRED edges - model-reasoned connections that need verification._

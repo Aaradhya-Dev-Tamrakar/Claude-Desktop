@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly:AssemblyConfiguration("")]
 [assembly:AssemblyCompany("MS")]
 [assembly:AssemblyProduct("VirtualDesktop")]
-[assembly:AssemblyCopyright("© Markus Scholtes 2025")]
+[assembly:AssemblyCopyright("ï¿½ Markus Scholtes 2025")]
 [assembly:AssemblyTrademark("")]
 [assembly:AssemblyCulture("")]
 [assembly:AssemblyVersion("1.21.0.0")]
@@ -602,32 +602,24 @@ namespace VirtualDesktop
 
 		public void MoveWindow(IntPtr hWnd)
 		{ // move window to this desktop
-			int processId;
 			if (hWnd == IntPtr.Zero) throw new ArgumentNullException();
-			GetWindowThreadProcessId(hWnd, out processId);
-
-			if (System.Diagnostics.Process.GetCurrentProcess().Id == processId)
-			{ // window of process
-				try // the easy way (if we are owner)
-				{
-					DesktopManager.VirtualDesktopManager.MoveWindowToDesktop(hWnd, ivd.GetId());
-				}
-				catch // window of process, but we are not the owner
+			try
+			{
+				DesktopManager.VirtualDesktopManager.MoveWindowToDesktop(hWnd, ivd.GetId());
+			}
+			catch
+			{
+				int processId;
+				GetWindowThreadProcessId(hWnd, out processId);
+				try
 				{
 					IApplicationView view;
 					DesktopManager.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
 					DesktopManager.VirtualDesktopManagerInternal.MoveViewToDesktop(view, ivd);
 				}
-			}
-			else
-			{ // window of other process
-				IApplicationView view;
-				DesktopManager.ApplicationViewCollection.GetViewForHwnd(hWnd, out view);
-				try {
-					DesktopManager.VirtualDesktopManagerInternal.MoveViewToDesktop(view, ivd);
-				}
 				catch
-				{ // could not move active window, try main window (or whatever Windows thinks is the main window)
+				{
+					IApplicationView view;
 					DesktopManager.ApplicationViewCollection.GetViewForHwnd(System.Diagnostics.Process.GetProcessById(processId).MainWindowHandle, out view);
 					DesktopManager.VirtualDesktopManagerInternal.MoveViewToDesktop(view, ivd);
 				}
@@ -1888,17 +1880,18 @@ namespace VDeskTool
 
 							case "MOVEWINDOWHANDLE": // move window with handle to desktop in rc
 							case "MWH":
-								if (int.TryParse(groups[2].Value, out iParam))
+								long lHandle;
+								if (long.TryParse(groups[2].Value, out lHandle))
 								{ // check if parameter is an integer
 									try
 									{
 										// use window handle and move window
-										VirtualDesktop.Desktop.FromIndex(rc).MoveWindow((IntPtr)iParam);
+										VirtualDesktop.Desktop.FromIndex(rc).MoveWindow((IntPtr)lHandle);
 										if (verbose) Console.WriteLine("Window to handle " + groups[2].Value + " moved to desktop number " + rc.ToString() + " (desktop '" + VirtualDesktop.Desktop.DesktopNameFromIndex(rc) + "')");
 									}
-									catch
+									catch (Exception ex)
 									{ // error while seeking
-										if (verbose) Console.WriteLine("Window to handle " + groups[2].Value + " not found or move failed");
+										if (verbose) Console.WriteLine("Window to handle " + groups[2].Value + " move failed: " + ex.Message);
 										rc = -1;
 									}
 								}
@@ -1911,9 +1904,9 @@ namespace VDeskTool
 										VirtualDesktop.Desktop.FromIndex(rc).MoveWindow((IntPtr)iParam);
 										if (verbose) Console.WriteLine("Window '" + foundTitle + "' moved to desktop number " + rc.ToString() + " (desktop '" + VirtualDesktop.Desktop.DesktopNameFromIndex(rc) + "')");
 									}
-									catch
+									catch (Exception ex)
 									{ // error while seeking
-										if (verbose) Console.WriteLine("Window with text '" + groups[2].Value + "' in title not found or move failed");
+										if (verbose) Console.WriteLine("Window with text '" + groups[2].Value + "' in title move failed: " + ex.Message);
 										rc = -1;
 									}
 								}
@@ -2608,3 +2601,4 @@ namespace VDeskTool
 
 	}
 }
+

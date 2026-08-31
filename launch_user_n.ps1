@@ -1163,8 +1163,8 @@ function Arrange-ClaudeWindows {
                     $allProfilePids = @($runningProcs | Where-Object { $mainPids -contains $_.ProcessId -or $mainPids -contains $_.ParentProcessId } | Select-Object -ExpandProperty ProcessId)
 
                     $foundHwnd = $null
-                    foreach ($pid in $allProfilePids) {
-                        $hwnds = [ClaudeDesktopWindowHelper]::GetProcessWindows($pid)
+                    foreach ($procId in $allProfilePids) {
+                        $hwnds = [ClaudeDesktopWindowHelper]::GetProcessWindows($procId)
                         if ($hwnds.Count -gt 0) {
                             $foundHwnd = $hwnds[0]
                             break

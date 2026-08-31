@@ -4260,7 +4260,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2",
-      "community": 48,
+      "community": 4,
       "norm_label": "virtualdesktop11-24h2.cs"
     },
     {
@@ -4270,7 +4270,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_virtualdesktop",
-      "community": 48,
+      "community": 4,
       "norm_label": "virtualdesktop"
     },
     {
@@ -5030,7 +5030,7 @@
       "source_location": "L154",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktop_getid",
-      "community": 48,
+      "community": 45,
       "norm_label": ".getid()"
     },
     {
@@ -5040,7 +5040,7 @@
       "source_location": "L155",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktop_getname",
-      "community": 48,
+      "community": 50,
       "norm_label": ".getname()"
     },
     {
@@ -5120,7 +5120,7 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktopmanagerinternal_getcurrentdesktop",
-      "community": 51,
+      "community": 44,
       "norm_label": ".getcurrentdesktop()"
     },
     {
@@ -5130,7 +5130,7 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktopmanagerinternal_getdesktops",
-      "community": 48,
+      "community": 50,
       "norm_label": ".getdesktops()"
     },
     {
@@ -5210,7 +5210,7 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktopmanagerinternal_finddesktop",
-      "community": 51,
+      "community": 48,
       "norm_label": ".finddesktop()"
     },
     {
@@ -5250,7 +5250,7 @@
       "source_location": "L183",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktopmanagerinternal_updatewallpaperpathforalldesktops",
-      "community": 44,
+      "community": 47,
       "norm_label": ".updatewallpaperpathforalldesktops()"
     },
     {
@@ -5320,7 +5320,7 @@
       "source_location": "L192",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktopmanager",
-      "community": 48,
+      "community": 4,
       "norm_label": "ivirtualdesktopmanager"
     },
     {
@@ -5330,7 +5330,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktopmanager_iswindowoncurrentvirtualdesktop",
-      "community": 48,
+      "community": 4,
       "norm_label": ".iswindowoncurrentvirtualdesktop()"
     },
     {
@@ -5340,7 +5340,7 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktopmanager_getwindowdesktopid",
-      "community": 48,
+      "community": 45,
       "norm_label": ".getwindowdesktopid()"
     },
     {
@@ -5350,7 +5350,7 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktopmanager_movewindowtodesktop",
-      "community": 48,
+      "community": 45,
       "norm_label": ".movewindowtodesktop()"
     },
     {
@@ -5360,7 +5360,7 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktoppinnedapps",
-      "community": 45,
+      "community": 4,
       "norm_label": "ivirtualdesktoppinnedapps"
     },
     {
@@ -5390,7 +5390,7 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktoppinnedapps_unpinappid",
-      "community": 45,
+      "community": 4,
       "norm_label": ".unpinappid()"
     },
     {
@@ -5400,7 +5400,7 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktoppinnedapps_isviewpinned",
-      "community": 45,
+      "community": 4,
       "norm_label": ".isviewpinned()"
     },
     {
@@ -5410,7 +5410,7 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktoppinnedapps_pinview",
-      "community": 45,
+      "community": 4,
       "norm_label": ".pinview()"
     },
     {
@@ -5420,7 +5420,7 @@
       "source_location": "L212",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_ivirtualdesktoppinnedapps_unpinview",
-      "community": 45,
+      "community": 4,
       "norm_label": ".unpinview()"
     },
     {
@@ -5430,7 +5430,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_iobjectarray",
-      "community": 48,
+      "community": 50,
       "norm_label": "iobjectarray"
     },
     {
@@ -5440,7 +5440,7 @@
       "source_location": "L220",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_iobjectarray_getcount",
-      "community": 48,
+      "community": 50,
       "norm_label": ".getcount()"
     },
     {
@@ -5450,7 +5450,7 @@
       "source_location": "L221",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_iobjectarray_getat",
-      "community": 48,
+      "community": 50,
       "norm_label": ".getat()"
     },
     {
@@ -5480,7 +5480,7 @@
       "source_location": "L235",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktopmanager",
-      "community": 48,
+      "community": 4,
       "norm_label": "desktopmanager"
     },
     {
@@ -5490,7 +5490,7 @@
       "source_location": "L251",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktopmanager_getdesktop",
-      "community": 48,
+      "community": 50,
       "norm_label": ".getdesktop()"
     },
     {
@@ -5500,7 +5500,7 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktopmanager_getdesktopindex",
-      "community": 48,
+      "community": 50,
       "norm_label": ".getdesktopindex()"
     },
     {
@@ -5660,7 +5660,7 @@
       "source_location": "L362",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_fromwindow",
-      "community": 51,
+      "community": 45,
       "norm_label": ".fromwindow()"
     },
     {
@@ -5670,7 +5670,7 @@
       "source_location": "L372",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_fromdesktop",
-      "community": 51,
+      "community": 45,
       "norm_label": ".fromdesktop()"
     },
     {
@@ -5680,7 +5680,7 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_desktopnamefromdesktop",
-      "community": 48,
+      "community": 50,
       "norm_label": ".desktopnamefromdesktop()"
     },
     {
@@ -5700,7 +5700,7 @@
       "source_location": "L413",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_hasdesktopnamefromindex",
-      "community": 48,
+      "community": 50,
       "norm_label": ".hasdesktopnamefromindex()"
     },
     {
@@ -5750,7 +5750,7 @@
       "source_location": "L485",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_removeall",
-      "community": 48,
+      "community": 50,
       "norm_label": ".removeall()"
     },
     {
@@ -5790,7 +5790,7 @@
       "source_location": "L518",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_setallwallpaperpaths",
-      "community": 44,
+      "community": 47,
       "norm_label": ".setallwallpaperpaths()"
     },
     {
@@ -5830,14 +5830,14 @@
       "source_location": "L603",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_movewindow",
-      "community": 47,
+      "community": 45,
       "norm_label": ".movewindow()"
     },
     {
       "label": ".MoveActiveWindow()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L637",
+      "source_location": "L629",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_moveactivewindow",
       "community": 47,
@@ -5847,17 +5847,17 @@
       "label": ".HasWindow()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L642",
+      "source_location": "L634",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_haswindow",
-      "community": 48,
+      "community": 45,
       "norm_label": ".haswindow()"
     },
     {
       "label": ".IsWindowPinned()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L652",
+      "source_location": "L644",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_iswindowpinned",
       "community": 45,
@@ -5867,17 +5867,17 @@
       "label": ".PinWindow()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L658",
+      "source_location": "L650",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_pinwindow",
-      "community": 45,
+      "community": 4,
       "norm_label": ".pinwindow()"
     },
     {
       "label": ".PinActiveWindow()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L668",
+      "source_location": "L660",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_pinactivewindow",
       "community": 47,
@@ -5887,17 +5887,17 @@
       "label": ".UnpinWindow()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L673",
+      "source_location": "L665",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_unpinwindow",
-      "community": 45,
+      "community": 4,
       "norm_label": ".unpinwindow()"
     },
     {
       "label": ".UnpinActiveWindow()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L683",
+      "source_location": "L675",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_unpinactivewindow",
       "community": 47,
@@ -5907,7 +5907,7 @@
       "label": ".IsApplicationPinned()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L688",
+      "source_location": "L680",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_isapplicationpinned",
       "community": 45,
@@ -5917,7 +5917,7 @@
       "label": ".PinApplication()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L694",
+      "source_location": "L686",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_pinapplication",
       "community": 45,
@@ -5927,7 +5927,7 @@
       "label": ".UnpinApplication()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L704",
+      "source_location": "L696",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_desktop_unpinapplication",
       "community": 45,
@@ -5937,17 +5937,17 @@
       "label": "VDeskTool",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L719",
+      "source_location": "L711",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_vdesktool",
-      "community": 48,
+      "community": 4,
       "norm_label": "vdesktool"
     },
     {
       "label": "Program",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L721",
+      "source_location": "L713",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program",
       "community": 46,
@@ -5957,7 +5957,7 @@
       "label": ".Main()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L728",
+      "source_location": "L720",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_main",
       "community": 46,
@@ -5967,7 +5967,7 @@
       "label": ".GetMainWindowHandle()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2319",
+      "source_location": "L2312",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_getmainwindowhandle",
       "community": 46,
@@ -5977,27 +5977,27 @@
       "label": ".SendMessage()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2334",
+      "source_location": "L2327",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_sendmessage",
-      "community": 51,
+      "community": 45,
       "norm_label": ".sendmessage()"
     },
     {
       "label": "UInt32",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2334",
+      "source_location": "L2327",
       "_origin": "ast",
       "id": "uint32",
-      "community": 51,
+      "community": 45,
       "norm_label": "uint32"
     },
     {
       "label": "uint",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2337",
+      "source_location": "L2330",
       "_origin": "ast",
       "id": "uint",
       "community": 46,
@@ -6007,17 +6007,17 @@
       "label": ".IsWindowVisible()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2339",
+      "source_location": "L2332",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_iswindowvisible",
-      "community": 46,
+      "community": 45,
       "norm_label": ".iswindowvisible()"
     },
     {
       "label": ".EnumDesktopWindows()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2343",
+      "source_location": "L2336",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_enumdesktopwindows",
       "community": 46,
@@ -6027,7 +6027,7 @@
       "label": "EnumDelegate",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2343",
+      "source_location": "L2336",
       "_origin": "ast",
       "id": "enumdelegate",
       "community": 46,
@@ -6037,27 +6037,27 @@
       "label": ".GetWindowText()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2346",
+      "source_location": "L2339",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_getwindowtext",
-      "community": 46,
+      "community": 45,
       "norm_label": ".getwindowtext()"
     },
     {
       "label": "StringBuilder",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2346",
+      "source_location": "L2339",
       "_origin": "ast",
       "id": "stringbuilder",
-      "community": 46,
+      "community": 45,
       "norm_label": "stringbuilder"
     },
     {
       "label": "string",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2351",
+      "source_location": "L2344",
       "_origin": "ast",
       "id": "string",
       "community": 46,
@@ -6067,17 +6067,17 @@
       "label": ".EnumWindowsProc()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2354",
+      "source_location": "L2347",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_enumwindowsproc",
-      "community": 46,
+      "community": 45,
       "norm_label": ".enumwindowsproc()"
     },
     {
       "label": ".GetWindowFromTitle()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2373",
+      "source_location": "L2366",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_getwindowfromtitle",
       "community": 46,
@@ -6087,17 +6087,17 @@
       "label": ".EnumWindowsProcToList()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2395",
+      "source_location": "L2388",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_enumwindowsproctolist",
-      "community": 51,
+      "community": 45,
       "norm_label": ".enumwindowsproctolist()"
     },
     {
       "label": ".ListWindowsOnDesktop()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2406",
+      "source_location": "L2399",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_listwindowsondesktop",
       "community": 46,
@@ -6107,17 +6107,17 @@
       "label": ".EnumWindowsProcToClose()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2416",
+      "source_location": "L2409",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_enumwindowsproctoclose",
-      "community": 51,
+      "community": 45,
       "norm_label": ".enumwindowsproctoclose()"
     },
     {
       "label": ".CloseWindowsOnDesktop()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2427",
+      "source_location": "L2420",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_closewindowsondesktop",
       "community": 46,
@@ -6127,17 +6127,17 @@
       "label": ".EnumWindowsProcToMoveWindows()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2438",
+      "source_location": "L2431",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_enumwindowsproctomovewindows",
-      "community": 51,
+      "community": 45,
       "norm_label": ".enumwindowsproctomovewindows()"
     },
     {
       "label": ".MoveWindowsToDesktop()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2449",
+      "source_location": "L2442",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_movewindowstodesktop",
       "community": 46,
@@ -6147,17 +6147,17 @@
       "label": ".EnumWindowsProcToSwap()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2461",
+      "source_location": "L2454",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_enumwindowsproctoswap",
-      "community": 46,
+      "community": 45,
       "norm_label": ".enumwindowsproctoswap()"
     },
     {
       "label": ".SwapDesktops()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2481",
+      "source_location": "L2474",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_swapdesktops",
       "community": 46,
@@ -6167,7 +6167,7 @@
       "label": ".HelpScreen()",
       "file_type": "code",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2500",
+      "source_location": "L2493",
       "_origin": "ast",
       "id": "tools_virtualdesktop11_24h2_program_helpscreen",
       "community": 46,
@@ -10337,9 +10337,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L614",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server",
-      "target": "orchestrator_mcp_run_server_archive_memory",
-      "confidence_score": 1.0
+      "target": "orchestrator_mcp_run_server_archive_memory"
     },
     {
       "relation": "contains",
@@ -10407,9 +10407,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L559",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server",
-      "target": "orchestrator_mcp_run_server_get_context_bundle",
-      "confidence_score": 1.0
+      "target": "orchestrator_mcp_run_server_get_context_bundle"
     },
     {
       "relation": "contains",
@@ -10810,9 +10810,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L615",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server_archive_memory",
-      "target": "orchestrator_mcp_run_server_ensure_dirs",
-      "confidence_score": 1.0
+      "target": "orchestrator_mcp_run_server_ensure_dirs"
     },
     {
       "relation": "calls",
@@ -10854,9 +10854,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L565",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server_get_context_bundle",
-      "target": "orchestrator_mcp_run_server_ensure_dirs",
-      "confidence_score": 1.0
+      "target": "orchestrator_mcp_run_server_ensure_dirs"
     },
     {
       "relation": "calls",
@@ -11008,9 +11008,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L566",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server_get_context_bundle",
-      "target": "orchestrator_mcp_run_server_validate_account",
-      "confidence_score": 1.0
+      "target": "orchestrator_mcp_run_server_validate_account"
     },
     {
       "relation": "calls",
@@ -11415,9 +11415,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L624",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server_archive_memory",
-      "target": "orchestrator_mcp_run_server_read_json",
-      "confidence_score": 1.0
+      "target": "orchestrator_mcp_run_server_read_json"
     },
     {
       "relation": "calls",
@@ -11437,9 +11437,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L577",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server_get_context_bundle",
-      "target": "orchestrator_mcp_run_server_read_json",
-      "confidence_score": 1.0
+      "target": "orchestrator_mcp_run_server_read_json"
     },
     {
       "relation": "calls",
@@ -11580,9 +11580,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L614",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server_archive_memory",
-      "target": "mcp_servers_orchestrator_mcp_run_server_py_any",
-      "confidence_score": 1.0
+      "target": "mcp_servers_orchestrator_mcp_run_server_py_any"
     },
     {
       "relation": "references",
@@ -11635,9 +11635,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L559",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server_get_context_bundle",
-      "target": "mcp_servers_orchestrator_mcp_run_server_py_any",
-      "confidence_score": 1.0
+      "target": "mcp_servers_orchestrator_mcp_run_server_py_any"
     },
     {
       "relation": "references",
@@ -11998,9 +11998,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L592",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server_get_context_bundle",
-      "target": "orchestrator_mcp_run_server_read_all_live_status",
-      "confidence_score": 1.0
+      "target": "orchestrator_mcp_run_server_read_all_live_status"
     },
     {
       "relation": "calls",
@@ -12009,9 +12009,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L571",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server_get_context_bundle",
-      "target": "orchestrator_mcp_run_server_read_team_memory",
-      "confidence_score": 1.0
+      "target": "orchestrator_mcp_run_server_read_team_memory"
     },
     {
       "relation": "calls",
@@ -12020,9 +12020,9 @@
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L570",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server_get_context_bundle",
-      "target": "orchestrator_mcp_run_server_read_team_context",
-      "confidence_score": 1.0
+      "target": "orchestrator_mcp_run_server_read_team_context"
     },
     {
       "relation": "calls",
@@ -17909,9 +17909,9 @@
       "source_file": "tests/orchestrator_mcp_test.py",
       "source_location": "L379",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_orchestrator_mcp_test",
-      "target": "tests_orchestrator_mcp_test_testcontextbundleandarchiving",
-      "confidence_score": 1.0
+      "target": "tests_orchestrator_mcp_test_testcontextbundleandarchiving"
     },
     {
       "relation": "contains",
@@ -18181,9 +18181,9 @@
       "source_file": "tests/orchestrator_mcp_test.py",
       "source_location": "L337",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_orchestrator_mcp_test_testteammemory",
-      "target": "tests_orchestrator_mcp_test_testteammemory_test_limit_and_search_and_project_filter",
-      "confidence_score": 1.0
+      "target": "tests_orchestrator_mcp_test_testteammemory_test_limit_and_search_and_project_filter"
     },
     {
       "relation": "method",
@@ -18231,9 +18231,9 @@
       "source_file": "tests/orchestrator_mcp_test.py",
       "source_location": "L397",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_orchestrator_mcp_test_testcontextbundleandarchiving",
-      "target": "tests_orchestrator_mcp_test_testcontextbundleandarchiving_test_archive_memory",
-      "confidence_score": 1.0
+      "target": "tests_orchestrator_mcp_test_testcontextbundleandarchiving_test_archive_memory"
     },
     {
       "relation": "method",
@@ -18241,9 +18241,9 @@
       "source_file": "tests/orchestrator_mcp_test.py",
       "source_location": "L380",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_orchestrator_mcp_test_testcontextbundleandarchiving",
-      "target": "tests_orchestrator_mcp_test_testcontextbundleandarchiving_test_get_context_bundle",
-      "confidence_score": 1.0
+      "target": "tests_orchestrator_mcp_test_testcontextbundleandarchiving_test_get_context_bundle"
     },
     {
       "relation": "method",
@@ -23856,9 +23856,9 @@
       "source_file": "orchestrator-state/SCHEMA.md",
       "source_location": "L174",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_state_schema_orchestrator_state_schema",
-      "target": "orchestrator_state_schema_orchestrator_state_memory_archive",
-      "confidence_score": 1.0
+      "target": "orchestrator_state_schema_orchestrator_state_memory_archive"
     },
     {
       "relation": "contains",
@@ -23876,9 +23876,9 @@
       "source_file": "orchestrator-state/SCHEMA.md",
       "source_location": "L181",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_state_schema_orchestrator_state_schema",
-      "target": "orchestrator_state_schema_token_efficient_session_bootstrap",
-      "confidence_score": 1.0
+      "target": "orchestrator_state_schema_token_efficient_session_bootstrap"
     },
     {
       "relation": "calls",
@@ -24810,5 +24810,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "968246a5ea3b770ff1ea01cc8d31a7c076182bcb"
+  "built_at_commit": "cac225a9b7f58e2a51341aec1c046af8ac0215ba"
 }
