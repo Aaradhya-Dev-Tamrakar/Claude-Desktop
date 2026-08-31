@@ -295,11 +295,17 @@ class TestLiveStatus:
 class TestTeamMemory:
     def test_push_then_read_round_trip(self, repo):
         rs, _ = repo
-        rs.push_memory_entry(account="user1", text="first fact")
-        entries = rs.read_team_memory()
+        rs.push_memory_entry(account="user1", text="first fact", tags=["SPARK"], ttl_days=14, priority="high")
+        res = rs.read_team_memory()
+        entries = res["entries"]
         assert len(entries) == 1
         assert entries[0]["account"] == "user1"
         assert entries[0]["text"] == "first fact"
+        assert entries[0]["tags"] == ["SPARK"]
+        assert entries[0]["ttl_days"] == 14
+        assert entries[0]["priority"] == "high"
+        assert res["total_available"] == 1
+        assert res["truncated"] is False
 
     def test_multiple_accounts_all_returned_sorted(self, repo):
         rs, _ = repo
@@ -308,7 +314,8 @@ class TestTeamMemory:
         rs.push_memory_entry(account="user2", text="second fact")
         time.sleep(1.1)
         rs.push_memory_entry(account="user1", text="third fact")
-        entries = rs.read_team_memory()
+        res = rs.read_team_memory()
+        entries = res["entries"]
         assert len(entries) == 3
         assert [e["text"] for e in entries] == ["first fact", "second fact", "third fact"]
         assert [e["pushed_at"] for e in entries] == sorted(e["pushed_at"] for e in entries)
@@ -321,19 +328,40 @@ class TestTeamMemory:
         time.sleep(1.1)
         e3 = rs.push_memory_entry(account="user1", text="third fact")
 
-        since_e2 = rs.read_team_memory(since=e2["pushed_at"])
+        since_e2 = rs.read_team_memory(since=e2["pushed_at"])["entries"]
         assert [e["text"] for e in since_e2] == ["second fact", "third fact"]
 
-        since_e3 = rs.read_team_memory(since=e3["pushed_at"])
+        since_e3 = rs.read_team_memory(since=e3["pushed_at"])["entries"]
         assert [e["text"] for e in since_e3] == ["third fact"]
+
+    def test_limit_and_search_and_project_filter(self, repo):
+        rs, _ = repo
+        rs.push_memory_entry(account="user1", text="SPARK fall detection model", tags=["SPARK"])
+        rs.push_memory_entry(account="user2", text="BiasAperture fairness metric", tags=["BiasAperture"])
+        rs.push_memory_entry(account="user3", text="SPARK gateway wire format", tags=["SPARK"])
+
+        # Search filter
+        spark_res = rs.read_team_memory(search="wire")
+        assert len(spark_res["entries"]) == 1
+        assert spark_res["entries"][0]["account"] == "user3"
+
+        # Project tag filter
+        spark_tags = rs.read_team_memory(project="SPARK")
+        assert len(spark_tags["entries"]) == 2
+
+        # Limit filter
+        limited = rs.read_team_memory(limit=1)
+        assert len(limited["entries"]) == 1
+        assert limited["total_available"] == 3
+        assert limited["truncated"] is True
 
     def test_same_account_repeat_push_no_collision(self, repo):
         rs, _ = repo
         e1 = rs.push_memory_entry(account="user1", text="note A")
         e2 = rs.push_memory_entry(account="user1", text="note B")
-        entries = rs.read_team_memory()
-        assert len(entries) == 2
-        assert {e["text"] for e in entries} == {"note A", "note B"}
+        res = rs.read_team_memory()
+        assert len(res["entries"]) == 2
+        assert {e["text"] for e in res["entries"]} == {"note A", "note B"}
 
     def test_empty_text_rejected(self, repo):
         rs, _ = repo
@@ -346,6 +374,49 @@ class TestTeamMemory:
         rs, _ = repo
         with pytest.raises(ValueError):
             rs.push_memory_entry(account="../../etc/passwd", text="x")
+
+
+class TestContextBundleAndArchiving:
+    def test_get_context_bundle(self, repo):
+        rs, repo_root = repo
+        (repo_root / "team-context.md").write_text("# Project Context\nRules here.", encoding="utf-8")
+        rs.push_memory_entry(account="user1", text="active memory note")
+        rs.push_live_status(account="user2", current_task_id=None, note="idle")
+
+        task = rs.create_task(spec="active task for user1", kind="text", created_by="user1")
+        rs.claim_task(task_id=task["id"], account="user1")
+
+        bundle = rs.get_context_bundle(account="user1")
+        assert bundle["account"] == "user1"
+        assert "Rules here." in bundle["team_context"]
+        assert len(bundle["recent_memory"]) >= 1
+        assert len(bundle["my_tasks"]) == 1
+        assert bundle["my_tasks"][0]["id"] == task["id"]
+        assert any(w["account"] == "user2" for w in bundle["active_workers"])
+
+    def test_archive_memory(self, repo):
+        rs, _ = repo
+        rs.push_memory_entry(account="user1", text="old note")
+        time.sleep(1.1)
+        now_cutoff = rs._now_iso()
+        time.sleep(1.1)
+        rs.push_memory_entry(account="user1", text="new note")
+
+        # Dry run preview
+        preview = rs.archive_memory(before=now_cutoff, dry_run=True)
+        assert preview["archived_count"] == 1
+        assert preview["dry_run"] is True
+        assert len(rs.read_team_memory(limit=10)["entries"]) == 2
+
+        # Actual archive
+        done = rs.archive_memory(before=now_cutoff, dry_run=False)
+        assert done["archived_count"] == 1
+        assert done["dry_run"] is False
+
+        # Active memory now only contains the new note
+        active = rs.read_team_memory(limit=10)["entries"]
+        assert len(active) == 1
+        assert active[0]["text"] == "new note"
 
 
 class TestTeamContext:
