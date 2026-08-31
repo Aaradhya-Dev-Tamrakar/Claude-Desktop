@@ -39,6 +39,7 @@ TASKS_DIR = STATE_ROOT / "tasks"
 LIVE_STATUS_DIR = STATE_ROOT / "live-status"
 CHECKPOINTS_DIR = STATE_ROOT / "checkpoints"
 MEMORY_DIR = STATE_ROOT / "memory"
+MEMORY_ARCHIVE_DIR = MEMORY_DIR / "archive"
 JOBS_DIR = STATE_ROOT / "jobs"
 QA_REVIEWS_DIR = STATE_ROOT / "qa-reviews"
 WORKER_ROLES_PATH = STATE_ROOT / "worker_roles.json"
@@ -57,7 +58,7 @@ def _now_iso() -> str:
 
 
 def _ensure_dirs() -> None:
-    for d in (TASKS_DIR, LIVE_STATUS_DIR, CHECKPOINTS_DIR, MEMORY_DIR, JOBS_DIR, QA_REVIEWS_DIR):
+    for d in (TASKS_DIR, LIVE_STATUS_DIR, CHECKPOINTS_DIR, MEMORY_DIR, MEMORY_ARCHIVE_DIR, JOBS_DIR, QA_REVIEWS_DIR):
         d.mkdir(parents=True, exist_ok=True)
 
 
