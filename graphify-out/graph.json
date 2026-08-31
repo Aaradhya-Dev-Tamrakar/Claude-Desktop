@@ -4327,7 +4327,7 @@
       "label": "Usage",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L142",
+      "source_location": "L144",
       "_origin": "ast",
       "id": "readme_usage",
       "community": 31,
@@ -4337,7 +4337,7 @@
       "label": "Launching Claude Desktop Profiles",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L144",
+      "source_location": "L146",
       "_origin": "ast",
       "id": "readme_launching_claude_desktop_profiles",
       "community": 31,
@@ -4347,7 +4347,7 @@
       "label": "Concurrent Mode (Multiple Windows, Multiple Monitors)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L161",
+      "source_location": "L163",
       "_origin": "ast",
       "id": "readme_concurrent_mode_multiple_windows_multiple_monitors",
       "community": 31,
@@ -4357,7 +4357,7 @@
       "label": "Running the Cloud Orchestration Backend (v2)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L186",
+      "source_location": "L188",
       "_origin": "ast",
       "id": "readme_running_the_cloud_orchestration_backend_v2",
       "community": 31,
@@ -4367,7 +4367,7 @@
       "label": "Running Autonomous Worker Daemons (v2)",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L209",
+      "source_location": "L211",
       "_origin": "ast",
       "id": "readme_running_autonomous_worker_daemons_v2",
       "community": 31,
@@ -4377,7 +4377,7 @@
       "label": "Running Usage Watchdog",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L240",
+      "source_location": "L242",
       "_origin": "ast",
       "id": "readme_running_usage_watchdog",
       "community": 31,
@@ -4387,7 +4387,7 @@
       "label": "Syncing Git Repository",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L255",
+      "source_location": "L257",
       "_origin": "ast",
       "id": "readme_syncing_git_repository",
       "community": 31,
@@ -4452,6 +4452,36 @@
       "id": "orchestrator_state_job_schema_4_worker_node_entity_workers",
       "community": 35,
       "norm_label": "4. worker node entity (`workers`)"
+    },
+    {
+      "label": "5. Shared Memory & Team Context (`memory_entries`, `team_context`)",
+      "file_type": "document",
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source_location": "L104",
+      "_origin": "ast",
+      "id": "orchestrator_state_job_schema_5_shared_memory_team_context_memory_entries_team_context",
+      "community": 35,
+      "norm_label": "5. shared memory & team context (`memory_entries`, `team_context`)"
+    },
+    {
+      "label": "Memory Entry (`memory_entries`)",
+      "file_type": "document",
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source_location": "L108",
+      "_origin": "ast",
+      "id": "orchestrator_state_job_schema_memory_entry_memory_entries",
+      "community": 35,
+      "norm_label": "memory entry (`memory_entries`)"
+    },
+    {
+      "label": "Team Context (`team_context`)",
+      "file_type": "document",
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source_location": "L120",
+      "_origin": "ast",
+      "id": "orchestrator_state_job_schema_team_context_team_context",
+      "community": 35,
+      "norm_label": "team context (`team_context`)"
     },
     {
       "label": "SCHEMA.md",
@@ -7161,9 +7191,9 @@
       "source_file": "launch_user_n.ps1",
       "source_location": "L394",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "launch_user_n",
-      "target": "launch_user_n_ensure_localorchestratorserver",
-      "confidence_score": 1.0
+      "target": "launch_user_n_ensure_localorchestratorserver"
     },
     {
       "relation": "contains",
@@ -7361,9 +7391,9 @@
       "source_file": "launch_user_n.ps1",
       "source_location": "L909",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "launch_user_n_invoke_profilelaunch",
-      "target": "launch_user_n_ensure_localorchestratorserver",
-      "confidence_score": 1.0
+      "target": "launch_user_n_ensure_localorchestratorserver"
     },
     {
       "relation": "contains",
@@ -16420,6 +16450,36 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "orchestrator_state_job_schema_job_pipeline_production_schema_v2",
+      "target": "orchestrator_state_job_schema_5_shared_memory_team_context_memory_entries_team_context",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "orchestrator_state_job_schema_5_shared_memory_team_context_memory_entries_team_context",
+      "target": "orchestrator_state_job_schema_memory_entry_memory_entries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source_location": "L120",
+      "weight": 1.0,
+      "source": "orchestrator_state_job_schema_5_shared_memory_team_context_memory_entries_team_context",
+      "target": "orchestrator_state_job_schema_team_context_team_context",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "orchestrator-state/SCHEMA.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -17339,5 +17399,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "1032f2c778fea275d9deb757aab022eaa7fd5690"
+  "built_at_commit": "1354976dfbc8017828c8c7096b37f5a13583cca3"
 }

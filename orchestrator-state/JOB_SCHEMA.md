@@ -98,3 +98,31 @@ Represents execution endpoints (Claude Desktop profiles, Gemini Free API, Ollama
   "registered_at": "2026-08-29T08:00:00Z"
 }
 ```
+
+---
+
+## 5. Shared Memory & Team Context (`memory_entries`, `team_context`)
+
+Provides persistent database-backed cross-profile shared memory and durable team context.
+
+### Memory Entry (`memory_entries`)
+```json
+{
+  "id": 1,
+  "author": "user1",
+  "category": "architecture",
+  "content": "Deployed remote MCP server with 23 tools over SSE at /mcp",
+  "metadata": {"source": "manual", "environment": "production"},
+  "created_at": "2026-08-31T08:00:00Z"
+}
+```
+
+### Team Context (`team_context`)
+```json
+{
+  "key": "standing_instructions",
+  "value": "All workers must follow single-responsibility role prompts.",
+  "updated_by": "admin",
+  "updated_at": "2026-08-31T08:00:00Z"
+}
+```

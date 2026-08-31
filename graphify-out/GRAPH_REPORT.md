@@ -1,16 +1,16 @@
 # Graph Report - Claude-Desktop  (2026-08-31)
 
 ## Corpus Check
-- 251 files · ~163,829 words
+- 251 files · ~163,662 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 558 nodes · 1131 edges · 46 communities (38 shown, 8 thin omitted)
+- 561 nodes · 1134 edges · 46 communities (38 shown, 8 thin omitted)
 - Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 149 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1032f2c7`
+- Built from commit: `1354976d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -186,8 +186,8 @@ Cohesion: 0.33
 Nodes (3): Execute task using Anthropic Claude API, CDP bridge, or structured prompt transf, Stage-aware local processing engine producing structured deliverables., Any
 
 ### Community 35 - "Community 35"
-Cohesion: 0.33
-Nodes (5): 1. Job Entity (`jobs` / `orchestrator-state/jobs/<job_id>.json`), 2. Extended Task Schema (`tasks`), 3. QA Review Schema (`qa_reviews`), 4. Worker Node Entity (`workers`), Job & Pipeline Production Schema (v2)
+Cohesion: 0.22
+Nodes (8): 1. Job Entity (`jobs` / `orchestrator-state/jobs/<job_id>.json`), 2. Extended Task Schema (`tasks`), 3. QA Review Schema (`qa_reviews`), 4. Worker Node Entity (`workers`), 5. Shared Memory & Team Context (`memory_entries`, `team_context`), Job & Pipeline Production Schema (v2), Memory Entry (`memory_entries`), Team Context (`team_context`)
 
 ### Community 36 - "Community 36"
 Cohesion: 0.50
@@ -214,7 +214,7 @@ Cohesion: 0.22
 Nodes (20): get_all_context(), get_context_by_key(), list_memory(), _now_iso(), push_memory(), Retrieve a single context value by key., Set or update a persistent team context key-value entry., Push a shared team memory entry to the central database. (+12 more)
 
 ## Knowledge Gaps
-- **108 isolated node(s):** `Any`, `TaskStatus`, `HTTPAuthorizationCredentials`, `Row`, `Path` (+103 more)
+- **110 isolated node(s):** `Any`, `TaskStatus`, `HTTPAuthorizationCredentials`, `Row`, `Path` (+105 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -222,16 +222,16 @@ Nodes (20): get_all_context(), get_context_by_key(), list_memory(), _now_iso(), 
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `ClaudeDesktopProxyAdapter` connect `Community 29` to `Community 0`, `Community 34`, `Community 5`, `Community 30`?**
-  _High betweenness centrality (0.100) - this node is a cross-community bridge._
+  _High betweenness centrality (0.099) - this node is a cross-community bridge._
 - **Why does `FastAPI` connect `Community 5` to `Community 1`, `Community 45`, `Community 6`, `Community 7`?**
   _High betweenness centrality (0.084) - this node is a cross-community bridge._
 - **Why does `ClaudeDesktopCDPAdapter` connect `Community 29` to `Community 0`, `Community 34`, `Community 4`, `Community 30`?**
-  _High betweenness centrality (0.042) - this node is a cross-community bridge._
+  _High betweenness centrality (0.041) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `ClaudeDesktopCDPAdapter` (e.g. with `BaseWorkerAdapter` and `ClaudeDesktopProxyAdapter`) actually correct?**
   _`ClaudeDesktopCDPAdapter` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 12 inferred relationships involving `BaseWorkerAdapter` (e.g. with `ClaudeDesktopCDPAdapter` and `ClaudeDesktopProxyAdapter`) actually correct?**
   _`BaseWorkerAdapter` has 12 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `Any`, `Abstract interface for worker execution endpoints.`, `Executes work specified in `spec`.         Returns dictionary:         {` to the rest of the system?**
-  _178 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _180 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.047619047619047616 - nodes in this community are weakly interconnected._
