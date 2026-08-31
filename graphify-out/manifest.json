@@ -60,8 +60,8 @@
     "semantic_hash": "7b5a62a07ab6a5fb99d81a6afbd96642"
   },
   "mcp-servers/orchestrator-mcp/run_server.py": {
-    "mtime": 1788147102.6813917,
-    "ast_hash": "10c7379f9feda24052b6e9a9284e5310",
+    "mtime": 1788148225.1123683,
+    "ast_hash": "3887a0279bf0a5c0513925d1951c4be5",
     "semantic_hash": ""
   },
   "orchestrator-state/checkpoints/task_2026-08-05_004.json": {
@@ -1030,8 +1030,8 @@
     "semantic_hash": "e9091216a526021912560dd4f61bf1a7"
   },
   "profiles.json": {
-    "mtime": 1788146584.2267814,
-    "ast_hash": "80748d81f1c3c3f17db3adeaf2758b71",
+    "mtime": 1788148274.6056998,
+    "ast_hash": "41836bf7d0fdd52a17c7a84025ea7707",
     "semantic_hash": ""
   },
   "reset_profiles.ps1": {
@@ -1135,9 +1135,9 @@
     "semantic_hash": ""
   },
   "tests/orchestrator_mcp_test.py": {
-    "mtime": 1788017996.33214,
-    "ast_hash": "959ac634ddc25b2676e71c373b7e73ba",
-    "semantic_hash": "959ac634ddc25b2676e71c373b7e73ba"
+    "mtime": 1788148268.2678597,
+    "ast_hash": "b43721ea07024d1603b7048ce9b24951",
+    "semantic_hash": ""
   },
   "tests/test_claude_cdp_adapter.py": {
     "mtime": 1788018004.9509206,
@@ -1180,9 +1180,9 @@
     "semantic_hash": "91cbed8098dc27cccdb80e37cfede57a"
   },
   "orchestrator-state/SCHEMA.md": {
-    "mtime": 1788017996.3157141,
-    "ast_hash": "210c755ee6cc9865c2a106799e74807d",
-    "semantic_hash": "210c755ee6cc9865c2a106799e74807d"
+    "mtime": 1788148533.4208663,
+    "ast_hash": "167283f63a533b21ee8fce9057b6cbed",
+    "semantic_hash": ""
   },
   "team-context.md": {
     "mtime": 1787384919.143119,

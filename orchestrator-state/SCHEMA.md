@@ -148,7 +148,10 @@ everything else here.
 {
   "account": "user1",
   "text": "note or context another account should see",
-  "pushed_at": "2026-08-05T14:22:41Z"
+  "pushed_at": "2026-08-05T14:22:41Z",
+  "tags": ["SPARK", "orchestration"],
+  "ttl_days": 30,
+  "priority": "normal"
 }
 ```
 
@@ -158,6 +161,31 @@ everything else here.
 - `pushed_at`: set once at push time, never modified — this file is
   never edited after creation, only ever a new file added, so there is
   no write race at all, not even the narrowed one `claim_task` has.
+- `tags` (optional, default `[]`): project/topic tags for scoped retrieval.
+  `read_team_memory(project=...)` filters by these.
+- `ttl_days` (optional, default `30`): auto-expiry in days from `pushed_at`.
+  `null` means permanent. `read_team_memory` auto-skips expired entries.
+- `priority` (optional, default `"normal"`): one of `"low"`, `"normal"`,
+  `"high"`, `"pinned"`. Pinned entries always sort first in results.
+
+Backward-compatible: existing entries without `tags`/`ttl_days`/`priority`
+are read as `tags=[], ttl_days=null (permanent), priority="normal"`.
+
+## orchestrator-state/memory/archive/
+
+Cold storage for aged-out memory entries. `archive_memory(before=...)` moves
+entries older than a timestamp here. Same JSON format as `memory/` — files
+are simply relocated, not modified. `read_team_memory` ignores this
+directory; entries remain recoverable for forensics.
+
+## Token-Efficient Session Bootstrap
+
+`get_context_bundle(account=...)` replaces the three-call startup pattern
+(`read_team_context` + `read_team_memory` + `list_tasks`) with a single
+composite call that returns team context, recent memory (scoped by time
+window and limit), the caller's active tasks (projected fields only),
+pending task count, and currently-active workers. Saves ~5,000 tokens per
+session bootstrap.
 
 `team-memory.md` and `team-context.md` at the repo root remain the
 human-readable files. `sync.ps1` automatically appends new entries from
