@@ -864,10 +864,20 @@
       "norm_label": "new-row()"
     },
     {
+      "label": "Ensure-LocalOrchestratorServer()",
+      "file_type": "code",
+      "source_file": "launch_user_n.ps1",
+      "source_location": "L394",
+      "_origin": "ast",
+      "id": "launch_user_n_ensure_localorchestratorserver",
+      "community": 10,
+      "norm_label": "ensure-localorchestratorserver()"
+    },
+    {
       "label": "Resolve-SingleAccount()",
       "file_type": "code",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L398",
+      "source_location": "L457",
       "_origin": "ast",
       "id": "launch_user_n_resolve_singleaccount",
       "community": 10,
@@ -877,7 +887,7 @@
       "label": "Invoke-ProfileLaunch()",
       "file_type": "code",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L472",
+      "source_location": "L531",
       "_origin": "ast",
       "id": "launch_user_n_invoke_profilelaunch",
       "community": 10,
@@ -7149,6 +7159,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "launch_user_n.ps1",
+      "source_location": "L394",
+      "weight": 1.0,
+      "source": "launch_user_n",
+      "target": "launch_user_n_ensure_localorchestratorserver",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "launch_user_n.ps1",
       "source_location": "L146",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -7334,6 +7354,16 @@
       "confidence_score": 1.0,
       "source": "launch_user_n_show_profiletable",
       "target": "launch_user_n_new_row"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "launch_user_n.ps1",
+      "source_location": "L909",
+      "weight": 1.0,
+      "source": "launch_user_n_invoke_profilelaunch",
+      "target": "launch_user_n_ensure_localorchestratorserver",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -9915,9 +9945,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "api_routes_memory_get_all_context",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_get_all_context"
     },
     {
       "relation": "contains",
@@ -9925,9 +9955,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L110",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "api_routes_memory_get_context_by_key",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_get_context_by_key"
     },
     {
       "relation": "contains",
@@ -9935,9 +9965,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "api_routes_memory_list_memory",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_list_memory"
     },
     {
       "relation": "contains",
@@ -9945,9 +9975,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "api_routes_memory_now_iso",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_now_iso"
     },
     {
       "relation": "contains",
@@ -9955,9 +9985,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "api_routes_memory_push_memory",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_push_memory"
     },
     {
       "relation": "contains",
@@ -9965,9 +9995,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "api_routes_memory_search_memory",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_search_memory"
     },
     {
       "relation": "contains",
@@ -9975,9 +10005,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L124",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "api_routes_memory_upsert_context",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_upsert_context"
     },
     {
       "relation": "imports",
@@ -9986,9 +10016,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "core_database_get_db",
-      "confidence_score": 1.0
+      "target": "core_database_get_db"
     },
     {
       "relation": "imports_from",
@@ -9997,9 +10027,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "fastapi",
-      "confidence_score": 1.0
+      "target": "fastapi"
     },
     {
       "relation": "imports",
@@ -10008,9 +10038,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "models_schemas_contextresponse",
-      "confidence_score": 1.0
+      "target": "models_schemas_contextresponse"
     },
     {
       "relation": "imports",
@@ -10019,9 +10049,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "models_schemas_contextupsert",
-      "confidence_score": 1.0
+      "target": "models_schemas_contextupsert"
     },
     {
       "relation": "imports",
@@ -10030,9 +10060,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "models_schemas_memorycreate",
-      "confidence_score": 1.0
+      "target": "models_schemas_memorycreate"
     },
     {
       "relation": "imports",
@@ -10041,9 +10071,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory",
-      "target": "models_schemas_memoryresponse",
-      "confidence_score": 1.0
+      "target": "models_schemas_memoryresponse"
     },
     {
       "relation": "calls",
@@ -10052,9 +10082,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_get_all_context",
-      "target": "api_routes_memory_now_iso",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_now_iso"
     },
     {
       "relation": "calls",
@@ -10063,9 +10093,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L118",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_get_context_by_key",
-      "target": "api_routes_memory_now_iso",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_now_iso"
     },
     {
       "relation": "calls",
@@ -10074,9 +10104,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_push_memory",
-      "target": "api_routes_memory_now_iso",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_now_iso"
     },
     {
       "relation": "calls",
@@ -10085,9 +10115,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L126",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_upsert_context",
-      "target": "api_routes_memory_now_iso",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_now_iso"
     },
     {
       "relation": "references",
@@ -10096,9 +10126,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_push_memory",
-      "target": "memorycreate",
-      "confidence_score": 1.0
+      "target": "memorycreate"
     },
     {
       "relation": "calls",
@@ -10118,9 +10148,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_push_memory",
-      "target": "server_api_routes_memory_py_connection",
-      "confidence_score": 1.0
+      "target": "server_api_routes_memory_py_connection"
     },
     {
       "relation": "rationale_for",
@@ -10128,9 +10158,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_rationale_22",
-      "target": "api_routes_memory_push_memory",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_push_memory"
     },
     {
       "relation": "uses",
@@ -10138,9 +10168,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "memorycreate",
-      "target": "models_schemas_contextresponse",
-      "confidence_score": 0.5
+      "target": "models_schemas_contextresponse"
     },
     {
       "relation": "uses",
@@ -10148,9 +10178,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "memorycreate",
-      "target": "models_schemas_contextupsert",
-      "confidence_score": 0.5
+      "target": "models_schemas_contextupsert"
     },
     {
       "relation": "uses",
@@ -10158,9 +10188,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "memorycreate",
-      "target": "models_schemas_memorycreate",
-      "confidence_score": 0.5
+      "target": "models_schemas_memorycreate"
     },
     {
       "relation": "uses",
@@ -10168,9 +10198,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "memorycreate",
-      "target": "models_schemas_memoryresponse",
-      "confidence_score": 0.5
+      "target": "models_schemas_memoryresponse"
     },
     {
       "relation": "references",
@@ -10179,9 +10209,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_get_all_context",
-      "target": "server_api_routes_memory_py_connection",
-      "confidence_score": 1.0
+      "target": "server_api_routes_memory_py_connection"
     },
     {
       "relation": "references",
@@ -10190,9 +10220,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L110",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_get_context_by_key",
-      "target": "server_api_routes_memory_py_connection",
-      "confidence_score": 1.0
+      "target": "server_api_routes_memory_py_connection"
     },
     {
       "relation": "references",
@@ -10201,9 +10231,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_list_memory",
-      "target": "server_api_routes_memory_py_connection",
-      "confidence_score": 1.0
+      "target": "server_api_routes_memory_py_connection"
     },
     {
       "relation": "references",
@@ -10212,9 +10242,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_search_memory",
-      "target": "server_api_routes_memory_py_connection",
-      "confidence_score": 1.0
+      "target": "server_api_routes_memory_py_connection"
     },
     {
       "relation": "references",
@@ -10223,9 +10253,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L124",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_upsert_context",
-      "target": "server_api_routes_memory_py_connection",
-      "confidence_score": 1.0
+      "target": "server_api_routes_memory_py_connection"
     },
     {
       "relation": "uses",
@@ -10233,9 +10263,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "server_api_routes_memory_py_connection",
-      "target": "models_schemas_contextresponse",
-      "confidence_score": 0.5
+      "target": "models_schemas_contextresponse"
     },
     {
       "relation": "uses",
@@ -10243,9 +10273,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "server_api_routes_memory_py_connection",
-      "target": "models_schemas_contextupsert",
-      "confidence_score": 0.5
+      "target": "models_schemas_contextupsert"
     },
     {
       "relation": "uses",
@@ -10253,9 +10283,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "server_api_routes_memory_py_connection",
-      "target": "models_schemas_memorycreate",
-      "confidence_score": 0.5
+      "target": "models_schemas_memorycreate"
     },
     {
       "relation": "uses",
@@ -10263,9 +10293,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "server_api_routes_memory_py_connection",
-      "target": "models_schemas_memoryresponse",
-      "confidence_score": 0.5
+      "target": "models_schemas_memoryresponse"
     },
     {
       "relation": "calls",
@@ -10284,9 +10314,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_rationale_44",
-      "target": "api_routes_memory_list_memory",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_list_memory"
     },
     {
       "relation": "rationale_for",
@@ -10294,9 +10324,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L71",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_rationale_71",
-      "target": "api_routes_memory_search_memory",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_search_memory"
     },
     {
       "relation": "calls",
@@ -10326,9 +10356,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L86",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_rationale_86",
-      "target": "api_routes_memory_get_all_context",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_get_all_context"
     },
     {
       "relation": "calls",
@@ -10347,9 +10377,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L111",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_rationale_111",
-      "target": "api_routes_memory_get_context_by_key",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_get_context_by_key"
     },
     {
       "relation": "rationale_for",
@@ -10357,9 +10387,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L125",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_rationale_125",
-      "target": "api_routes_memory_upsert_context",
-      "confidence_score": 1.0
+      "target": "api_routes_memory_upsert_context"
     },
     {
       "relation": "references",
@@ -10368,9 +10398,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L124",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "api_routes_memory_upsert_context",
-      "target": "contextupsert",
-      "confidence_score": 1.0
+      "target": "contextupsert"
     },
     {
       "relation": "calls",
@@ -10389,9 +10419,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "contextupsert",
-      "target": "models_schemas_contextresponse",
-      "confidence_score": 0.5
+      "target": "models_schemas_contextresponse"
     },
     {
       "relation": "uses",
@@ -10399,9 +10429,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "contextupsert",
-      "target": "models_schemas_contextupsert",
-      "confidence_score": 0.5
+      "target": "models_schemas_contextupsert"
     },
     {
       "relation": "uses",
@@ -10409,9 +10439,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "contextupsert",
-      "target": "models_schemas_memorycreate",
-      "confidence_score": 0.5
+      "target": "models_schemas_memorycreate"
     },
     {
       "relation": "uses",
@@ -10419,9 +10449,9 @@
       "source_file": "server/api/routes_memory.py",
       "source_location": "L10",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "contextupsert",
-      "target": "models_schemas_memoryresponse",
-      "confidence_score": 0.5
+      "target": "models_schemas_memoryresponse"
     },
     {
       "relation": "contains",
@@ -12392,9 +12422,9 @@
       "source_file": "server/core/auth.py",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_auth",
-      "target": "core_auth_verify_api_key",
-      "confidence_score": 1.0
+      "target": "core_auth_verify_api_key"
     },
     {
       "relation": "imports_from",
@@ -12403,9 +12433,9 @@
       "source_file": "server/core/auth.py",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_auth",
-      "target": "fastapi",
-      "confidence_score": 1.0
+      "target": "fastapi"
     },
     {
       "relation": "rationale_for",
@@ -12413,9 +12443,9 @@
       "source_file": "server/core/auth.py",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_auth_rationale_13",
-      "target": "core_auth_verify_api_key",
-      "confidence_score": 1.0
+      "target": "core_auth_verify_api_key"
     },
     {
       "relation": "references",
@@ -12424,9 +12454,9 @@
       "source_file": "server/core/auth.py",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_auth_verify_api_key",
-      "target": "httpauthorizationcredentials",
-      "confidence_score": 1.0
+      "target": "httpauthorizationcredentials"
     },
     {
       "relation": "contains",
@@ -12474,9 +12504,9 @@
       "source_file": "server/models/schemas.py",
       "source_location": "L194",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_schemas_contextresponse",
-      "target": "basemodel",
-      "confidence_score": 1.0
+      "target": "basemodel"
     },
     {
       "relation": "inherits",
@@ -12484,9 +12514,9 @@
       "source_file": "server/models/schemas.py",
       "source_location": "L191",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_schemas_contextupsert",
-      "target": "basemodel",
-      "confidence_score": 1.0
+      "target": "basemodel"
     },
     {
       "relation": "inherits",
@@ -12534,9 +12564,9 @@
       "source_file": "server/models/schemas.py",
       "source_location": "L181",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_schemas_memorycreate",
-      "target": "basemodel",
-      "confidence_score": 1.0
+      "target": "basemodel"
     },
     {
       "relation": "inherits",
@@ -12544,9 +12574,9 @@
       "source_file": "server/models/schemas.py",
       "source_location": "L185",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_schemas_memoryresponse",
-      "target": "basemodel",
-      "confidence_score": 1.0
+      "target": "basemodel"
     },
     {
       "relation": "inherits",
@@ -12684,9 +12714,9 @@
       "source_file": "server/core/database.py",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_database",
-      "target": "core_database_get_db_conn",
-      "confidence_score": 1.0
+      "target": "core_database_get_db_conn"
     },
     {
       "relation": "contains",
@@ -12705,9 +12735,9 @@
       "source_file": "server/core/database.py",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_database_get_db",
-      "target": "core_database_get_db_conn",
-      "confidence_score": 1.0
+      "target": "core_database_get_db_conn"
     },
     {
       "relation": "references",
@@ -12716,9 +12746,9 @@
       "source_file": "server/core/database.py",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_database_get_db_conn",
-      "target": "server_core_database_py_connection",
-      "confidence_score": 1.0
+      "target": "server_core_database_py_connection"
     },
     {
       "relation": "rationale_for",
@@ -12726,9 +12756,9 @@
       "source_file": "server/core/database.py",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_database_rationale_8",
-      "target": "core_database_get_db_conn",
-      "confidence_score": 1.0
+      "target": "core_database_get_db_conn"
     },
     {
       "relation": "imports",
@@ -12737,9 +12767,9 @@
       "source_file": "server/main.py",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_main",
-      "target": "core_database_get_db_conn",
-      "confidence_score": 1.0
+      "target": "core_database_get_db_conn"
     },
     {
       "relation": "calls",
@@ -12748,9 +12778,9 @@
       "source_file": "server/main.py",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_main_run_supervisor_loop",
-      "target": "core_database_get_db_conn",
-      "confidence_score": 1.0
+      "target": "core_database_get_db_conn"
     },
     {
       "relation": "imports",
@@ -12759,9 +12789,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "core_database_get_db_conn",
-      "confidence_score": 1.0
+      "target": "core_database_get_db_conn"
     },
     {
       "relation": "calls",
@@ -13023,9 +13053,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "core_database_get_db_conn",
-      "confidence_score": 1.0
+      "target": "core_database_get_db_conn"
     },
     {
       "relation": "references",
@@ -13044,9 +13074,9 @@
       "source_file": "server/core/database.py",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_database_rationale_16",
-      "target": "core_database_get_db",
-      "confidence_score": 1.0
+      "target": "core_database_get_db"
     },
     {
       "relation": "rationale_for",
@@ -13064,9 +13094,9 @@
       "source_file": "server/core/database.py",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_database_rationale_24",
-      "target": "core_database_init_db",
-      "confidence_score": 1.0
+      "target": "core_database_init_db"
     },
     {
       "relation": "imports",
@@ -13163,9 +13193,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "core_database_init_db",
-      "confidence_score": 1.0
+      "target": "core_database_init_db"
     },
     {
       "relation": "calls",
@@ -13591,9 +13621,9 @@
       "source_file": "server/main.py",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_main",
-      "target": "server_mcp_remote",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote"
     },
     {
       "relation": "imports_from",
@@ -13613,9 +13643,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_main",
-      "confidence_score": 1.0
+      "target": "server_main"
     },
     {
       "relation": "references",
@@ -13645,9 +13675,9 @@
       "source_file": "server/main.py",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_main_rationale_35",
-      "target": "server_main_run_supervisor_loop",
-      "confidence_score": 1.0
+      "target": "server_main_run_supervisor_loop"
     },
     {
       "relation": "contains",
@@ -13655,9 +13685,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L261",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_block_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_block_task"
     },
     {
       "relation": "contains",
@@ -13665,9 +13695,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L129",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_claim_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_claim_task"
     },
     {
       "relation": "contains",
@@ -13675,9 +13705,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_create_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_create_task"
     },
     {
       "relation": "contains",
@@ -13685,9 +13715,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L526",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_get_job",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_get_job"
     },
     {
       "relation": "contains",
@@ -13695,9 +13725,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L544",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_get_job_metrics",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_get_job_metrics"
     },
     {
       "relation": "contains",
@@ -13705,9 +13735,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L680",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_get_system_health",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_get_system_health"
     },
     {
       "relation": "contains",
@@ -13715,9 +13745,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_get_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_get_task"
     },
     {
       "relation": "contains",
@@ -13725,9 +13755,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L663",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_get_worker",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_get_worker"
     },
     {
       "relation": "contains",
@@ -13735,9 +13765,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L500",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_list_jobs",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_list_jobs"
     },
     {
       "relation": "contains",
@@ -13745,9 +13775,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_list_tasks",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_list_tasks"
     },
     {
       "relation": "contains",
@@ -13755,9 +13785,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L640",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_list_workers",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_list_workers"
     },
     {
       "relation": "contains",
@@ -13765,9 +13795,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_now_iso",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_now_iso"
     },
     {
       "relation": "contains",
@@ -13775,9 +13805,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L724",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_push_memory",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_push_memory"
     },
     {
       "relation": "contains",
@@ -13785,9 +13815,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L793",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_read_team_context",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_read_team_context"
     },
     {
       "relation": "contains",
@@ -13795,9 +13825,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L769",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_read_team_memory",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_read_team_memory"
     },
     {
       "relation": "contains",
@@ -13805,9 +13835,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L563",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_register_worker",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_register_worker"
     },
     {
       "relation": "contains",
@@ -13815,9 +13845,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L226",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_release_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_release_task"
     },
     {
       "relation": "contains",
@@ -13825,9 +13855,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L186",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_renew_task_lease",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_renew_task_lease"
     },
     {
       "relation": "contains",
@@ -13835,9 +13865,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "contains",
@@ -13845,9 +13875,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L749",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_search_memory",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_search_memory"
     },
     {
       "relation": "contains",
@@ -13855,9 +13885,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L316",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_submit_checkpoint",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_submit_checkpoint"
     },
     {
       "relation": "contains",
@@ -13865,9 +13895,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L452",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_submit_job_from_template",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_submit_job_from_template"
     },
     {
       "relation": "contains",
@@ -13875,9 +13905,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L379",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_submit_qa_review",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_submit_qa_review"
     },
     {
       "relation": "contains",
@@ -13885,9 +13915,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L290",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_unblock_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_unblock_task"
     },
     {
       "relation": "contains",
@@ -13895,9 +13925,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L602",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote",
-      "target": "server_mcp_remote_worker_heartbeat",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_worker_heartbeat"
     },
     {
       "relation": "imports_from",
@@ -13906,9 +13936,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote"
     },
     {
       "relation": "calls",
@@ -13917,9 +13947,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L268",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_block_task",
-      "target": "server_mcp_remote_now_iso",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_now_iso"
     },
     {
       "relation": "calls",
@@ -13928,9 +13958,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_create_task",
-      "target": "server_mcp_remote_now_iso",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_now_iso"
     },
     {
       "relation": "calls",
@@ -13939,9 +13969,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L734",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_push_memory",
-      "target": "server_mcp_remote_now_iso",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_now_iso"
     },
     {
       "relation": "calls",
@@ -13950,9 +13980,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L806",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_read_team_context",
-      "target": "server_mcp_remote_now_iso",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_now_iso"
     },
     {
       "relation": "calls",
@@ -13961,9 +13991,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L575",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_register_worker",
-      "target": "server_mcp_remote_now_iso",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_now_iso"
     },
     {
       "relation": "calls",
@@ -13972,9 +14002,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L233",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_release_task",
-      "target": "server_mcp_remote_now_iso",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_now_iso"
     },
     {
       "relation": "calls",
@@ -13983,9 +14013,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L327",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_submit_checkpoint",
-      "target": "server_mcp_remote_now_iso",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_now_iso"
     },
     {
       "relation": "calls",
@@ -13994,9 +14024,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L477",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_submit_job_from_template",
-      "target": "server_mcp_remote_now_iso",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_now_iso"
     },
     {
       "relation": "calls",
@@ -14005,9 +14035,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L388",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_submit_qa_review",
-      "target": "server_mcp_remote_now_iso",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_now_iso"
     },
     {
       "relation": "calls",
@@ -14016,9 +14046,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L296",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_unblock_task",
-      "target": "server_mcp_remote_now_iso",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_now_iso"
     },
     {
       "relation": "calls",
@@ -14027,9 +14057,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L282",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_block_task",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14038,9 +14068,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L175",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_claim_task",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14049,9 +14079,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L69",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_create_task",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14060,9 +14090,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L533",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_get_job",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14071,9 +14101,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L551",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_get_job_metrics",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14082,9 +14112,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_get_task",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14093,9 +14123,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L670",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_get_worker",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14104,9 +14134,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L514",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_list_jobs",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14115,9 +14145,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L106",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_list_tasks",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14126,9 +14156,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L652",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_list_workers",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14137,9 +14167,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L801",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_read_team_context",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14148,9 +14178,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L785",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_read_team_memory",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14159,9 +14189,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L592",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_register_worker",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14170,9 +14200,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L253",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_release_task",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14181,9 +14211,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L216",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_renew_task_lease",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "references",
@@ -14192,9 +14222,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_row_to_dict",
-      "target": "row",
-      "confidence_score": 1.0
+      "target": "row"
     },
     {
       "relation": "references",
@@ -14203,9 +14233,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_row_to_dict",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "calls",
@@ -14214,9 +14244,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L761",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_search_memory",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14225,9 +14255,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L367",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_submit_checkpoint",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14236,9 +14266,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L489",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_submit_job_from_template",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "calls",
@@ -14247,9 +14277,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L308",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_unblock_task",
-      "target": "server_mcp_remote_row_to_dict",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_row_to_dict"
     },
     {
       "relation": "references",
@@ -14258,9 +14288,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L261",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_block_task",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14269,9 +14299,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L129",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_claim_task",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14280,9 +14310,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_create_task",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14291,9 +14321,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L526",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_get_job",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14302,9 +14332,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L544",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_get_job_metrics",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14313,9 +14343,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L680",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_get_system_health",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14324,9 +14354,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_get_task",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14335,9 +14365,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L663",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_get_worker",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14346,9 +14376,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L500",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_list_jobs",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14357,9 +14387,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_list_tasks",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14368,9 +14398,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L640",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_list_workers",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14379,9 +14409,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L724",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_push_memory",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14390,9 +14420,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L793",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_read_team_context",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14401,9 +14431,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L769",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_read_team_memory",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14412,9 +14442,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L563",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_register_worker",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14423,9 +14453,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L226",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_release_task",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14434,9 +14464,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L186",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_renew_task_lease",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14445,9 +14475,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L749",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_search_memory",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14456,9 +14486,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L316",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_submit_checkpoint",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14467,9 +14497,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L452",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_submit_job_from_template",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14478,9 +14508,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L379",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_submit_qa_review",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14489,9 +14519,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L290",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_unblock_task",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "references",
@@ -14500,9 +14530,9 @@
       "source_file": "server/mcp_remote.py",
       "source_location": "L602",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "server_mcp_remote_worker_heartbeat",
-      "target": "server_mcp_remote_py_any",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_py_any"
     },
     {
       "relation": "imports",
@@ -14511,9 +14541,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_create_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_create_task"
     },
     {
       "relation": "calls",
@@ -14544,9 +14574,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_list_tasks",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_list_tasks"
     },
     {
       "relation": "imports",
@@ -14555,9 +14585,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_get_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_get_task"
     },
     {
       "relation": "calls",
@@ -14577,9 +14607,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_claim_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_claim_task"
     },
     {
       "relation": "calls",
@@ -14599,9 +14629,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_renew_task_lease",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_renew_task_lease"
     },
     {
       "relation": "calls",
@@ -14621,9 +14651,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_release_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_release_task"
     },
     {
       "relation": "imports",
@@ -14632,9 +14662,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_block_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_block_task"
     },
     {
       "relation": "calls",
@@ -14654,9 +14684,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_unblock_task",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_unblock_task"
     },
     {
       "relation": "calls",
@@ -14676,9 +14706,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_submit_checkpoint",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_submit_checkpoint"
     },
     {
       "relation": "calls",
@@ -14698,9 +14728,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_submit_qa_review",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_submit_qa_review"
     },
     {
       "relation": "calls",
@@ -14720,9 +14750,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_submit_job_from_template",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_submit_job_from_template"
     },
     {
       "relation": "calls",
@@ -14742,9 +14772,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_list_jobs",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_list_jobs"
     },
     {
       "relation": "calls",
@@ -14764,9 +14794,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_get_job",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_get_job"
     },
     {
       "relation": "imports",
@@ -14775,9 +14805,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_get_job_metrics",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_get_job_metrics"
     },
     {
       "relation": "calls",
@@ -14797,9 +14827,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_register_worker",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_register_worker"
     },
     {
       "relation": "calls",
@@ -14830,9 +14860,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_worker_heartbeat",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_worker_heartbeat"
     },
     {
       "relation": "calls",
@@ -14852,9 +14882,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_list_workers",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_list_workers"
     },
     {
       "relation": "calls",
@@ -14874,9 +14904,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_get_worker",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_get_worker"
     },
     {
       "relation": "imports",
@@ -14885,9 +14915,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_get_system_health",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_get_system_health"
     },
     {
       "relation": "calls",
@@ -14907,9 +14937,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_push_memory",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_push_memory"
     },
     {
       "relation": "calls",
@@ -14929,9 +14959,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_search_memory",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_search_memory"
     },
     {
       "relation": "calls",
@@ -14951,9 +14981,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_read_team_memory",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_read_team_memory"
     },
     {
       "relation": "calls",
@@ -14973,9 +15003,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "server_mcp_remote_read_team_context",
-      "confidence_score": 1.0
+      "target": "server_mcp_remote_read_team_context"
     },
     {
       "relation": "calls",
@@ -15014,9 +15044,9 @@
       "source_file": "server/models/schemas.py",
       "source_location": "L194",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_schemas",
-      "target": "models_schemas_contextresponse",
-      "confidence_score": 1.0
+      "target": "models_schemas_contextresponse"
     },
     {
       "relation": "contains",
@@ -15024,9 +15054,9 @@
       "source_file": "server/models/schemas.py",
       "source_location": "L191",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_schemas",
-      "target": "models_schemas_contextupsert",
-      "confidence_score": 1.0
+      "target": "models_schemas_contextupsert"
     },
     {
       "relation": "contains",
@@ -15074,9 +15104,9 @@
       "source_file": "server/models/schemas.py",
       "source_location": "L181",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_schemas",
-      "target": "models_schemas_memorycreate",
-      "confidence_score": 1.0
+      "target": "models_schemas_memorycreate"
     },
     {
       "relation": "contains",
@@ -15084,9 +15114,9 @@
       "source_file": "server/models/schemas.py",
       "source_location": "L185",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_schemas",
-      "target": "models_schemas_memoryresponse",
-      "confidence_score": 1.0
+      "target": "models_schemas_memoryresponse"
     },
     {
       "relation": "contains",
@@ -15987,9 +16017,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "tests_test_remote_mcp_setup_test_db",
-      "confidence_score": 1.0
+      "target": "tests_test_remote_mcp_setup_test_db"
     },
     {
       "relation": "contains",
@@ -15997,9 +16027,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L128",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "tests_test_remote_mcp_test_fastapi_rest_routes",
-      "confidence_score": 1.0
+      "target": "tests_test_remote_mcp_test_fastapi_rest_routes"
     },
     {
       "relation": "contains",
@@ -16007,9 +16037,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L94",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "tests_test_remote_mcp_test_mcp_jobs_and_qa_review",
-      "confidence_score": 1.0
+      "target": "tests_test_remote_mcp_test_mcp_jobs_and_qa_review"
     },
     {
       "relation": "contains",
@@ -16017,9 +16047,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "tests_test_remote_mcp_test_mcp_memory_and_context",
-      "confidence_score": 1.0
+      "target": "tests_test_remote_mcp_test_mcp_memory_and_context"
     },
     {
       "relation": "contains",
@@ -16027,9 +16057,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L116",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "tests_test_remote_mcp_test_mcp_system_health_and_fleet",
-      "confidence_score": 1.0
+      "target": "tests_test_remote_mcp_test_mcp_system_health_and_fleet"
     },
     {
       "relation": "contains",
@@ -16037,9 +16067,9 @@
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "tests_test_remote_mcp",
-      "target": "tests_test_remote_mcp_test_mcp_task_lifecycle",
-      "confidence_score": 1.0
+      "target": "tests_test_remote_mcp_test_mcp_task_lifecycle"
     },
     {
       "relation": "contains",
@@ -17309,5 +17339,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "109a7e3a206a2a9c259f41c96ade5769665e6bd8"
+  "built_at_commit": "1032f2c778fea275d9deb757aab022eaa7fd5690"
 }

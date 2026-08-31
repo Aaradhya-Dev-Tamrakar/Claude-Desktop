@@ -1,16 +1,16 @@
 # Graph Report - Claude-Desktop  (2026-08-31)
 
 ## Corpus Check
-- 251 files · ~163,592 words
+- 251 files · ~163,829 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 557 nodes · 1129 edges · 46 communities (38 shown, 8 thin omitted)
+- 558 nodes · 1131 edges · 46 communities (38 shown, 8 thin omitted)
 - Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 149 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `109a7e3a`
+- Built from commit: `1032f2c7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -126,8 +126,8 @@ Cohesion: 0.22
 Nodes (8): _now_iso(), PipelineEngine, Checks whether all tasks for a job have reached terminal state (done/merged)., Decomposes intake jobs into discrete, pipeline-staged tasks and manages     stag, Load SKU definition JSON from sku-templates directory., Takes a job and a list of parsed input items (e.g. from CSV/JSON).         Creat, When a task is verified (or passes QA), triggers generation of the next stage ta, Connection
 
 ### Community 10 - "Community 10"
-Cohesion: 0.30
-Nodes (11): Add-NewProfile(), Expand-TeamMcpPlaceholders(), Get-ValidatedProfilePath(), Invoke-ProfileLaunch(), Merge-McpServers(), New-Border(), New-Row(), Resolve-SingleAccount() (+3 more)
+Cohesion: 0.28
+Nodes (12): Add-NewProfile(), Ensure-LocalOrchestratorServer(), Expand-TeamMcpPlaceholders(), Get-ValidatedProfilePath(), Invoke-ProfileLaunch(), Merge-McpServers(), New-Border(), New-Row() (+4 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.22
@@ -224,7 +224,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `ClaudeDesktopProxyAdapter` connect `Community 29` to `Community 0`, `Community 34`, `Community 5`, `Community 30`?**
   _High betweenness centrality (0.100) - this node is a cross-community bridge._
 - **Why does `FastAPI` connect `Community 5` to `Community 1`, `Community 45`, `Community 6`, `Community 7`?**
-  _High betweenness centrality (0.085) - this node is a cross-community bridge._
+  _High betweenness centrality (0.084) - this node is a cross-community bridge._
 - **Why does `ClaudeDesktopCDPAdapter` connect `Community 29` to `Community 0`, `Community 34`, `Community 4`, `Community 30`?**
   _High betweenness centrality (0.042) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `ClaudeDesktopCDPAdapter` (e.g. with `BaseWorkerAdapter` and `ClaudeDesktopProxyAdapter`) actually correct?**

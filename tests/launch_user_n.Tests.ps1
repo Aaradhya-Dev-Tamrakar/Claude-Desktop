@@ -352,5 +352,6 @@ Describe "TestHook contract" {
         Get-Command Sync-TeamMcpConfig -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Show-ProfileTable -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Add-NewProfile -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Ensure-LocalOrchestratorServer -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
     }
 }

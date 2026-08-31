@@ -391,6 +391,65 @@ function Show-ProfileTable {
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
 }
 
+function Ensure-LocalOrchestratorServer {
+    param(
+        [Parameter(Mandatory = $true)][string]$RepoRoot,
+        [switch]$WhatIf
+    )
+
+    $HealthUrl = "http://127.0.0.1:8000/health"
+    $IsRunning = $false
+
+    try {
+        $response = Invoke-RestMethod -Uri $HealthUrl -Method Get -TimeoutSec 1 -ErrorAction Stop
+        if ($response -and $response.status -eq "ok") {
+            $IsRunning = $true
+        }
+    }
+    catch {
+        $IsRunning = $false
+    }
+
+    if ($IsRunning) {
+        Write-Host "[+] Local Orchestrator server is active on http://127.0.0.1:8000." -ForegroundColor Gray
+        return
+    }
+
+    if ($WhatIf) {
+        Write-Host "[WhatIf] Would spawn background Orchestrator server on http://127.0.0.1:8000." -ForegroundColor DarkCyan
+        return
+    }
+
+    $VenvPython = Join-Path $RepoRoot ".venv\Scripts\python.exe"
+    $PythonExe = if (Test-Path $VenvPython) { $VenvPython } else { "python" }
+    
+    $ProfilesBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
+    $ServerLogsDir = Join-Path $ProfilesBaseDir "Logs\server"
+    if (-not (Test-Path $ServerLogsDir)) {
+        New-Item -ItemType Directory -Force -Path $ServerLogsDir | Out-Null
+    }
+    $ServerOutLog = Join-Path $ServerLogsDir "server_out.log"
+    $ServerErrLog = Join-Path $ServerLogsDir "server_err.log"
+
+    Write-Host "[+] Starting background Orchestrator server on http://127.0.0.1:8000..." -ForegroundColor Cyan
+    Start-Process -FilePath $PythonExe -ArgumentList "-m uvicorn server.main:app --host 127.0.0.1 --port 8000" -WorkingDirectory $RepoRoot -WindowStyle Hidden -RedirectStandardOutput $ServerOutLog -RedirectStandardError $ServerErrLog
+
+    # Wait up to 3 seconds for health check
+    $retries = 6
+    while ($retries -gt 0) {
+        Start-Sleep -Milliseconds 500
+        try {
+            $check = Invoke-RestMethod -Uri $HealthUrl -Method Get -TimeoutSec 1 -ErrorAction Stop
+            if ($check -and $check.status -eq "ok") {
+                Write-Host "[+] Local Orchestrator server is ready." -ForegroundColor Green
+                return
+            }
+        }
+        catch { }
+        $retries--
+    }
+}
+
 if ($TestHook) {
     return
 }
@@ -845,6 +904,9 @@ function Invoke-ProfileLaunch {
                 Write-Warning "Cooldown reminder setup failed: $_"
             }
         }
+
+        # Ensure local background orchestrator server is running for MCP endpoints
+        Ensure-LocalOrchestratorServer -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
 
         # Team interlink: force-merge shared MCP servers into this profile's
         # claude_desktop_config.json. Opt out with -NoTeamSync. Best-effort
