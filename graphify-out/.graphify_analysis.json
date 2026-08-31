@@ -1,59 +1,6 @@
 {
   "communities": {
     "0": [
-      "abc",
-      "adapters_base_adapter",
-      "adapters_base_adapter_baseworkeradapter",
-      "adapters_base_adapter_baseworkeradapter_check_health",
-      "adapters_base_adapter_baseworkeradapter_execute_task",
-      "adapters_base_adapter_baseworkeradapter_init",
-      "adapters_base_adapter_rationale_16",
-      "adapters_base_adapter_rationale_30",
-      "adapters_base_adapter_rationale_7",
-      "adapters_claude_desktop_cdp",
-      "adapters_claude_desktop_proxy",
-      "adapters_claude_desktop_proxy_claudedesktopproxyadapter",
-      "adapters_claude_desktop_proxy_claudedesktopproxyadapter_check_health",
-      "adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_local_profile_stage",
-      "adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_task",
-      "adapters_claude_desktop_proxy_claudedesktopproxyadapter_init",
-      "adapters_claude_desktop_proxy_rationale_12",
-      "adapters_claude_desktop_proxy_rationale_30",
-      "adapters_claude_desktop_proxy_rationale_76",
-      "adapters_gemini_free_adapter",
-      "adapters_gemini_free_adapter_geminifreeadapter",
-      "adapters_gemini_free_adapter_geminifreeadapter_check_health",
-      "adapters_gemini_free_adapter_geminifreeadapter_execute_task",
-      "adapters_gemini_free_adapter_geminifreeadapter_init",
-      "adapters_gemini_free_adapter_rationale_10",
-      "adapters_groq_adapter",
-      "adapters_groq_adapter_groqadapter",
-      "adapters_groq_adapter_groqadapter_check_health",
-      "adapters_groq_adapter_groqadapter_execute_task",
-      "adapters_groq_adapter_groqadapter_init",
-      "adapters_groq_adapter_rationale_11",
-      "adapters_ollama_local_adapter",
-      "adapters_ollama_local_adapter_ollamalocaladapter",
-      "adapters_ollama_local_adapter_ollamalocaladapter_check_health",
-      "adapters_ollama_local_adapter_ollamalocaladapter_execute_task",
-      "adapters_ollama_local_adapter_ollamalocaladapter_init",
-      "adapters_ollama_local_adapter_rationale_10",
-      "baseworkeradapter",
-      "client_adapters_base_adapter_py_any",
-      "client_adapters_claude_desktop_proxy_py_any",
-      "client_adapters_gemini_free_adapter_py_any",
-      "client_adapters_groq_adapter_py_any",
-      "client_adapters_ollama_local_adapter_py_any",
-      "client_worker_daemon",
-      "client_worker_daemon_get_adapter",
-      "client_worker_daemon_main_loop",
-      "client_worker_daemon_py_baseworkeradapter",
-      "tests_test_claude_cdp_adapter_test_claude_proxy_delegation_to_cdp",
-      "tests_test_groq_adapter",
-      "tests_test_groq_adapter_test_groq_adapter_missing_key_returns_error",
-      "tests_test_groq_adapter_test_groq_adapter_uses_env_model_override"
-    ],
-    "1": [
       "api_routes_tasks",
       "api_routes_tasks_block_task",
       "api_routes_tasks_claim_task",
@@ -100,7 +47,7 @@
       "taskleaserenewrequest",
       "taskreleaserequest"
     ],
-    "2": [
+    "1": [
       "tests_orchestrator_mcp_test",
       "tests_orchestrator_mcp_test_load_run_server",
       "tests_orchestrator_mcp_test_py_path",
@@ -145,7 +92,131 @@
       "tests_orchestrator_mcp_test_testtoolregistration",
       "tests_orchestrator_mcp_test_testtoolregistration_test_all_expected_tools_are_registered"
     ],
+    "2": [
+      "team_memory_2026_08_05",
+      "team_memory_2026_08_06",
+      "team_memory_2026_08_10",
+      "team_memory_2026_08_11",
+      "team_memory_2026_08_13",
+      "team_memory_2026_08_15",
+      "team_memory_2026_08_21",
+      "team_memory_2026_08_22",
+      "team_memory_2026_08_23",
+      "team_memory_areas_6g_rf_presentation_md",
+      "team_memory_areas_fairness_bias_audit_md",
+      "team_memory_areas_fusemachines_fellowship_md",
+      "team_memory_areas_kec_makerspace_website_md",
+      "team_memory_areas_makerspace_ambassador_bio_md",
+      "team_memory_areas_master_profile_system_md",
+      "team_memory_areas_nexus_md",
+      "team_memory_areas_personal_notebook_md",
+      "team_memory_areas_portfolio_site_md",
+      "team_memory_areas_spark_md",
+      "team_memory_canteen_price_list",
+      "team_memory_courses",
+      "team_memory_fusemachines_ai_fellowship",
+      "team_memory_local_git_workflow_auto_sync_sync_ps1",
+      "team_memory_memory_log",
+      "team_memory_people_dipen_manandhar_md",
+      "team_memory_people_rupesh_kadel_md",
+      "team_memory_people_sankalpa_lamsal_md",
+      "team_memory_people_sonia_thapa_md",
+      "team_memory_personal_context",
+      "team_memory_portfolio_website",
+      "team_memory_preferences_md",
+      "team_memory_profile_md",
+      "team_memory_spark_project",
+      "team_memory_tools_and_environment",
+      "team_memory_top_of_mind_as_of_this_session",
+      "team_memory_topics_coursework_md",
+      "team_memory_topics_hobbies_md",
+      "team_memory_topics_home_network_md",
+      "team_memory_topics_recent_work_md",
+      "team_memory_topics_tech_stack_md",
+      "team_memory_work_context"
+    ],
     "3": [
+      "core_database",
+      "core_database_get_db",
+      "core_database_get_db_conn",
+      "core_database_rationale_16",
+      "core_database_rationale_8",
+      "row",
+      "server_core_database_py_connection",
+      "server_mcp_remote",
+      "server_mcp_remote_block_task",
+      "server_mcp_remote_claim_task",
+      "server_mcp_remote_create_task",
+      "server_mcp_remote_get_job",
+      "server_mcp_remote_get_job_metrics",
+      "server_mcp_remote_get_system_health",
+      "server_mcp_remote_get_task",
+      "server_mcp_remote_get_worker",
+      "server_mcp_remote_list_jobs",
+      "server_mcp_remote_list_tasks",
+      "server_mcp_remote_list_workers",
+      "server_mcp_remote_now_iso",
+      "server_mcp_remote_push_memory",
+      "server_mcp_remote_py_any",
+      "server_mcp_remote_read_team_context",
+      "server_mcp_remote_read_team_memory",
+      "server_mcp_remote_register_worker",
+      "server_mcp_remote_release_task",
+      "server_mcp_remote_renew_task_lease",
+      "server_mcp_remote_row_to_dict",
+      "server_mcp_remote_search_memory",
+      "server_mcp_remote_submit_checkpoint",
+      "server_mcp_remote_submit_job_from_template",
+      "server_mcp_remote_submit_qa_review",
+      "server_mcp_remote_unblock_task",
+      "server_mcp_remote_worker_heartbeat",
+      "tests_test_remote_mcp",
+      "tests_test_remote_mcp_test_fastapi_rest_routes",
+      "tests_test_remote_mcp_test_mcp_jobs_and_qa_review",
+      "tests_test_remote_mcp_test_mcp_memory_and_context",
+      "tests_test_remote_mcp_test_mcp_system_health_and_fleet",
+      "tests_test_remote_mcp_test_mcp_task_lifecycle"
+    ],
+    "4": [
+      "core_auth",
+      "core_auth_rationale_13",
+      "core_auth_verify_api_key",
+      "core_database_init_db",
+      "core_database_rationale_24",
+      "core_supervisor",
+      "core_supervisor_rationale_9",
+      "core_supervisor_run_supervisor_cycle",
+      "fastapi",
+      "httpauthorizationcredentials",
+      "server_main",
+      "server_main_health_check",
+      "server_main_lifespan",
+      "server_main_rationale_35",
+      "server_main_run_supervisor_loop",
+      "tests_test_cloud_scheduler",
+      "tests_test_cloud_scheduler_py_path",
+      "tests_test_cloud_scheduler_setup_test_db",
+      "tests_test_cloud_scheduler_test_quota_scheduler_capability_matching",
+      "tests_test_cloud_scheduler_test_scheduler_cooldown_filtering",
+      "tests_test_cloud_scheduler_test_supervisor_dead_worker_recovery",
+      "tests_test_e2e_pipeline",
+      "tests_test_e2e_pipeline_py_path",
+      "tests_test_e2e_pipeline_rationale_136",
+      "tests_test_e2e_pipeline_rationale_173",
+      "tests_test_e2e_pipeline_rationale_232",
+      "tests_test_e2e_pipeline_rationale_30",
+      "tests_test_e2e_pipeline_setup_test_db",
+      "tests_test_e2e_pipeline_test_concurrent_task_leasing_race_safety",
+      "tests_test_e2e_pipeline_test_e2e_sku_pipeline_execution",
+      "tests_test_e2e_pipeline_test_expired_lease_reclamation_and_recovery",
+      "tests_test_e2e_pipeline_test_lease_renewal_heartbeat",
+      "tests_test_pipeline_engine",
+      "tests_test_pipeline_engine_py_path",
+      "tests_test_pipeline_engine_setup_test_db",
+      "tests_test_pipeline_engine_test_pipeline_decomposition_and_waterfall",
+      "tests_test_remote_mcp_setup_test_db"
+    ],
+    "5": [
       "mcp_servers_orchestrator_mcp_run_server_py_any",
       "mcp_servers_orchestrator_mcp_run_server_py_path",
       "orchestrator_mcp_run_server",
@@ -184,30 +255,65 @@
       "taskkind",
       "taskstatus"
     ],
-    "4": [
+    "6": [
+      "cooldown_reminder",
+      "cooldown_reminder_new_cooldowncalendarevent",
+      "cooldown_reminder_register_cooldowntoast",
+      "cooldown_reminder_update_firstlogindate",
+      "launch_user_n",
+      "launch_user_n_add_newprofile",
+      "launch_user_n_ensure_localorchestratorserver",
+      "launch_user_n_expand_teammcpplaceholders",
+      "launch_user_n_get_validatedprofilepath",
+      "launch_user_n_invoke_profilelaunch",
+      "launch_user_n_merge_mcpservers",
+      "launch_user_n_new_border",
+      "launch_user_n_new_row",
+      "launch_user_n_resolve_singleaccount",
+      "launch_user_n_show_profiletable",
+      "launch_user_n_sync_teammcpconfig",
+      "launch_user_n_test_profilepathwithinbase",
+      "readme_team_mcp_json",
+      "reset_profiles",
+      "sync",
+      "sync_find_stagedsecrets",
+      "sync_get_autocommitmessage",
+      "sync_sync_memorytoteammemory",
+      "team_memory"
+    ],
+    "7": [
+      "api_routes_memory",
+      "api_routes_memory_get_all_context",
+      "api_routes_memory_get_context_by_key",
+      "api_routes_memory_list_memory",
+      "api_routes_memory_now_iso",
+      "api_routes_memory_push_memory",
+      "api_routes_memory_rationale_111",
+      "api_routes_memory_rationale_125",
+      "api_routes_memory_rationale_22",
+      "api_routes_memory_rationale_44",
+      "api_routes_memory_rationale_71",
+      "api_routes_memory_rationale_86",
+      "api_routes_memory_search_memory",
+      "api_routes_memory_upsert_context",
+      "contextupsert",
+      "memorycreate",
+      "models_schemas_contextresponse",
+      "models_schemas_contextupsert",
+      "models_schemas_memorycreate",
+      "models_schemas_memoryresponse",
+      "server_api_routes_memory_py_connection"
+    ],
+    "8": [
       "adapters_claude_desktop_cdp_claudedesktopcdpadapter",
-      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_check_cooldown_banner",
       "adapters_claude_desktop_cdp_claudedesktopcdpadapter_check_health",
-      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_eval_js",
-      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_execute_task",
-      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_get_page_ws_url",
       "adapters_claude_desktop_cdp_claudedesktopcdpadapter_http_url",
       "adapters_claude_desktop_cdp_claudedesktopcdpadapter_init",
-      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_inject_prompt_and_send",
-      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_send_cdp_command",
-      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_start_new_chat",
-      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_wait_for_generation_complete",
-      "adapters_claude_desktop_cdp_rationale_103",
       "adapters_claude_desktop_cdp_rationale_12",
-      "adapters_claude_desktop_cdp_rationale_187",
-      "adapters_claude_desktop_cdp_rationale_205",
-      "adapters_claude_desktop_cdp_rationale_220",
-      "adapters_claude_desktop_cdp_rationale_263",
       "adapters_claude_desktop_cdp_rationale_35",
-      "adapters_claude_desktop_cdp_rationale_46",
-      "adapters_claude_desktop_cdp_rationale_72",
-      "adapters_claude_desktop_cdp_rationale_90",
-      "client_adapters_claude_desktop_cdp_py_any",
+      "adapters_claude_desktop_proxy_claudedesktopproxyadapter",
+      "adapters_claude_desktop_proxy_claudedesktopproxyadapter_init",
+      "adapters_claude_desktop_proxy_rationale_12",
       "tests_test_claude_cdp_adapter",
       "tests_test_claude_cdp_adapter_test_cdp_adapter_init",
       "tests_test_claude_cdp_adapter_test_cdp_cooldown_detection_returns_429",
@@ -218,65 +324,9 @@
       "tests_test_claude_cdp_adapter_test_cdp_health_check_failure",
       "tests_test_claude_cdp_adapter_test_cdp_health_check_success",
       "tests_test_claude_cdp_adapter_test_cdp_ui_error_banner_handling",
-      "websocketclientprotocol"
+      "tests_test_claude_cdp_adapter_test_claude_proxy_delegation_to_cdp"
     ],
-    "5": [
-      "core_database_init_db",
-      "core_database_rationale_19",
-      "core_supervisor",
-      "core_supervisor_rationale_9",
-      "core_supervisor_run_supervisor_cycle",
-      "fastapi",
-      "server_main",
-      "server_main_health_check",
-      "server_main_lifespan",
-      "server_main_rationale_33",
-      "server_main_run_supervisor_loop",
-      "tests_test_cloud_scheduler",
-      "tests_test_cloud_scheduler_py_path",
-      "tests_test_cloud_scheduler_setup_test_db",
-      "tests_test_cloud_scheduler_test_quota_scheduler_capability_matching",
-      "tests_test_cloud_scheduler_test_scheduler_cooldown_filtering",
-      "tests_test_cloud_scheduler_test_supervisor_dead_worker_recovery",
-      "tests_test_e2e_pipeline",
-      "tests_test_e2e_pipeline_py_path",
-      "tests_test_e2e_pipeline_rationale_136",
-      "tests_test_e2e_pipeline_rationale_173",
-      "tests_test_e2e_pipeline_rationale_232",
-      "tests_test_e2e_pipeline_rationale_30",
-      "tests_test_e2e_pipeline_setup_test_db",
-      "tests_test_e2e_pipeline_test_concurrent_task_leasing_race_safety",
-      "tests_test_e2e_pipeline_test_e2e_sku_pipeline_execution",
-      "tests_test_e2e_pipeline_test_expired_lease_reclamation_and_recovery",
-      "tests_test_e2e_pipeline_test_lease_renewal_heartbeat",
-      "tests_test_pipeline_engine",
-      "tests_test_pipeline_engine_py_path",
-      "tests_test_pipeline_engine_setup_test_db",
-      "tests_test_pipeline_engine_test_pipeline_decomposition_and_waterfall"
-    ],
-    "6": [
-      "api_routes_workers",
-      "api_routes_workers_get_worker",
-      "api_routes_workers_list_workers",
-      "api_routes_workers_now_iso",
-      "api_routes_workers_rationale_18",
-      "api_routes_workers_rationale_45",
-      "api_routes_workers_rationale_72",
-      "api_routes_workers_rationale_95",
-      "api_routes_workers_register_worker",
-      "api_routes_workers_worker_heartbeat",
-      "core_database",
-      "core_database_get_db",
-      "core_database_rationale_8",
-      "models_schemas_workerheartbeat",
-      "models_schemas_workerregister",
-      "models_schemas_workerresponse",
-      "server_api_routes_workers_py_connection",
-      "server_core_database_py_connection",
-      "workerheartbeat",
-      "workerregister"
-    ],
-    "7": [
+    "9": [
       "api_routes_jobs",
       "api_routes_jobs_create_job",
       "api_routes_jobs_get_job",
@@ -297,7 +347,46 @@
       "models_schemas_jobupdate",
       "server_api_routes_jobs_py_connection"
     ],
-    "8": [
+    "10": [
+      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_check_cooldown_banner",
+      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_eval_js",
+      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_execute_task",
+      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_get_page_ws_url",
+      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_inject_prompt_and_send",
+      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_send_cdp_command",
+      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_start_new_chat",
+      "adapters_claude_desktop_cdp_claudedesktopcdpadapter_wait_for_generation_complete",
+      "adapters_claude_desktop_cdp_rationale_103",
+      "adapters_claude_desktop_cdp_rationale_187",
+      "adapters_claude_desktop_cdp_rationale_205",
+      "adapters_claude_desktop_cdp_rationale_220",
+      "adapters_claude_desktop_cdp_rationale_263",
+      "adapters_claude_desktop_cdp_rationale_46",
+      "adapters_claude_desktop_cdp_rationale_72",
+      "adapters_claude_desktop_cdp_rationale_90",
+      "client_adapters_claude_desktop_cdp_py_any",
+      "websocketclientprotocol"
+    ],
+    "11": [
+      "adapters_gemini_free_adapter",
+      "adapters_gemini_free_adapter_geminifreeadapter",
+      "adapters_gemini_free_adapter_geminifreeadapter_check_health",
+      "adapters_gemini_free_adapter_geminifreeadapter_init",
+      "adapters_gemini_free_adapter_rationale_10",
+      "adapters_ollama_local_adapter",
+      "adapters_ollama_local_adapter_ollamalocaladapter",
+      "adapters_ollama_local_adapter_ollamalocaladapter_check_health",
+      "adapters_ollama_local_adapter_ollamalocaladapter_execute_task",
+      "adapters_ollama_local_adapter_ollamalocaladapter_init",
+      "adapters_ollama_local_adapter_rationale_10",
+      "baseworkeradapter",
+      "client_adapters_ollama_local_adapter_py_any",
+      "client_worker_daemon",
+      "client_worker_daemon_get_adapter",
+      "client_worker_daemon_main_loop",
+      "client_worker_daemon_py_baseworkeradapter"
+    ],
+    "12": [
       "cloud_orchestrator_mcp_run_server",
       "cloud_orchestrator_mcp_run_server_block_task",
       "cloud_orchestrator_mcp_run_server_claim_task",
@@ -316,7 +405,41 @@
       "cloud_orchestrator_mcp_run_server_submit_task_checkpoint",
       "mcp_servers_cloud_orchestrator_mcp_run_server_py_any"
     ],
-    "9": [
+    "13": [
+      "api_routes_workers",
+      "api_routes_workers_get_worker",
+      "api_routes_workers_list_workers",
+      "api_routes_workers_now_iso",
+      "api_routes_workers_rationale_18",
+      "api_routes_workers_rationale_45",
+      "api_routes_workers_rationale_72",
+      "api_routes_workers_rationale_95",
+      "api_routes_workers_register_worker",
+      "api_routes_workers_worker_heartbeat",
+      "models_schemas_workerheartbeat",
+      "models_schemas_workerregister",
+      "models_schemas_workerresponse",
+      "server_api_routes_workers_py_connection",
+      "workerheartbeat",
+      "workerregister"
+    ],
+    "14": [
+      "abc",
+      "adapters_base_adapter",
+      "adapters_base_adapter_baseworkeradapter",
+      "adapters_base_adapter_baseworkeradapter_check_health",
+      "adapters_base_adapter_baseworkeradapter_execute_task",
+      "adapters_base_adapter_baseworkeradapter_init",
+      "adapters_base_adapter_rationale_16",
+      "adapters_base_adapter_rationale_30",
+      "adapters_base_adapter_rationale_7",
+      "adapters_claude_desktop_cdp",
+      "adapters_claude_desktop_proxy",
+      "adapters_gemini_free_adapter_geminifreeadapter_execute_task",
+      "client_adapters_base_adapter_py_any",
+      "client_adapters_gemini_free_adapter_py_any"
+    ],
+    "15": [
       "core_pipeline_engine",
       "core_pipeline_engine_now_iso",
       "core_pipeline_engine_pipelineengine",
@@ -331,33 +454,47 @@
       "core_pipeline_engine_rationale_80",
       "server_core_pipeline_engine_py_connection"
     ],
-    "10": [
-      "launch_user_n",
-      "launch_user_n_add_newprofile",
-      "launch_user_n_expand_teammcpplaceholders",
-      "launch_user_n_get_validatedprofilepath",
-      "launch_user_n_invoke_profilelaunch",
-      "launch_user_n_merge_mcpservers",
-      "launch_user_n_new_border",
-      "launch_user_n_new_row",
-      "launch_user_n_resolve_singleaccount",
-      "launch_user_n_show_profiletable",
-      "launch_user_n_sync_teammcpconfig",
-      "launch_user_n_test_profilepathwithinbase"
+    "16": [
+      "claude_skills_mcp_cross_linking_hub",
+      "claude_skills_mcp_cross_linking_hub_application_rules",
+      "claude_skills_mcp_cross_linking_hub_coursework_notebooks_iv_i_exam_sequence_order",
+      "claude_skills_mcp_cross_linking_hub_cross_linking_hub",
+      "claude_skills_mcp_cross_linking_hub_hub",
+      "claude_skills_mcp_cross_linking_hub_leaf_nodes",
+      "claude_skills_mcp_cross_linking_hub_pending",
+      "claude_skills_mcp_cross_linking_hub_unlinked_notebooks",
+      "orchestrator_mcp",
+      "spark_project",
+      "team_context",
+      "team_context_context"
     ],
-    "11": [
-      "job_schema_job_entity",
-      "job_schema_qa_review",
-      "job_schema_task_entity",
-      "job_schema_worker_node",
-      "worker_formatter",
-      "worker_orchestrator",
-      "worker_qa_reviewer",
-      "worker_researcher",
-      "worker_seo_optimizer",
-      "worker_writer"
+    "17": [
+      "readme",
+      "readme_claude_desktop_multi_profile_sync_utilities",
+      "readme_concurrent_mode_multiple_windows_multiple_monitors",
+      "readme_features",
+      "readme_files",
+      "readme_launching_claude_desktop_profiles",
+      "readme_repo_structure",
+      "readme_running_autonomous_worker_daemons_v2",
+      "readme_running_the_cloud_orchestration_backend_v2",
+      "readme_running_usage_watchdog",
+      "readme_syncing_git_repository",
+      "readme_usage"
     ],
-    "12": [
+    "18": [
+      "adapters_groq_adapter",
+      "adapters_groq_adapter_groqadapter",
+      "adapters_groq_adapter_groqadapter_check_health",
+      "adapters_groq_adapter_groqadapter_execute_task",
+      "adapters_groq_adapter_groqadapter_init",
+      "adapters_groq_adapter_rationale_11",
+      "client_adapters_groq_adapter_py_any",
+      "tests_test_groq_adapter",
+      "tests_test_groq_adapter_test_groq_adapter_missing_key_returns_error",
+      "tests_test_groq_adapter_test_groq_adapter_uses_env_model_override"
+    ],
+    "19": [
       "core_scheduler",
       "core_scheduler_quotaawarescheduler",
       "core_scheduler_quotaawarescheduler_init",
@@ -368,16 +505,35 @@
       "core_scheduler_rationale_9",
       "server_core_scheduler_py_connection"
     ],
-    "13": [
-      "orchestrator_mcp",
-      "sync",
-      "sync_find_stagedsecrets",
-      "sync_get_autocommitmessage",
-      "sync_sync_memorytoteammemory",
-      "team_context_md",
-      "team_memory_md"
+    "20": [
+      "orchestrator_state_job_schema",
+      "orchestrator_state_job_schema_1_job_entity_jobs_orchestrator_state_jobs_job_id_json",
+      "orchestrator_state_job_schema_2_extended_task_schema_tasks",
+      "orchestrator_state_job_schema_3_qa_review_schema_qa_reviews",
+      "orchestrator_state_job_schema_4_worker_node_entity_workers",
+      "orchestrator_state_job_schema_5_shared_memory_team_context_memory_entries_team_context",
+      "orchestrator_state_job_schema_job_pipeline_production_schema_v2",
+      "orchestrator_state_job_schema_memory_entry_memory_entries",
+      "orchestrator_state_job_schema_team_context_team_context"
     ],
-    "14": [
+    "21": [
+      "orchestrator_state_schema",
+      "orchestrator_state_schema_directory_listing_as_the_index",
+      "orchestrator_state_schema_orchestrator_state_checkpoints_task_id_json",
+      "orchestrator_state_schema_orchestrator_state_live_status_account_json",
+      "orchestrator_state_schema_orchestrator_state_memory_account_entry_id_json",
+      "orchestrator_state_schema_orchestrator_state_schema",
+      "orchestrator_state_schema_orchestrator_state_tasks_task_id_json"
+    ],
+    "22": [
+      "adapters_claude_desktop_proxy_claudedesktopproxyadapter_check_health",
+      "adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_local_profile_stage",
+      "adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_task",
+      "adapters_claude_desktop_proxy_rationale_30",
+      "adapters_claude_desktop_proxy_rationale_76",
+      "client_adapters_claude_desktop_proxy_py_any"
+    ],
+    "23": [
       "notebooklm_mcp_cli",
       "notebooklm_mcp_run_server",
       "notebooklm_mcp_run_server_find_uvx",
@@ -385,7 +541,7 @@
       "notebooklm_mcp_run_server_rationale_21",
       "notebooklm_mcp_run_server_rationale_70"
     ],
-    "15": [
+    "24": [
       "usage_watchdog",
       "usage_watchdog_get_claudetrayusagepercent",
       "usage_watchdog_invoke_autocheckpoint",
@@ -393,95 +549,159 @@
       "usage_watchdog_set_checkpointfiredthiscycle",
       "usage_watchdog_test_checkpointalreadyfiredthiscycle"
     ],
-    "16": [
-      "cooldown_reminder",
-      "cooldown_reminder_new_cooldowncalendarevent",
-      "cooldown_reminder_register_cooldowntoast",
-      "cooldown_reminder_update_firstlogindate"
+    "25": [
+      "worker_formatter",
+      "worker_orchestrator",
+      "worker_qa_reviewer",
+      "worker_researcher",
+      "worker_seo_optimizer",
+      "worker_writer"
     ],
-    "17": [
-      "biasaperture_project",
-      "cross_linking_hub",
-      "spark_project"
+    "26": [
+      "readme_mcp_remote_py",
+      "readme_pipeline_engine_py",
+      "readme_scheduler_py",
+      "readme_server_main_py",
+      "readme_worker_daemon_py"
     ],
-    "18": [
+    "27": [
+      "job_schema_jobs",
+      "job_schema_qa_reviews",
+      "job_schema_tasks",
+      "job_schema_workers"
+    ],
+    "28": [
+      "worker_prompts_orchestrator",
+      "worker_prompts_orchestrator_responsibilities",
+      "worker_prompts_orchestrator_rules",
+      "worker_prompts_orchestrator_worker_role_orchestrator_dispatcher"
+    ],
+    "29": [
+      "worker_prompts_qa_reviewer",
+      "worker_prompts_qa_reviewer_output_verdict",
+      "worker_prompts_qa_reviewer_verification_checklist",
+      "worker_prompts_qa_reviewer_worker_role_quality_assurance_qa_fact_checker"
+    ],
+    "30": [
+      "worker_prompts_researcher",
+      "worker_prompts_researcher_responsibilities",
+      "worker_prompts_researcher_strict_rules",
+      "worker_prompts_researcher_worker_role_researcher_attribute_extractor"
+    ],
+    "31": [
+      "worker_prompts_writer",
+      "worker_prompts_writer_responsibilities",
+      "worker_prompts_writer_strict_rules",
+      "worker_prompts_writer_worker_role_copywriter_drafting_specialist"
+    ],
+    "32": [
       "mcp_library",
       "orchestrator_mcp_requirements",
       "server_requirements"
     ],
-    "19": [
+    "33": [
+      "worker_prompts_formatter",
+      "worker_prompts_formatter_responsibilities",
+      "worker_prompts_formatter_worker_role_formatter_delivery_packaging"
+    ],
+    "34": [
+      "worker_prompts_seo_optimizer",
+      "worker_prompts_seo_optimizer_responsibilities",
+      "worker_prompts_seo_optimizer_worker_role_seo_aeo_optimization_specialist"
+    ],
+    "35": [
+      "agents",
+      "agents_git_workflow"
+    ],
+    "36": [
       "docker_cloudflared_service",
       "docker_orchestrator_service"
     ],
-    "20": [
+    "37": [
       "agents_sync_ps1"
     ],
-    "21": [
+    "38": [
       "bypass_all_profiles"
     ],
-    "22": [
+    "39": [
       "notebooklm_mcp"
     ],
-    "23": [
-      "profiles_json"
+    "40": [
+      "readme_profiles_json"
     ],
-    "24": [
-      "readme_claude_desktop"
-    ],
-    "25": [
-      "reset_profiles"
-    ],
-    "26": [
-      "server_main_py"
-    ],
-    "27": [
-      "team_mcp_json"
-    ],
-    "28": [
+    "41": [
       "tests_launch_user_n_tests"
     ]
   },
   "cohesion": {
-    "0": 0.06274509803921569,
-    "1": 0.1797979797979798,
-    "2": 0.047619047619047616,
-    "3": 0.2222222222222222,
-    "4": 0.11051693404634581,
-    "5": 0.08669354838709678,
-    "6": 0.18947368421052632,
-    "7": 0.23976608187134502,
-    "8": 0.3235294117647059,
-    "9": 0.21794871794871795,
-    "10": 0.30303030303030304,
-    "11": 0.2222222222222222,
-    "12": 0.2777777777777778,
-    "13": 0.2857142857142857,
-    "14": 0.4,
-    "15": 0.6,
-    "16": 0.5,
-    "17": 0.6666666666666666,
-    "18": 0.6666666666666666,
-    "19": 1.0,
-    "20": 1.0,
-    "21": 1.0,
-    "22": 1.0,
-    "23": 1.0,
-    "24": 1.0,
-    "25": 1.0,
-    "26": 1.0,
-    "27": 1.0,
-    "28": 1.0
+    "0": 0.1797979797979798,
+    "1": 0.047619047619047616,
+    "2": 0.04878048780487805,
+    "3": 0.2064102564102564,
+    "4": 0.07207207207207207,
+    "5": 0.2222222222222222,
+    "6": 0.11956521739130435,
+    "7": 0.22380952380952382,
+    "8": 0.1631578947368421,
+    "9": 0.23976608187134502,
+    "10": 0.19607843137254902,
+    "11": 0.16176470588235295,
+    "12": 0.3235294117647059,
+    "13": 0.26666666666666666,
+    "14": 0.15384615384615385,
+    "15": 0.21794871794871795,
+    "16": 0.16666666666666666,
+    "17": 0.16666666666666666,
+    "18": 0.24444444444444444,
+    "19": 0.2777777777777778,
+    "20": 0.2222222222222222,
+    "21": 0.2857142857142857,
+    "22": 0.3333333333333333,
+    "23": 0.4,
+    "24": 0.6,
+    "25": 0.3333333333333333,
+    "26": 0.4,
+    "27": 0.5,
+    "28": 0.5,
+    "29": 0.5,
+    "30": 0.5,
+    "31": 0.5,
+    "32": 0.6666666666666666,
+    "33": 0.6666666666666666,
+    "34": 0.6666666666666666,
+    "35": 1.0,
+    "36": 1.0,
+    "37": 1.0,
+    "38": 1.0,
+    "39": 1.0,
+    "40": 1.0,
+    "41": 1.0
   },
   "gods": [
+    {
+      "id": "team_memory_memory_log",
+      "label": "Memory Log",
+      "degree": 40
+    },
     {
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter",
       "label": "ClaudeDesktopCDPAdapter",
       "degree": 32
     },
     {
+      "id": "core_database_get_db_conn",
+      "label": "get_db_conn()",
+      "degree": 31
+    },
+    {
       "id": "adapters_base_adapter_baseworkeradapter",
       "label": "BaseWorkerAdapter",
       "degree": 24
+    },
+    {
+      "id": "server_mcp_remote_row_to_dict",
+      "label": "_row_to_dict()",
+      "degree": 22
     },
     {
       "id": "server_api_routes_tasks_py_connection",
@@ -507,21 +727,6 @@
       "id": "orchestrator_mcp_run_server_write_json",
       "label": "_write_json()",
       "degree": 14
-    },
-    {
-      "id": "models_schemas_taskresponse",
-      "label": "TaskResponse",
-      "degree": 14
-    },
-    {
-      "id": "adapters_groq_adapter_groqadapter",
-      "label": "GroqAdapter",
-      "degree": 13
-    },
-    {
-      "id": "orchestrator_mcp_run_server_task_path",
-      "label": "_task_path()",
-      "degree": 13
     }
   ],
   "surprises": [
@@ -537,15 +742,26 @@
       "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; bridges separate communities; peripheral node `Path` unexpectedly reaches hub `ClaudeDesktopProxyAdapter`"
     },
     {
-      "source": "Orchestrator / Dispatcher",
-      "target": "Job Entity",
+      "source": "Any",
+      "target": "BaseWorkerAdapter",
       "source_files": [
-        "worker-prompts/orchestrator.md",
-        "orchestrator-state/JOB_SCHEMA.md"
+        "client/adapters/groq_adapter.py",
+        "client/adapters/base_adapter.py"
       ],
       "confidence": "INFERRED",
-      "relation": "references",
-      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories; peripheral node `Job Entity` unexpectedly reaches hub `Orchestrator / Dispatcher`"
+      "relation": "uses",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities; peripheral node `Any` unexpectedly reaches hub `BaseWorkerAdapter`"
+    },
+    {
+      "source": "Any",
+      "target": "BaseWorkerAdapter",
+      "source_files": [
+        "client/adapters/ollama_local_adapter.py",
+        "client/adapters/base_adapter.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "uses",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities; peripheral node `Any` unexpectedly reaches hub `BaseWorkerAdapter`"
     },
     {
       "source": "test_cdp_adapter_init()",
@@ -568,17 +784,6 @@
       "confidence": "EXTRACTED",
       "relation": "calls",
       "why": "connects across different repos/directories; peripheral node `test_cdp_cooldown_detection_returns_429()` unexpectedly reaches hub `ClaudeDesktopCDPAdapter`"
-    },
-    {
-      "source": "test_cdp_eval_js_exception()",
-      "target": "ClaudeDesktopCDPAdapter",
-      "source_files": [
-        "tests/test_claude_cdp_adapter.py",
-        "client/adapters/claude_desktop_cdp.py"
-      ],
-      "confidence": "EXTRACTED",
-      "relation": "calls",
-      "why": "connects across different repos/directories; peripheral node `test_cdp_eval_js_exception()` unexpectedly reaches hub `ClaudeDesktopCDPAdapter`"
     }
   ],
   "tokens": {

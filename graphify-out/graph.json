@@ -10,7 +10,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "bypass_all_profiles",
-      "community": 21,
+      "community": 38,
       "norm_label": "bypass-all-profiles.ps1"
     },
     {
@@ -20,7 +20,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "adapters_base_adapter",
-      "community": 30,
+      "community": 14,
       "norm_label": "base_adapter.py"
     },
     {
@@ -30,7 +30,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "adapters_base_adapter_baseworkeradapter",
-      "community": 30,
+      "community": 14,
       "norm_label": "baseworkeradapter"
     },
     {
@@ -40,7 +40,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "abc",
-      "community": 30,
+      "community": 14,
       "norm_label": "abc"
     },
     {
@@ -50,7 +50,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "adapters_base_adapter_baseworkeradapter_init",
-      "community": 30,
+      "community": 14,
       "norm_label": ".__init__()"
     },
     {
@@ -60,7 +60,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "adapters_base_adapter_baseworkeradapter_execute_task",
-      "community": 30,
+      "community": 14,
       "norm_label": ".execute_task()"
     },
     {
@@ -70,7 +70,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "client_adapters_base_adapter_py_any",
-      "community": 30,
+      "community": 14,
       "norm_label": "any"
     },
     {
@@ -80,7 +80,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "adapters_base_adapter_baseworkeradapter_check_health",
-      "community": 30,
+      "community": 14,
       "norm_label": ".check_health()"
     },
     {
@@ -90,7 +90,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "adapters_base_adapter_rationale_7",
-      "community": 30,
+      "community": 14,
       "norm_label": "abstract interface for worker execution endpoints."
     },
     {
@@ -100,7 +100,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "adapters_base_adapter_rationale_16",
-      "community": 30,
+      "community": 14,
       "norm_label": "executes work specified in `spec`.         returns dictionary:         {"
     },
     {
@@ -110,7 +110,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "adapters_base_adapter_rationale_30",
-      "community": 30,
+      "community": 14,
       "norm_label": "returns true if the backend ai model / profile is online and usable."
     },
     {
@@ -120,7 +120,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp",
-      "community": 30,
+      "community": 14,
       "norm_label": "claude_desktop_cdp.py"
     },
     {
@@ -130,7 +130,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter",
-      "community": 29,
+      "community": 8,
       "norm_label": "claudedesktopcdpadapter"
     },
     {
@@ -140,7 +140,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "baseworkeradapter",
-      "community": 0,
+      "community": 11,
       "norm_label": "baseworkeradapter"
     },
     {
@@ -150,7 +150,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter_init",
-      "community": 29,
+      "community": 8,
       "norm_label": ".__init__()"
     },
     {
@@ -160,7 +160,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter_http_url",
-      "community": 29,
+      "community": 8,
       "norm_label": ".http_url()"
     },
     {
@@ -170,7 +170,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter_check_health",
-      "community": 29,
+      "community": 8,
       "norm_label": ".check_health()"
     },
     {
@@ -180,7 +180,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter_get_page_ws_url",
-      "community": 4,
+      "community": 10,
       "norm_label": ".get_page_ws_url()"
     },
     {
@@ -190,7 +190,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter_send_cdp_command",
-      "community": 4,
+      "community": 10,
       "norm_label": "._send_cdp_command()"
     },
     {
@@ -200,7 +200,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "websocketclientprotocol",
-      "community": 4,
+      "community": 10,
       "norm_label": "websocketclientprotocol"
     },
     {
@@ -210,7 +210,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "client_adapters_claude_desktop_cdp_py_any",
-      "community": 4,
+      "community": 10,
       "norm_label": "any"
     },
     {
@@ -220,7 +220,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter_eval_js",
-      "community": 4,
+      "community": 10,
       "norm_label": "._eval_js()"
     },
     {
@@ -230,7 +230,7 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter_execute_task",
-      "community": 4,
+      "community": 10,
       "norm_label": ".execute_task()"
     },
     {
@@ -240,7 +240,7 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter_check_cooldown_banner",
-      "community": 4,
+      "community": 10,
       "norm_label": "._check_cooldown_banner()"
     },
     {
@@ -250,7 +250,7 @@
       "source_location": "L204",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter_start_new_chat",
-      "community": 4,
+      "community": 10,
       "norm_label": "._start_new_chat()"
     },
     {
@@ -260,7 +260,7 @@
       "source_location": "L219",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter_inject_prompt_and_send",
-      "community": 4,
+      "community": 10,
       "norm_label": "._inject_prompt_and_send()"
     },
     {
@@ -270,7 +270,7 @@
       "source_location": "L262",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_claudedesktopcdpadapter_wait_for_generation_complete",
-      "community": 4,
+      "community": 10,
       "norm_label": "._wait_for_generation_complete()"
     },
     {
@@ -280,7 +280,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_rationale_12",
-      "community": 29,
+      "community": 8,
       "norm_label": "adapter automating a locally running claude desktop electron app     via chrome"
     },
     {
@@ -290,7 +290,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_rationale_35",
-      "community": 29,
+      "community": 8,
       "norm_label": "check if claude desktop electron process is exposing cdp port and has an active"
     },
     {
@@ -300,7 +300,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_rationale_46",
-      "community": 4,
+      "community": 10,
       "norm_label": "find the websocket debugger url for the active claude desktop ui page."
     },
     {
@@ -310,7 +310,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_rationale_72",
-      "community": 4,
+      "community": 10,
       "norm_label": "send a json-rpc command over websocket and await result with timeout."
     },
     {
@@ -320,7 +320,7 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_rationale_90",
-      "community": 4,
+      "community": 10,
       "norm_label": "evaluate a javascript expression in the page and return the unwrapped value."
     },
     {
@@ -330,7 +330,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_rationale_103",
-      "community": 4,
+      "community": 10,
       "norm_label": "automate claude desktop via cdp:         1. connect to page         2. check for"
     },
     {
@@ -340,7 +340,7 @@
       "source_location": "L187",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_rationale_187",
-      "community": 4,
+      "community": 10,
       "norm_label": "scan dom for 5-hour usage limit and cooldown warnings."
     },
     {
@@ -350,7 +350,7 @@
       "source_location": "L205",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_rationale_205",
-      "community": 4,
+      "community": 10,
       "norm_label": "click new chat or reset conversation."
     },
     {
@@ -360,7 +360,7 @@
       "source_location": "L220",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_rationale_220",
-      "community": 4,
+      "community": 10,
       "norm_label": "inject prompt into prosemirror / contenteditable and click send safely without i"
     },
     {
@@ -370,7 +370,7 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "adapters_claude_desktop_cdp_rationale_263",
-      "community": 4,
+      "community": 10,
       "norm_label": "poll until generation stop button disappears and text settles."
     },
     {
@@ -380,7 +380,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "adapters_claude_desktop_proxy",
-      "community": 30,
+      "community": 14,
       "norm_label": "claude_desktop_proxy.py"
     },
     {
@@ -390,7 +390,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "adapters_claude_desktop_proxy_claudedesktopproxyadapter",
-      "community": 29,
+      "community": 8,
       "norm_label": "claudedesktopproxyadapter"
     },
     {
@@ -400,7 +400,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "adapters_claude_desktop_proxy_claudedesktopproxyadapter_init",
-      "community": 29,
+      "community": 8,
       "norm_label": ".__init__()"
     },
     {
@@ -410,7 +410,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "adapters_claude_desktop_proxy_claudedesktopproxyadapter_check_health",
-      "community": 34,
+      "community": 22,
       "norm_label": ".check_health()"
     },
     {
@@ -420,7 +420,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_task",
-      "community": 34,
+      "community": 22,
       "norm_label": ".execute_task()"
     },
     {
@@ -430,7 +430,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "client_adapters_claude_desktop_proxy_py_any",
-      "community": 34,
+      "community": 22,
       "norm_label": "any"
     },
     {
@@ -440,7 +440,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_local_profile_stage",
-      "community": 34,
+      "community": 22,
       "norm_label": "._execute_local_profile_stage()"
     },
     {
@@ -450,7 +450,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "adapters_claude_desktop_proxy_rationale_12",
-      "community": 29,
+      "community": 8,
       "norm_label": "adapter representing a local windows claude desktop profile session.     interfa"
     },
     {
@@ -460,7 +460,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "adapters_claude_desktop_proxy_rationale_30",
-      "community": 34,
+      "community": 22,
       "norm_label": "execute task using anthropic claude api, cdp bridge, or structured prompt transf"
     },
     {
@@ -470,7 +470,7 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "adapters_claude_desktop_proxy_rationale_76",
-      "community": 34,
+      "community": 22,
       "norm_label": "stage-aware local processing engine producing structured deliverables."
     },
     {
@@ -480,7 +480,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "adapters_gemini_free_adapter",
-      "community": 0,
+      "community": 11,
       "norm_label": "gemini_free_adapter.py"
     },
     {
@@ -490,7 +490,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "adapters_gemini_free_adapter_geminifreeadapter",
-      "community": 0,
+      "community": 11,
       "norm_label": "geminifreeadapter"
     },
     {
@@ -500,7 +500,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "adapters_gemini_free_adapter_geminifreeadapter_init",
-      "community": 0,
+      "community": 11,
       "norm_label": ".__init__()"
     },
     {
@@ -510,7 +510,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "adapters_gemini_free_adapter_geminifreeadapter_check_health",
-      "community": 0,
+      "community": 11,
       "norm_label": ".check_health()"
     },
     {
@@ -520,7 +520,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "adapters_gemini_free_adapter_geminifreeadapter_execute_task",
-      "community": 30,
+      "community": 14,
       "norm_label": ".execute_task()"
     },
     {
@@ -530,7 +530,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "client_adapters_gemini_free_adapter_py_any",
-      "community": 30,
+      "community": 14,
       "norm_label": "any"
     },
     {
@@ -540,7 +540,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "adapters_gemini_free_adapter_rationale_10",
-      "community": 0,
+      "community": 11,
       "norm_label": "adapter for google ai studio free tier (gemini 2.5 / 3.0).     provides free tok"
     },
     {
@@ -550,7 +550,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "adapters_groq_adapter",
-      "community": 32,
+      "community": 18,
       "norm_label": "groq_adapter.py"
     },
     {
@@ -560,7 +560,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "adapters_groq_adapter_groqadapter",
-      "community": 32,
+      "community": 18,
       "norm_label": "groqadapter"
     },
     {
@@ -570,7 +570,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "adapters_groq_adapter_groqadapter_init",
-      "community": 32,
+      "community": 18,
       "norm_label": ".__init__()"
     },
     {
@@ -580,7 +580,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "adapters_groq_adapter_groqadapter_check_health",
-      "community": 32,
+      "community": 18,
       "norm_label": ".check_health()"
     },
     {
@@ -590,7 +590,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "adapters_groq_adapter_groqadapter_execute_task",
-      "community": 32,
+      "community": 18,
       "norm_label": ".execute_task()"
     },
     {
@@ -600,7 +600,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "client_adapters_groq_adapter_py_any",
-      "community": 32,
+      "community": 18,
       "norm_label": "any"
     },
     {
@@ -610,7 +610,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "adapters_groq_adapter_rationale_11",
-      "community": 32,
+      "community": 18,
       "norm_label": "adapter for groq-hosted llms via the openai-compatible chat completions api."
     },
     {
@@ -620,7 +620,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "adapters_ollama_local_adapter",
-      "community": 0,
+      "community": 11,
       "norm_label": "ollama_local_adapter.py"
     },
     {
@@ -630,7 +630,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "adapters_ollama_local_adapter_ollamalocaladapter",
-      "community": 0,
+      "community": 11,
       "norm_label": "ollamalocaladapter"
     },
     {
@@ -640,7 +640,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "adapters_ollama_local_adapter_ollamalocaladapter_init",
-      "community": 0,
+      "community": 11,
       "norm_label": ".__init__()"
     },
     {
@@ -650,7 +650,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "adapters_ollama_local_adapter_ollamalocaladapter_check_health",
-      "community": 0,
+      "community": 11,
       "norm_label": ".check_health()"
     },
     {
@@ -660,7 +660,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "adapters_ollama_local_adapter_ollamalocaladapter_execute_task",
-      "community": 0,
+      "community": 11,
       "norm_label": ".execute_task()"
     },
     {
@@ -670,7 +670,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "client_adapters_ollama_local_adapter_py_any",
-      "community": 0,
+      "community": 11,
       "norm_label": "any"
     },
     {
@@ -680,7 +680,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "adapters_ollama_local_adapter_rationale_10",
-      "community": 0,
+      "community": 11,
       "norm_label": "adapter for local ollama / lm studio models (e.g. qwen 2.5, llama 3.3).     $0 i"
     },
     {
@@ -690,7 +690,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "client_worker_daemon",
-      "community": 0,
+      "community": 11,
       "norm_label": "worker_daemon.py"
     },
     {
@@ -700,7 +700,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "client_worker_daemon_get_adapter",
-      "community": 0,
+      "community": 11,
       "norm_label": "get_adapter()"
     },
     {
@@ -710,7 +710,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "client_worker_daemon_py_baseworkeradapter",
-      "community": 0,
+      "community": 11,
       "norm_label": "baseworkeradapter"
     },
     {
@@ -720,7 +720,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "client_worker_daemon_main_loop",
-      "community": 0,
+      "community": 11,
       "norm_label": "main_loop()"
     },
     {
@@ -730,7 +730,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "cooldown_reminder",
-      "community": 16,
+      "community": 6,
       "norm_label": "cooldown-reminder.ps1"
     },
     {
@@ -740,7 +740,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "cooldown_reminder_update_firstlogindate",
-      "community": 16,
+      "community": 6,
       "norm_label": "update-firstlogindate()"
     },
     {
@@ -750,7 +750,7 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "cooldown_reminder_register_cooldowntoast",
-      "community": 16,
+      "community": 6,
       "norm_label": "register-cooldowntoast()"
     },
     {
@@ -760,7 +760,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "cooldown_reminder_new_cooldowncalendarevent",
-      "community": 16,
+      "community": 6,
       "norm_label": "new-cooldowncalendarevent()"
     },
     {
@@ -770,7 +770,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "launch_user_n",
-      "community": 10,
+      "community": 6,
       "norm_label": "launch_user_n.ps1"
     },
     {
@@ -780,7 +780,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "launch_user_n_test_profilepathwithinbase",
-      "community": 10,
+      "community": 6,
       "norm_label": "test-profilepathwithinbase()"
     },
     {
@@ -790,7 +790,7 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "launch_user_n_get_validatedprofilepath",
-      "community": 10,
+      "community": 6,
       "norm_label": "get-validatedprofilepath()"
     },
     {
@@ -800,7 +800,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "launch_user_n_merge_mcpservers",
-      "community": 10,
+      "community": 6,
       "norm_label": "merge-mcpservers()"
     },
     {
@@ -810,7 +810,7 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "launch_user_n_expand_teammcpplaceholders",
-      "community": 10,
+      "community": 6,
       "norm_label": "expand-teammcpplaceholders()"
     },
     {
@@ -820,7 +820,7 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "launch_user_n_sync_teammcpconfig",
-      "community": 10,
+      "community": 6,
       "norm_label": "sync-teammcpconfig()"
     },
     {
@@ -830,7 +830,7 @@
       "source_location": "L269",
       "_origin": "ast",
       "id": "launch_user_n_add_newprofile",
-      "community": 10,
+      "community": 6,
       "norm_label": "add-newprofile()"
     },
     {
@@ -840,7 +840,7 @@
       "source_location": "L324",
       "_origin": "ast",
       "id": "launch_user_n_show_profiletable",
-      "community": 10,
+      "community": 6,
       "norm_label": "show-profiletable()"
     },
     {
@@ -850,7 +850,7 @@
       "source_location": "L368",
       "_origin": "ast",
       "id": "launch_user_n_new_border",
-      "community": 10,
+      "community": 6,
       "norm_label": "new-border()"
     },
     {
@@ -860,7 +860,7 @@
       "source_location": "L371",
       "_origin": "ast",
       "id": "launch_user_n_new_row",
-      "community": 10,
+      "community": 6,
       "norm_label": "new-row()"
     },
     {
@@ -870,7 +870,7 @@
       "source_location": "L394",
       "_origin": "ast",
       "id": "launch_user_n_ensure_localorchestratorserver",
-      "community": 10,
+      "community": 6,
       "norm_label": "ensure-localorchestratorserver()"
     },
     {
@@ -880,7 +880,7 @@
       "source_location": "L457",
       "_origin": "ast",
       "id": "launch_user_n_resolve_singleaccount",
-      "community": 10,
+      "community": 6,
       "norm_label": "resolve-singleaccount()"
     },
     {
@@ -890,7 +890,7 @@
       "source_location": "L531",
       "_origin": "ast",
       "id": "launch_user_n_invoke_profilelaunch",
-      "community": 10,
+      "community": 6,
       "norm_label": "invoke-profilelaunch()"
     },
     {
@@ -900,7 +900,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server",
-      "community": 8,
+      "community": 12,
       "norm_label": "run_server.py"
     },
     {
@@ -910,7 +910,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_request_raw",
-      "community": 8,
+      "community": 12,
       "norm_label": "_request_raw()"
     },
     {
@@ -920,7 +920,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "mcp_servers_cloud_orchestrator_mcp_run_server_py_any",
-      "community": 8,
+      "community": 12,
       "norm_label": "any"
     },
     {
@@ -930,7 +930,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_request_json",
-      "community": 8,
+      "community": 12,
       "norm_label": "_request_json()"
     },
     {
@@ -940,7 +940,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_request_list",
-      "community": 8,
+      "community": 12,
       "norm_label": "_request_list()"
     },
     {
@@ -950,7 +950,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_submit_job_from_template",
-      "community": 8,
+      "community": 12,
       "norm_label": "submit_job_from_template()"
     },
     {
@@ -960,7 +960,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_list_jobs",
-      "community": 8,
+      "community": 12,
       "norm_label": "list_jobs()"
     },
     {
@@ -970,7 +970,7 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_get_job",
-      "community": 8,
+      "community": 12,
       "norm_label": "get_job()"
     },
     {
@@ -980,7 +980,7 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_list_tasks",
-      "community": 8,
+      "community": 12,
       "norm_label": "list_tasks()"
     },
     {
@@ -990,7 +990,7 @@
       "source_location": "L153",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_get_task",
-      "community": 8,
+      "community": 12,
       "norm_label": "get_task()"
     },
     {
@@ -1000,7 +1000,7 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_claim_task",
-      "community": 8,
+      "community": 12,
       "norm_label": "claim_task()"
     },
     {
@@ -1010,7 +1010,7 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_release_task",
-      "community": 8,
+      "community": 12,
       "norm_label": "release_task()"
     },
     {
@@ -1020,7 +1020,7 @@
       "source_location": "L183",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_block_task",
-      "community": 8,
+      "community": 12,
       "norm_label": "block_task()"
     },
     {
@@ -1030,7 +1030,7 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_list_workers",
-      "community": 8,
+      "community": 12,
       "norm_label": "list_workers()"
     },
     {
@@ -1040,7 +1040,7 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_get_worker",
-      "community": 8,
+      "community": 12,
       "norm_label": "get_worker()"
     },
     {
@@ -1050,7 +1050,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_submit_task_checkpoint",
-      "community": 8,
+      "community": 12,
       "norm_label": "submit_task_checkpoint()"
     },
     {
@@ -1060,7 +1060,7 @@
       "source_location": "L242",
       "_origin": "ast",
       "id": "cloud_orchestrator_mcp_run_server_get_system_health",
-      "community": 8,
+      "community": 12,
       "norm_label": "get_system_health()"
     },
     {
@@ -1070,7 +1070,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "notebooklm_mcp_run_server",
-      "community": 14,
+      "community": 23,
       "norm_label": "run_server.py"
     },
     {
@@ -1080,7 +1080,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "notebooklm_mcp_run_server_find_uvx",
-      "community": 14,
+      "community": 23,
       "norm_label": "_find_uvx()"
     },
     {
@@ -1090,7 +1090,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "notebooklm_mcp_run_server_main",
-      "community": 14,
+      "community": 23,
       "norm_label": "main()"
     },
     {
@@ -1100,7 +1100,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "notebooklm_mcp_run_server_rationale_21",
-      "community": 14,
+      "community": 23,
       "norm_label": "find the uvx executable, checking common locations first."
     },
     {
@@ -1110,7 +1110,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "notebooklm_mcp_run_server_rationale_70",
-      "community": 14,
+      "community": 23,
       "norm_label": "find uvx and launch the notebooklm mcp server."
     },
     {
@@ -1120,7 +1120,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server",
-      "community": 3,
+      "community": 5,
       "norm_label": "run_server.py"
     },
     {
@@ -1130,7 +1130,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_now_iso",
-      "community": 3,
+      "community": 5,
       "norm_label": "_now_iso()"
     },
     {
@@ -1140,7 +1140,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_ensure_dirs",
-      "community": 3,
+      "community": 5,
       "norm_label": "_ensure_dirs()"
     },
     {
@@ -1150,7 +1150,7 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_validate_account",
-      "community": 3,
+      "community": 5,
       "norm_label": "_validate_account()"
     },
     {
@@ -1160,7 +1160,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_validate_task_id",
-      "community": 3,
+      "community": 5,
       "norm_label": "_validate_task_id()"
     },
     {
@@ -1170,7 +1170,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_task_path",
-      "community": 3,
+      "community": 5,
       "norm_label": "_task_path()"
     },
     {
@@ -1180,7 +1180,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "mcp_servers_orchestrator_mcp_run_server_py_path",
-      "community": 3,
+      "community": 5,
       "norm_label": "path"
     },
     {
@@ -1190,7 +1190,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_checkpoint_path",
-      "community": 3,
+      "community": 5,
       "norm_label": "_checkpoint_path()"
     },
     {
@@ -1200,7 +1200,7 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_live_status_path",
-      "community": 3,
+      "community": 5,
       "norm_label": "_live_status_path()"
     },
     {
@@ -1210,7 +1210,7 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_memory_entry_path",
-      "community": 3,
+      "community": 5,
       "norm_label": "_memory_entry_path()"
     },
     {
@@ -1220,7 +1220,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_read_json",
-      "community": 3,
+      "community": 5,
       "norm_label": "_read_json()"
     },
     {
@@ -1230,7 +1230,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "mcp_servers_orchestrator_mcp_run_server_py_any",
-      "community": 3,
+      "community": 5,
       "norm_label": "any"
     },
     {
@@ -1240,7 +1240,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_write_json",
-      "community": 3,
+      "community": 5,
       "norm_label": "_write_json()"
     },
     {
@@ -1250,7 +1250,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_next_task_id",
-      "community": 3,
+      "community": 5,
       "norm_label": "_next_task_id()"
     },
     {
@@ -1260,7 +1260,7 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_create_task",
-      "community": 3,
+      "community": 5,
       "norm_label": "create_task()"
     },
     {
@@ -1270,7 +1270,7 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "taskkind",
-      "community": 3,
+      "community": 5,
       "norm_label": "taskkind"
     },
     {
@@ -1280,7 +1280,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_decompose_task",
-      "community": 3,
+      "community": 5,
       "norm_label": "decompose_task()"
     },
     {
@@ -1290,7 +1290,7 @@
       "source_location": "L243",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_claim_task",
-      "community": 3,
+      "community": 5,
       "norm_label": "claim_task()"
     },
     {
@@ -1300,7 +1300,7 @@
       "source_location": "L282",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_release_task",
-      "community": 3,
+      "community": 5,
       "norm_label": "release_task()"
     },
     {
@@ -1310,7 +1310,7 @@
       "source_location": "L309",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_mark_blocked",
-      "community": 3,
+      "community": 5,
       "norm_label": "mark_blocked()"
     },
     {
@@ -1320,7 +1320,7 @@
       "source_location": "L335",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_unblock_task",
-      "community": 3,
+      "community": 5,
       "norm_label": "unblock_task()"
     },
     {
@@ -1330,7 +1330,7 @@
       "source_location": "L363",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_push_live_status",
-      "community": 3,
+      "community": 5,
       "norm_label": "push_live_status()"
     },
     {
@@ -1340,7 +1340,7 @@
       "source_location": "L390",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_read_all_live_status",
-      "community": 3,
+      "community": 5,
       "norm_label": "read_all_live_status()"
     },
     {
@@ -1350,7 +1350,7 @@
       "source_location": "L412",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_push_memory_entry",
-      "community": 3,
+      "community": 5,
       "norm_label": "push_memory_entry()"
     },
     {
@@ -1360,7 +1360,7 @@
       "source_location": "L448",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_read_team_memory",
-      "community": 3,
+      "community": 5,
       "norm_label": "read_team_memory()"
     },
     {
@@ -1370,7 +1370,7 @@
       "source_location": "L475",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_read_team_context",
-      "community": 3,
+      "community": 5,
       "norm_label": "read_team_context()"
     },
     {
@@ -1380,7 +1380,7 @@
       "source_location": "L494",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_submit_checkpoint",
-      "community": 3,
+      "community": 5,
       "norm_label": "submit_checkpoint()"
     },
     {
@@ -1390,7 +1390,7 @@
       "source_location": "L554",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_list_tasks",
-      "community": 3,
+      "community": 5,
       "norm_label": "list_tasks()"
     },
     {
@@ -1400,7 +1400,7 @@
       "source_location": "L554",
       "_origin": "ast",
       "id": "taskstatus",
-      "community": 3,
+      "community": 5,
       "norm_label": "taskstatus"
     },
     {
@@ -1410,7 +1410,7 @@
       "source_location": "L588",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_merge_results",
-      "community": 3,
+      "community": 5,
       "norm_label": "merge_results()"
     },
     {
@@ -1420,7 +1420,7 @@
       "source_location": "L673",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_mark_merged",
-      "community": 3,
+      "community": 5,
       "norm_label": "_mark_merged()"
     },
     {
@@ -1430,7 +1430,7 @@
       "source_location": "L683",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_create_job",
-      "community": 3,
+      "community": 5,
       "norm_label": "create_job()"
     },
     {
@@ -1440,7 +1440,7 @@
       "source_location": "L717",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_list_jobs",
-      "community": 3,
+      "community": 5,
       "norm_label": "list_jobs()"
     },
     {
@@ -1450,7 +1450,7 @@
       "source_location": "L731",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_submit_qa_review",
-      "community": 3,
+      "community": 5,
       "norm_label": "submit_qa_review()"
     },
     {
@@ -1460,7 +1460,7 @@
       "source_location": "L778",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_read_worker_roles",
-      "community": 3,
+      "community": 5,
       "norm_label": "read_worker_roles()"
     },
     {
@@ -1470,7 +1470,7 @@
       "source_location": "L788",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_get_job_metrics",
-      "community": 3,
+      "community": 5,
       "norm_label": "get_job_metrics()"
     },
     {
@@ -1480,7 +1480,7 @@
       "source_location": "L812",
       "_origin": "ast",
       "id": "orchestrator_mcp_run_server_main",
-      "community": 3,
+      "community": 5,
       "norm_label": "main()"
     },
     {
@@ -1490,7 +1490,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "reset_profiles",
-      "community": 25,
+      "community": 6,
       "norm_label": "reset_profiles.ps1"
     },
     {
@@ -1500,7 +1500,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_routes_jobs",
-      "community": 7,
+      "community": 9,
       "norm_label": "routes_jobs.py"
     },
     {
@@ -1510,7 +1510,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "api_routes_jobs_now_iso",
-      "community": 7,
+      "community": 9,
       "norm_label": "_now_iso()"
     },
     {
@@ -1520,7 +1520,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "api_routes_jobs_create_job",
-      "community": 7,
+      "community": 9,
       "norm_label": "create_job()"
     },
     {
@@ -1530,7 +1530,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "jobcreate",
-      "community": 7,
+      "community": 9,
       "norm_label": "jobcreate"
     },
     {
@@ -1540,7 +1540,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "server_api_routes_jobs_py_connection",
-      "community": 7,
+      "community": 9,
       "norm_label": "connection"
     },
     {
@@ -1550,7 +1550,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "api_routes_jobs_list_jobs",
-      "community": 7,
+      "community": 9,
       "norm_label": "list_jobs()"
     },
     {
@@ -1560,7 +1560,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "api_routes_jobs_get_job",
-      "community": 7,
+      "community": 9,
       "norm_label": "get_job()"
     },
     {
@@ -1570,7 +1570,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "api_routes_jobs_update_job",
-      "community": 7,
+      "community": 9,
       "norm_label": "update_job()"
     },
     {
@@ -1580,7 +1580,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "jobupdate",
-      "community": 7,
+      "community": 9,
       "norm_label": "jobupdate"
     },
     {
@@ -1590,7 +1590,7 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "api_routes_jobs_get_job_metrics",
-      "community": 7,
+      "community": 9,
       "norm_label": "get_job_metrics()"
     },
     {
@@ -1600,7 +1600,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "api_routes_jobs_rationale_18",
-      "community": 7,
+      "community": 9,
       "norm_label": "create a new client job / production batch."
     },
     {
@@ -1610,7 +1610,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "api_routes_jobs_rationale_63",
-      "community": 7,
+      "community": 9,
       "norm_label": "list all jobs with optional status filter."
     },
     {
@@ -1620,7 +1620,7 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "api_routes_jobs_rationale_88",
-      "community": 7,
+      "community": 9,
       "norm_label": "retrieve details of a single job."
     },
     {
@@ -1630,7 +1630,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "api_routes_jobs_rationale_109",
-      "community": 7,
+      "community": 9,
       "norm_label": "update job status or deadline."
     },
     {
@@ -1640,7 +1640,7 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "api_routes_jobs_rationale_131",
-      "community": 7,
+      "community": 9,
       "norm_label": "retrieve throughput, rejection rate, and task statistics for a job."
     },
     {
@@ -1650,7 +1650,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_routes_memory",
-      "community": 45,
+      "community": 7,
       "norm_label": "routes_memory.py"
     },
     {
@@ -1660,7 +1660,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "api_routes_memory_now_iso",
-      "community": 45,
+      "community": 7,
       "norm_label": "_now_iso()"
     },
     {
@@ -1670,7 +1670,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "api_routes_memory_push_memory",
-      "community": 45,
+      "community": 7,
       "norm_label": "push_memory()"
     },
     {
@@ -1680,7 +1680,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "memorycreate",
-      "community": 45,
+      "community": 7,
       "norm_label": "memorycreate"
     },
     {
@@ -1690,7 +1690,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "server_api_routes_memory_py_connection",
-      "community": 45,
+      "community": 7,
       "norm_label": "connection"
     },
     {
@@ -1700,7 +1700,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "api_routes_memory_list_memory",
-      "community": 45,
+      "community": 7,
       "norm_label": "list_memory()"
     },
     {
@@ -1710,7 +1710,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "api_routes_memory_search_memory",
-      "community": 45,
+      "community": 7,
       "norm_label": "search_memory()"
     },
     {
@@ -1720,7 +1720,7 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "api_routes_memory_get_all_context",
-      "community": 45,
+      "community": 7,
       "norm_label": "get_all_context()"
     },
     {
@@ -1730,7 +1730,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "api_routes_memory_get_context_by_key",
-      "community": 45,
+      "community": 7,
       "norm_label": "get_context_by_key()"
     },
     {
@@ -1740,7 +1740,7 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "api_routes_memory_upsert_context",
-      "community": 45,
+      "community": 7,
       "norm_label": "upsert_context()"
     },
     {
@@ -1750,7 +1750,7 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "contextupsert",
-      "community": 45,
+      "community": 7,
       "norm_label": "contextupsert"
     },
     {
@@ -1760,7 +1760,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "api_routes_memory_rationale_22",
-      "community": 45,
+      "community": 7,
       "norm_label": "push a shared team memory entry to the central database."
     },
     {
@@ -1770,7 +1770,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "api_routes_memory_rationale_44",
-      "community": 45,
+      "community": 7,
       "norm_label": "list shared memory entries, ordered chronologically."
     },
     {
@@ -1780,7 +1780,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "api_routes_memory_rationale_71",
-      "community": 45,
+      "community": 7,
       "norm_label": "search memory entries by keyword substring."
     },
     {
@@ -1790,7 +1790,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "api_routes_memory_rationale_86",
-      "community": 45,
+      "community": 7,
       "norm_label": "retrieve all team context entries. auto-seeds default 'scaffold' from team-conte"
     },
     {
@@ -1800,7 +1800,7 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "api_routes_memory_rationale_111",
-      "community": 45,
+      "community": 7,
       "norm_label": "retrieve a single context value by key."
     },
     {
@@ -1810,7 +1810,7 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "api_routes_memory_rationale_125",
-      "community": 45,
+      "community": 7,
       "norm_label": "set or update a persistent team context key-value entry."
     },
     {
@@ -1820,7 +1820,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_routes_tasks",
-      "community": 1,
+      "community": 0,
       "norm_label": "routes_tasks.py"
     },
     {
@@ -1830,7 +1830,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "api_routes_tasks_now_iso",
-      "community": 1,
+      "community": 0,
       "norm_label": "_now_iso()"
     },
     {
@@ -1840,7 +1840,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "api_routes_tasks_create_task",
-      "community": 1,
+      "community": 0,
       "norm_label": "create_task()"
     },
     {
@@ -1850,7 +1850,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "taskcreate",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskcreate"
     },
     {
@@ -1860,7 +1860,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "server_api_routes_tasks_py_connection",
-      "community": 1,
+      "community": 0,
       "norm_label": "connection"
     },
     {
@@ -1870,7 +1870,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "api_routes_tasks_list_tasks",
-      "community": 1,
+      "community": 0,
       "norm_label": "list_tasks()"
     },
     {
@@ -1880,7 +1880,7 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "api_routes_tasks_get_task",
-      "community": 1,
+      "community": 0,
       "norm_label": "get_task()"
     },
     {
@@ -1890,7 +1890,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "api_routes_tasks_claim_task",
-      "community": 1,
+      "community": 0,
       "norm_label": "claim_task()"
     },
     {
@@ -1900,7 +1900,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "taskclaimrequest",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskclaimrequest"
     },
     {
@@ -1910,7 +1910,7 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "api_routes_tasks_renew_task_lease",
-      "community": 1,
+      "community": 0,
       "norm_label": "renew_task_lease()"
     },
     {
@@ -1920,7 +1920,7 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "taskleaserenewrequest",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskleaserenewrequest"
     },
     {
@@ -1930,7 +1930,7 @@
       "source_location": "L230",
       "_origin": "ast",
       "id": "api_routes_tasks_release_task",
-      "community": 1,
+      "community": 0,
       "norm_label": "release_task()"
     },
     {
@@ -1940,7 +1940,7 @@
       "source_location": "L230",
       "_origin": "ast",
       "id": "taskreleaserequest",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskreleaserequest"
     },
     {
@@ -1950,7 +1950,7 @@
       "source_location": "L254",
       "_origin": "ast",
       "id": "api_routes_tasks_block_task",
-      "community": 1,
+      "community": 0,
       "norm_label": "block_task()"
     },
     {
@@ -1960,7 +1960,7 @@
       "source_location": "L254",
       "_origin": "ast",
       "id": "taskblockrequest",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskblockrequest"
     },
     {
@@ -1970,7 +1970,7 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "api_routes_tasks_submit_checkpoint",
-      "community": 1,
+      "community": 0,
       "norm_label": "submit_checkpoint()"
     },
     {
@@ -1980,7 +1980,7 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "checkpointsubmit",
-      "community": 1,
+      "community": 0,
       "norm_label": "checkpointsubmit"
     },
     {
@@ -1990,7 +1990,7 @@
       "source_location": "L332",
       "_origin": "ast",
       "id": "api_routes_tasks_get_checkpoint",
-      "community": 1,
+      "community": 0,
       "norm_label": "get_checkpoint()"
     },
     {
@@ -2000,7 +2000,7 @@
       "source_location": "L353",
       "_origin": "ast",
       "id": "api_routes_tasks_submit_qa_review",
-      "community": 1,
+      "community": 0,
       "norm_label": "submit_qa_review()"
     },
     {
@@ -2010,7 +2010,7 @@
       "source_location": "L353",
       "_origin": "ast",
       "id": "qareviewsubmit",
-      "community": 1,
+      "community": 0,
       "norm_label": "qareviewsubmit"
     },
     {
@@ -2020,7 +2020,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "api_routes_tasks_rationale_24",
-      "community": 1,
+      "community": 0,
       "norm_label": "create a new task in the queue."
     },
     {
@@ -2030,7 +2030,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "api_routes_tasks_rationale_74",
-      "community": 1,
+      "community": 0,
       "norm_label": "list tasks with flexible filtering."
     },
     {
@@ -2040,7 +2040,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "api_routes_tasks_rationale_122",
-      "community": 1,
+      "community": 0,
       "norm_label": "get single task details."
     },
     {
@@ -2050,7 +2050,7 @@
       "source_location": "L150",
       "_origin": "ast",
       "id": "api_routes_tasks_rationale_150",
-      "community": 1,
+      "community": 0,
       "norm_label": "claim a pending or expired task atomically with a lease duration."
     },
     {
@@ -2060,7 +2060,7 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "api_routes_tasks_rationale_199",
-      "community": 1,
+      "community": 0,
       "norm_label": "renew the lease on an actively claimed task."
     },
     {
@@ -2070,7 +2070,7 @@
       "source_location": "L231",
       "_origin": "ast",
       "id": "api_routes_tasks_rationale_231",
-      "community": 1,
+      "community": 0,
       "norm_label": "release a claimed task back to pending."
     },
     {
@@ -2080,7 +2080,7 @@
       "source_location": "L255",
       "_origin": "ast",
       "id": "api_routes_tasks_rationale_255",
-      "community": 1,
+      "community": 0,
       "norm_label": "mark a claimed task as blocked."
     },
     {
@@ -2090,7 +2090,7 @@
       "source_location": "L274",
       "_origin": "ast",
       "id": "api_routes_tasks_rationale_274",
-      "community": 1,
+      "community": 0,
       "norm_label": "submit finished task deliverable, mark task 'done', and advance pipeline stage."
     },
     {
@@ -2100,7 +2100,7 @@
       "source_location": "L333",
       "_origin": "ast",
       "id": "api_routes_tasks_rationale_333",
-      "community": 1,
+      "community": 0,
       "norm_label": "retrieve checkpoint deliverable for a task."
     },
     {
@@ -2110,7 +2110,7 @@
       "source_location": "L354",
       "_origin": "ast",
       "id": "api_routes_tasks_rationale_354",
-      "community": 1,
+      "community": 0,
       "norm_label": "submit a qa verification pass/fail/revision review."
     },
     {
@@ -2120,7 +2120,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_routes_workers",
-      "community": 6,
+      "community": 13,
       "norm_label": "routes_workers.py"
     },
     {
@@ -2130,7 +2130,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "api_routes_workers_now_iso",
-      "community": 6,
+      "community": 13,
       "norm_label": "_now_iso()"
     },
     {
@@ -2140,7 +2140,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "api_routes_workers_register_worker",
-      "community": 6,
+      "community": 13,
       "norm_label": "register_worker()"
     },
     {
@@ -2150,7 +2150,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "workerregister",
-      "community": 6,
+      "community": 13,
       "norm_label": "workerregister"
     },
     {
@@ -2160,7 +2160,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "server_api_routes_workers_py_connection",
-      "community": 6,
+      "community": 13,
       "norm_label": "connection"
     },
     {
@@ -2170,7 +2170,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "api_routes_workers_list_workers",
-      "community": 6,
+      "community": 13,
       "norm_label": "list_workers()"
     },
     {
@@ -2180,7 +2180,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "api_routes_workers_get_worker",
-      "community": 6,
+      "community": 13,
       "norm_label": "get_worker()"
     },
     {
@@ -2190,7 +2190,7 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "api_routes_workers_worker_heartbeat",
-      "community": 6,
+      "community": 13,
       "norm_label": "worker_heartbeat()"
     },
     {
@@ -2200,7 +2200,7 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "workerheartbeat",
-      "community": 6,
+      "community": 13,
       "norm_label": "workerheartbeat"
     },
     {
@@ -2210,7 +2210,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "api_routes_workers_rationale_18",
-      "community": 6,
+      "community": 13,
       "norm_label": "register or update an ai worker node / profile."
     },
     {
@@ -2220,7 +2220,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "api_routes_workers_rationale_45",
-      "community": 6,
+      "community": 13,
       "norm_label": "list all registered worker nodes."
     },
     {
@@ -2230,7 +2230,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "api_routes_workers_rationale_72",
-      "community": 6,
+      "community": 13,
       "norm_label": "retrieve details for a specific worker."
     },
     {
@@ -2240,7 +2240,7 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "api_routes_workers_rationale_95",
-      "community": 6,
+      "community": 13,
       "norm_label": "process heartbeat from a worker, updating usage, cooldown, and status."
     },
     {
@@ -2250,7 +2250,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "core_auth",
-      "community": 5,
+      "community": 4,
       "norm_label": "auth.py"
     },
     {
@@ -2260,7 +2260,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "core_auth_verify_api_key",
-      "community": 5,
+      "community": 4,
       "norm_label": "verify_api_key()"
     },
     {
@@ -2270,7 +2270,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "httpauthorizationcredentials",
-      "community": 5,
+      "community": 4,
       "norm_label": "httpauthorizationcredentials"
     },
     {
@@ -2280,7 +2280,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "core_auth_rationale_13",
-      "community": 5,
+      "community": 4,
       "norm_label": "verify that incoming request provides a valid api token via bearer header or x-a"
     },
     {
@@ -2290,7 +2290,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "core_config",
-      "community": 1,
+      "community": 0,
       "norm_label": "config.py"
     },
     {
@@ -2300,7 +2300,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "core_config_settings",
-      "community": 1,
+      "community": 0,
       "norm_label": "settings"
     },
     {
@@ -2310,7 +2310,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "basemodel",
-      "community": 1,
+      "community": 0,
       "norm_label": "basemodel"
     },
     {
@@ -2320,7 +2320,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "core_database",
-      "community": 44,
+      "community": 3,
       "norm_label": "database.py"
     },
     {
@@ -2330,7 +2330,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "core_database_get_db_conn",
-      "community": 44,
+      "community": 3,
       "norm_label": "get_db_conn()"
     },
     {
@@ -2340,7 +2340,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "server_core_database_py_connection",
-      "community": 44,
+      "community": 3,
       "norm_label": "connection"
     },
     {
@@ -2350,7 +2350,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "core_database_get_db",
-      "community": 44,
+      "community": 3,
       "norm_label": "get_db()"
     },
     {
@@ -2360,7 +2360,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "core_database_init_db",
-      "community": 5,
+      "community": 4,
       "norm_label": "init_db()"
     },
     {
@@ -2370,7 +2370,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "core_database_rationale_8",
-      "community": 44,
+      "community": 3,
       "norm_label": "obtain a direct async sqlite database connection."
     },
     {
@@ -2380,7 +2380,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "core_database_rationale_16",
-      "community": 44,
+      "community": 3,
       "norm_label": "dependency for obtaining an async sqlite database connection in fastapi routes."
     },
     {
@@ -2390,7 +2390,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "core_database_rationale_24",
-      "community": 5,
+      "community": 4,
       "norm_label": "initialize database tables and indexes from schema.sql with automatic migration"
     },
     {
@@ -2400,7 +2400,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "core_pipeline_engine",
-      "community": 9,
+      "community": 15,
       "norm_label": "pipeline_engine.py"
     },
     {
@@ -2410,7 +2410,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "core_pipeline_engine_now_iso",
-      "community": 9,
+      "community": 15,
       "norm_label": "_now_iso()"
     },
     {
@@ -2420,7 +2420,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "core_pipeline_engine_pipelineengine",
-      "community": 9,
+      "community": 15,
       "norm_label": "pipelineengine"
     },
     {
@@ -2430,7 +2430,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "core_pipeline_engine_pipelineengine_load_sku_template",
-      "community": 9,
+      "community": 15,
       "norm_label": ".load_sku_template()"
     },
     {
@@ -2440,7 +2440,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "core_pipeline_engine_pipelineengine_decompose_job_into_tasks",
-      "community": 9,
+      "community": 15,
       "norm_label": ".decompose_job_into_tasks()"
     },
     {
@@ -2450,7 +2450,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "server_core_pipeline_engine_py_connection",
-      "community": 9,
+      "community": 15,
       "norm_label": "connection"
     },
     {
@@ -2460,7 +2460,7 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "core_pipeline_engine_pipelineengine_advance_task_to_next_stage",
-      "community": 9,
+      "community": 15,
       "norm_label": ".advance_task_to_next_stage()"
     },
     {
@@ -2470,7 +2470,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "core_pipeline_engine_pipelineengine_check_and_finalize_job",
-      "community": 9,
+      "community": 15,
       "norm_label": ".check_and_finalize_job()"
     },
     {
@@ -2480,7 +2480,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "core_pipeline_engine_rationale_14",
-      "community": 9,
+      "community": 15,
       "norm_label": "decomposes intake jobs into discrete, pipeline-staged tasks and manages     stag"
     },
     {
@@ -2490,7 +2490,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "core_pipeline_engine_rationale_21",
-      "community": 9,
+      "community": 15,
       "norm_label": "load sku definition json from sku-templates directory."
     },
     {
@@ -2500,7 +2500,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "core_pipeline_engine_rationale_33",
-      "community": 9,
+      "community": 15,
       "norm_label": "takes a job and a list of parsed input items (e.g. from csv/json).         creat"
     },
     {
@@ -2510,7 +2510,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "core_pipeline_engine_rationale_80",
-      "community": 9,
+      "community": 15,
       "norm_label": "when a task is verified (or passes qa), triggers generation of the next stage ta"
     },
     {
@@ -2520,7 +2520,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "core_pipeline_engine_rationale_137",
-      "community": 9,
+      "community": 15,
       "norm_label": "checks whether all tasks for a job have reached terminal state (done/merged)."
     },
     {
@@ -2530,7 +2530,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "core_scheduler",
-      "community": 12,
+      "community": 19,
       "norm_label": "scheduler.py"
     },
     {
@@ -2540,7 +2540,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "core_scheduler_quotaawarescheduler",
-      "community": 12,
+      "community": 19,
       "norm_label": "quotaawarescheduler"
     },
     {
@@ -2550,7 +2550,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "core_scheduler_quotaawarescheduler_init",
-      "community": 12,
+      "community": 19,
       "norm_label": ".__init__()"
     },
     {
@@ -2560,7 +2560,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "core_scheduler_quotaawarescheduler_select_best_worker_for_task",
-      "community": 12,
+      "community": 19,
       "norm_label": ".select_best_worker_for_task()"
     },
     {
@@ -2570,7 +2570,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "server_core_scheduler_py_connection",
-      "community": 12,
+      "community": 19,
       "norm_label": "connection"
     },
     {
@@ -2580,7 +2580,7 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "core_scheduler_quotaawarescheduler_schedule_next_pending_tasks",
-      "community": 12,
+      "community": 19,
       "norm_label": ".schedule_next_pending_tasks()"
     },
     {
@@ -2590,7 +2590,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "core_scheduler_rationale_9",
-      "community": 12,
+      "community": 19,
       "norm_label": "evaluates pending tasks against registered workers using:     score(w) = w1 * pr"
     },
     {
@@ -2600,7 +2600,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "core_scheduler_rationale_23",
-      "community": 12,
+      "community": 19,
       "norm_label": "find the optimal worker id to claim a given pending task or expired lease."
     },
     {
@@ -2610,7 +2610,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "core_scheduler_rationale_103",
-      "community": 12,
+      "community": 19,
       "norm_label": "find pending tasks (or expired leases) and auto-assign to best available workers"
     },
     {
@@ -2620,7 +2620,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "core_supervisor",
-      "community": 5,
+      "community": 4,
       "norm_label": "supervisor.py"
     },
     {
@@ -2630,7 +2630,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "core_supervisor_run_supervisor_cycle",
-      "community": 5,
+      "community": 4,
       "norm_label": "run_supervisor_cycle()"
     },
     {
@@ -2640,7 +2640,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "core_supervisor_rationale_9",
-      "community": 5,
+      "community": 4,
       "norm_label": "periodic self-healing supervisor loop:     1. identifies workers with stale hear"
     },
     {
@@ -2650,7 +2650,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "server_main",
-      "community": 5,
+      "community": 4,
       "norm_label": "main.py"
     },
     {
@@ -2660,7 +2660,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "server_main_lifespan",
-      "community": 5,
+      "community": 4,
       "norm_label": "lifespan()"
     },
     {
@@ -2670,7 +2670,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "fastapi",
-      "community": 5,
+      "community": 4,
       "norm_label": "fastapi"
     },
     {
@@ -2680,7 +2680,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "server_main_run_supervisor_loop",
-      "community": 5,
+      "community": 4,
       "norm_label": "run_supervisor_loop()"
     },
     {
@@ -2690,7 +2690,7 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "server_main_health_check",
-      "community": 5,
+      "community": 4,
       "norm_label": "health_check()"
     },
     {
@@ -2700,7 +2700,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "server_main_rationale_35",
-      "community": 5,
+      "community": 4,
       "norm_label": "background supervisor monitoring heartbeats, dead workers, and auto-scheduling p"
     },
     {
@@ -2710,7 +2710,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "server_mcp_remote",
-      "community": 44,
+      "community": 3,
       "norm_label": "mcp_remote.py"
     },
     {
@@ -2720,7 +2720,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "server_mcp_remote_now_iso",
-      "community": 44,
+      "community": 3,
       "norm_label": "_now_iso()"
     },
     {
@@ -2730,7 +2730,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "server_mcp_remote_row_to_dict",
-      "community": 44,
+      "community": 3,
       "norm_label": "_row_to_dict()"
     },
     {
@@ -2740,7 +2740,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "row",
-      "community": 44,
+      "community": 3,
       "norm_label": "row"
     },
     {
@@ -2750,7 +2750,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "server_mcp_remote_py_any",
-      "community": 44,
+      "community": 3,
       "norm_label": "any"
     },
     {
@@ -2760,7 +2760,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "server_mcp_remote_create_task",
-      "community": 44,
+      "community": 3,
       "norm_label": "create_task()"
     },
     {
@@ -2770,7 +2770,7 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "server_mcp_remote_list_tasks",
-      "community": 44,
+      "community": 3,
       "norm_label": "list_tasks()"
     },
     {
@@ -2780,7 +2780,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "server_mcp_remote_get_task",
-      "community": 44,
+      "community": 3,
       "norm_label": "get_task()"
     },
     {
@@ -2790,7 +2790,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "server_mcp_remote_claim_task",
-      "community": 44,
+      "community": 3,
       "norm_label": "claim_task()"
     },
     {
@@ -2800,7 +2800,7 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "server_mcp_remote_renew_task_lease",
-      "community": 44,
+      "community": 3,
       "norm_label": "renew_task_lease()"
     },
     {
@@ -2810,7 +2810,7 @@
       "source_location": "L226",
       "_origin": "ast",
       "id": "server_mcp_remote_release_task",
-      "community": 44,
+      "community": 3,
       "norm_label": "release_task()"
     },
     {
@@ -2820,7 +2820,7 @@
       "source_location": "L261",
       "_origin": "ast",
       "id": "server_mcp_remote_block_task",
-      "community": 44,
+      "community": 3,
       "norm_label": "block_task()"
     },
     {
@@ -2830,7 +2830,7 @@
       "source_location": "L290",
       "_origin": "ast",
       "id": "server_mcp_remote_unblock_task",
-      "community": 44,
+      "community": 3,
       "norm_label": "unblock_task()"
     },
     {
@@ -2840,7 +2840,7 @@
       "source_location": "L316",
       "_origin": "ast",
       "id": "server_mcp_remote_submit_checkpoint",
-      "community": 44,
+      "community": 3,
       "norm_label": "submit_checkpoint()"
     },
     {
@@ -2850,7 +2850,7 @@
       "source_location": "L379",
       "_origin": "ast",
       "id": "server_mcp_remote_submit_qa_review",
-      "community": 44,
+      "community": 3,
       "norm_label": "submit_qa_review()"
     },
     {
@@ -2860,7 +2860,7 @@
       "source_location": "L452",
       "_origin": "ast",
       "id": "server_mcp_remote_submit_job_from_template",
-      "community": 44,
+      "community": 3,
       "norm_label": "submit_job_from_template()"
     },
     {
@@ -2870,7 +2870,7 @@
       "source_location": "L500",
       "_origin": "ast",
       "id": "server_mcp_remote_list_jobs",
-      "community": 44,
+      "community": 3,
       "norm_label": "list_jobs()"
     },
     {
@@ -2880,7 +2880,7 @@
       "source_location": "L526",
       "_origin": "ast",
       "id": "server_mcp_remote_get_job",
-      "community": 44,
+      "community": 3,
       "norm_label": "get_job()"
     },
     {
@@ -2890,7 +2890,7 @@
       "source_location": "L544",
       "_origin": "ast",
       "id": "server_mcp_remote_get_job_metrics",
-      "community": 44,
+      "community": 3,
       "norm_label": "get_job_metrics()"
     },
     {
@@ -2900,7 +2900,7 @@
       "source_location": "L563",
       "_origin": "ast",
       "id": "server_mcp_remote_register_worker",
-      "community": 44,
+      "community": 3,
       "norm_label": "register_worker()"
     },
     {
@@ -2910,7 +2910,7 @@
       "source_location": "L602",
       "_origin": "ast",
       "id": "server_mcp_remote_worker_heartbeat",
-      "community": 44,
+      "community": 3,
       "norm_label": "worker_heartbeat()"
     },
     {
@@ -2920,7 +2920,7 @@
       "source_location": "L640",
       "_origin": "ast",
       "id": "server_mcp_remote_list_workers",
-      "community": 44,
+      "community": 3,
       "norm_label": "list_workers()"
     },
     {
@@ -2930,7 +2930,7 @@
       "source_location": "L663",
       "_origin": "ast",
       "id": "server_mcp_remote_get_worker",
-      "community": 44,
+      "community": 3,
       "norm_label": "get_worker()"
     },
     {
@@ -2940,7 +2940,7 @@
       "source_location": "L680",
       "_origin": "ast",
       "id": "server_mcp_remote_get_system_health",
-      "community": 44,
+      "community": 3,
       "norm_label": "get_system_health()"
     },
     {
@@ -2950,7 +2950,7 @@
       "source_location": "L724",
       "_origin": "ast",
       "id": "server_mcp_remote_push_memory",
-      "community": 44,
+      "community": 3,
       "norm_label": "push_memory()"
     },
     {
@@ -2960,7 +2960,7 @@
       "source_location": "L749",
       "_origin": "ast",
       "id": "server_mcp_remote_search_memory",
-      "community": 44,
+      "community": 3,
       "norm_label": "search_memory()"
     },
     {
@@ -2970,7 +2970,7 @@
       "source_location": "L769",
       "_origin": "ast",
       "id": "server_mcp_remote_read_team_memory",
-      "community": 44,
+      "community": 3,
       "norm_label": "read_team_memory()"
     },
     {
@@ -2980,7 +2980,7 @@
       "source_location": "L793",
       "_origin": "ast",
       "id": "server_mcp_remote_read_team_context",
-      "community": 44,
+      "community": 3,
       "norm_label": "read_team_context()"
     },
     {
@@ -2990,7 +2990,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "models_schemas",
-      "community": 1,
+      "community": 0,
       "norm_label": "schemas.py"
     },
     {
@@ -3000,7 +3000,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "models_schemas_jobcreate",
-      "community": 7,
+      "community": 9,
       "norm_label": "jobcreate"
     },
     {
@@ -3010,7 +3010,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "models_schemas_jobresponse",
-      "community": 7,
+      "community": 9,
       "norm_label": "jobresponse"
     },
     {
@@ -3020,7 +3020,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "models_schemas_jobupdate",
-      "community": 7,
+      "community": 9,
       "norm_label": "jobupdate"
     },
     {
@@ -3030,7 +3030,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "models_schemas_taskcreate",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskcreate"
     },
     {
@@ -3040,7 +3040,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "models_schemas_taskresponse",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskresponse"
     },
     {
@@ -3050,7 +3050,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "models_schemas_taskclaimrequest",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskclaimrequest"
     },
     {
@@ -3060,7 +3060,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "models_schemas_taskclaimresponse",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskclaimresponse"
     },
     {
@@ -3070,7 +3070,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "models_schemas_taskleaserenewrequest",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskleaserenewrequest"
     },
     {
@@ -3080,7 +3080,7 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "models_schemas_taskreleaserequest",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskreleaserequest"
     },
     {
@@ -3090,7 +3090,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "models_schemas_taskblockrequest",
-      "community": 1,
+      "community": 0,
       "norm_label": "taskblockrequest"
     },
     {
@@ -3100,7 +3100,7 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "models_schemas_workerregister",
-      "community": 6,
+      "community": 13,
       "norm_label": "workerregister"
     },
     {
@@ -3110,7 +3110,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "models_schemas_workerheartbeat",
-      "community": 6,
+      "community": 13,
       "norm_label": "workerheartbeat"
     },
     {
@@ -3120,7 +3120,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "models_schemas_workerresponse",
-      "community": 6,
+      "community": 13,
       "norm_label": "workerresponse"
     },
     {
@@ -3130,7 +3130,7 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "models_schemas_checkpointsubmit",
-      "community": 1,
+      "community": 0,
       "norm_label": "checkpointsubmit"
     },
     {
@@ -3140,7 +3140,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "models_schemas_checkpointresponse",
-      "community": 1,
+      "community": 0,
       "norm_label": "checkpointresponse"
     },
     {
@@ -3150,7 +3150,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "models_schemas_qareviewsubmit",
-      "community": 1,
+      "community": 0,
       "norm_label": "qareviewsubmit"
     },
     {
@@ -3160,7 +3160,7 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "models_schemas_qareviewresponse",
-      "community": 1,
+      "community": 0,
       "norm_label": "qareviewresponse"
     },
     {
@@ -3170,7 +3170,7 @@
       "source_location": "L168",
       "_origin": "ast",
       "id": "models_schemas_jobmetricsresponse",
-      "community": 7,
+      "community": 9,
       "norm_label": "jobmetricsresponse"
     },
     {
@@ -3180,7 +3180,7 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "models_schemas_memorycreate",
-      "community": 45,
+      "community": 7,
       "norm_label": "memorycreate"
     },
     {
@@ -3190,7 +3190,7 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "models_schemas_memoryresponse",
-      "community": 45,
+      "community": 7,
       "norm_label": "memoryresponse"
     },
     {
@@ -3200,7 +3200,7 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "models_schemas_contextupsert",
-      "community": 45,
+      "community": 7,
       "norm_label": "contextupsert"
     },
     {
@@ -3210,7 +3210,7 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "models_schemas_contextresponse",
-      "community": 45,
+      "community": 7,
       "norm_label": "contextresponse"
     },
     {
@@ -3220,7 +3220,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "sync",
-      "community": 13,
+      "community": 6,
       "norm_label": "sync.ps1"
     },
     {
@@ -3230,7 +3230,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "sync_find_stagedsecrets",
-      "community": 13,
+      "community": 6,
       "norm_label": "find-stagedsecrets()"
     },
     {
@@ -3240,7 +3240,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "sync_get_autocommitmessage",
-      "community": 13,
+      "community": 6,
       "norm_label": "get-autocommitmessage()"
     },
     {
@@ -3250,7 +3250,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "sync_sync_memorytoteammemory",
-      "community": 13,
+      "community": 6,
       "norm_label": "sync-memorytoteammemory()"
     },
     {
@@ -3260,7 +3260,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_launch_user_n_tests",
-      "community": 28,
+      "community": 41,
       "norm_label": "launch_user_n.tests.ps1"
     },
     {
@@ -3270,7 +3270,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test",
-      "community": 2,
+      "community": 1,
       "norm_label": "orchestrator_mcp_test.py"
     },
     {
@@ -3280,7 +3280,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_load_run_server",
-      "community": 2,
+      "community": 1,
       "norm_label": "_load_run_server()"
     },
     {
@@ -3290,7 +3290,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_py_path",
-      "community": 2,
+      "community": 1,
       "norm_label": "path"
     },
     {
@@ -3300,7 +3300,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_repo",
-      "community": 2,
+      "community": 1,
       "norm_label": "repo()"
     },
     {
@@ -3310,7 +3310,7 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testtoolregistration",
-      "community": 2,
+      "community": 1,
       "norm_label": "testtoolregistration"
     },
     {
@@ -3320,7 +3320,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testtoolregistration_test_all_expected_tools_are_registered",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_all_expected_tools_are_registered()"
     },
     {
@@ -3330,7 +3330,7 @@
       "source_location": "L115",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testtexttasklifecycle",
-      "community": 2,
+      "community": 1,
       "norm_label": "testtexttasklifecycle"
     },
     {
@@ -3340,7 +3340,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testtexttasklifecycle_test_create_decompose_claim_checkpoint_merge",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_create_decompose_claim_checkpoint_merge()"
     },
     {
@@ -3350,7 +3350,7 @@
       "source_location": "L143",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testcodetasklifecycle",
-      "community": 2,
+      "community": 1,
       "norm_label": "testcodetasklifecycle"
     },
     {
@@ -3360,7 +3360,7 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testcodetasklifecycle_test_clean_merge",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_clean_merge()"
     },
     {
@@ -3370,7 +3370,7 @@
       "source_location": "L174",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testcodetasklifecycle_test_conflict_aborts_cleanly",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_conflict_aborts_cleanly()"
     },
     {
@@ -3380,7 +3380,7 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testblockedunblock",
-      "community": 2,
+      "community": 1,
       "norm_label": "testblockedunblock"
     },
     {
@@ -3390,7 +3390,7 @@
       "source_location": "L219",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testblockedunblock_test_mark_blocked_preserves_ownership",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_mark_blocked_preserves_ownership()"
     },
     {
@@ -3400,7 +3400,7 @@
       "source_location": "L229",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testblockedunblock_test_only_owner_can_unblock",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_only_owner_can_unblock()"
     },
     {
@@ -3410,7 +3410,7 @@
       "source_location": "L242",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testblockedunblock_test_unblock_non_blocked_task_raises",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_unblock_non_blocked_task_raises()"
     },
     {
@@ -3420,7 +3420,7 @@
       "source_location": "L250",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testclaimrace",
-      "community": 2,
+      "community": 1,
       "norm_label": "testclaimrace"
     },
     {
@@ -3430,7 +3430,7 @@
       "source_location": "L251",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testclaimrace_test_double_claim_rejected",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_double_claim_rejected()"
     },
     {
@@ -3440,7 +3440,7 @@
       "source_location": "L258",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testclaimrace_test_release_then_reclaim_succeeds",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_release_then_reclaim_succeeds()"
     },
     {
@@ -3450,7 +3450,7 @@
       "source_location": "L266",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testclaimrace_test_non_owner_cannot_release",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_non_owner_cannot_release()"
     },
     {
@@ -3460,7 +3460,7 @@
       "source_location": "L274",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testlivestatus",
-      "community": 2,
+      "community": 1,
       "norm_label": "testlivestatus"
     },
     {
@@ -3470,7 +3470,7 @@
       "source_location": "L275",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testlivestatus_test_independent_files_per_account",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_independent_files_per_account()"
     },
     {
@@ -3480,7 +3480,7 @@
       "source_location": "L284",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testlivestatus_test_overwrite_is_last_write_wins",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_overwrite_is_last_write_wins()"
     },
     {
@@ -3490,7 +3490,7 @@
       "source_location": "L293",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testteammemory",
-      "community": 2,
+      "community": 1,
       "norm_label": "testteammemory"
     },
     {
@@ -3500,7 +3500,7 @@
       "source_location": "L294",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testteammemory_test_push_then_read_round_trip",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_push_then_read_round_trip()"
     },
     {
@@ -3510,7 +3510,7 @@
       "source_location": "L302",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testteammemory_test_multiple_accounts_all_returned_sorted",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_multiple_accounts_all_returned_sorted()"
     },
     {
@@ -3520,7 +3520,7 @@
       "source_location": "L314",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testteammemory_test_since_filter_excludes_earlier_entries",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_since_filter_excludes_earlier_entries()"
     },
     {
@@ -3530,7 +3530,7 @@
       "source_location": "L328",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testteammemory_test_same_account_repeat_push_no_collision",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_same_account_repeat_push_no_collision()"
     },
     {
@@ -3540,7 +3540,7 @@
       "source_location": "L336",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testteammemory_test_empty_text_rejected",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_empty_text_rejected()"
     },
     {
@@ -3550,7 +3550,7 @@
       "source_location": "L343",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testteammemory_test_invalid_account_rejected",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_invalid_account_rejected()"
     },
     {
@@ -3560,7 +3560,7 @@
       "source_location": "L349",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testteamcontext",
-      "community": 2,
+      "community": 1,
       "norm_label": "testteamcontext"
     },
     {
@@ -3570,7 +3570,7 @@
       "source_location": "L350",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testteamcontext_test_read_team_context_missing",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_read_team_context_missing()"
     },
     {
@@ -3580,7 +3580,7 @@
       "source_location": "L358",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testteamcontext_test_read_team_context_present",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_read_team_context_present()"
     },
     {
@@ -3590,7 +3590,7 @@
       "source_location": "L367",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testinputvalidation",
-      "community": 2,
+      "community": 1,
       "norm_label": "testinputvalidation"
     },
     {
@@ -3600,7 +3600,7 @@
       "source_location": "L368",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testinputvalidation_test_invalid_account_name_rejected",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_invalid_account_name_rejected()"
     },
     {
@@ -3610,7 +3610,7 @@
       "source_location": "L374",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testinputvalidation_test_invalid_task_id_rejected",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_invalid_task_id_rejected()"
     },
     {
@@ -3620,7 +3620,7 @@
       "source_location": "L379",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testinputvalidation_test_code_task_requires_branch_name_on_claim",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_code_task_requires_branch_name_on_claim()"
     },
     {
@@ -3630,7 +3630,7 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testinputvalidation_test_unknown_parent_id_rejected",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_unknown_parent_id_rejected()"
     },
     {
@@ -3640,7 +3640,7 @@
       "source_location": "L391",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testjobproductionlifecycle",
-      "community": 2,
+      "community": 1,
       "norm_label": "testjobproductionlifecycle"
     },
     {
@@ -3650,7 +3650,7 @@
       "source_location": "L392",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testjobproductionlifecycle_test_create_and_list_jobs",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_create_and_list_jobs()"
     },
     {
@@ -3660,7 +3660,7 @@
       "source_location": "L409",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_testjobproductionlifecycle_test_submit_qa_review_lifecycle",
-      "community": 2,
+      "community": 1,
       "norm_label": ".test_submit_qa_review_lifecycle()"
     },
     {
@@ -3670,7 +3670,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_rationale_1",
-      "community": 2,
+      "community": 1,
       "norm_label": "pytest specs for orchestrator-mcp's run_server.py.  unlike tests/launch_user_n.t"
     },
     {
@@ -3680,7 +3680,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_rationale_31",
-      "community": 2,
+      "community": 1,
       "norm_label": "import run_server.py fresh against a specific repo_root.      run_server.py deri"
     },
     {
@@ -3690,7 +3690,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "tests_orchestrator_mcp_test_rationale_57",
-      "community": 2,
+      "community": 1,
       "norm_label": "a throwaway git repo with orchestrator-mcp's run_server.py loaded     against it"
     },
     {
@@ -3700,7 +3700,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_claude_cdp_adapter",
-      "community": 29,
+      "community": 8,
       "norm_label": "test_claude_cdp_adapter.py"
     },
     {
@@ -3710,7 +3710,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "tests_test_claude_cdp_adapter_test_cdp_adapter_init",
-      "community": 29,
+      "community": 8,
       "norm_label": "test_cdp_adapter_init()"
     },
     {
@@ -3720,7 +3720,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "tests_test_claude_cdp_adapter_test_cdp_health_check_success",
-      "community": 29,
+      "community": 8,
       "norm_label": "test_cdp_health_check_success()"
     },
     {
@@ -3730,7 +3730,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "tests_test_claude_cdp_adapter_test_cdp_health_check_failure",
-      "community": 29,
+      "community": 8,
       "norm_label": "test_cdp_health_check_failure()"
     },
     {
@@ -3740,7 +3740,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "tests_test_claude_cdp_adapter_test_cdp_get_page_ws_url",
-      "community": 29,
+      "community": 8,
       "norm_label": "test_cdp_get_page_ws_url()"
     },
     {
@@ -3750,7 +3750,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "tests_test_claude_cdp_adapter_test_cdp_execute_task_unreachable",
-      "community": 29,
+      "community": 8,
       "norm_label": "test_cdp_execute_task_unreachable()"
     },
     {
@@ -3760,7 +3760,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "tests_test_claude_cdp_adapter_test_cdp_cooldown_detection_returns_429",
-      "community": 29,
+      "community": 8,
       "norm_label": "test_cdp_cooldown_detection_returns_429()"
     },
     {
@@ -3770,7 +3770,7 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "tests_test_claude_cdp_adapter_test_cdp_execute_task_flow_success",
-      "community": 29,
+      "community": 8,
       "norm_label": "test_cdp_execute_task_flow_success()"
     },
     {
@@ -3780,7 +3780,7 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "tests_test_claude_cdp_adapter_test_claude_proxy_delegation_to_cdp",
-      "community": 29,
+      "community": 8,
       "norm_label": "test_claude_proxy_delegation_to_cdp()"
     },
     {
@@ -3790,7 +3790,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "tests_test_claude_cdp_adapter_test_cdp_eval_js_exception",
-      "community": 29,
+      "community": 8,
       "norm_label": "test_cdp_eval_js_exception()"
     },
     {
@@ -3800,7 +3800,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "tests_test_claude_cdp_adapter_test_cdp_ui_error_banner_handling",
-      "community": 29,
+      "community": 8,
       "norm_label": "test_cdp_ui_error_banner_handling()"
     },
     {
@@ -3810,7 +3810,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_cloud_scheduler",
-      "community": 5,
+      "community": 4,
       "norm_label": "test_cloud_scheduler.py"
     },
     {
@@ -3820,7 +3820,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "tests_test_cloud_scheduler_setup_test_db",
-      "community": 5,
+      "community": 4,
       "norm_label": "setup_test_db()"
     },
     {
@@ -3830,7 +3830,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "tests_test_cloud_scheduler_py_path",
-      "community": 5,
+      "community": 4,
       "norm_label": "path"
     },
     {
@@ -3840,7 +3840,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "tests_test_cloud_scheduler_test_quota_scheduler_capability_matching",
-      "community": 5,
+      "community": 4,
       "norm_label": "test_quota_scheduler_capability_matching()"
     },
     {
@@ -3850,7 +3850,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "tests_test_cloud_scheduler_test_scheduler_cooldown_filtering",
-      "community": 5,
+      "community": 4,
       "norm_label": "test_scheduler_cooldown_filtering()"
     },
     {
@@ -3860,7 +3860,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "tests_test_cloud_scheduler_test_supervisor_dead_worker_recovery",
-      "community": 5,
+      "community": 4,
       "norm_label": "test_supervisor_dead_worker_recovery()"
     },
     {
@@ -3870,7 +3870,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_e2e_pipeline",
-      "community": 5,
+      "community": 4,
       "norm_label": "test_e2e_pipeline.py"
     },
     {
@@ -3880,7 +3880,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "tests_test_e2e_pipeline_setup_test_db",
-      "community": 5,
+      "community": 4,
       "norm_label": "setup_test_db()"
     },
     {
@@ -3890,7 +3890,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "tests_test_e2e_pipeline_py_path",
-      "community": 5,
+      "community": 4,
       "norm_label": "path"
     },
     {
@@ -3900,7 +3900,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_e2e_pipeline_test_e2e_sku_pipeline_execution",
-      "community": 5,
+      "community": 4,
       "norm_label": "test_e2e_sku_pipeline_execution()"
     },
     {
@@ -3910,7 +3910,7 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "tests_test_e2e_pipeline_test_concurrent_task_leasing_race_safety",
-      "community": 5,
+      "community": 4,
       "norm_label": "test_concurrent_task_leasing_race_safety()"
     },
     {
@@ -3920,7 +3920,7 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "tests_test_e2e_pipeline_test_expired_lease_reclamation_and_recovery",
-      "community": 5,
+      "community": 4,
       "norm_label": "test_expired_lease_reclamation_and_recovery()"
     },
     {
@@ -3930,7 +3930,7 @@
       "source_location": "L231",
       "_origin": "ast",
       "id": "tests_test_e2e_pipeline_test_lease_renewal_heartbeat",
-      "community": 5,
+      "community": 4,
       "norm_label": "test_lease_renewal_heartbeat()"
     },
     {
@@ -3940,7 +3940,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "tests_test_e2e_pipeline_rationale_30",
-      "community": 5,
+      "community": 4,
       "norm_label": "end-to-end test:     intake a 3-item '100_product_descriptions' job through all"
     },
     {
@@ -3950,7 +3950,7 @@
       "source_location": "L136",
       "_origin": "ast",
       "id": "tests_test_e2e_pipeline_rationale_136",
-      "community": 5,
+      "community": 4,
       "norm_label": "test that when multiple workers race to claim the same task simultaneously,"
     },
     {
@@ -3960,7 +3960,7 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "tests_test_e2e_pipeline_rationale_173",
-      "community": 5,
+      "community": 4,
       "norm_label": "test that tasks with expired leases can be claimed by a new worker     or automa"
     },
     {
@@ -3970,7 +3970,7 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "tests_test_e2e_pipeline_rationale_232",
-      "community": 5,
+      "community": 4,
       "norm_label": "test that an active worker can extend its task lease before expiration."
     },
     {
@@ -3980,7 +3980,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_groq_adapter",
-      "community": 32,
+      "community": 18,
       "norm_label": "test_groq_adapter.py"
     },
     {
@@ -3990,7 +3990,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "tests_test_groq_adapter_test_groq_adapter_missing_key_returns_error",
-      "community": 32,
+      "community": 18,
       "norm_label": "test_groq_adapter_missing_key_returns_error()"
     },
     {
@@ -4000,7 +4000,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "tests_test_groq_adapter_test_groq_adapter_uses_env_model_override",
-      "community": 32,
+      "community": 18,
       "norm_label": "test_groq_adapter_uses_env_model_override()"
     },
     {
@@ -4010,7 +4010,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_pipeline_engine",
-      "community": 5,
+      "community": 4,
       "norm_label": "test_pipeline_engine.py"
     },
     {
@@ -4020,7 +4020,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "tests_test_pipeline_engine_setup_test_db",
-      "community": 5,
+      "community": 4,
       "norm_label": "setup_test_db()"
     },
     {
@@ -4030,7 +4030,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "tests_test_pipeline_engine_py_path",
-      "community": 5,
+      "community": 4,
       "norm_label": "path"
     },
     {
@@ -4040,7 +4040,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "tests_test_pipeline_engine_test_pipeline_decomposition_and_waterfall",
-      "community": 5,
+      "community": 4,
       "norm_label": "test_pipeline_decomposition_and_waterfall()"
     },
     {
@@ -4050,7 +4050,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "tests_test_remote_mcp",
-      "community": 44,
+      "community": 3,
       "norm_label": "test_remote_mcp.py"
     },
     {
@@ -4060,7 +4060,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "tests_test_remote_mcp_setup_test_db",
-      "community": 5,
+      "community": 4,
       "norm_label": "setup_test_db()"
     },
     {
@@ -4070,7 +4070,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "tests_test_remote_mcp_test_mcp_task_lifecycle",
-      "community": 44,
+      "community": 3,
       "norm_label": "test_mcp_task_lifecycle()"
     },
     {
@@ -4080,7 +4080,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "tests_test_remote_mcp_test_mcp_memory_and_context",
-      "community": 44,
+      "community": 3,
       "norm_label": "test_mcp_memory_and_context()"
     },
     {
@@ -4090,7 +4090,7 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "tests_test_remote_mcp_test_mcp_jobs_and_qa_review",
-      "community": 44,
+      "community": 3,
       "norm_label": "test_mcp_jobs_and_qa_review()"
     },
     {
@@ -4100,7 +4100,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "tests_test_remote_mcp_test_mcp_system_health_and_fleet",
-      "community": 44,
+      "community": 3,
       "norm_label": "test_mcp_system_health_and_fleet()"
     },
     {
@@ -4110,7 +4110,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "tests_test_remote_mcp_test_fastapi_rest_routes",
-      "community": 44,
+      "community": 3,
       "norm_label": "test_fastapi_rest_routes()"
     },
     {
@@ -4120,7 +4120,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "usage_watchdog",
-      "community": 15,
+      "community": 24,
       "norm_label": "usage-watchdog.ps1"
     },
     {
@@ -4130,7 +4130,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "usage_watchdog_get_claudetrayusagepercent",
-      "community": 15,
+      "community": 24,
       "norm_label": "get-claudetrayusagepercent()"
     },
     {
@@ -4140,7 +4140,7 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "usage_watchdog_test_checkpointalreadyfiredthiscycle",
-      "community": 15,
+      "community": 24,
       "norm_label": "test-checkpointalreadyfiredthiscycle()"
     },
     {
@@ -4150,7 +4150,7 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "usage_watchdog_set_checkpointfiredthiscycle",
-      "community": 15,
+      "community": 24,
       "norm_label": "set-checkpointfiredthiscycle()"
     },
     {
@@ -4160,7 +4160,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "usage_watchdog_invoke_autocheckpoint",
-      "community": 15,
+      "community": 24,
       "norm_label": "invoke-autocheckpoint()"
     },
     {
@@ -4170,7 +4170,7 @@
       "source_location": "L242",
       "_origin": "ast",
       "id": "usage_watchdog_invoke_watchdogpoll",
-      "community": 15,
+      "community": 24,
       "norm_label": "invoke-watchdogpoll()"
     },
     {
@@ -4180,7 +4180,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents",
-      "community": 42,
+      "community": 35,
       "norm_label": "agents.md"
     },
     {
@@ -4190,7 +4190,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "agents_git_workflow",
-      "community": 42,
+      "community": 35,
       "norm_label": "git-workflow"
     },
     {
@@ -4200,7 +4200,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "claude_skills_mcp_cross_linking_hub",
-      "community": 17,
+      "community": 16,
       "norm_label": "cross-linking hub.md"
     },
     {
@@ -4210,7 +4210,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "claude_skills_mcp_cross_linking_hub_cross_linking_hub",
-      "community": 17,
+      "community": 16,
       "norm_label": "cross-linking hub"
     },
     {
@@ -4220,7 +4220,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "claude_skills_mcp_cross_linking_hub_hub",
-      "community": 17,
+      "community": 16,
       "norm_label": "hub"
     },
     {
@@ -4230,7 +4230,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "claude_skills_mcp_cross_linking_hub_leaf_nodes",
-      "community": 17,
+      "community": 16,
       "norm_label": "leaf nodes"
     },
     {
@@ -4240,7 +4240,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "claude_skills_mcp_cross_linking_hub_unlinked_notebooks",
-      "community": 17,
+      "community": 16,
       "norm_label": "unlinked notebooks"
     },
     {
@@ -4250,7 +4250,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "claude_skills_mcp_cross_linking_hub_coursework_notebooks_iv_i_exam_sequence_order",
-      "community": 17,
+      "community": 16,
       "norm_label": "coursework notebooks (iv/i, exam sequence order)"
     },
     {
@@ -4260,7 +4260,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "claude_skills_mcp_cross_linking_hub_pending",
-      "community": 17,
+      "community": 16,
       "norm_label": "pending"
     },
     {
@@ -4270,7 +4270,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "claude_skills_mcp_cross_linking_hub_application_rules",
-      "community": 17,
+      "community": 16,
       "norm_label": "application rules"
     },
     {
@@ -4280,7 +4280,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "readme",
-      "community": 31,
+      "community": 17,
       "norm_label": "readme.md"
     },
     {
@@ -4290,7 +4290,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "readme_claude_desktop_multi_profile_sync_utilities",
-      "community": 31,
+      "community": 17,
       "norm_label": "claude desktop multi-profile & sync utilities"
     },
     {
@@ -4300,7 +4300,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "readme_features",
-      "community": 31,
+      "community": 17,
       "norm_label": "features"
     },
     {
@@ -4310,7 +4310,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "readme_repo_structure",
-      "community": 31,
+      "community": 17,
       "norm_label": "repo structure"
     },
     {
@@ -4320,7 +4320,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "readme_files",
-      "community": 31,
+      "community": 17,
       "norm_label": "files"
     },
     {
@@ -4330,7 +4330,7 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "readme_usage",
-      "community": 31,
+      "community": 17,
       "norm_label": "usage"
     },
     {
@@ -4340,7 +4340,7 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "readme_launching_claude_desktop_profiles",
-      "community": 31,
+      "community": 17,
       "norm_label": "launching claude desktop profiles"
     },
     {
@@ -4350,7 +4350,7 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "readme_concurrent_mode_multiple_windows_multiple_monitors",
-      "community": 31,
+      "community": 17,
       "norm_label": "concurrent mode (multiple windows, multiple monitors)"
     },
     {
@@ -4360,7 +4360,7 @@
       "source_location": "L188",
       "_origin": "ast",
       "id": "readme_running_the_cloud_orchestration_backend_v2",
-      "community": 31,
+      "community": 17,
       "norm_label": "running the cloud orchestration backend (v2)"
     },
     {
@@ -4370,7 +4370,7 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "readme_running_autonomous_worker_daemons_v2",
-      "community": 31,
+      "community": 17,
       "norm_label": "running autonomous worker daemons (v2)"
     },
     {
@@ -4380,7 +4380,7 @@
       "source_location": "L242",
       "_origin": "ast",
       "id": "readme_running_usage_watchdog",
-      "community": 31,
+      "community": 17,
       "norm_label": "running usage watchdog"
     },
     {
@@ -4390,7 +4390,7 @@
       "source_location": "L257",
       "_origin": "ast",
       "id": "readme_syncing_git_repository",
-      "community": 31,
+      "community": 17,
       "norm_label": "syncing git repository"
     },
     {
@@ -4400,7 +4400,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "orchestrator_state_job_schema",
-      "community": 35,
+      "community": 20,
       "norm_label": "job_schema.md"
     },
     {
@@ -4410,7 +4410,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "orchestrator_state_job_schema_job_pipeline_production_schema_v2",
-      "community": 35,
+      "community": 20,
       "norm_label": "job & pipeline production schema (v2)"
     },
     {
@@ -4420,7 +4420,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "orchestrator_state_job_schema_1_job_entity_jobs_orchestrator_state_jobs_job_id_json",
-      "community": 35,
+      "community": 20,
       "norm_label": "1. job entity (`jobs` / `orchestrator-state/jobs/<job_id>.json`)"
     },
     {
@@ -4430,7 +4430,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "orchestrator_state_job_schema_2_extended_task_schema_tasks",
-      "community": 35,
+      "community": 20,
       "norm_label": "2. extended task schema (`tasks`)"
     },
     {
@@ -4440,7 +4440,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "orchestrator_state_job_schema_3_qa_review_schema_qa_reviews",
-      "community": 35,
+      "community": 20,
       "norm_label": "3. qa review schema (`qa_reviews`)"
     },
     {
@@ -4450,7 +4450,7 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "orchestrator_state_job_schema_4_worker_node_entity_workers",
-      "community": 35,
+      "community": 20,
       "norm_label": "4. worker node entity (`workers`)"
     },
     {
@@ -4460,7 +4460,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "orchestrator_state_job_schema_5_shared_memory_team_context_memory_entries_team_context",
-      "community": 35,
+      "community": 20,
       "norm_label": "5. shared memory & team context (`memory_entries`, `team_context`)"
     },
     {
@@ -4470,7 +4470,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "orchestrator_state_job_schema_memory_entry_memory_entries",
-      "community": 35,
+      "community": 20,
       "norm_label": "memory entry (`memory_entries`)"
     },
     {
@@ -4480,7 +4480,7 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "orchestrator_state_job_schema_team_context_team_context",
-      "community": 35,
+      "community": 20,
       "norm_label": "team context (`team_context`)"
     },
     {
@@ -4490,7 +4490,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "orchestrator_state_schema",
-      "community": 33,
+      "community": 21,
       "norm_label": "schema.md"
     },
     {
@@ -4500,7 +4500,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "orchestrator_state_schema_orchestrator_state_schema",
-      "community": 33,
+      "community": 21,
       "norm_label": "orchestrator-state schema"
     },
     {
@@ -4510,7 +4510,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "orchestrator_state_schema_orchestrator_state_tasks_task_id_json",
-      "community": 33,
+      "community": 21,
       "norm_label": "orchestrator-state/tasks/<task_id>.json"
     },
     {
@@ -4520,7 +4520,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "orchestrator_state_schema_orchestrator_state_live_status_account_json",
-      "community": 33,
+      "community": 21,
       "norm_label": "orchestrator-state/live-status/\\<account\\>.json"
     },
     {
@@ -4530,7 +4530,7 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "orchestrator_state_schema_orchestrator_state_checkpoints_task_id_json",
-      "community": 33,
+      "community": 21,
       "norm_label": "orchestrator-state/checkpoints/<task_id>.json"
     },
     {
@@ -4540,7 +4540,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "orchestrator_state_schema_orchestrator_state_memory_account_entry_id_json",
-      "community": 33,
+      "community": 21,
       "norm_label": "orchestrator-state/memory/\\<account\\>\\_\\_\\<entry_id\\>.json"
     },
     {
@@ -4550,7 +4550,7 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "orchestrator_state_schema_directory_listing_as_the_index",
-      "community": 33,
+      "community": 21,
       "norm_label": "directory listing as the index"
     },
     {
@@ -4560,7 +4560,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "team_context",
-      "community": 13,
+      "community": 16,
       "norm_label": "team-context.md"
     },
     {
@@ -4570,7 +4570,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "team_context_context",
-      "community": 13,
+      "community": 16,
       "norm_label": "context"
     },
     {
@@ -4580,7 +4580,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "team_context_spark_project",
-      "community": 13,
+      "community": 16,
       "norm_label": "spark project"
     },
     {
@@ -4590,7 +4590,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "team_memory",
-      "community": 13,
+      "community": 6,
       "norm_label": "team-memory.md"
     },
     {
@@ -4600,7 +4600,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "team_memory_memory_log",
-      "community": 24,
+      "community": 2,
       "norm_label": "memory log"
     },
     {
@@ -4610,7 +4610,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "team_memory_2026_08_05",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-05"
     },
     {
@@ -4620,7 +4620,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "team_memory_2026_08_06",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-06"
     },
     {
@@ -4630,7 +4630,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "team_memory_2026_08_10",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-10"
     },
     {
@@ -4640,7 +4640,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "team_memory_2026_08_10_30",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-10"
     },
     {
@@ -4650,7 +4650,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "team_memory_2026_08_11",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-11"
     },
     {
@@ -4660,7 +4660,7 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "team_memory_2026_08_11_91",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-11"
     },
     {
@@ -4670,7 +4670,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "team_memory_2026_08_11_103",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-11"
     },
     {
@@ -4680,7 +4680,7 @@
       "source_location": "L155",
       "_origin": "ast",
       "id": "team_memory_2026_08_11_155",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-11"
     },
     {
@@ -4690,7 +4690,7 @@
       "source_location": "L180",
       "_origin": "ast",
       "id": "team_memory_2026_08_13",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-13"
     },
     {
@@ -4700,7 +4700,7 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "team_memory_topics_coursework_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/topics/coursework.md"
     },
     {
@@ -4710,7 +4710,7 @@
       "source_location": "L192",
       "_origin": "ast",
       "id": "team_memory_topics_hobbies_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/topics/hobbies.md"
     },
     {
@@ -4720,7 +4720,7 @@
       "source_location": "L203",
       "_origin": "ast",
       "id": "team_memory_topics_home_network_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/topics/home-network.md"
     },
     {
@@ -4730,7 +4730,7 @@
       "source_location": "L208",
       "_origin": "ast",
       "id": "team_memory_topics_recent_work_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/topics/recent-work.md"
     },
     {
@@ -4740,7 +4740,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "team_memory_topics_tech_stack_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/topics/tech-stack.md"
     },
     {
@@ -4750,7 +4750,7 @@
       "source_location": "L230",
       "_origin": "ast",
       "id": "team_memory_profile_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/profile.md"
     },
     {
@@ -4760,7 +4760,7 @@
       "source_location": "L239",
       "_origin": "ast",
       "id": "team_memory_areas_6g_rf_presentation_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/areas/6g-rf-presentation.md"
     },
     {
@@ -4770,7 +4770,7 @@
       "source_location": "L247",
       "_origin": "ast",
       "id": "team_memory_areas_fairness_bias_audit_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/areas/fairness-bias-audit.md"
     },
     {
@@ -4780,7 +4780,7 @@
       "source_location": "L255",
       "_origin": "ast",
       "id": "team_memory_areas_fusemachines_fellowship_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/areas/fusemachines-fellowship.md"
     },
     {
@@ -4790,7 +4790,7 @@
       "source_location": "L265",
       "_origin": "ast",
       "id": "team_memory_areas_kec_makerspace_website_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/areas/kec-makerspace-website.md"
     },
     {
@@ -4800,7 +4800,7 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "team_memory_areas_makerspace_ambassador_bio_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/areas/makerspace-ambassador-bio.md"
     },
     {
@@ -4810,7 +4810,7 @@
       "source_location": "L282",
       "_origin": "ast",
       "id": "team_memory_areas_master_profile_system_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/areas/master-profile-system.md"
     },
     {
@@ -4820,7 +4820,7 @@
       "source_location": "L289",
       "_origin": "ast",
       "id": "team_memory_areas_nexus_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/areas/nexus.md"
     },
     {
@@ -4830,7 +4830,7 @@
       "source_location": "L295",
       "_origin": "ast",
       "id": "team_memory_areas_personal_notebook_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/areas/personal-notebook.md"
     },
     {
@@ -4840,7 +4840,7 @@
       "source_location": "L300",
       "_origin": "ast",
       "id": "team_memory_areas_portfolio_site_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/areas/portfolio-site.md"
     },
     {
@@ -4850,7 +4850,7 @@
       "source_location": "L312",
       "_origin": "ast",
       "id": "team_memory_areas_spark_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/areas/spark.md"
     },
     {
@@ -4860,7 +4860,7 @@
       "source_location": "L334",
       "_origin": "ast",
       "id": "team_memory_people_dipen_manandhar_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/people/dipen-manandhar.md"
     },
     {
@@ -4870,7 +4870,7 @@
       "source_location": "L338",
       "_origin": "ast",
       "id": "team_memory_people_rupesh_kadel_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/people/rupesh-kadel.md"
     },
     {
@@ -4880,7 +4880,7 @@
       "source_location": "L342",
       "_origin": "ast",
       "id": "team_memory_people_sankalpa_lamsal_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/people/sankalpa-lamsal.md"
     },
     {
@@ -4890,7 +4890,7 @@
       "source_location": "L346",
       "_origin": "ast",
       "id": "team_memory_people_sonia_thapa_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/people/sonia-thapa.md"
     },
     {
@@ -4900,7 +4900,7 @@
       "source_location": "L350",
       "_origin": "ast",
       "id": "team_memory_topics_coursework_md_350",
-      "community": 24,
+      "community": 2,
       "norm_label": "/topics/coursework.md"
     },
     {
@@ -4910,7 +4910,7 @@
       "source_location": "L357",
       "_origin": "ast",
       "id": "team_memory_topics_hobbies_md_357",
-      "community": 24,
+      "community": 2,
       "norm_label": "/topics/hobbies.md"
     },
     {
@@ -4920,7 +4920,7 @@
       "source_location": "L368",
       "_origin": "ast",
       "id": "team_memory_topics_home_network_md_368",
-      "community": 24,
+      "community": 2,
       "norm_label": "/topics/home-network.md"
     },
     {
@@ -4930,7 +4930,7 @@
       "source_location": "L373",
       "_origin": "ast",
       "id": "team_memory_topics_recent_work_md_373",
-      "community": 24,
+      "community": 2,
       "norm_label": "/topics/recent-work.md"
     },
     {
@@ -4940,7 +4940,7 @@
       "source_location": "L378",
       "_origin": "ast",
       "id": "team_memory_topics_tech_stack_md_378",
-      "community": 24,
+      "community": 2,
       "norm_label": "/topics/tech-stack.md"
     },
     {
@@ -4950,7 +4950,7 @@
       "source_location": "L390",
       "_origin": "ast",
       "id": "team_memory_preferences_md",
-      "community": 24,
+      "community": 2,
       "norm_label": "/preferences.md"
     },
     {
@@ -4960,7 +4960,7 @@
       "source_location": "L410",
       "_origin": "ast",
       "id": "team_memory_2026_08_13_410",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-13"
     },
     {
@@ -4970,7 +4970,7 @@
       "source_location": "L416",
       "_origin": "ast",
       "id": "team_memory_work_context",
-      "community": 24,
+      "community": 2,
       "norm_label": "work context"
     },
     {
@@ -4980,7 +4980,7 @@
       "source_location": "L421",
       "_origin": "ast",
       "id": "team_memory_personal_context",
-      "community": 24,
+      "community": 2,
       "norm_label": "personal context"
     },
     {
@@ -4990,7 +4990,7 @@
       "source_location": "L427",
       "_origin": "ast",
       "id": "team_memory_top_of_mind_as_of_this_session",
-      "community": 24,
+      "community": 2,
       "norm_label": "top of mind (as of this session)"
     },
     {
@@ -5000,7 +5000,7 @@
       "source_location": "L433",
       "_origin": "ast",
       "id": "team_memory_spark_project",
-      "community": 24,
+      "community": 2,
       "norm_label": "spark project"
     },
     {
@@ -5010,7 +5010,7 @@
       "source_location": "L440",
       "_origin": "ast",
       "id": "team_memory_portfolio_website",
-      "community": 24,
+      "community": 2,
       "norm_label": "portfolio website"
     },
     {
@@ -5020,7 +5020,7 @@
       "source_location": "L446",
       "_origin": "ast",
       "id": "team_memory_fusemachines_ai_fellowship",
-      "community": 24,
+      "community": 2,
       "norm_label": "fusemachines ai fellowship"
     },
     {
@@ -5030,7 +5030,7 @@
       "source_location": "L451",
       "_origin": "ast",
       "id": "team_memory_courses",
-      "community": 24,
+      "community": 2,
       "norm_label": "courses"
     },
     {
@@ -5040,7 +5040,7 @@
       "source_location": "L456",
       "_origin": "ast",
       "id": "team_memory_tools_and_environment",
-      "community": 24,
+      "community": 2,
       "norm_label": "tools and environment"
     },
     {
@@ -5050,7 +5050,7 @@
       "source_location": "L462",
       "_origin": "ast",
       "id": "team_memory_canteen_price_list",
-      "community": 24,
+      "community": 2,
       "norm_label": "canteen price list"
     },
     {
@@ -5060,7 +5060,7 @@
       "source_location": "L468",
       "_origin": "ast",
       "id": "team_memory_2026_08_15",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-15"
     },
     {
@@ -5070,7 +5070,7 @@
       "source_location": "L483",
       "_origin": "ast",
       "id": "team_memory_2026_08_15_483",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-15"
     },
     {
@@ -5080,7 +5080,7 @@
       "source_location": "L507",
       "_origin": "ast",
       "id": "team_memory_2026_08_21",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-21"
     },
     {
@@ -5090,7 +5090,7 @@
       "source_location": "L519",
       "_origin": "ast",
       "id": "team_memory_2026_08_22",
-      "community": 24,
+      "community": 42,
       "norm_label": "2026-08-22"
     },
     {
@@ -5100,7 +5100,7 @@
       "source_location": "L528",
       "_origin": "ast",
       "id": "team_memory_2026_08_22_528",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-22"
     },
     {
@@ -5110,7 +5110,7 @@
       "source_location": "L536",
       "_origin": "ast",
       "id": "team_memory_2026_08_22_536",
-      "community": 43,
+      "community": 42,
       "norm_label": "2026-08-22"
     },
     {
@@ -5120,7 +5120,7 @@
       "source_location": "L569",
       "_origin": "ast",
       "id": "team_memory_local_git_workflow_auto_sync_sync_ps1",
-      "community": 43,
+      "community": 42,
       "norm_label": "local git workflow & auto-sync (`sync.ps1`)"
     },
     {
@@ -5130,7 +5130,7 @@
       "source_location": "L595",
       "_origin": "ast",
       "id": "team_memory_2026_08_22_595",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-22"
     },
     {
@@ -5140,7 +5140,7 @@
       "source_location": "L601",
       "_origin": "ast",
       "id": "team_memory_2026_08_23",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-23"
     },
     {
@@ -5150,7 +5150,7 @@
       "source_location": "L605",
       "_origin": "ast",
       "id": "team_memory_2026_08_23_605",
-      "community": 24,
+      "community": 2,
       "norm_label": "2026-08-23"
     },
     {
@@ -5160,7 +5160,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_formatter",
-      "community": 40,
+      "community": 33,
       "norm_label": "formatter.md"
     },
     {
@@ -5170,7 +5170,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_formatter_worker_role_formatter_delivery_packaging",
-      "community": 40,
+      "community": 33,
       "norm_label": "worker role: formatter & delivery packaging"
     },
     {
@@ -5180,7 +5180,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "worker_prompts_formatter_responsibilities",
-      "community": 40,
+      "community": 33,
       "norm_label": "responsibilities:"
     },
     {
@@ -5190,7 +5190,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_orchestrator",
-      "community": 36,
+      "community": 28,
       "norm_label": "orchestrator.md"
     },
     {
@@ -5200,7 +5200,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_orchestrator_worker_role_orchestrator_dispatcher",
-      "community": 36,
+      "community": 28,
       "norm_label": "worker role: orchestrator / dispatcher"
     },
     {
@@ -5210,7 +5210,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "worker_prompts_orchestrator_responsibilities",
-      "community": 36,
+      "community": 28,
       "norm_label": "responsibilities:"
     },
     {
@@ -5220,7 +5220,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "worker_prompts_orchestrator_rules",
-      "community": 36,
+      "community": 28,
       "norm_label": "rules:"
     },
     {
@@ -5230,7 +5230,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_qa_reviewer",
-      "community": 37,
+      "community": 29,
       "norm_label": "qa-reviewer.md"
     },
     {
@@ -5240,7 +5240,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_qa_reviewer_worker_role_quality_assurance_qa_fact_checker",
-      "community": 37,
+      "community": 29,
       "norm_label": "worker role: quality assurance (qa) & fact-checker"
     },
     {
@@ -5250,7 +5250,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "worker_prompts_qa_reviewer_verification_checklist",
-      "community": 37,
+      "community": 29,
       "norm_label": "verification checklist:"
     },
     {
@@ -5260,7 +5260,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "worker_prompts_qa_reviewer_output_verdict",
-      "community": 37,
+      "community": 29,
       "norm_label": "output verdict:"
     },
     {
@@ -5270,7 +5270,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_researcher",
-      "community": 38,
+      "community": 30,
       "norm_label": "researcher.md"
     },
     {
@@ -5280,7 +5280,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_researcher_worker_role_researcher_attribute_extractor",
-      "community": 38,
+      "community": 30,
       "norm_label": "worker role: researcher / attribute extractor"
     },
     {
@@ -5290,7 +5290,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "worker_prompts_researcher_responsibilities",
-      "community": 38,
+      "community": 30,
       "norm_label": "responsibilities:"
     },
     {
@@ -5300,7 +5300,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "worker_prompts_researcher_strict_rules",
-      "community": 38,
+      "community": 30,
       "norm_label": "strict rules:"
     },
     {
@@ -5310,7 +5310,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_seo_optimizer",
-      "community": 41,
+      "community": 34,
       "norm_label": "seo-optimizer.md"
     },
     {
@@ -5320,7 +5320,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_seo_optimizer_worker_role_seo_aeo_optimization_specialist",
-      "community": 41,
+      "community": 34,
       "norm_label": "worker role: seo & aeo optimization specialist"
     },
     {
@@ -5330,7 +5330,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "worker_prompts_seo_optimizer_responsibilities",
-      "community": 41,
+      "community": 34,
       "norm_label": "responsibilities:"
     },
     {
@@ -5340,7 +5340,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_writer",
-      "community": 39,
+      "community": 31,
       "norm_label": "writer.md"
     },
     {
@@ -5350,7 +5350,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "worker_prompts_writer_worker_role_copywriter_drafting_specialist",
-      "community": 39,
+      "community": 31,
       "norm_label": "worker role: copywriter / drafting specialist"
     },
     {
@@ -5360,7 +5360,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "worker_prompts_writer_responsibilities",
-      "community": 39,
+      "community": 31,
       "norm_label": "responsibilities:"
     },
     {
@@ -5370,80 +5370,44 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "worker_prompts_writer_strict_rules",
-      "community": 39,
+      "community": 31,
       "norm_label": "strict rules:"
-    },
-    {
-      "label": "profiles.json",
-      "file_type": "code",
-      "source_file": "profiles.json",
-      "community": 23,
-      "norm_label": "profiles.json",
-      "community_name": "Community 23",
-      "id": "profiles_json"
-    },
-    {
-      "label": "team-mcp.json",
-      "file_type": "code",
-      "source_file": "team-mcp.json",
-      "community": 27,
-      "norm_label": "team-mcp.json",
-      "community_name": "Community 27",
-      "id": "team_mcp_json"
     },
     {
       "label": "Orchestrator MCP Server",
       "file_type": "code",
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
-      "community": 13,
+      "community": 16,
       "norm_label": "orchestrator mcp server",
-      "community_name": "Community 13",
+      "community_name": "Community 16",
       "id": "orchestrator_mcp"
     },
     {
       "label": "NotebookLM MCP Server",
       "file_type": "code",
       "source_file": "mcp-servers/notebooklm-mcp/run_server.py",
-      "community": 22,
+      "community": 39,
       "norm_label": "notebooklm mcp server",
-      "community_name": "Community 22",
+      "community_name": "Community 39",
       "id": "notebooklm_mcp"
-    },
-    {
-      "label": "FastAPI Orchestrator Backend",
-      "file_type": "code",
-      "source_file": "server/main.py",
-      "community": 26,
-      "norm_label": "fastapi orchestrator backend",
-      "community_name": "Community 26",
-      "id": "server_main_py"
     },
     {
       "label": "SPARK Project",
       "file_type": "concept",
       "source_file": "team-context.md",
-      "community": 17,
+      "community": 16,
       "norm_label": "spark project",
-      "community_name": "Community 17",
+      "community_name": "Community 16",
       "id": "spark_project"
-    },
-    {
-      "label": "BiasAperture Project",
-      "file_type": "concept",
-      "source_file": "team-memory.md",
-      "community": 17,
-      "norm_label": "biasaperture project",
-      "community_name": "Community 17",
-      "id": "biasaperture_project"
     },
     {
       "label": "sync.ps1",
       "file_type": "code",
       "source_file": "AGENTS.md",
       "source_location": null,
-      "community": 20,
+      "community": 37,
       "norm_label": "sync.ps1",
-      "community_name": "Community 20",
+      "community_name": "Community 37",
       "id": "agents_sync_ps1"
     },
     {
@@ -5451,9 +5415,9 @@
       "file_type": "code",
       "source_file": "mcp-servers/notebooklm-mcp/requirements.txt",
       "source_location": null,
-      "community": 14,
+      "community": 23,
       "norm_label": "notebooklm-mcp-cli",
-      "community_name": "Community 14",
+      "community_name": "Community 23",
       "id": "notebooklm_mcp_cli"
     },
     {
@@ -5461,9 +5425,9 @@
       "file_type": "code",
       "source_file": "mcp-servers/orchestrator-mcp/requirements.txt",
       "source_location": null,
-      "community": 18,
+      "community": 32,
       "norm_label": "orchestrator mcp requirements",
-      "community_name": "Community 18",
+      "community_name": "Community 32",
       "id": "orchestrator_mcp_requirements"
     },
     {
@@ -5471,59 +5435,19 @@
       "file_type": "code",
       "source_file": "mcp-servers/orchestrator-mcp/requirements.txt",
       "source_location": null,
-      "community": 18,
+      "community": 32,
       "norm_label": "mcp",
-      "community_name": "Community 18",
+      "community_name": "Community 32",
       "id": "mcp_library"
-    },
-    {
-      "label": "Job Entity",
-      "file_type": "concept",
-      "source_file": "orchestrator-state/JOB_SCHEMA.md",
-      "source_location": null,
-      "community": 11,
-      "norm_label": "job entity",
-      "community_name": "Community 11",
-      "id": "job_schema_job_entity"
-    },
-    {
-      "label": "Task Entity",
-      "file_type": "concept",
-      "source_file": "orchestrator-state/JOB_SCHEMA.md",
-      "source_location": null,
-      "community": 11,
-      "norm_label": "task entity",
-      "community_name": "Community 11",
-      "id": "job_schema_task_entity"
-    },
-    {
-      "label": "QA Review Schema",
-      "file_type": "concept",
-      "source_file": "orchestrator-state/JOB_SCHEMA.md",
-      "source_location": null,
-      "community": 11,
-      "norm_label": "qa review schema",
-      "community_name": "Community 11",
-      "id": "job_schema_qa_review"
-    },
-    {
-      "label": "Worker Node Entity",
-      "file_type": "concept",
-      "source_file": "orchestrator-state/JOB_SCHEMA.md",
-      "source_location": null,
-      "community": 11,
-      "norm_label": "worker node entity",
-      "community_name": "Community 11",
-      "id": "job_schema_worker_node"
     },
     {
       "label": "Orchestrator Service",
       "file_type": "code",
       "source_file": "server/docker-compose.yml",
       "source_location": null,
-      "community": 19,
+      "community": 36,
       "norm_label": "orchestrator service",
-      "community_name": "Community 19",
+      "community_name": "Community 36",
       "id": "docker_orchestrator_service"
     },
     {
@@ -5531,9 +5455,9 @@
       "file_type": "code",
       "source_file": "server/docker-compose.yml",
       "source_location": null,
-      "community": 19,
+      "community": 36,
       "norm_label": "cloudflared service",
-      "community_name": "Community 19",
+      "community_name": "Community 36",
       "id": "docker_cloudflared_service"
     },
     {
@@ -5541,9 +5465,9 @@
       "file_type": "code",
       "source_file": "server/requirements.txt",
       "source_location": null,
-      "community": 18,
+      "community": 32,
       "norm_label": "server requirements",
-      "community_name": "Community 18",
+      "community_name": "Community 32",
       "id": "server_requirements"
     },
     {
@@ -5551,9 +5475,9 @@
       "file_type": "rationale",
       "source_file": "worker-prompts/formatter.md",
       "source_location": null,
-      "community": 11,
+      "community": 25,
       "norm_label": "formatter & delivery packaging",
-      "community_name": "Community 11",
+      "community_name": "Community 25",
       "id": "worker_formatter"
     },
     {
@@ -5561,9 +5485,9 @@
       "file_type": "rationale",
       "source_file": "worker-prompts/orchestrator.md",
       "source_location": null,
-      "community": 11,
+      "community": 25,
       "norm_label": "orchestrator / dispatcher",
-      "community_name": "Community 11",
+      "community_name": "Community 25",
       "id": "worker_orchestrator"
     },
     {
@@ -5571,9 +5495,9 @@
       "file_type": "rationale",
       "source_file": "worker-prompts/qa-reviewer.md",
       "source_location": null,
-      "community": 11,
+      "community": 25,
       "norm_label": "quality assurance (qa) & fact-checker",
-      "community_name": "Community 11",
+      "community_name": "Community 25",
       "id": "worker_qa_reviewer"
     },
     {
@@ -5581,9 +5505,9 @@
       "file_type": "rationale",
       "source_file": "worker-prompts/researcher.md",
       "source_location": null,
-      "community": 11,
+      "community": 25,
       "norm_label": "researcher / attribute extractor",
-      "community_name": "Community 11",
+      "community_name": "Community 25",
       "id": "worker_researcher"
     },
     {
@@ -5591,9 +5515,9 @@
       "file_type": "rationale",
       "source_file": "worker-prompts/seo-optimizer.md",
       "source_location": null,
-      "community": 11,
+      "community": 25,
       "norm_label": "seo & aeo optimization specialist",
-      "community_name": "Community 11",
+      "community_name": "Community 25",
       "id": "worker_seo_optimizer"
     },
     {
@@ -5601,10 +5525,120 @@
       "file_type": "rationale",
       "source_file": "worker-prompts/writer.md",
       "source_location": null,
-      "community": 11,
+      "community": 25,
       "norm_label": "copywriter / drafting specialist",
-      "community_name": "Community 11",
+      "community_name": "Community 25",
       "id": "worker_writer"
+    },
+    {
+      "label": "server/main.py",
+      "file_type": "code",
+      "source_file": "server/main.py",
+      "source_location": null,
+      "community": 26,
+      "norm_label": "server/main.py",
+      "community_name": "Community 26",
+      "id": "readme_server_main_py"
+    },
+    {
+      "label": "client/worker_daemon.py",
+      "file_type": "code",
+      "source_file": "client/worker_daemon.py",
+      "source_location": null,
+      "community": 26,
+      "norm_label": "client/worker_daemon.py",
+      "community_name": "Community 26",
+      "id": "readme_worker_daemon_py"
+    },
+    {
+      "label": "server/mcp_remote.py",
+      "file_type": "code",
+      "source_file": "server/mcp_remote.py",
+      "source_location": null,
+      "community": 26,
+      "norm_label": "server/mcp_remote.py",
+      "community_name": "Community 26",
+      "id": "readme_mcp_remote_py"
+    },
+    {
+      "label": "server/core/pipeline_engine.py",
+      "file_type": "code",
+      "source_file": "server/core/pipeline_engine.py",
+      "source_location": null,
+      "community": 26,
+      "norm_label": "server/core/pipeline_engine.py",
+      "community_name": "Community 26",
+      "id": "readme_pipeline_engine_py"
+    },
+    {
+      "label": "server/core/scheduler.py",
+      "file_type": "code",
+      "source_file": "server/core/scheduler.py",
+      "source_location": null,
+      "community": 26,
+      "norm_label": "server/core/scheduler.py",
+      "community_name": "Community 26",
+      "id": "readme_scheduler_py"
+    },
+    {
+      "label": "team-mcp.json",
+      "file_type": "document",
+      "source_file": "team-mcp.json",
+      "source_location": null,
+      "community": 6,
+      "norm_label": "team-mcp.json",
+      "community_name": "Community 6",
+      "id": "readme_team_mcp_json"
+    },
+    {
+      "label": "profiles.json",
+      "file_type": "document",
+      "source_file": "profiles.json",
+      "source_location": null,
+      "community": 40,
+      "norm_label": "profiles.json",
+      "community_name": "Community 40",
+      "id": "readme_profiles_json"
+    },
+    {
+      "label": "Job Entity",
+      "file_type": "concept",
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source_location": "1",
+      "community": 27,
+      "norm_label": "job entity",
+      "community_name": "Community 27",
+      "id": "job_schema_jobs"
+    },
+    {
+      "label": "Task Entity",
+      "file_type": "concept",
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source_location": "2",
+      "community": 27,
+      "norm_label": "task entity",
+      "community_name": "Community 27",
+      "id": "job_schema_tasks"
+    },
+    {
+      "label": "QA Review Entity",
+      "file_type": "concept",
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source_location": "3",
+      "community": 27,
+      "norm_label": "qa review entity",
+      "community_name": "Community 27",
+      "id": "job_schema_qa_reviews"
+    },
+    {
+      "label": "Worker Node Entity",
+      "file_type": "concept",
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source_location": "4",
+      "community": 27,
+      "norm_label": "worker node entity",
+      "community_name": "Community 27",
+      "id": "job_schema_workers"
     }
   ],
   "links": [
@@ -7176,6 +7210,14 @@
       "target": "cooldown_reminder_update_firstlogindate"
     },
     {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source": "launch_user_n",
+      "target": "cooldown_reminder"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "launch_user_n.ps1",
@@ -7219,7 +7261,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L472",
+      "source_location": "L531",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "launch_user_n",
@@ -7259,7 +7301,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L398",
+      "source_location": "L457",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "launch_user_n",
@@ -7296,6 +7338,22 @@
       "target": "launch_user_n_test_profilepathwithinbase"
     },
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source": "launch_user_n",
+      "target": "readme_team_mcp_json"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source": "launch_user_n",
+      "target": "sync"
+    },
+    {
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "launch_user_n.ps1",
@@ -7309,7 +7367,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L497",
+      "source_location": "L556",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "launch_user_n_invoke_profilelaunch",
@@ -7339,7 +7397,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L857",
+      "source_location": "L919",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "launch_user_n_invoke_profilelaunch",
@@ -7349,7 +7407,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L428",
+      "source_location": "L487",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "launch_user_n_resolve_singleaccount",
@@ -7359,7 +7417,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L423",
+      "source_location": "L482",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "launch_user_n_resolve_singleaccount",
@@ -9518,6 +9576,14 @@
       "confidence_score": 1.0,
       "source": "orchestrator_mcp_run_server_merge_results",
       "target": "orchestrator_mcp_run_server_mark_merged"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source": "reset_profiles",
+      "target": "sync"
     },
     {
       "relation": "contains",
@@ -12732,7 +12798,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "server/core/database.py",
-      "source_location": "L7",
+      "source_location": "L15",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "core_database",
@@ -12752,7 +12818,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "server/core/database.py",
-      "source_location": "L18",
+      "source_location": "L23",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "core_database",
@@ -13092,7 +13158,7 @@
       "context": "generic_arg",
       "confidence": "EXTRACTED",
       "source_file": "server/core/database.py",
-      "source_location": "L7",
+      "source_location": "L15",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "core_database_get_db",
@@ -13106,16 +13172,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "core_database_rationale_16",
-      "target": "core_database_get_db"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "server/core/database.py",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "core_database_rationale_8",
       "target": "core_database_get_db"
     },
     {
@@ -13145,7 +13201,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/main.py",
-      "source_location": "L17",
+      "source_location": "L19",
       "weight": 1.0,
       "source": "server_main_lifespan",
       "target": "core_database_init_db"
@@ -13542,7 +13598,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "server/main.py",
-      "source_location": "L38",
+      "source_location": "L39",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "server_main",
@@ -13553,7 +13609,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "server/main.py",
-      "source_location": "L39",
+      "source_location": "L43",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "server_main_run_supervisor_loop",
@@ -13618,7 +13674,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "server/main.py",
-      "source_location": "L66",
+      "source_location": "L81",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "server_main",
@@ -13628,7 +13684,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "server/main.py",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "server_main",
@@ -13638,7 +13694,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "server/main.py",
-      "source_location": "L32",
+      "source_location": "L34",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "server_main",
@@ -13682,7 +13738,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "server/main.py",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "server_main_lifespan",
@@ -13693,7 +13749,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "server/main.py",
-      "source_location": "L21",
+      "source_location": "L23",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "server_main_lifespan",
@@ -15269,14 +15325,6 @@
       "target": "models_schemas_workerresponse"
     },
     {
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.9,
-      "source_file": "orchestrator-state/SCHEMA.md",
-      "source": "sync",
-      "target": "orchestrator_mcp"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sync.ps1",
@@ -15305,6 +15353,14 @@
       "confidence_score": 1.0,
       "source": "sync",
       "target": "sync_sync_memorytoteammemory"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source": "sync",
+      "target": "team_memory"
     },
     {
       "relation": "contains",
@@ -16212,14 +16268,6 @@
       "target": "claude_skills_mcp_cross_linking_hub_cross_linking_hub"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "Claude Skills + MCP/Cross-Linking Hub.md",
-      "source": "claude_skills_mcp_cross_linking_hub_cross_linking_hub",
-      "target": "biasaperture_project"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Claude Skills + MCP/Cross-Linking Hub.md",
@@ -16453,9 +16501,9 @@
       "source_file": "orchestrator-state/JOB_SCHEMA.md",
       "source_location": "L104",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_state_job_schema_job_pipeline_production_schema_v2",
-      "target": "orchestrator_state_job_schema_5_shared_memory_team_context_memory_entries_team_context",
-      "confidence_score": 1.0
+      "target": "orchestrator_state_job_schema_5_shared_memory_team_context_memory_entries_team_context"
     },
     {
       "relation": "contains",
@@ -16463,9 +16511,9 @@
       "source_file": "orchestrator-state/JOB_SCHEMA.md",
       "source_location": "L108",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_state_job_schema_5_shared_memory_team_context_memory_entries_team_context",
-      "target": "orchestrator_state_job_schema_memory_entry_memory_entries",
-      "confidence_score": 1.0
+      "target": "orchestrator_state_job_schema_memory_entry_memory_entries"
     },
     {
       "relation": "contains",
@@ -16473,9 +16521,9 @@
       "source_file": "orchestrator-state/JOB_SCHEMA.md",
       "source_location": "L120",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "orchestrator_state_job_schema_5_shared_memory_team_context_memory_entries_team_context",
-      "target": "orchestrator_state_job_schema_team_context_team_context",
-      "confidence_score": 1.0
+      "target": "orchestrator_state_job_schema_team_context_team_context"
     },
     {
       "relation": "contains",
@@ -16563,15 +16611,17 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_context_context",
-      "target": "team_context_spark_project"
+      "target": "spark_project"
     },
     {
-      "relation": "calls",
+      "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "team-context.md",
+      "source_location": "L17",
+      "weight": 1.0,
       "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source": "orchestrator_mcp",
-      "target": "team_memory"
+      "source": "team_context_context",
+      "target": "team_context_spark_project"
     },
     {
       "relation": "contains",
@@ -16607,7 +16657,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "team-memory.md",
-      "source_location": "L26",
+      "source_location": "L30",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
@@ -16627,7 +16677,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "team-memory.md",
-      "source_location": "L45",
+      "source_location": "L91",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
@@ -16667,7 +16717,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "team-memory.md",
-      "source_location": "L180",
+      "source_location": "L410",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
@@ -16687,7 +16737,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "team-memory.md",
-      "source_location": "L468",
+      "source_location": "L483",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
@@ -16717,7 +16767,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "team-memory.md",
-      "source_location": "L519",
+      "source_location": "L595",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
@@ -16757,7 +16807,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "team-memory.md",
-      "source_location": "L601",
+      "source_location": "L605",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
@@ -17017,7 +17067,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "team-memory.md",
-      "source_location": "L185",
+      "source_location": "L350",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
@@ -17037,7 +17087,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "team-memory.md",
-      "source_location": "L192",
+      "source_location": "L357",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
@@ -17057,7 +17107,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "team-memory.md",
-      "source_location": "L203",
+      "source_location": "L368",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
@@ -17077,7 +17127,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "team-memory.md",
-      "source_location": "L208",
+      "source_location": "L373",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
@@ -17097,7 +17147,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "team-memory.md",
-      "source_location": "L213",
+      "source_location": "L378",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
@@ -17122,6 +17172,16 @@
       "confidence_score": 1.0,
       "source": "team_memory_memory_log",
       "target": "team_memory_work_context"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "team-memory.md",
+      "source_location": "L569",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "team_memory_2026_08_22",
+      "target": "team_memory_local_git_workflow_auto_sync_sync_ps1"
     },
     {
       "relation": "contains",
@@ -17313,46 +17373,6 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "orchestrator-state/JOB_SCHEMA.md",
-      "source": "job_schema_task_entity",
-      "target": "job_schema_job_entity"
-    },
-    {
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "worker-prompts/orchestrator.md",
-      "source": "worker_orchestrator",
-      "target": "job_schema_job_entity"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "orchestrator-state/JOB_SCHEMA.md",
-      "source": "job_schema_qa_review",
-      "target": "job_schema_task_entity"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "orchestrator-state/JOB_SCHEMA.md",
-      "source": "job_schema_task_entity",
-      "target": "job_schema_worker_node"
-    },
-    {
-      "relation": "implements",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "worker-prompts/qa-reviewer.md",
-      "source": "worker_qa_reviewer",
-      "target": "job_schema_qa_review"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "server/docker-compose.yml",
       "source": "docker_cloudflared_service",
       "target": "docker_orchestrator_service"
@@ -17396,8 +17416,64 @@
       "source_file": "worker-prompts/orchestrator.md",
       "source": "worker_orchestrator",
       "target": "worker_writer"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source": "readme_server_main_py",
+      "target": "readme_mcp_remote_py"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source": "readme_server_main_py",
+      "target": "readme_pipeline_engine_py"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source": "readme_server_main_py",
+      "target": "readme_scheduler_py"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "README.md",
+      "source": "readme_worker_daemon_py",
+      "target": "readme_server_main_py"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source": "job_schema_tasks",
+      "target": "job_schema_jobs"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source": "job_schema_qa_reviews",
+      "target": "job_schema_tasks"
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "orchestrator-state/JOB_SCHEMA.md",
+      "source": "job_schema_tasks",
+      "target": "job_schema_workers"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "1354976dfbc8017828c8c7096b37f5a13583cca3"
+  "built_at_commit": "81df25e3ec195c61cdcd26c529694e6cd04687e4"
 }
