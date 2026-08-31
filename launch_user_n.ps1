@@ -459,18 +459,33 @@ function Select-ProfileInteractive {
     try { [Console]::OutputEncoding = [System.Text.Encoding]::UTF8 } catch { }
     try { [Console]::CursorVisible = $false } catch { }
 
+    # Load enriched profiles once in memory (no repeated WMI queries in loop)
+    $allRows = Get-EnrichedProfileRows -Profiles $script:Profiles -AccountKeys $script:AccountKeys
+    if ($allRows.Count -eq 0) {
+        Write-Host "No profiles found in profiles.json." -ForegroundColor Yellow
+        $new = Add-NewProfile
+        $script:Profiles = Get-Content $script:ConfigFile | ConvertFrom-Json
+        $script:AccountKeys = @($script:Profiles.psobject.properties.Name)
+        $allRows = Get-EnrichedProfileRows -Profiles $script:Profiles -AccountKeys $script:AccountKeys
+    }
+
+    # Initial console clear
+    try { [Console]::Clear() } catch { }
+
+    $cols = @(6, 13, 14, 10, 10, 10, 11)
+    $tblTop = "╭" + (($cols | ForEach-Object { "─" * ($_ + 2) }) -join "┬") + "╮"
+    $tblMid = "├" + (($cols | ForEach-Object { "─" * ($_ + 2) }) -join "┼") + "┤"
+    $tblBot = "╰" + (($cols | ForEach-Object { "─" * ($_ + 2) }) -join "┴") + "╯"
+
+    $bannerTop = "╭" + ("─" * 94) + "╮"
+    $bannerMid = "│" + "                    🚀  CLAUDE DESKTOP PROFILE LAUNCHER".PadRight(94) + "│"
+    $bannerBot = "╰" + ("─" * 94) + "╯"
+
+    $lastRenderLineCount = 0
+
     try {
         while ($true) {
-            $allRows = Get-EnrichedProfileRows -Profiles $script:Profiles -AccountKeys $script:AccountKeys
-            if ($allRows.Count -eq 0) {
-                Write-Host "No profiles found in profiles.json." -ForegroundColor Yellow
-                $new = Add-NewProfile
-                $script:Profiles = Get-Content $script:ConfigFile | ConvertFrom-Json
-                $script:AccountKeys = @($script:Profiles.psobject.properties.Name)
-                $allRows = Get-EnrichedProfileRows -Profiles $script:Profiles -AccountKeys $script:AccountKeys
-            }
-
-            # Filter rows by query
+            # Filter rows by query in-memory
             $filteredRows = if ([string]::IsNullOrWhiteSpace($filterText)) {
                 $allRows
             } else {
@@ -504,43 +519,56 @@ function Select-ProfileInteractive {
                 @($filteredRows[$viewportStart .. ($viewportStart + $maxVisible - 1)])
             }
 
-            # Render TUI screen
-            [Console]::Clear()
+            # Flicker-free render via cursor repositioning
+            try { [Console]::SetCursorPosition(0, 0) } catch { [Console]::Clear() }
 
-            Write-Host "╭─────────────────────────────────────────────────────────────────────────────╮" -ForegroundColor Cyan
-            Write-Host "│                    🚀  CLAUDE DESKTOP PROFILE LAUNCHER                      │" -ForegroundColor Green
-            Write-Host "╰─────────────────────────────────────────────────────────────────────────────╯" -ForegroundColor Cyan
+            $currentLines = 0
+
+            Write-Host $bannerTop -ForegroundColor Cyan
+            Write-Host $bannerMid -ForegroundColor Green
+            Write-Host $bannerBot -ForegroundColor Cyan
+            $currentLines += 3
             
             $modeLabel = if ($isConcurrent) { "Concurrent (Side-by-Side)" } else { "Isolated (Session Swap)" }
             $modeColor = if ($isConcurrent) { "Magenta" } else { "Cyan" }
-            Write-Host " Mode: " -NoNewline -ForegroundColor Gray
-            Write-Host "[ $modeLabel ]" -NoNewline -ForegroundColor $modeColor
-            Write-Host "  ◄ Press [Tab] or [M] to toggle" -ForegroundColor DarkGray
+            $modeLine = " Mode: [ $modeLabel ]".PadRight(40) + "◄ Press [Tab] or [M] to toggle"
+            Write-Host $modeLine.PadRight(96) -ForegroundColor $modeColor
+            $currentLines++
             
             if ($isConcurrent) {
                 $selCount = $selectedSet.Count
-                Write-Host " Multi-Launch: " -NoNewline -ForegroundColor DarkYellow
-                Write-Host "$selCount profile(s) selected" -NoNewline -ForegroundColor Yellow
-                Write-Host "  ([Space] to toggle, [A] select/clear all)" -ForegroundColor DarkGray
+                $multiLine = " Multi-Launch: $selCount profile(s) selected".PadRight(40) + "([Space] to toggle, [A] select/clear all)"
+                Write-Host $multiLine.PadRight(96) -ForegroundColor Yellow
+            } else {
+                Write-Host (" " * 96)
             }
+            $currentLines++
 
             if (-not [string]::IsNullOrEmpty($filterText)) {
-                Write-Host " 🔍 Filter: " -NoNewline -ForegroundColor Yellow
-                Write-Host "$filterText" -NoNewline -ForegroundColor White
-                Write-Host " (Press [Esc] to clear, matches: $($filteredRows.Count))" -ForegroundColor DarkGray
+                $filterLine = " 🔍 Filter: $filterText (Press [Esc] to clear, matches: $($filteredRows.Count))"
+                Write-Host $filterLine.PadRight(96) -ForegroundColor Yellow
             } else {
-                Write-Host " 🔍 Filter: " -NoNewline -ForegroundColor DarkGray
-                Write-Host "[Type to search by name/role/number...]" -ForegroundColor DarkGray
+                $filterLine = " 🔍 Filter: [Type to search by name/role/number...]"
+                Write-Host $filterLine.PadRight(96) -ForegroundColor DarkGray
             }
-            Write-Host ""
+            $currentLines++
 
-            # Header border & table
-            Write-Host "╭──────┬───────────────┬────────────────┬────────────┬────────────┬────────────┬─────────────╮" -ForegroundColor Cyan
-            Write-Host "│ Sel  │ Nickname      │ Role           │ Last Time  │ Last Date  │ Today Rank │ Status      │" -ForegroundColor Cyan
-            Write-Host "├──────┼───────────────┼────────────────┼────────────┼────────────┼────────────┼─────────────┤" -ForegroundColor Cyan
+            Write-Host (" " * 96)
+            $currentLines++
+
+            # Table Header
+            $headers = @("Sel   ", "Nickname     ", "Role          ", "Last Time ", "Last Date ", "Today Rank", "Status     ")
+            $hdrRow = "│" + (($headers | ForEach-Object { " " + $_ + " " }) -join "│") + "│"
+
+            Write-Host $tblTop -ForegroundColor Cyan
+            Write-Host $hdrRow -ForegroundColor Cyan
+            Write-Host $tblMid -ForegroundColor Cyan
+            $currentLines += 3
 
             if ($filteredRows.Count -eq 0) {
-                Write-Host "│ (No matching profiles found for '$filterText')                                                 │" -ForegroundColor Yellow
+                $emptyMsg = "  (No matching profiles found for '$filterText')".PadRight(94)
+                Write-Host "│$emptyMsg│" -ForegroundColor Yellow
+                $currentLines++
             } else {
                 for ($v = 0; $v -lt $visibleRows.Count; $v++) {
                     $row = $visibleRows[$v]
@@ -549,8 +577,8 @@ function Select-ProfileInteractive {
                     $isChecked = $selectedSet.Contains($row.Profile)
 
                     $cursorMark = if ($isHighlighted) { "❯" } else { " " }
-                    $checkMark = if ($isChecked) { "[x]" } else { "[ ]" }
-                    $selCell = ("$cursorMark$checkMark " + $row.Index).PadRight(5)
+                    $checkMark = if ($isChecked) { "x" } else { " " }
+                    $selCell = "$cursorMark[$checkMark]" + ([string]$row.Index).PadLeft(2)
                     
                     $nickCell = $row.Nickname.PadRight(13)
                     if ($nickCell.Length -gt 13) { $nickCell = $nickCell.Substring(0, 10) + "..." }
@@ -561,13 +589,14 @@ function Select-ProfileInteractive {
                     $timeCell = $row.LastTime.PadRight(10)
                     $dateCell = $row.LastDate.PadRight(10)
                     
-                    $rankStr = if ($row.TodayRank -eq "1") { "🥇 1" } elseif ($row.TodayRank -eq "2") { "🥈 2" } elseif ($row.TodayRank -eq "3") { "🥉 3" } elseif ($row.TodayRank -ne "-") { "#$($row.TodayRank)" } else { "-" }
+                    $rankStr = if ($row.TodayRank -ne "-") { "#$($row.TodayRank)" } else { "-" }
                     $rankCell = $rankStr.PadRight(10)
 
-                    $statusStr = if ($row.IsActive -and $row.IsRunning) { "🟢 Active (Live)" } elseif ($row.IsRunning) { "⚡ Running" } elseif ($row.IsActive) { "● Active" } else { "" }
+                    $statusStr = if ($row.IsActive -and $row.IsRunning) { "🟢 Active" } elseif ($row.IsRunning) { "⚡ Live" } elseif ($row.IsActive) { "● Active" } else { "" }
                     $statusCell = $statusStr.PadRight(11)
 
-                    $line = "│ $selCell│ $nickCell │ $roleCell │ $timeCell │ $dateCell │ $rankCell │ $statusCell │"
+                    $cells = @($selCell, $nickCell, $roleCell, $timeCell, $dateCell, $rankCell, $statusCell)
+                    $line = "│" + (($cells | ForEach-Object { " " + $_ + " " }) -join "│") + "│"
 
                     if ($isHighlighted) {
                         Write-Host $line -ForegroundColor Black -BackgroundColor Cyan
@@ -578,29 +607,74 @@ function Select-ProfileInteractive {
                     } else {
                         Write-Host $line -ForegroundColor Gray
                     }
+                    $currentLines++
                 }
             }
 
-            Write-Host "╰──────┴───────────────┴────────────────┴────────────┴────────────┴────────────┴─────────────╯" -ForegroundColor Cyan
+            Write-Host $tblBot -ForegroundColor Cyan
+            $currentLines++
 
             if ($filteredRows.Count -gt $maxVisible) {
-                Write-Host " (Showing items $($viewportStart + 1)-$($viewportStart + $visibleRows.Count) of $($filteredRows.Count) — use ↑/↓ to scroll)" -ForegroundColor DarkGray
+                $scrollInfo = " (Showing items $($viewportStart + 1)-$($viewportStart + $visibleRows.Count) of $($filteredRows.Count) — use ↑/↓ to scroll)"
+                Write-Host $scrollInfo.PadRight(96) -ForegroundColor DarkGray
+            } else {
+                Write-Host (" " * 96)
+            }
+            $currentLines++
+
+            $footerLine = " [↑/↓] Move │ [Space] Select │ [Tab] Mode │ [Enter] Launch │ [/] Search │ [N] New │ [Q] Exit"
+            Write-Host $footerLine.PadRight(96) -ForegroundColor DarkCyan
+            $currentLines++
+
+            # Clear trailing lines if viewport shrank
+            if ($lastRenderLineCount -gt $currentLines) {
+                for ($cl = $currentLines; $cl -lt $lastRenderLineCount; $cl++) {
+                    Write-Host (" " * 96)
+                }
+            }
+            $lastRenderLineCount = $currentLines
+
+            # Fast responsive input handling with key drain for held keys
+            $keyInfo = [Console]::ReadKey($true)
+            $key = $keyInfo.Key
+
+            if ($key -eq [ConsoleKey]::DownArrow) {
+                $delta = 1
+                while ([Console]::KeyAvailable) {
+                    $next = [Console]::ReadKey($true)
+                    if ($next.Key -eq [ConsoleKey]::DownArrow) {
+                        $delta++
+                    } else {
+                        $keyInfo = $next
+                        $key = $next.Key
+                        break
+                    }
+                }
+                if ($filteredRows.Count -gt 0) {
+                    $selectedIndex = ($selectedIndex + $delta) % $filteredRows.Count
+                }
+                continue
+            }
+            elseif ($key -eq [ConsoleKey]::UpArrow) {
+                $delta = 1
+                while ([Console]::KeyAvailable) {
+                    $next = [Console]::ReadKey($true)
+                    if ($next.Key -eq [ConsoleKey]::UpArrow) {
+                        $delta++
+                    } else {
+                        $keyInfo = $next
+                        $key = $next.Key
+                        break
+                    }
+                }
+                if ($filteredRows.Count -gt 0) {
+                    $selectedIndex = ($selectedIndex - $delta) % $filteredRows.Count
+                    if ($selectedIndex -lt 0) { $selectedIndex += $filteredRows.Count }
+                }
+                continue
             }
 
-            Write-Host ""
-            Write-Host " [↑/↓] Move │ [Space] Select │ [Tab] Mode │ [Enter] Launch │ [/] Search │ [N] New │ [Q] Exit" -ForegroundColor DarkCyan
-
-            $keyInfo = [Console]::ReadKey($true)
-
-            switch ($keyInfo.Key) {
-                ([ConsoleKey]::UpArrow) {
-                    if ($selectedIndex -gt 0) { $selectedIndex-- }
-                    else { $selectedIndex = [Math]::Max(0, $filteredRows.Count - 1) }
-                }
-                ([ConsoleKey]::DownArrow) {
-                    if ($selectedIndex -lt $filteredRows.Count - 1) { $selectedIndex++ }
-                    else { $selectedIndex = 0 }
-                }
+            switch ($key) {
                 ([ConsoleKey]::PageUp) {
                     $selectedIndex = [Math]::Max(0, $selectedIndex - $maxVisible)
                 }
@@ -634,6 +708,7 @@ function Select-ProfileInteractive {
                         continue
                     }
                     if ($isConcurrent -and $selectedSet.Count -gt 0) {
+                        try { [Console]::Clear() } catch { }
                         return [PSCustomObject]@{
                             Mode      = "Concurrent"
                             Accounts  = @($selectedSet)
@@ -641,6 +716,7 @@ function Select-ProfileInteractive {
                         }
                     } else {
                         $chosen = $filteredRows[$selectedIndex].Profile
+                        try { [Console]::Clear() } catch { }
                         return [PSCustomObject]@{
                             Mode      = if ($isConcurrent) { "Concurrent" } else { "Isolated" }
                             Accounts  = @($chosen)
@@ -653,6 +729,7 @@ function Select-ProfileInteractive {
                         $filterText = ""
                         $selectedIndex = 0
                     } else {
+                        try { [Console]::Clear() } catch { }
                         return [PSCustomObject]@{ Cancelled = $true }
                     }
                 }
@@ -666,6 +743,7 @@ function Select-ProfileInteractive {
                     $c = $keyInfo.KeyChar
                     if ($c -eq 'q' -or $c -eq 'Q') {
                         if ($filterText.Length -eq 0) {
+                            try { [Console]::Clear() } catch { }
                             return [PSCustomObject]@{ Cancelled = $true }
                         } else {
                             $filterText += $c
@@ -682,7 +760,7 @@ function Select-ProfileInteractive {
                     }
                     elseif ($c -eq 'n' -or $c -eq 'N' -or $c -eq '+') {
                         if ($filterText.Length -eq 0) {
-                            [Console]::Clear()
+                            try { [Console]::Clear() } catch { }
                             try { [Console]::CursorVisible = $true } catch { }
                             $newAccount = Add-NewProfile
                             try { [Console]::CursorVisible = $false } catch { }
@@ -691,6 +769,7 @@ function Select-ProfileInteractive {
                             $filterText = ""
                             $allRows = Get-EnrichedProfileRows -Profiles $script:Profiles -AccountKeys $script:AccountKeys
                             $selectedIndex = [Math]::Max(0, $allRows.Count - 1)
+                            try { [Console]::Clear() } catch { }
                         } else {
                             $filterText += $c
                             $selectedIndex = 0
