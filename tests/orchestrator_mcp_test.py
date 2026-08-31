@@ -88,6 +88,7 @@ class TestToolRegistration:
         names = asyncio.run(get_names())
         expected = sorted(
             [
+                "archive_memory",
                 "create_task",
                 "decompose_task",
                 "claim_task",
@@ -99,6 +100,7 @@ class TestToolRegistration:
                 "push_memory_entry",
                 "read_team_memory",
                 "read_team_context",
+                "get_context_bundle",
                 "submit_checkpoint",
                 "list_tasks",
                 "merge_results",
