@@ -1,16 +1,16 @@
 # Graph Report - Claude-Desktop  (2026-08-31)
 
 ## Corpus Check
-- 251 files · ~167,551 words
+- 253 files · ~178,827 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 573 nodes · 1155 edges · 43 communities (37 shown, 6 thin omitted)
-- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 148 edges (avg confidence: 0.52)
+- 775 nodes · 1607 edges · 57 communities (45 shown, 12 thin omitted)
+- Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 148 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a3564811`
+- Built from commit: `085b1581`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -55,18 +55,32 @@
 - [[_COMMUNITY_Community 37|Community 37]]
 - [[_COMMUNITY_Community 39|Community 39]]
 - [[_COMMUNITY_Community 42|Community 42]]
+- [[_COMMUNITY_Community 43|Community 43]]
+- [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Community 45|Community 45]]
+- [[_COMMUNITY_Community 46|Community 46]]
+- [[_COMMUNITY_Community 47|Community 47]]
+- [[_COMMUNITY_Community 48|Community 48]]
+- [[_COMMUNITY_Community 49|Community 49]]
+- [[_COMMUNITY_Community 50|Community 50]]
+- [[_COMMUNITY_Community 51|Community 51]]
+- [[_COMMUNITY_Community 52|Community 52]]
+- [[_COMMUNITY_Community 53|Community 53]]
+- [[_COMMUNITY_Community 54|Community 54]]
+- [[_COMMUNITY_Community 55|Community 55]]
+- [[_COMMUNITY_Community 56|Community 56]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Memory Log` - 55 edges
-2. `ClaudeDesktopCDPAdapter` - 32 edges
-3. `get_db_conn()` - 31 edges
-4. `BaseWorkerAdapter` - 24 edges
-5. `_row_to_dict()` - 22 edges
-6. `Connection` - 21 edges
-7. `ClaudeDesktopProxyAdapter` - 17 edges
-8. `_ensure_dirs()` - 15 edges
-9. `_read_json()` - 15 edges
-10. `_write_json()` - 14 edges
+1. `IApplicationView` - 64 edges
+2. `Memory Log` - 55 edges
+3. `IntPtr` - 43 edges
+4. `Desktop` - 42 edges
+5. `ClaudeDesktopCDPAdapter` - 32 edges
+6. `get_db_conn()` - 31 edges
+7. `IVirtualDesktop` - 25 edges
+8. `BaseWorkerAdapter` - 24 edges
+9. `IVirtualDesktopManagerInternal` - 24 edges
+10. `Program` - 23 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Path` --uses--> `ClaudeDesktopProxyAdapter`  [INFERRED]
@@ -83,7 +97,7 @@
 ## Import Cycles
 - 1-file cycle: `server/main.py -> server/main.py`
 
-## Communities (43 total, 6 thin omitted)
+## Communities (57 total, 12 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.18
@@ -111,7 +125,7 @@ Nodes (36): Any, Path, _checkpoint_path(), claim_task(), create_job(), create_ta
 
 ### Community 6 - "Community 6"
 Cohesion: 0.10
-Nodes (18): Add-NewProfile(), Arrange-ClaudeWindows(), Ensure-LocalOrchestratorServer(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Get-EnrichedProfileRows(), Get-ValidatedProfilePath(), Get-WindowGridLayout() (+10 more)
+Nodes (20): Add-NewProfile(), Arrange-ClaudeWindows(), Ensure-LocalOrchestratorServer(), Ensure-VirtualDesktopTool(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Get-DesktopBatchAllocation(), Get-EnrichedProfileRows() (+12 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.22
@@ -203,7 +217,7 @@ Nodes (4): Responsibilities:, Rules:, Token Efficiency:, Worker Role: Orchestrat
 
 ### Community 29 - "Community 29"
 Cohesion: 0.50
-Nodes (3): Output Verdict:, Verification Checklist:, Worker Role: Quality Assurance (QA) & Fact-Checker
+Nodes (3): Directives:, Token Efficiency:, Worker Role: Quality Assurance (QA) & Fact-Checker
 
 ### Community 30 - "Community 30"
 Cohesion: 0.40
@@ -211,35 +225,67 @@ Nodes (4): Research Protocol:, Responsibilities:, Strict Rules:, Worker Role: Re
 
 ### Community 31 - "Community 31"
 Cohesion: 0.50
-Nodes (3): Responsibilities:, Strict Rules:, Worker Role: Copywriter / Drafting Specialist
+Nodes (3): Directives:, Token Efficiency:, Worker Role: Copywriter / Drafting Specialist
 
 ### Community 32 - "Community 32"
 Cohesion: 0.67
 Nodes (3): mcp, Orchestrator MCP Requirements, Server Requirements
 
+### Community 33 - "Community 33"
+Cohesion: 0.50
+Nodes (3): Directives:, Token Efficiency:, Worker Role: Formatter & Delivery Packaging
+
+### Community 34 - "Community 34"
+Cohesion: 0.50
+Nodes (3): Directives:, Token Efficiency:, Worker Role: SEO & AEO Optimization Specialist
+
 ### Community 42 - "Community 42"
 Cohesion: 0.67
 Nodes (3): 2026-08-22, 2026-08-22, Local Git Workflow & Auto-Sync (`sync.ps1`)
 
+### Community 44 - "Community 44"
+Cohesion: 0.11
+Nodes (3): PreserveSig, IVirtualDesktop, IVirtualDesktopManagerInternal
+
+### Community 45 - "Community 45"
+Cohesion: 0.19
+Nodes (3): IntPtr, StringBuilder, UInt32
+
+### Community 46 - "Community 46"
+Cohesion: 0.18
+Nodes (6): bool, EnumDelegate, int, string, Program, uint
+
+### Community 48 - "Community 48"
+Cohesion: 0.20
+Nodes (3): MarshalAs, IObjectArray, IServiceProvider10
+
+### Community 50 - "Community 50"
+Cohesion: 0.18
+Nodes (5): DesktopManager, IVirtualDesktopManager, IVirtualDesktopPinnedApps, VDeskTool, VirtualDesktop
+
+### Community 52 - "Community 52"
+Cohesion: 0.33
+Nodes (5): Anti-Patterns (Wastes Tokens), Checkpoint Summary Format (max 500 chars), Handoff Protocol, Memory Entry Format, Session Bootstrap
+
 ## Knowledge Gaps
-- **115 isolated node(s):** `Any`, `TaskStatus`, `HTTPAuthorizationCredentials`, `Row`, `Path` (+110 more)
+- **131 isolated node(s):** `Any`, `TaskStatus`, `HTTPAuthorizationCredentials`, `Row`, `Path` (+126 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `ClaudeDesktopProxyAdapter` connect `Community 8` to `Community 11`, `Community 4`, `Community 14`, `Community 22`?**
-  _High betweenness centrality (0.095) - this node is a cross-community bridge._
+  _High betweenness centrality (0.052) - this node is a cross-community bridge._
 - **Why does `FastAPI` connect `Community 4` to `Community 0`, `Community 9`, `Community 13`, `Community 7`?**
-  _High betweenness centrality (0.080) - this node is a cross-community bridge._
-- **Why does `ClaudeDesktopCDPAdapter` connect `Community 8` to `Community 10`, `Community 11`, `Community 14`, `Community 22`?**
-  _High betweenness centrality (0.039) - this node is a cross-community bridge._
+  _High betweenness centrality (0.044) - this node is a cross-community bridge._
+- **Why does `IApplicationView` connect `Community 43` to `Community 44`, `Community 45`, `Community 49`, `Community 50`, `Community 51`, `Community 53`, `Community 54`, `Community 55`, `Community 56`?**
+  _High betweenness centrality (0.028) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `ClaudeDesktopCDPAdapter` (e.g. with `BaseWorkerAdapter` and `ClaudeDesktopProxyAdapter`) actually correct?**
   _`ClaudeDesktopCDPAdapter` has 4 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 12 inferred relationships involving `BaseWorkerAdapter` (e.g. with `ClaudeDesktopCDPAdapter` and `ClaudeDesktopProxyAdapter`) actually correct?**
-  _`BaseWorkerAdapter` has 12 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `Any`, `Abstract interface for worker execution endpoints.`, `Executes work specified in `spec`.         Returns dictionary:         {` to the rest of the system?**
-  _187 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _203 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.047619047619047616 - nodes in this community are weakly interconnected._
+- **Should `Community 2` be split into smaller, more focused modules?**
+  _Cohesion score 0.03773584905660377 - nodes in this community are weakly interconnected._

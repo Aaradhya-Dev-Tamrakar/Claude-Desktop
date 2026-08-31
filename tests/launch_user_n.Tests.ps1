@@ -503,6 +503,75 @@ Describe "Get-WindowGridLayout" {
     }
 }
 
+Describe "Get-DesktopBatchAllocation" {
+    Context "edge cases" {
+        It "returns empty array when TotalCount or MaxPerDesktop is <= 0" {
+            (Get-DesktopBatchAllocation -TotalCount 0).Count | Should -Be 0
+            (Get-DesktopBatchAllocation -TotalCount -1).Count | Should -Be 0
+            (Get-DesktopBatchAllocation -TotalCount 5 -MaxPerDesktop 0).Count | Should -Be 0
+        }
+    }
+
+    Context "single desktop allocations (1..4 users)" {
+        It "allocates 1 user to Desktop 1 (index 0)" {
+            $allocs = Get-DesktopBatchAllocation -TotalCount 1 -MaxPerDesktop 4
+            $allocs.Count | Should -Be 1
+            $allocs[0].AccountIndex | Should -Be 0
+            $allocs[0].DesktopIndex | Should -Be 0
+            $allocs[0].DesktopSlot | Should -Be 1
+            $allocs[0].DesktopTotal | Should -Be 1
+        }
+
+        It "allocates 4 users to Desktop 1 with slots 1..4" {
+            $allocs = Get-DesktopBatchAllocation -TotalCount 4 -MaxPerDesktop 4
+            $allocs.Count | Should -Be 4
+            for ($i = 0; $i -lt 4; $i++) {
+                $allocs[$i].AccountIndex | Should -Be $i
+                $allocs[$i].DesktopIndex | Should -Be 0
+                $allocs[$i].DesktopSlot | Should -Be ($i + 1)
+                $allocs[$i].DesktopTotal | Should -Be 4
+            }
+        }
+    }
+
+    Context "multi-desktop distribution (5+ users with max 4 per desktop)" {
+        It "distributes 6 users as 4 on Desktop 1 and 2 on Desktop 2" {
+            $allocs = Get-DesktopBatchAllocation -TotalCount 6 -MaxPerDesktop 4
+            $allocs.Count | Should -Be 6
+
+            # First 4 on Desktop 1 (index 0)
+            for ($i = 0; $i -lt 4; $i++) {
+                $allocs[$i].AccountIndex | Should -Be $i
+                $allocs[$i].DesktopIndex | Should -Be 0
+                $allocs[$i].DesktopSlot | Should -Be ($i + 1)
+                $allocs[$i].DesktopTotal | Should -Be 4
+            }
+
+            # Remaining 2 on Desktop 2 (index 1)
+            $allocs[4].AccountIndex | Should -Be 4
+            $allocs[4].DesktopIndex | Should -Be 1
+            $allocs[4].DesktopSlot | Should -Be 1
+            $allocs[4].DesktopTotal | Should -Be 2
+
+            $allocs[5].AccountIndex | Should -Be 5
+            $allocs[5].DesktopIndex | Should -Be 1
+            $allocs[5].DesktopSlot | Should -Be 2
+            $allocs[5].DesktopTotal | Should -Be 2
+        }
+
+        It "distributes 9 users across 3 desktops (4, 4, 1)" {
+            $allocs = Get-DesktopBatchAllocation -TotalCount 9 -MaxPerDesktop 4
+            $allocs.Count | Should -Be 9
+
+            ($allocs | Where-Object { $_.DesktopIndex -eq 0 }).Count | Should -Be 4
+            ($allocs | Where-Object { $_.DesktopIndex -eq 1 }).Count | Should -Be 4
+            ($allocs | Where-Object { $_.DesktopIndex -eq 2 }).Count | Should -Be 1
+            $allocs[8].DesktopSlot | Should -Be 1
+            $allocs[8].DesktopTotal | Should -Be 1
+        }
+    }
+}
+
 Describe "TestHook contract" {
     It "does not execute past function definitions (no interactive prompt hangs the run)" {
         Get-Command Test-ProfilePathWithinBase -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
@@ -514,6 +583,8 @@ Describe "TestHook contract" {
         Get-Command Select-ProfileInteractive -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Add-NewProfile -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Ensure-LocalOrchestratorServer -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Get-DesktopBatchAllocation -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Ensure-VirtualDesktopTool -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Get-WindowGridLayout -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Initialize-WindowHelperType -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Arrange-ClaudeWindows -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty

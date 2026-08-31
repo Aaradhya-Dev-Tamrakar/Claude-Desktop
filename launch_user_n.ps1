@@ -868,18 +868,94 @@ function Ensure-LocalOrchestratorServer {
     }
 }
 
+function Get-DesktopBatchAllocation {
+    <#
+    .SYNOPSIS
+        Distributes N accounts across virtual desktops with a maximum limit per desktop (default 4).
+    .DESCRIPTION
+        Returns an array of PSCustomObject detailing for each item:
+          - AccountIndex: 0-based overall index
+          - DesktopIndex: 0-based virtual desktop index (Desktop 1 is index 0)
+          - DesktopSlot:  1-based slot on that virtual desktop (1..4)
+          - DesktopTotal: total number of windows placed on that virtual desktop
+    #>
+    param(
+        [Parameter(Mandatory = $true)][int]$TotalCount,
+        [int]$MaxPerDesktop = 4
+    )
+
+    if ($TotalCount -le 0 -or $MaxPerDesktop -le 0) {
+        return @()
+    }
+
+    $numDesktops = [int][Math]::Ceiling($TotalCount / [double]$MaxPerDesktop)
+    $allocations = [System.Collections.Generic.List[PSCustomObject]]::new()
+
+    for ($d = 0; $d -lt $numDesktops; $d++) {
+        $startIdx = $d * $MaxPerDesktop
+        $countOnThisDesktop = [Math]::Min($MaxPerDesktop, $TotalCount - $startIdx)
+
+        for ($s = 0; $s -lt $countOnThisDesktop; $s++) {
+            $overallIdx = $startIdx + $s
+            $allocations.Add([PSCustomObject]@{
+                AccountIndex = $overallIdx
+                DesktopIndex = $d
+                DesktopSlot  = ($s + 1)
+                DesktopTotal = $countOnThisDesktop
+            })
+        }
+    }
+
+    return $allocations
+}
+
+function Ensure-VirtualDesktopTool {
+    param(
+        [Parameter(Mandatory = $true)][string]$RepoRoot
+    )
+
+    $toolsDir = Join-Path $RepoRoot "tools"
+    $exePath = Join-Path $toolsDir "VirtualDesktop.exe"
+    $csPath = Join-Path $toolsDir "VirtualDesktop11-24H2.cs"
+
+    if (Test-Path $exePath) {
+        return $exePath
+    }
+
+    if (Test-Path $csPath) {
+        $cscPaths = @(
+            "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\csc.exe",
+            "$env:WINDIR\Microsoft.NET\Framework\v4.0.30319\csc.exe"
+        )
+        $csc = $cscPaths | Where-Object { Test-Path $_ } | Select-Object -First 1
+        if ($csc) {
+            try {
+                if (-not (Test-Path $toolsDir)) {
+                    New-Item -ItemType Directory -Force -Path $toolsDir | Out-Null
+                }
+                & $csc /nologo /target:exe /out:$exePath $csPath | Out-Null
+                if (Test-Path $exePath) {
+                    return $exePath
+                }
+            }
+            catch { }
+        }
+    }
+
+    return $null
+}
+
 function Get-WindowGridLayout {
     <#
     .SYNOPSIS
         Calculates grid rectangles for arranging N windows within a bounding rectangle.
     .DESCRIPTION
         Returns an array of PSCustomObject rectangles with X, Y, Width, Height, and Slot index (1-based).
-        Layout logic:
+        Layout logic (per desktop with max 4 windows):
           - Count <= 1: 1 col, 1 row (full work area)
           - Count == 2: 2 cols, 1 row (left 50%, right 50%)
           - Count == 3..4: 2 cols, 2 rows (quad grid: top-left, top-right, bottom-left, bottom-right)
-          - Count == 5..6: 2 cols, 3 rows (top-left, top-right, mid-left, mid-right, bot-left, bot-right)
-          - Count > 6: 2 cols, Ceil(N/2) rows
+          - Count > 4: 2 cols, Ceil(N/2) rows
     #>
     param(
         [Parameter(Mandatory = $true)]$Bounds,
@@ -1031,6 +1107,7 @@ public class ClaudeDesktopWindowHelper {
 function Arrange-ClaudeWindows {
     param(
         [Parameter(Mandatory = $false)][string[]]$Accounts = @(),
+        [int]$MaxPerDesktop = 4,
         [switch]$WhatIf
     )
 
@@ -1129,25 +1206,72 @@ function Arrange-ClaudeWindows {
             return
         }
 
-        $layoutSlots = Get-WindowGridLayout -Bounds $bounds -Count $targets.Count
+        # Multi-desktop allocation (max 4 per desktop)
+        $allocations = Get-DesktopBatchAllocation -TotalCount $targets.Count -MaxPerDesktop $MaxPerDesktop
+        $vdExe = Ensure-VirtualDesktopTool -RepoRoot $PSScriptRoot
 
-        if ($WhatIf) {
-            Write-Host "[WhatIf] Would auto-snap $($targets.Count) Claude window(s) to desktop grid:" -ForegroundColor DarkCyan
-            for ($i = 0; $i -lt $targets.Count; $i++) {
-                $t = $targets[$i]
-                $s = $layoutSlots[$i]
-                Write-Host "  - Profile '$($t.Account)': Slot $($s.Slot) at (X=$($s.X), Y=$($s.Y), W=$($s.Width), H=$($s.Height))" -ForegroundColor Gray
+        $numDesktops = [int][Math]::Ceiling($targets.Count / [double]$MaxPerDesktop)
+
+        if ($numDesktops -gt 1 -and $vdExe) {
+            try {
+                $countStr = & $vdExe /Quiet /Count 2>$null
+                $currentDesktopCount = 1
+                if ($countStr -match '(\d+)') {
+                    $currentDesktopCount = [int]$Matches[1]
+                }
+                while ($currentDesktopCount -lt $numDesktops) {
+                    if ($WhatIf) {
+                        Write-Host "[WhatIf] Would create Virtual Desktop $($currentDesktopCount + 1)." -ForegroundColor DarkCyan
+                    } else {
+                        & $vdExe /Quiet /New | Out-Null
+                    }
+                    $currentDesktopCount++
+                }
             }
-            return
+            catch {
+                Write-Warning "Failed to ensure virtual desktops ($_)."
+            }
         }
 
-        for ($i = 0; $i -lt $targets.Count; $i++) {
-            $t = $targets[$i]
-            $s = $layoutSlots[$i]
-            [ClaudeDesktopWindowHelper]::SnapWindow($t.Hwnd, $s.X, $s.Y, $s.Width, $s.Height)
+        # Group targets by virtual desktop and apply per-desktop grid arrangement
+        for ($d = 0; $d -lt $numDesktops; $d++) {
+            $desktopItems = @($allocations | Where-Object { $_.DesktopIndex -eq $d })
+            $countOnThisDesktop = $desktopItems.Count
+            $desktopSlots = Get-WindowGridLayout -Bounds $bounds -Count $countOnThisDesktop
+
+            for ($k = 0; $k -lt $desktopItems.Count; $k++) {
+                $alloc = $desktopItems[$k]
+                $target = $targets[$alloc.AccountIndex]
+                $slot = $desktopSlots[$k]
+
+                if ($WhatIf) {
+                    $moveDesc = if ($d -gt 0) { " -> Desktop $($d + 1)" } else { " (Desktop 1)" }
+                    Write-Host "[WhatIf] Profile '$($target.Account)'${moveDesc}: Slot $($slot.Slot) at (X=$($slot.X), Y=$($slot.Y), W=$($slot.Width), H=$($slot.Height))" -ForegroundColor DarkCyan
+                }
+                else {
+                    # Move to virtual desktop if index > 0
+                    if ($d -gt 0 -and $vdExe) {
+                        try {
+                            & $vdExe /Quiet "/GetDesktop:$d" "/MoveWindowHandle:$($target.Hwnd)" | Out-Null
+                        }
+                        catch { }
+                    }
+
+                    # Snap window to slot (only snap if > 1 window on this desktop)
+                    if ($countOnThisDesktop -gt 1) {
+                        [ClaudeDesktopWindowHelper]::SnapWindow($target.Hwnd, $slot.X, $slot.Y, $slot.Width, $slot.Height)
+                    }
+                }
+            }
         }
 
-        Write-Host "[+] Snapped $($targets.Count) Claude profile window(s) into desktop grid (Slots 1-$($targets.Count))." -ForegroundColor Green
+        if (-not $WhatIf) {
+            if ($numDesktops -gt 1) {
+                Write-Host "[+] Arranged $($targets.Count) profiles across $numDesktops virtual desktops (max $MaxPerDesktop per desktop)." -ForegroundColor Green
+            } else {
+                Write-Host "[+] Snapped $($targets.Count) Claude profile window(s) into desktop grid (Slots 1-$($targets.Count))." -ForegroundColor Green
+            }
+        }
     }
     catch {
         Write-Warning "Auto-snap grid arrangement failed: $_"

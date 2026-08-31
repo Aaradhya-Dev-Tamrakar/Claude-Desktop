@@ -45,8 +45,8 @@
     "semantic_hash": "9163a74b118a56b4f05216c1a842b898"
   },
   "launch_user_n.ps1": {
-    "mtime": 1788147034.835668,
-    "ast_hash": "6318a75afbdb5e35db27cbae20b1831c",
+    "mtime": 1788147559.0037673,
+    "ast_hash": "38baedf0d28afe13735452b0e9e390eb",
     "semantic_hash": ""
   },
   "mcp-servers/cloud-orchestrator-mcp/run_server.py": {
@@ -60,8 +60,8 @@
     "semantic_hash": "7b5a62a07ab6a5fb99d81a6afbd96642"
   },
   "mcp-servers/orchestrator-mcp/run_server.py": {
-    "mtime": 1788147059.8365915,
-    "ast_hash": "c01b9c710535fb5b4e911599c20d872d",
+    "mtime": 1788147102.6813917,
+    "ast_hash": "10c7379f9feda24052b6e9a9284e5310",
     "semantic_hash": ""
   },
   "orchestrator-state/checkpoints/task_2026-08-05_004.json": {
@@ -1130,8 +1130,8 @@
     "semantic_hash": "f4585fd2132a5b2a9fd646626ea71fe5"
   },
   "tests/launch_user_n.Tests.ps1": {
-    "mtime": 1788147022.2704568,
-    "ast_hash": "4d3635e360898df3eb77beed99c0ab44",
+    "mtime": 1788147540.481263,
+    "ast_hash": "5ec554df71f7ecad56c5141b3c604af6",
     "semantic_hash": ""
   },
   "tests/orchestrator_mcp_test.py": {
@@ -1225,9 +1225,9 @@
     "semantic_hash": "91f70bea4d7f4b1d696ea949a33e4f51"
   },
   "worker-prompts/formatter.md": {
-    "mtime": 1788017996.334133,
-    "ast_hash": "6f54566dc83dc87c644c819cd8dd3c5e",
-    "semantic_hash": "6f54566dc83dc87c644c819cd8dd3c5e"
+    "mtime": 1788147075.1295204,
+    "ast_hash": "9ea9cd10e1d34fad15d471d454a8b1e9",
+    "semantic_hash": ""
   },
   "worker-prompts/orchestrator.md": {
     "mtime": 1788147057.3115668,
@@ -1235,9 +1235,9 @@
     "semantic_hash": ""
   },
   "worker-prompts/qa-reviewer.md": {
-    "mtime": 1788017996.3361998,
-    "ast_hash": "b27561827cc497ce3cf867a2341fac9e",
-    "semantic_hash": "b27561827cc497ce3cf867a2341fac9e"
+    "mtime": 1788147073.4822516,
+    "ast_hash": "76c8aa21b5eaeb5b56112bf69da2dddd",
+    "semantic_hash": ""
   },
   "worker-prompts/researcher.md": {
     "mtime": 1788147060.5108635,
@@ -1245,14 +1245,14 @@
     "semantic_hash": ""
   },
   "worker-prompts/seo-optimizer.md": {
-    "mtime": 1788017996.3372483,
-    "ast_hash": "f323bf94b845bdf2936d20a4c914a108",
-    "semantic_hash": "f323bf94b845bdf2936d20a4c914a108"
+    "mtime": 1788147071.758551,
+    "ast_hash": "9027fbd1598dbc579bb391f62279b866",
+    "semantic_hash": ""
   },
   "worker-prompts/writer.md": {
-    "mtime": 1788017996.3377848,
-    "ast_hash": "a4e7fb1e2902d3f32104b7f3fb6878fa",
-    "semantic_hash": "a4e7fb1e2902d3f32104b7f3fb6878fa"
+    "mtime": 1788147070.2747457,
+    "ast_hash": "f073a656fe77910ffaa55d071b686108",
+    "semantic_hash": ""
   },
   "server/api/routes_memory.py": {
     "mtime": 1788143781.5980954,
@@ -1273,5 +1273,15 @@
     "mtime": 1788143900.5228693,
     "ast_hash": "b0230e6d93cb64ec793e0c9e74916e91",
     "semantic_hash": "b0230e6d93cb64ec793e0c9e74916e91"
+  },
+  "tools/VirtualDesktop11-24H2.cs": {
+    "mtime": 1788147321.1998696,
+    "ast_hash": "de63679924d49fdd609e46aa484f6839",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/HANDOFF_PROTOCOL.md": {
+    "mtime": 1788147064.241945,
+    "ast_hash": "0890a0c7d28845c8eac96ebf7deb4fce",
+    "semantic_hash": ""
   }
 }

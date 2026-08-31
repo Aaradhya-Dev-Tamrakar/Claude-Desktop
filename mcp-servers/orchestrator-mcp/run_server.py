@@ -586,16 +586,20 @@ def submit_checkpoint(
     name="list_tasks",
     description=(
         "List tasks, optionally filtered by status and/or parent_id. "
-        "The directory listing of orchestrator-state/tasks/ is the index — "
-        "there is no separate counter/index file (see SCHEMA.md). "
-        "Role: any."
+        "Pass fields (e.g. ['id','status','spec']) for compact output — "
+        "omit for full task objects. exclude_terminal=true skips done/merged "
+        "tasks. limit caps result count (default 50). Role: any."
     ),
 )
 def list_tasks(
     status: TaskStatus | None = None,
     parent_id: str | None = None,
+    fields: list[str] | None = None,
+    exclude_terminal: bool = False,
+    limit: int | None = 50,
 ) -> list[dict[str, Any]]:
     _ensure_dirs()
+    terminal = {"done", "merged"}
     out = []
     for path in sorted(TASKS_DIR.glob("*.json")):
         task = _read_json(path)
@@ -605,7 +609,13 @@ def list_tasks(
             continue
         if parent_id is not None and task["parent_id"] != parent_id:
             continue
+        if exclude_terminal and task["status"] in terminal:
+            continue
+        if fields is not None:
+            task = {k: task[k] for k in fields if k in task}
         out.append(task)
+        if limit is not None and len(out) >= limit:
+            break
     return out
 
 
