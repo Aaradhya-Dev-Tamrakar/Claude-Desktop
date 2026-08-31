@@ -383,18 +383,32 @@ def push_live_status(
 @srv.tool(
     name="read_all_live_status",
     description=(
-        "Read every account's current live-status file. Role: orchestrator "
-        "(checking on executors) or anyone wanting a snapshot of who's doing "
-        "what right now."
+        "Read accounts' current live-status files. Pass stale_threshold_hours "
+        "(default 6) to filter out offline accounts and save tokens. Pass "
+        "stale_threshold_hours=null to include all accounts. Role: orchestrator "
+        "or anyone checking worker activity."
     ),
 )
-def read_all_live_status() -> list[dict[str, Any]]:
+def read_all_live_status(
+    stale_threshold_hours: int | None = 6,
+) -> list[dict[str, Any]]:
     _ensure_dirs()
     out = []
+    now = datetime.now(timezone.utc)
     for path in sorted(LIVE_STATUS_DIR.glob("*.json")):
         data = _read_json(path)
-        if data is not None:
-            out.append(data)
+        if data is None:
+            continue
+        if stale_threshold_hours is not None:
+            hb = data.get("heartbeat_at")
+            if hb:
+                try:
+                    hb_dt = datetime.strptime(hb, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+                    if (now - hb_dt).total_seconds() > stale_threshold_hours * 3600:
+                        continue
+                except (ValueError, TypeError):
+                    pass
+        out.append(data)
     return out
 
 
@@ -404,17 +418,24 @@ def read_all_live_status() -> list[dict[str, Any]]:
         "Append a team-memory entry (an account's note/context worth other "
         "accounts seeing). Writes a new file under orchestrator-state/memory/ "
         "— never edits an existing entry, so there is no shared-file write "
-        "race (see SCHEMA.md). This is the MCP-native replacement for "
-        "manually pasting team-memory.md into a profile's chat: any account "
-        "can push a note here and any other account picks it up on next "
-        "sync.ps1 pull via read_team_memory. Role: any."
+        "race (see SCHEMA.md). Supports project/topic tags, TTL expiry in days "
+        "(default 30), and priority ('low'|'normal'|'high'|'pinned'). "
+        "Role: any."
     ),
 )
-def push_memory_entry(account: str, text: str) -> dict[str, Any]:
+def push_memory_entry(
+    account: str,
+    text: str,
+    tags: list[str] | None = None,
+    ttl_days: int | None = 30,
+    priority: Literal["low", "normal", "high", "pinned"] = "normal",
+) -> dict[str, Any]:
     _ensure_dirs()
     _validate_account(account)
     if not text or not text.strip():
         raise ValueError("text must be non-empty")
+    if priority not in ("low", "normal", "high", "pinned"):
+        raise ValueError(f"invalid priority {priority!r}: must be low, normal, high, or pinned")
 
     now = _now_iso()
     # Timestamp-derived entry_id, collision-checked against the directory
@@ -432,6 +453,9 @@ def push_memory_entry(account: str, text: str) -> dict[str, Any]:
         "account": account,
         "text": text,
         "pushed_at": now,
+        "tags": tags or [],
+        "ttl_days": ttl_days,
+        "priority": priority,
     }
     _write_json(_memory_entry_path(account, entry_id), entry)
     return entry
