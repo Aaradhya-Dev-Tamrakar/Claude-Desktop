@@ -26,7 +26,11 @@ param (
     # Never set by real launches (launch.bat / manual pwsh invocation).
     [switch]$TestHook,
     # Bypass interactive TUI mode and use classic terminal prompts
-    [switch]$NoTUI
+    [switch]$NoTUI,
+    # Disable automatic window snapping / grid arrangement for concurrent launches
+    [switch]$NoSnap,
+    # Explicitly force window snapping / grid arrangement
+    [switch]$Snap
 )
 
 try {
@@ -864,6 +868,292 @@ function Ensure-LocalOrchestratorServer {
     }
 }
 
+function Get-WindowGridLayout {
+    <#
+    .SYNOPSIS
+        Calculates grid rectangles for arranging N windows within a bounding rectangle.
+    .DESCRIPTION
+        Returns an array of PSCustomObject rectangles with X, Y, Width, Height, and Slot index (1-based).
+        Layout logic:
+          - Count <= 1: 1 col, 1 row (full work area)
+          - Count == 2: 2 cols, 1 row (left 50%, right 50%)
+          - Count == 3..4: 2 cols, 2 rows (quad grid: top-left, top-right, bottom-left, bottom-right)
+          - Count == 5..6: 2 cols, 3 rows (top-left, top-right, mid-left, mid-right, bot-left, bot-right)
+          - Count > 6: 2 cols, Ceil(N/2) rows
+    #>
+    param(
+        [Parameter(Mandatory = $true)]$Bounds,
+        [Parameter(Mandatory = $true)][int]$Count
+    )
+
+    if ($Count -le 0) {
+        return @()
+    }
+
+    $bX = [int]$Bounds.X
+    $bY = [int]$Bounds.Y
+    $bW = [int]$Bounds.Width
+    $bH = [int]$Bounds.Height
+
+    if ($Count -eq 1) {
+        return @([PSCustomObject]@{
+            Slot   = 1
+            X      = $bX
+            Y      = $bY
+            Width  = $bW
+            Height = $bH
+        })
+    }
+
+    $cols = 2
+    $rows = if ($Count -eq 2) { 1 } elseif ($Count -le 4) { 2 } else { [int][Math]::Ceiling($Count / 2.0) }
+
+    $baseColW = [int][Math]::Floor($bW / $cols)
+    $baseRowH = [int][Math]::Floor($bH / $rows)
+
+    $slots = for ($i = 0; $i -lt $Count; $i++) {
+        $c = $i % $cols
+        $r = [int][Math]::Floor($i / $cols)
+
+        $x = $bX + ($c * $baseColW)
+        $y = $bY + ($r * $baseRowH)
+
+        $w = if ($c -eq ($cols - 1)) { $bW - ($c * $baseColW) } else { $baseColW }
+        $h = if ($r -eq ($rows - 1)) { $bH - ($r * $baseRowH) } else { $baseRowH }
+
+        [PSCustomObject]@{
+            Slot   = ($i + 1)
+            X      = $x
+            Y      = $y
+            Width  = $w
+            Height = $h
+        }
+    }
+
+    return $slots
+}
+
+function Initialize-WindowHelperType {
+    if (-not ([System.Management.Automation.PSTypeName]'ClaudeDesktopWindowHelper').Type) {
+        $typeDef = @"
+using System;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Collections.Generic;
+
+public class ClaudeDesktopWindowHelper {
+    [DllImport("user32.dll")]
+    public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+    public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+    [DllImport("user32.dll")]
+    public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+    [DllImport("user32.dll")]
+    public static extern bool IsWindowVisible(IntPtr hWnd);
+
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+    [DllImport("user32.dll")]
+    public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, out RECT pvParam, uint fWinIni);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
+    }
+
+    public const uint SPI_GETWORKAREA = 0x0030;
+    public const int SW_RESTORE = 9;
+    public const uint SWP_NOZORDER = 0x0004;
+    public const uint SWP_NOACTIVATE = 0x0010;
+    public const uint SWP_SHOWWINDOW = 0x0040;
+
+    public static RECT GetPrimaryWorkArea() {
+        RECT rect = new RECT();
+        SystemParametersInfo(SPI_GETWORKAREA, 0, out rect, 0);
+        return rect;
+    }
+
+    public static List<IntPtr> GetProcessWindows(uint processId) {
+        var result = new List<IntPtr>();
+        EnumWindows((hWnd, lParam) => {
+            if (IsWindowVisible(hWnd)) {
+                uint pid;
+                GetWindowThreadProcessId(hWnd, out pid);
+                if (pid == processId) {
+                    StringBuilder className = new StringBuilder(256);
+                    GetClassName(hWnd, className, 256);
+                    string cls = className.ToString();
+                    RECT r;
+                    GetWindowRect(hWnd, out r);
+                    int w = r.Right - r.Left;
+                    int h = r.Bottom - r.Top;
+                    if (w > 150 && h > 150) {
+                        result.Add(hWnd);
+                    }
+                }
+            }
+            return true;
+        }, IntPtr.Zero);
+        return result;
+    }
+
+    public static void SnapWindow(IntPtr hWnd, int x, int y, int width, int height) {
+        ShowWindowAsync(hWnd, SW_RESTORE);
+        SetWindowPos(hWnd, IntPtr.Zero, x, y, width, height, SWP_NOZORDER | SWP_NOACTIVATE | SWP_SHOWWINDOW);
+    }
+}
+"@
+        try {
+            Add-Type -TypeDefinition $typeDef -Language CSharp
+        }
+        catch { }
+    }
+}
+
+function Arrange-ClaudeWindows {
+    param(
+        [Parameter(Mandatory = $false)][string[]]$Accounts = @(),
+        [switch]$WhatIf
+    )
+
+    try {
+        Initialize-WindowHelperType
+        if (-not ([System.Management.Automation.PSTypeName]'ClaudeDesktopWindowHelper').Type) {
+            Write-Warning "Window helper could not be initialized. Skipping auto-snap."
+            return
+        }
+
+        $workArea = [ClaudeDesktopWindowHelper]::GetPrimaryWorkArea()
+        $bounds = [PSCustomObject]@{
+            X      = [int]$workArea.Left
+            Y      = [int]$workArea.Top
+            Width  = [int]($workArea.Right - $workArea.Left)
+            Height = [int]($workArea.Bottom - $workArea.Top)
+        }
+
+        if ($bounds.Width -le 0 -or $bounds.Height -le 0) {
+            return
+        }
+
+        $orderedProfiles = [System.Collections.Generic.List[string]]::new()
+        foreach ($acc in $Accounts) {
+            if ($acc -and -not $orderedProfiles.Contains($acc)) {
+                $orderedProfiles.Add($acc)
+            }
+        }
+
+        $allKnownAccounts = if ($script:AccountKeys) { @($script:AccountKeys) } else { @() }
+        foreach ($acc in $allKnownAccounts) {
+            if (-not $orderedProfiles.Contains($acc)) {
+                $orderedProfiles.Add($acc)
+            }
+        }
+
+        $targets = [System.Collections.Generic.List[PSCustomObject]]::new()
+
+        # Wait up to ~3.5s for launched windows to be created and visible
+        $maxAttempts = 7
+        for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+            $targets.Clear()
+            $runningProcs = @(Get-CimInstance Win32_Process -Filter "Name = 'claude.exe'" -ErrorAction SilentlyContinue)
+
+            foreach ($acc in $orderedProfiles) {
+                $pInfo = $script:Profiles.$acc
+                $rawPath = if ($pInfo -and $pInfo.path) { [string]$pInfo.path } else { "%USERPROFILE%\.claude-profiles\$acc" }
+                $expPath = [System.Environment]::ExpandEnvironmentVariables($rawPath)
+
+                $matchedProcs = @($runningProcs | Where-Object { $_.CommandLine -and $_.CommandLine.IndexOf($expPath, [System.StringComparison]::OrdinalIgnoreCase) -ge 0 })
+                if ($matchedProcs.Count -gt 0) {
+                    $mainPids = @($matchedProcs | Select-Object -ExpandProperty ProcessId)
+                    $allProfilePids = @($runningProcs | Where-Object { $mainPids -contains $_.ProcessId -or $mainPids -contains $_.ParentProcessId } | Select-Object -ExpandProperty ProcessId)
+
+                    $foundHwnd = $null
+                    foreach ($pid in $allProfilePids) {
+                        $hwnds = [ClaudeDesktopWindowHelper]::GetProcessWindows($pid)
+                        if ($hwnds.Count -gt 0) {
+                            $foundHwnd = $hwnds[0]
+                            break
+                        }
+                    }
+
+                    if ($foundHwnd) {
+                        $targets.Add([PSCustomObject]@{
+                            Account = $acc
+                            Hwnd    = $foundHwnd
+                        })
+                    }
+                }
+            }
+
+            # Check if all requested accounts have visible windows
+            $allRequestedFound = $true
+            if ($Accounts.Count -gt 0) {
+                foreach ($req in $Accounts) {
+                    $found = $false
+                    foreach ($t in $targets) {
+                        if ($t.Account -eq $req) { $found = $true; break }
+                    }
+                    if (-not $found) {
+                        $allRequestedFound = $false
+                        break
+                    }
+                }
+            }
+
+            if ($allRequestedFound -and $targets.Count -ge 2) {
+                break
+            }
+            Start-Sleep -Milliseconds 500
+        }
+
+        # 1 user / profile stays normal (no forced snapping)
+        if ($targets.Count -le 1) {
+            return
+        }
+
+        $layoutSlots = Get-WindowGridLayout -Bounds $bounds -Count $targets.Count
+
+        if ($WhatIf) {
+            Write-Host "[WhatIf] Would auto-snap $($targets.Count) Claude window(s) to desktop grid:" -ForegroundColor DarkCyan
+            for ($i = 0; $i -lt $targets.Count; $i++) {
+                $t = $targets[$i]
+                $s = $layoutSlots[$i]
+                Write-Host "  - Profile '$($t.Account)': Slot $($s.Slot) at (X=$($s.X), Y=$($s.Y), W=$($s.Width), H=$($s.Height))" -ForegroundColor Gray
+            }
+            return
+        }
+
+        for ($i = 0; $i -lt $targets.Count; $i++) {
+            $t = $targets[$i]
+            $s = $layoutSlots[$i]
+            [ClaudeDesktopWindowHelper]::SnapWindow($t.Hwnd, $s.X, $s.Y, $s.Width, $s.Height)
+        }
+
+        Write-Host "[+] Snapped $($targets.Count) Claude profile window(s) into desktop grid (Slots 1-$($targets.Count))." -ForegroundColor Green
+    }
+    catch {
+        Write-Warning "Auto-snap grid arrangement failed: $_"
+    }
+}
+
 if ($TestHook) {
     return
 }
@@ -1425,6 +1715,9 @@ if ($isInteractive -and -not $Users -and -not $Account) {
     foreach ($acc in $tuiChoice.Accounts) {
         Invoke-ProfileLaunch -Account $acc
     }
+    if (($Concurrent -or $Snap) -and -not $NoSnap) {
+        Arrange-ClaudeWindows -Accounts $tuiChoice.Accounts -WhatIf:$WhatIf
+    }
     
     if (-not $WhatIf) {
         Read-Host "Press Enter to close this window"
@@ -1478,11 +1771,17 @@ if ($Users -and $Users.Count -gt 0) {
     foreach ($resolvedAccount in $ResolvedAccounts) {
         Invoke-ProfileLaunch -Account $resolvedAccount
     }
+    if (($Concurrent -or $Snap) -and -not $NoSnap) {
+        Arrange-ClaudeWindows -Accounts $ResolvedAccounts -WhatIf:$WhatIf
+    }
 }
 else {
     $tableAlreadyShown = -not $Mode -and -not $Concurrent
     $singleAccount = Resolve-SingleAccount -PresetAccount $Account -SkipTableDisplay:$tableAlreadyShown
     Invoke-ProfileLaunch -Account $singleAccount
+    if (($Concurrent -or $Snap) -and -not $NoSnap) {
+        Arrange-ClaudeWindows -Accounts @($singleAccount) -WhatIf:$WhatIf
+    }
 }
 
 if (-not $WhatIf) {

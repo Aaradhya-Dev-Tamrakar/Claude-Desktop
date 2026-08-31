@@ -1,16 +1,16 @@
 # Graph Report - Claude-Desktop  (2026-08-31)
 
 ## Corpus Check
-- 251 files · ~165,306 words
+- 251 files · ~167,551 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 567 nodes · 1146 edges · 43 communities (37 shown, 6 thin omitted)
+- 573 nodes · 1155 edges · 43 communities (37 shown, 6 thin omitted)
 - Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 148 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a84291b2`
+- Built from commit: `a3564811`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -110,8 +110,8 @@ Cohesion: 0.22
 Nodes (36): Any, Path, _checkpoint_path(), claim_task(), create_job(), create_task(), decompose_task(), _ensure_dirs() (+28 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.11
-Nodes (15): Add-NewProfile(), Ensure-LocalOrchestratorServer(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Get-EnrichedProfileRows(), Get-ValidatedProfilePath(), Invoke-ProfileLaunch(), Merge-McpServers() (+7 more)
+Cohesion: 0.10
+Nodes (18): Add-NewProfile(), Arrange-ClaudeWindows(), Ensure-LocalOrchestratorServer(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Get-EnrichedProfileRows(), Get-ValidatedProfilePath(), Get-WindowGridLayout() (+10 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.22
@@ -150,8 +150,8 @@ Cohesion: 0.22
 Nodes (8): _now_iso(), PipelineEngine, Checks whether all tasks for a job have reached terminal state (done/merged)., Decomposes intake jobs into discrete, pipeline-staged tasks and manages     stag, Load SKU definition JSON from sku-templates directory., Takes a job and a list of parsed input items (e.g. from CSV/JSON).         Creat, When a task is verified (or passes QA), triggers generation of the next stage ta, Connection
 
 ### Community 16 - "Community 16"
-Cohesion: 0.15
-Nodes (11): Application rules, Coursework notebooks (IV/I, exam sequence order), Cross-Linking Hub, Hub, Leaf nodes, Pending, Unlinked notebooks, Orchestrator MCP Server (+3 more)
+Cohesion: 0.14
+Nodes (12): Application rules, Coursework notebooks (IV/I, exam sequence order), Cross-Linking Hub, Hub, Leaf nodes, Pending, Query Protocol (Token Savings), Unlinked notebooks (+4 more)
 
 ### Community 17 - "Community 17"
 Cohesion: 0.17
@@ -198,16 +198,16 @@ Cohesion: 0.50
 Nodes (4): Job Entity, QA Review Entity, Task Entity, Worker Node Entity
 
 ### Community 28 - "Community 28"
-Cohesion: 0.50
-Nodes (3): Responsibilities:, Rules:, Worker Role: Orchestrator / Dispatcher
+Cohesion: 0.40
+Nodes (4): Responsibilities:, Rules:, Token Efficiency:, Worker Role: Orchestrator / Dispatcher
 
 ### Community 29 - "Community 29"
 Cohesion: 0.50
 Nodes (3): Output Verdict:, Verification Checklist:, Worker Role: Quality Assurance (QA) & Fact-Checker
 
 ### Community 30 - "Community 30"
-Cohesion: 0.50
-Nodes (3): Responsibilities:, Strict Rules:, Worker Role: Researcher / Attribute Extractor
+Cohesion: 0.40
+Nodes (4): Research Protocol:, Responsibilities:, Strict Rules:, Worker Role: Researcher / Attribute Extractor
 
 ### Community 31 - "Community 31"
 Cohesion: 0.50
@@ -222,7 +222,7 @@ Cohesion: 0.67
 Nodes (3): 2026-08-22, 2026-08-22, Local Git Workflow & Auto-Sync (`sync.ps1`)
 
 ## Knowledge Gaps
-- **112 isolated node(s):** `Any`, `TaskStatus`, `HTTPAuthorizationCredentials`, `Row`, `Path` (+107 more)
+- **115 isolated node(s):** `Any`, `TaskStatus`, `HTTPAuthorizationCredentials`, `Row`, `Path` (+110 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -230,16 +230,16 @@ Nodes (3): 2026-08-22, 2026-08-22, Local Git Workflow & Auto-Sync (`sync.ps1`)
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `ClaudeDesktopProxyAdapter` connect `Community 8` to `Community 11`, `Community 4`, `Community 14`, `Community 22`?**
-  _High betweenness centrality (0.097) - this node is a cross-community bridge._
+  _High betweenness centrality (0.095) - this node is a cross-community bridge._
 - **Why does `FastAPI` connect `Community 4` to `Community 0`, `Community 9`, `Community 13`, `Community 7`?**
-  _High betweenness centrality (0.082) - this node is a cross-community bridge._
+  _High betweenness centrality (0.080) - this node is a cross-community bridge._
 - **Why does `ClaudeDesktopCDPAdapter` connect `Community 8` to `Community 10`, `Community 11`, `Community 14`, `Community 22`?**
-  _High betweenness centrality (0.040) - this node is a cross-community bridge._
+  _High betweenness centrality (0.039) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `ClaudeDesktopCDPAdapter` (e.g. with `BaseWorkerAdapter` and `ClaudeDesktopProxyAdapter`) actually correct?**
   _`ClaudeDesktopCDPAdapter` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 12 inferred relationships involving `BaseWorkerAdapter` (e.g. with `ClaudeDesktopCDPAdapter` and `ClaudeDesktopProxyAdapter`) actually correct?**
   _`BaseWorkerAdapter` has 12 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `Any`, `Abstract interface for worker execution endpoints.`, `Executes work specified in `spec`.         Returns dictionary:         {` to the rest of the system?**
-  _184 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _187 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.047619047619047616 - nodes in this community are weakly interconnected._

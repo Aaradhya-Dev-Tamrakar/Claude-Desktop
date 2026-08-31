@@ -27,7 +27,7 @@ import json
 import re
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Literal
 
@@ -439,24 +439,64 @@ def push_memory_entry(account: str, text: str) -> dict[str, Any]:
 @srv.tool(
     name="read_team_memory",
     description=(
-        "Read all team-memory entries across every account, sorted "
-        "chronologically by pushed_at. Pass since (ISO 8601 UTC, e.g. "
-        "'2026-08-05T00:00:00Z') to only return entries pushed at or after "
-        "that time. Role: any."
+        "Read team-memory entries, sorted chronologically by pushed_at. "
+        "Defaults to the last 20 entries to save tokens — pass limit=null "
+        "for all entries (expensive). Supports filtering by since (ISO 8601 "
+        "UTC), account, substring search, and project tag. Auto-skips "
+        "expired entries (ttl_days). Returns {entries, total_available, "
+        "truncated}. Role: any."
     ),
 )
-def read_team_memory(since: str | None = None) -> list[dict[str, Any]]:
+def read_team_memory(
+    since: str | None = None,
+    limit: int | None = 20,
+    account: str | None = None,
+    search: str | None = None,
+    project: str | None = None,
+) -> dict[str, Any]:
     _ensure_dirs()
+    now_str = _now_iso()
     out = []
     for path in sorted(MEMORY_DIR.glob("*.json")):
         entry = _read_json(path)
         if entry is None:
             continue
+        # Time filter
         if since is not None and entry["pushed_at"] < since:
             continue
+        # TTL expiry filter (backward compat: missing ttl_days = permanent)
+        ttl = entry.get("ttl_days")
+        if ttl is not None:
+            pushed = entry["pushed_at"]
+            try:
+                pushed_dt = datetime.strptime(pushed, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+                if datetime.now(timezone.utc) > pushed_dt + timedelta(days=ttl):
+                    continue
+            except (ValueError, TypeError):
+                pass  # Malformed date — include rather than silently drop
+        # Account filter
+        if account is not None and entry.get("account") != account:
+            continue
+        # Project/tag filter (backward compat: missing tags = [])
+        if project is not None:
+            tags = entry.get("tags", [])
+            if project.lower() not in [t.lower() for t in tags]:
+                continue
+        # Substring search
+        if search is not None and search.lower() not in entry.get("text", "").lower():
+            continue
         out.append(entry)
+    out.sort(key=lambda e: e.get("priority") == "pinned", reverse=True)
     out.sort(key=lambda e: e["pushed_at"])
-    return out
+    # Pinned entries first, then chronological
+    pinned = [e for e in out if e.get("priority") == "pinned"]
+    unpinned = [e for e in out if e.get("priority") != "pinned"]
+    unpinned.sort(key=lambda e: e["pushed_at"])
+    combined = pinned + unpinned
+    total = len(combined)
+    if limit is not None:
+        combined = combined[-limit:]  # Last N entries (most recent)
+    return {"entries": combined, "total_available": total, "truncated": total > len(combined)}
 
 
 @srv.tool(

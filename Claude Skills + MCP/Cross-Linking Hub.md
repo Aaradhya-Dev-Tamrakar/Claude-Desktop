@@ -38,6 +38,17 @@ No linked repos — standalone exam-prep notebooks, feed into the hub notebook f
 | 5 | ME708 — Organization and Management | Sep 20, 2026 (2083 Ashoj 4) | `94cd4e14-802d-4231-b27d-6a4f4a2e6182` |
 | 6 | EX725 04 — Aeronautical Telecommunication | Sep 24, 2026 (2083 Ashoj 8) | `56cdad30-13d3-4621-a0b7-8f841858476b` |
 
+## Query Protocol (Token Savings)
+
+Before performing ANY web search for a topic covered by a linked notebook:
+1. Check this hub for matching NLM notebook ID
+2. Use `notebooklm-mcp` → `notebook_query` with the notebook ID
+3. Only fall back to web search if NLM returns insufficient results
+
+Cost comparison:
+- Web search round-trip: ~3,000–5,000 tokens (query + results + re-read)
+- NLM notebook_query: ~500–1,000 tokens (pre-curated, citation-linked)
+
 ## Pending
 
 - If a 4th repo, or a notebook/repo outside the sets above, surfaces, treat it as unmapped — ask where it fits before using it in any cross-linking or status-summary task.

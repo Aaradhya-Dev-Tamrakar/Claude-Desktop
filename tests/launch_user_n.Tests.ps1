@@ -362,6 +362,147 @@ Describe "Get-EnrichedProfileRows" {
     }
 }
 
+Describe "Get-WindowGridLayout" {
+    Context "edge cases" {
+        It "returns empty array when Count is 0 or negative" {
+            $bounds = [PSCustomObject]@{ X = 0; Y = 0; Width = 1920; Height = 1080 }
+            (Get-WindowGridLayout -Bounds $bounds -Count 0).Count | Should -Be 0
+            (Get-WindowGridLayout -Bounds $bounds -Count -1).Count | Should -Be 0
+        }
+    }
+
+    Context "1 window (normal space)" {
+        It "returns full work area for single window" {
+            $bounds = [PSCustomObject]@{ X = 0; Y = 0; Width = 1920; Height = 1040 }
+            $slots = Get-WindowGridLayout -Bounds $bounds -Count 1
+            $slots.Count | Should -Be 1
+            $slots[0].Slot | Should -Be 1
+            $slots[0].X | Should -Be 0
+            $slots[0].Y | Should -Be 0
+            $slots[0].Width | Should -Be 1920
+            $slots[0].Height | Should -Be 1040
+        }
+    }
+
+    Context "2 windows (side-by-side 50% split)" {
+        It "splits screen into left and right halves" {
+            $bounds = [PSCustomObject]@{ X = 0; Y = 0; Width = 1920; Height = 1040 }
+            $slots = Get-WindowGridLayout -Bounds $bounds -Count 2
+            $slots.Count | Should -Be 2
+            # Left half
+            $slots[0].Slot | Should -Be 1
+            $slots[0].X | Should -Be 0
+            $slots[0].Y | Should -Be 0
+            $slots[0].Width | Should -Be 960
+            $slots[0].Height | Should -Be 1040
+            # Right half
+            $slots[1].Slot | Should -Be 2
+            $slots[1].X | Should -Be 960
+            $slots[1].Y | Should -Be 0
+            $slots[1].Width | Should -Be 960
+            $slots[1].Height | Should -Be 1040
+        }
+    }
+
+    Context "3 windows (2x2 quad grid with 3 active slots)" {
+        It "places windows in top-left, top-right, bottom-left" {
+            $bounds = [PSCustomObject]@{ X = 0; Y = 0; Width = 1920; Height = 1040 }
+            $slots = Get-WindowGridLayout -Bounds $bounds -Count 3
+            $slots.Count | Should -Be 3
+            # Top-Left (Slot 1)
+            $slots[0].Slot | Should -Be 1
+            $slots[0].X | Should -Be 0
+            $slots[0].Y | Should -Be 0
+            $slots[0].Width | Should -Be 960
+            $slots[0].Height | Should -Be 520
+            # Top-Right (Slot 2)
+            $slots[1].Slot | Should -Be 2
+            $slots[1].X | Should -Be 960
+            $slots[1].Y | Should -Be 0
+            $slots[1].Width | Should -Be 960
+            $slots[1].Height | Should -Be 520
+            # Bottom-Left (Slot 3)
+            $slots[2].Slot | Should -Be 3
+            $slots[2].X | Should -Be 0
+            $slots[2].Y | Should -Be 520
+            $slots[2].Width | Should -Be 960
+            $slots[2].Height | Should -Be 520
+        }
+    }
+
+    Context "4 windows (2x2 quad grid)" {
+        It "places 4 windows into 4 quadrants" {
+            $bounds = [PSCustomObject]@{ X = 0; Y = 0; Width = 1920; Height = 1040 }
+            $slots = Get-WindowGridLayout -Bounds $bounds -Count 4
+            $slots.Count | Should -Be 4
+            # Top-Left
+            $slots[0].Slot | Should -Be 1
+            $slots[0].X | Should -Be 0
+            $slots[0].Y | Should -Be 0
+            $slots[0].Width | Should -Be 960
+            $slots[0].Height | Should -Be 520
+            # Top-Right
+            $slots[1].Slot | Should -Be 2
+            $slots[1].X | Should -Be 960
+            $slots[1].Y | Should -Be 0
+            $slots[1].Width | Should -Be 960
+            $slots[1].Height | Should -Be 520
+            # Bottom-Left
+            $slots[2].Slot | Should -Be 3
+            $slots[2].X | Should -Be 0
+            $slots[2].Y | Should -Be 520
+            $slots[2].Width | Should -Be 960
+            $slots[2].Height | Should -Be 520
+            # Bottom-Right
+            $slots[3].Slot | Should -Be 4
+            $slots[3].X | Should -Be 960
+            $slots[3].Y | Should -Be 520
+            $slots[3].Width | Should -Be 960
+            $slots[3].Height | Should -Be 520
+        }
+    }
+
+    Context "6 windows (2x3 grid as in screenshot)" {
+        It "arranges 6 slots across 2 columns and 3 rows" {
+            $bounds = [PSCustomObject]@{ X = 0; Y = 0; Width = 1920; Height = 1080 }
+            $slots = Get-WindowGridLayout -Bounds $bounds -Count 6
+            $slots.Count | Should -Be 6
+            # Row 1 (top): Slot 1, Slot 2
+            $slots[0].Slot | Should -Be 1
+            $slots[0].X | Should -Be 0
+            $slots[0].Y | Should -Be 0
+            $slots[1].Slot | Should -Be 2
+            $slots[1].X | Should -Be 960
+            $slots[1].Y | Should -Be 0
+            # Row 2 (mid): Slot 3, Slot 4
+            $slots[2].Slot | Should -Be 3
+            $slots[2].X | Should -Be 0
+            $slots[2].Y | Should -Be 360
+            $slots[3].Slot | Should -Be 4
+            $slots[3].X | Should -Be 960
+            $slots[3].Y | Should -Be 360
+            # Row 3 (bot): Slot 5, Slot 6
+            $slots[4].Slot | Should -Be 5
+            $slots[4].X | Should -Be 0
+            $slots[4].Y | Should -Be 720
+            $slots[5].Slot | Should -Be 6
+            $slots[5].X | Should -Be 960
+            $slots[5].Y | Should -Be 720
+        }
+    }
+
+    Context "screen bounds with offset (e.g. secondary monitor)" {
+        It "respects non-zero X/Y origin coordinates" {
+            $bounds = [PSCustomObject]@{ X = 1920; Y = 100; Width = 1920; Height = 1000 }
+            $slots = Get-WindowGridLayout -Bounds $bounds -Count 2
+            $slots[0].X | Should -Be 1920
+            $slots[0].Y | Should -Be 100
+            $slots[1].X | Should -Be 2880
+            $slots[1].Y | Should -Be 100
+        }
+    }
+}
+
 Describe "TestHook contract" {
     It "does not execute past function definitions (no interactive prompt hangs the run)" {
         Get-Command Test-ProfilePathWithinBase -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
@@ -373,5 +514,8 @@ Describe "TestHook contract" {
         Get-Command Select-ProfileInteractive -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Add-NewProfile -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Ensure-LocalOrchestratorServer -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Get-WindowGridLayout -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Initialize-WindowHelperType -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Arrange-ClaudeWindows -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
     }
 }
