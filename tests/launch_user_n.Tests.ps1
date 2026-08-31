@@ -341,16 +341,36 @@ Describe "Show-ProfileTable" {
     }
 }
 
+Describe "Get-EnrichedProfileRows" {
+    Context "enrichment logic" {
+        It "correctly extracts role, nickname, and today ranks" {
+            $today = (Get-Date).ToString("yyyy-MM-dd")
+            $profiles = [PSCustomObject]@{
+                user1 = @{ nickname = "alice"; role = "orchestrator"; last_login_date = $today; last_login_time = "10:00:00" }
+                user2 = @{ nickname = "bob"; role = "researcher"; last_login_date = $null; last_login_time = $null }
+            }
+            $rows = Get-EnrichedProfileRows -Profiles $profiles -AccountKeys @("user1", "user2")
+            
+            $rows.Count | Should -Be 2
+            $rows[0].Role | Should -Be "orchestrator"
+            $rows[0].TodayRank | Should -Be "1"
+            $rows[0].IsToday | Should -BeTrue
+            $rows[1].Role | Should -Be "researcher"
+            $rows[1].LastDate | Should -Be "Never"
+            $rows[1].TodayRank | Should -Be "-"
+        }
+    }
+}
+
 Describe "TestHook contract" {
     It "does not execute past function definitions (no interactive prompt hangs the run)" {
-        # If this test file completed BeforeAll without hanging on Read-Host,
-        # the contract holds. This assertion just makes that explicit and
-        # gives a named failure point if -TestHook regresses.
         Get-Command Test-ProfilePathWithinBase -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Get-ValidatedProfilePath -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Merge-McpServers -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Sync-TeamMcpConfig -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Show-ProfileTable -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Get-EnrichedProfileRows -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Select-ProfileInteractive -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Add-NewProfile -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Ensure-LocalOrchestratorServer -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
     }

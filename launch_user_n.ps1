@@ -24,8 +24,15 @@ param (
     # Dot-source-and-return-early hook for Pester: stops after function
     # definitions, before any interactive prompt or side-effecting logic.
     # Never set by real launches (launch.bat / manual pwsh invocation).
-    [switch]$TestHook
+    [switch]$TestHook,
+    # Bypass interactive TUI mode and use classic terminal prompts
+    [switch]$NoTUI
 )
+
+try {
+    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+    $OutputEncoding = [System.Text.Encoding]::UTF8
+} catch { }
 
 if ($GCalReminder) {
     Write-Warning "GCalReminder: Google Calendar integration is currently paused. This switch has no effect until re-enabled in cooldown-reminder.ps1."
@@ -44,6 +51,7 @@ elseif ($Mode -eq "Isolated" -and $Concurrent) {
 }
 
 if ($Users -and $Users.Count -gt 0) {
+    $Users = @($Users | ForEach-Object { $_ -split '[, ]+' } | Where-Object { $_ })
     if ($Mode -eq "Isolated") {
         Write-Host "-Users requires Concurrent mode (Isolated is single-profile only)." -ForegroundColor Red
         Read-Host "Press Enter to close this window"
@@ -321,6 +329,76 @@ function Add-NewProfile {
     return $Name
 }
 
+function Get-EnrichedProfileRows {
+    param($Profiles, $AccountKeys)
+
+    if (-not $AccountKeys -or $AccountKeys.Count -eq 0) {
+        return @()
+    }
+
+    $TodayStr = (Get-Date).ToString("yyyy-MM-dd")
+    $ProfilesBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
+    $StateFile = Join-Path $ProfilesBaseDir ".active_profile"
+    $ActiveAccount = $null
+    if (Test-Path $StateFile) {
+        try {
+            $ActiveAccount = (Get-Content $StateFile -Raw -ErrorAction SilentlyContinue)
+            if ($ActiveAccount) { $ActiveAccount = $ActiveAccount.Trim() }
+        } catch { }
+    }
+
+    $RunningProcesses = @()
+    try {
+        $RunningProcesses = @(Get-CimInstance Win32_Process -Filter "Name = 'claude.exe'" -ErrorAction SilentlyContinue)
+    } catch { }
+
+    $rows = for ($i = 0; $i -lt $AccountKeys.Count; $i++) {
+        $key = $AccountKeys[$i]
+        $p = $Profiles.$key
+        $lastLoginDate = if ($p -and $p.last_login_date) { $p.last_login_date } else { "Never" }
+        $lastLoginTime = if ($p -and $p.last_login_time) { $p.last_login_time } else { "-" }
+        $role = if ($p -and $p.role) { [string]$p.role } else { "-" }
+        $nickname = if ($p -and $p.nickname) { [string]$p.nickname } else { $key }
+        $rawPath = if ($p -and $p.path) { [string]$p.path } else { "%USERPROFILE%\.claude-profiles\$key" }
+        $expandedPath = [System.Environment]::ExpandEnvironmentVariables($rawPath)
+
+        $isRunning = $false
+        foreach ($proc in $RunningProcesses) {
+            if ($proc.CommandLine -and $proc.CommandLine.IndexOf($expandedPath, [System.StringComparison]::OrdinalIgnoreCase) -ge 0) {
+                $isRunning = $true
+                break
+            }
+        }
+        $isActive = ($key -eq $ActiveAccount)
+
+        [PSCustomObject]@{
+            Index     = ($i + 1)
+            Profile   = $key
+            Nickname  = $nickname
+            Role      = $role
+            LastTime  = $lastLoginTime
+            LastDate  = $lastLoginDate
+            IsToday   = ($lastLoginDate -eq $TodayStr)
+            IsActive  = $isActive
+            IsRunning = $isRunning
+            Path      = $expandedPath
+        }
+    }
+
+    # Rank today's logins by Last Time descending (most recent = 1).
+    $todayRanked = $rows | Where-Object { $_.IsToday } | Sort-Object -Property LastTime -Descending
+    $rankMap = @{}
+    for ($r = 0; $r -lt $todayRanked.Count; $r++) {
+        $rankMap[$todayRanked[$r].Profile] = ($r + 1)
+    }
+    foreach ($row in $rows) {
+        $rankVal = if ($rankMap.ContainsKey($row.Profile)) { [string]$rankMap[$row.Profile] } else { "-" }
+        $row | Add-Member -NotePropertyName "TodayRank" -NotePropertyValue $rankVal -Force
+    }
+
+    return $rows
+}
+
 function Show-ProfileTable {
     param($Profiles, $AccountKeys)
 
@@ -329,34 +407,7 @@ function Show-ProfileTable {
         return
     }
 
-    $TodayStr = (Get-Date).ToString("yyyy-MM-dd")
-
-    $rows = for ($i = 0; $i -lt $AccountKeys.Count; $i++) {
-        $key = $AccountKeys[$i]
-        $lastLoginDate = $Profiles.$key.last_login_date
-        $lastLoginTime = $Profiles.$key.last_login_time
-        if (-not $lastLoginDate) { $lastLoginDate = "Never" }
-        if (-not $lastLoginTime) { $lastLoginTime = "-" }
-        [PSCustomObject]@{
-            Profile  = $key
-            Nickname = $Profiles.$key.nickname
-            LastTime = $lastLoginTime
-            LastDate = $lastLoginDate
-            IsToday  = ($lastLoginDate -eq $TodayStr)
-        }
-    }
-
-    # Rank today's logins by Last Time descending (most recent = 1). Tuple
-    # position (row order) is untouched — this only assigns a rank label.
-    # Profiles not logged in today (or never) get "-".
-    $todayRanked = $rows | Where-Object { $_.IsToday } | Sort-Object -Property LastTime -Descending
-    $rankMap = @{}
-    for ($r = 0; $r -lt $todayRanked.Count; $r++) {
-        $rankMap[$todayRanked[$r].Profile] = ($r + 1)
-    }
-    foreach ($row in $rows) {
-        $row | Add-Member -NotePropertyName "TodayRank" -NotePropertyValue $(if ($rankMap.ContainsKey($row.Profile)) { [string]$rankMap[$row.Profile] } else { "-" }) -Force
-    }
+    $rows = Get-EnrichedProfileRows -Profiles $Profiles -AccountKeys $AccountKeys
 
     $profW = [Math]::Max(5, ([string]$rows.Count).Length)
     $nickW = [Math]::Max(8, ($rows.Nickname | Measure-Object -Property Length -Maximum).Maximum)
@@ -389,6 +440,290 @@ function Show-ProfileTable {
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
     Write-Host ("| " + "[N] Add New Profile (+)".PadRight($innerWidth - 2) + " |") -ForegroundColor Magenta
     Write-Host (New-Border "+" "+" "+") -ForegroundColor Cyan
+}
+
+function Select-ProfileInteractive {
+    param(
+        [string]$InitialMode = "Isolated"
+    )
+
+    $isConcurrent = ($InitialMode -eq "Concurrent")
+    $selectedIndex = 0
+    $filterText = ""
+    $selectedSet = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+
+    # Save initial cursor visibility
+    $origCursorVisible = $true
+    try { $origCursorVisible = [Console]::CursorVisible } catch { }
+
+    try { [Console]::OutputEncoding = [System.Text.Encoding]::UTF8 } catch { }
+    try { [Console]::CursorVisible = $false } catch { }
+
+    try {
+        while ($true) {
+            $allRows = Get-EnrichedProfileRows -Profiles $script:Profiles -AccountKeys $script:AccountKeys
+            if ($allRows.Count -eq 0) {
+                Write-Host "No profiles found in profiles.json." -ForegroundColor Yellow
+                $new = Add-NewProfile
+                $script:Profiles = Get-Content $script:ConfigFile | ConvertFrom-Json
+                $script:AccountKeys = @($script:Profiles.psobject.properties.Name)
+                $allRows = Get-EnrichedProfileRows -Profiles $script:Profiles -AccountKeys $script:AccountKeys
+            }
+
+            # Filter rows by query
+            $filteredRows = if ([string]::IsNullOrWhiteSpace($filterText)) {
+                $allRows
+            } else {
+                $q = $filterText.Trim().ToLower()
+                @($allRows | Where-Object {
+                    ([string]$_.Index) -eq $q -or
+                    $_.Nickname.ToLower().Contains($q) -or
+                    $_.Role.ToLower().Contains($q) -or
+                    $_.Profile.ToLower().Contains($q)
+                })
+            }
+
+            if ($selectedIndex -ge $filteredRows.Count) {
+                $selectedIndex = [Math]::Max(0, $filteredRows.Count - 1)
+            }
+
+            # Adaptive viewport calculation
+            $windowHeight = 25
+            try { $windowHeight = [Console]::WindowHeight } catch { }
+            $maxVisible = [Math]::Max(5, [Math]::Min(14, $windowHeight - 12))
+            
+            $viewportStart = 0
+            if ($filteredRows.Count -gt $maxVisible) {
+                $viewportStart = [Math]::Max(0, [Math]::Min($selectedIndex - [Math]::Floor($maxVisible / 2), $filteredRows.Count - $maxVisible))
+            }
+            $visibleRows = if ($filteredRows.Count -eq 0) {
+                @()
+            } elseif ($filteredRows.Count -le $maxVisible) {
+                $filteredRows
+            } else {
+                @($filteredRows[$viewportStart .. ($viewportStart + $maxVisible - 1)])
+            }
+
+            # Render TUI screen
+            [Console]::Clear()
+
+            Write-Host "╭─────────────────────────────────────────────────────────────────────────────╮" -ForegroundColor Cyan
+            Write-Host "│                    🚀  CLAUDE DESKTOP PROFILE LAUNCHER                      │" -ForegroundColor Green
+            Write-Host "╰─────────────────────────────────────────────────────────────────────────────╯" -ForegroundColor Cyan
+            
+            $modeLabel = if ($isConcurrent) { "Concurrent (Side-by-Side)" } else { "Isolated (Session Swap)" }
+            $modeColor = if ($isConcurrent) { "Magenta" } else { "Cyan" }
+            Write-Host " Mode: " -NoNewline -ForegroundColor Gray
+            Write-Host "[ $modeLabel ]" -NoNewline -ForegroundColor $modeColor
+            Write-Host "  ◄ Press [Tab] or [M] to toggle" -ForegroundColor DarkGray
+            
+            if ($isConcurrent) {
+                $selCount = $selectedSet.Count
+                Write-Host " Multi-Launch: " -NoNewline -ForegroundColor DarkYellow
+                Write-Host "$selCount profile(s) selected" -NoNewline -ForegroundColor Yellow
+                Write-Host "  ([Space] to toggle, [A] select/clear all)" -ForegroundColor DarkGray
+            }
+
+            if (-not [string]::IsNullOrEmpty($filterText)) {
+                Write-Host " 🔍 Filter: " -NoNewline -ForegroundColor Yellow
+                Write-Host "$filterText" -NoNewline -ForegroundColor White
+                Write-Host " (Press [Esc] to clear, matches: $($filteredRows.Count))" -ForegroundColor DarkGray
+            } else {
+                Write-Host " 🔍 Filter: " -NoNewline -ForegroundColor DarkGray
+                Write-Host "[Type to search by name/role/number...]" -ForegroundColor DarkGray
+            }
+            Write-Host ""
+
+            # Header border & table
+            Write-Host "╭──────┬───────────────┬────────────────┬────────────┬────────────┬────────────┬─────────────╮" -ForegroundColor Cyan
+            Write-Host "│ Sel  │ Nickname      │ Role           │ Last Time  │ Last Date  │ Today Rank │ Status      │" -ForegroundColor Cyan
+            Write-Host "├──────┼───────────────┼────────────────┼────────────┼────────────┼────────────┼─────────────┤" -ForegroundColor Cyan
+
+            if ($filteredRows.Count -eq 0) {
+                Write-Host "│ (No matching profiles found for '$filterText')                                                 │" -ForegroundColor Yellow
+            } else {
+                for ($v = 0; $v -lt $visibleRows.Count; $v++) {
+                    $row = $visibleRows[$v]
+                    $actualIdx = $viewportStart + $v
+                    $isHighlighted = ($actualIdx -eq $selectedIndex)
+                    $isChecked = $selectedSet.Contains($row.Profile)
+
+                    $cursorMark = if ($isHighlighted) { "❯" } else { " " }
+                    $checkMark = if ($isChecked) { "[x]" } else { "[ ]" }
+                    $selCell = ("$cursorMark$checkMark " + $row.Index).PadRight(5)
+                    
+                    $nickCell = $row.Nickname.PadRight(13)
+                    if ($nickCell.Length -gt 13) { $nickCell = $nickCell.Substring(0, 10) + "..." }
+                    
+                    $roleCell = $row.Role.PadRight(14)
+                    if ($roleCell.Length -gt 14) { $roleCell = $roleCell.Substring(0, 11) + "..." }
+                    
+                    $timeCell = $row.LastTime.PadRight(10)
+                    $dateCell = $row.LastDate.PadRight(10)
+                    
+                    $rankStr = if ($row.TodayRank -eq "1") { "🥇 1" } elseif ($row.TodayRank -eq "2") { "🥈 2" } elseif ($row.TodayRank -eq "3") { "🥉 3" } elseif ($row.TodayRank -ne "-") { "#$($row.TodayRank)" } else { "-" }
+                    $rankCell = $rankStr.PadRight(10)
+
+                    $statusStr = if ($row.IsActive -and $row.IsRunning) { "🟢 Active (Live)" } elseif ($row.IsRunning) { "⚡ Running" } elseif ($row.IsActive) { "● Active" } else { "" }
+                    $statusCell = $statusStr.PadRight(11)
+
+                    $line = "│ $selCell│ $nickCell │ $roleCell │ $timeCell │ $dateCell │ $rankCell │ $statusCell │"
+
+                    if ($isHighlighted) {
+                        Write-Host $line -ForegroundColor Black -BackgroundColor Cyan
+                    } elseif ($isChecked) {
+                        Write-Host $line -ForegroundColor Green -BackgroundColor DarkGray
+                    } elseif ($row.IsToday) {
+                        Write-Host $line -ForegroundColor Yellow
+                    } else {
+                        Write-Host $line -ForegroundColor Gray
+                    }
+                }
+            }
+
+            Write-Host "╰──────┴───────────────┴────────────────┴────────────┴────────────┴────────────┴─────────────╯" -ForegroundColor Cyan
+
+            if ($filteredRows.Count -gt $maxVisible) {
+                Write-Host " (Showing items $($viewportStart + 1)-$($viewportStart + $visibleRows.Count) of $($filteredRows.Count) — use ↑/↓ to scroll)" -ForegroundColor DarkGray
+            }
+
+            Write-Host ""
+            Write-Host " [↑/↓] Move │ [Space] Select │ [Tab] Mode │ [Enter] Launch │ [/] Search │ [N] New │ [Q] Exit" -ForegroundColor DarkCyan
+
+            $keyInfo = [Console]::ReadKey($true)
+
+            switch ($keyInfo.Key) {
+                ([ConsoleKey]::UpArrow) {
+                    if ($selectedIndex -gt 0) { $selectedIndex-- }
+                    else { $selectedIndex = [Math]::Max(0, $filteredRows.Count - 1) }
+                }
+                ([ConsoleKey]::DownArrow) {
+                    if ($selectedIndex -lt $filteredRows.Count - 1) { $selectedIndex++ }
+                    else { $selectedIndex = 0 }
+                }
+                ([ConsoleKey]::PageUp) {
+                    $selectedIndex = [Math]::Max(0, $selectedIndex - $maxVisible)
+                }
+                ([ConsoleKey]::PageDown) {
+                    $selectedIndex = [Math]::Min([Math]::Max(0, $filteredRows.Count - 1), $selectedIndex + $maxVisible)
+                }
+                ([ConsoleKey]::Home) {
+                    $selectedIndex = 0
+                }
+                ([ConsoleKey]::End) {
+                    $selectedIndex = [Math]::Max(0, $filteredRows.Count - 1)
+                }
+                ([ConsoleKey]::Tab) {
+                    $isConcurrent = -not $isConcurrent
+                }
+                ([ConsoleKey]::Spacebar) {
+                    if ($filteredRows.Count -gt 0) {
+                        $targetProfile = $filteredRows[$selectedIndex].Profile
+                        if ($selectedSet.Contains($targetProfile)) {
+                            $selectedSet.Remove($targetProfile) | Out-Null
+                        } else {
+                            $selectedSet.Add($targetProfile) | Out-Null
+                            if ($selectedSet.Count -gt 1) {
+                                $isConcurrent = $true
+                            }
+                        }
+                    }
+                }
+                ([ConsoleKey]::Enter) {
+                    if ($filteredRows.Count -eq 0) {
+                        continue
+                    }
+                    if ($isConcurrent -and $selectedSet.Count -gt 0) {
+                        return [PSCustomObject]@{
+                            Mode      = "Concurrent"
+                            Accounts  = @($selectedSet)
+                            Cancelled = $false
+                        }
+                    } else {
+                        $chosen = $filteredRows[$selectedIndex].Profile
+                        return [PSCustomObject]@{
+                            Mode      = if ($isConcurrent) { "Concurrent" } else { "Isolated" }
+                            Accounts  = @($chosen)
+                            Cancelled = $false
+                        }
+                    }
+                }
+                ([ConsoleKey]::Escape) {
+                    if ($filterText.Length -gt 0) {
+                        $filterText = ""
+                        $selectedIndex = 0
+                    } else {
+                        return [PSCustomObject]@{ Cancelled = $true }
+                    }
+                }
+                ([ConsoleKey]::Backspace) {
+                    if ($filterText.Length -gt 0) {
+                        $filterText = $filterText.Substring(0, $filterText.Length - 1)
+                        $selectedIndex = 0
+                    }
+                }
+                default {
+                    $c = $keyInfo.KeyChar
+                    if ($c -eq 'q' -or $c -eq 'Q') {
+                        if ($filterText.Length -eq 0) {
+                            return [PSCustomObject]@{ Cancelled = $true }
+                        } else {
+                            $filterText += $c
+                            $selectedIndex = 0
+                        }
+                    }
+                    elseif ($c -eq 'm' -or $c -eq 'M') {
+                        if ($filterText.Length -eq 0) {
+                            $isConcurrent = -not $isConcurrent
+                        } else {
+                            $filterText += $c
+                            $selectedIndex = 0
+                        }
+                    }
+                    elseif ($c -eq 'n' -or $c -eq 'N' -or $c -eq '+') {
+                        if ($filterText.Length -eq 0) {
+                            [Console]::Clear()
+                            try { [Console]::CursorVisible = $true } catch { }
+                            $newAccount = Add-NewProfile
+                            try { [Console]::CursorVisible = $false } catch { }
+                            $script:Profiles = Get-Content $script:ConfigFile | ConvertFrom-Json
+                            $script:AccountKeys = @($script:Profiles.psobject.properties.Name)
+                            $filterText = ""
+                            $allRows = Get-EnrichedProfileRows -Profiles $script:Profiles -AccountKeys $script:AccountKeys
+                            $selectedIndex = [Math]::Max(0, $allRows.Count - 1)
+                        } else {
+                            $filterText += $c
+                            $selectedIndex = 0
+                        }
+                    }
+                    elseif ($c -eq 'a' -or $c -eq 'A') {
+                        if ($filterText.Length -eq 0) {
+                            $isConcurrent = $true
+                            if ($selectedSet.Count -eq $filteredRows.Count) {
+                                $selectedSet.Clear()
+                            } else {
+                                foreach ($r in $filteredRows) {
+                                    $selectedSet.Add($r.Profile) | Out-Null
+                                }
+                            }
+                        } else {
+                            $filterText += $c
+                            $selectedIndex = 0
+                        }
+                    }
+                    elseif ($c -eq '/' -or [char]::IsLetterOrDigit($c) -or $c -eq '-' -or $c -eq '_' -or $c -eq '.') {
+                        if ($c -ne '/') {
+                            $filterText += $c
+                        }
+                        $selectedIndex = 0
+                    }
+                }
+            }
+        }
+    }
+    finally {
+        try { [Console]::CursorVisible = $origCursorVisible } catch { }
+    }
 }
 
 function Ensure-LocalOrchestratorServer {
@@ -919,15 +1254,20 @@ function Invoke-ProfileLaunch {
             Sync-TeamMcpConfig -RepoRoot $PSScriptRoot -TargetConfigDir $TeamConfigDir -WhatIf:$WhatIf
         }
 
-        Write-Host "----------------------------------------" -ForegroundColor Cyan
-        Write-Host " Launching Claude Desktop (Native)" -ForegroundColor Green
-        Write-Host " Profile    : $Account" -ForegroundColor Yellow
-        Write-Host " Nickname   : $Nickname" -ForegroundColor Yellow
-        Write-Host " Last Login : $CurrentDate $CurrentTime" -ForegroundColor Yellow
-        Write-Host " Active     : $NativeAppDataDir" -ForegroundColor Gray
-        Write-Host " Storage    : $TargetStorageDir" -ForegroundColor Gray
-        Write-Host " Exe        : $ClaudeExe" -ForegroundColor Gray
-        Write-Host "----------------------------------------" -ForegroundColor Cyan
+        $Role = if ($ProfileInfo.role) { [string]$ProfileInfo.role } else { "-" }
+        $modeDesc = if ($Concurrent) { "Concurrent (Side-by-Side)" } else { "Isolated (Session Swap)" }
+
+        Write-Host "╭────────────────────────────────────────────────────────────────────────╮" -ForegroundColor Cyan
+        Write-Host "│  🚀 Launching Claude Desktop (Native)                                  │" -ForegroundColor Green
+        Write-Host "├────────────────────────────────────────────────────────────────────────┤" -ForegroundColor Cyan
+        Write-Host "│  ● Profile    : $($Account.PadRight(56))│" -ForegroundColor Yellow
+        Write-Host "│  ● Nickname   : $($Nickname.PadRight(56))│" -ForegroundColor Yellow
+        Write-Host "│  ● Role       : $($Role.PadRight(56))│" -ForegroundColor Cyan
+        Write-Host "│  ● Mode       : $($modeDesc.PadRight(56))│" -ForegroundColor Gray
+        Write-Host "│  ● Last Login : $("$CurrentDate $CurrentTime".PadRight(56))│" -ForegroundColor Gray
+        Write-Host "│  ● Storage    : $($TargetStorageDir.PadRight(56))│" -ForegroundColor DarkGray
+        Write-Host "│  ● Executable : $($ClaudeExe.PadRight(56))│" -ForegroundColor DarkGray
+        Write-Host "╰────────────────────────────────────────────────────────────────────────╯" -ForegroundColor Cyan
 
         # Redirect stdout/stderr to per-profile logs to suppress internal Electron/Node.js deprecation warnings (DEP0169)
         $LogsDir = Join-Path $ProfilesBaseDir "Logs\$Account"
@@ -980,18 +1320,33 @@ function Invoke-ProfileLaunch {
 
 # ----------------------------------------------------------------------
 # Mode dispatch
-#
-# -Users (implies Concurrent) skips the mode prompt entirely — an explicit
-# list is already an unambiguous Concurrent request. -Mode/-Concurrent with
-# no -Users runs one Concurrent-mode account via the normal picker. With
-# neither -Mode, -Concurrent, nor -Users supplied, prompt once for a mode so
-# the common case (single Isolated launch) still takes one keypress, same
-# as before this change; Isolated always resolves to exactly one account,
-# since session-swap semantics don't compose across multiple simultaneous
-# windows.
 # ----------------------------------------------------------------------
 
-if (-not $Mode -and -not $Concurrent -and -not $Users) {
+$isInteractive = [Environment]::UserInteractive -and -not [Console]::IsInputRedirected -and -not $NoTUI
+
+# Interactive TUI mode for interactive terminal runs with no CLI targets
+if ($isInteractive -and -not $Users -and -not $Account) {
+    $initialMode = if ($Concurrent -or $Mode -eq "Concurrent") { "Concurrent" } else { "Isolated" }
+    $tuiChoice = Select-ProfileInteractive -InitialMode $initialMode
+    
+    if ($tuiChoice.Cancelled) {
+        Write-Host "Launch cancelled." -ForegroundColor Yellow
+        exit 0
+    }
+
+    $Concurrent = ($tuiChoice.Mode -eq "Concurrent")
+    foreach ($acc in $tuiChoice.Accounts) {
+        Invoke-ProfileLaunch -Account $acc
+    }
+    
+    if (-not $WhatIf) {
+        Read-Host "Press Enter to close this window"
+    }
+    exit 0
+}
+
+# Classic Fallback Mode (non-interactive / redirected / explicit CLI parameters)
+if (-not $Mode -and -not $Concurrent -and -not $Users -and -not $Account) {
     Write-Host "----------------------------------------" -ForegroundColor Cyan
     Write-Host " Select a Claude Desktop Profile:" -ForegroundColor Green
     Write-Host "----------------------------------------" -ForegroundColor Cyan
@@ -1009,10 +1364,6 @@ if (-not $Mode -and -not $Concurrent -and -not $Users) {
 }
 
 if ($Concurrent -and -not $Users) {
-    # Concurrent chosen but no -Users list — ask how many/which. Same table
-    # is on screen as Isolated's picker, so accept the same shorthand: a
-    # bare index (1, 2, 3) as well as a literal profile name, comma/space
-    # separated. Blank means "just one, use the normal picker below".
     Show-ProfileTable -Profiles $script:Profiles -AccountKeys $script:AccountKeys
     $usersInput = Read-Host "Profile(s) for Concurrent mode - number(s) or name(s), comma-separated (blank to pick one from the list)"
     if (-not [string]::IsNullOrWhiteSpace($usersInput)) {
@@ -1021,15 +1372,6 @@ if ($Concurrent -and -not $Users) {
 }
 
 if ($Users -and $Users.Count -gt 0) {
-    # Concurrent, explicit list: resolve+validate every entry up front (fatal
-    # on a bad name/index — see Resolve-SingleAccount's doc comment) before
-    # launching any of them, then launch each in turn. A later account's
-    # failure inside Invoke-ProfileLaunch does not stop earlier-resolved
-    # accounts from having already launched, nor prevent later ones in the
-    # list from being attempted.
-    # A purely-numeric entry is treated as a 1-based index into the same
-    # table Isolated's picker uses, mirroring its "[1-N or N]" shorthand;
-    # anything else is passed through as a literal profile name.
     $ResolvedAccounts = foreach ($u in $Users) {
         if ($u -match '^\d+$') {
             $idx = [int]$u - 1
@@ -1051,12 +1393,6 @@ if ($Users -and $Users.Count -gt 0) {
     }
 }
 else {
-    # Isolated, or Concurrent with a single account via the interactive
-    # picker (equivalent to the pre-existing -Account / no-args behavior).
-    # -SkipTableDisplay: the table was already shown above the mode prompt
-    # when we got here via that prompt (no -Mode/-Concurrent/-Users given
-    # on the CLI — the only route into this else-branch with $Concurrent
-    # still false here). Re-show it if -Mode/-Concurrent bypassed that prompt.
     $tableAlreadyShown = -not $Mode -and -not $Concurrent
     $singleAccount = Resolve-SingleAccount -PresetAccount $Account -SkipTableDisplay:$tableAlreadyShown
     Invoke-ProfileLaunch -Account $singleAccount
