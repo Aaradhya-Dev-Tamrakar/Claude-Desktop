@@ -12,6 +12,7 @@ import shutil
 import subprocess
 import tempfile
 import tkinter as tk
+from pathlib import Path
 from tkinter import filedialog, messagebox, scrolledtext, ttk
 
 DEFAULT_CSS = """
@@ -146,7 +147,27 @@ class MD2PDFApp:
             self.status.config(text="Failed")
             messagebox.showerror("Conversion failed", str(e))
 
+    def _resolve_output_path(self, save_path):
+        candidate = save_path.strip()
+        if not candidate:
+            raise ValueError("save_path is required.")
+
+        if not os.path.isabs(candidate):
+            repo_root = Path(__file__).resolve().parents[1]
+            candidate = str((repo_root / candidate).resolve())
+
+        directory = os.path.dirname(candidate) or os.getcwd()
+        try:
+            os.makedirs(directory, exist_ok=True)
+        except OSError:
+            fallback = os.path.join(tempfile.gettempdir(), "md2pdf-app", os.path.basename(candidate))
+            os.makedirs(os.path.dirname(fallback), exist_ok=True)
+            return fallback
+        return candidate
+
     def _run_conversion(self, md_content, save_path, margin):
+        resolved_path = self._resolve_output_path(save_path)
+
         with tempfile.TemporaryDirectory() as tmp:
             md_file = os.path.join(tmp, "doc.md")
             html_file = os.path.join(tmp, "doc.html")
@@ -175,12 +196,15 @@ class MD2PDFApp:
                     "wkhtmltopdf", "--encoding", "utf-8",
                     "--margin-top", f"{margin}mm", "--margin-bottom", f"{margin}mm",
                     "--margin-left", f"{margin}mm", "--margin-right", f"{margin}mm",
-                    html_file, save_path,
+                    html_file, resolved_path,
                 ],
                 capture_output=True, text=True,
             )
             if result.returncode != 0:
                 raise RuntimeError(f"wkhtmltopdf failed:\n{result.stderr}")
+
+        if not os.path.exists(resolved_path) or os.path.getsize(resolved_path) == 0:
+            raise RuntimeError(f"Conversion claimed success but no PDF was written to: {resolved_path}")
 
 
 def main():

@@ -58,8 +58,9 @@ def _resolve_output_path(output_path: str) -> str:
     if not candidate:
         raise ValueError("output_path is required.")
 
+    repo_root = Path(__file__).resolve().parents[2]
     if not os.path.isabs(candidate):
-        candidate = os.path.abspath(candidate)
+        candidate = str((repo_root / candidate).resolve())
 
     directory = os.path.dirname(candidate) or os.getcwd()
     try:
@@ -187,6 +188,10 @@ def convert_markdown_to_pdf(
 
     resolved_output_path = _resolve_output_path(output_path)
     _run_conversion(content, resolved_output_path, margin_mm)
+
+    if not os.path.exists(resolved_output_path) or os.path.getsize(resolved_output_path) == 0:
+        raise RuntimeError(f"Conversion claimed success but no PDF was written to: {resolved_output_path}")
+
     return {"status": "saved", "output_path": resolved_output_path}
 
 
