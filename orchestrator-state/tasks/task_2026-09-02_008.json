@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-02_002",
   "kind": "text",
   "spec": "Track 26 — Interactive Drill-Down Report UX\nStream: H (UI/UX) | Priority: High | Est: 45min | Feeds: resolves open coordination flag — pass/fail dashboard semantics (needs Aaradhya/Tisha sign-off)\n\nCONTEXT: An existing open coordination flag from the original report-template sprint: whether the report's top-level verdict should read as a 'scanning aid' (draw attention to what to look at) vs a 'compliance verdict' (implies legal pass/fail) — never resolved. Watkins et al. 2022 (in lit review) is the project's own cited caution against bare threshold pass/fail framing for disparate impact.\n\nTASK: Propose a concrete UX resolution: a 3-tier drill-down structure — (1) top-level summary view using non-verdict scanning language (e.g. 'X of Y subgroups flagged for review' not 'PASS/FAIL'), (2) subgroup-level detail view showing the metric value, CI, p-value, n, and insufficient_sample flag per NFR-003, (3) SHAP evidence view for any flagged subgroup. Deliver wireframe-level descriptions (layout, information hierarchy, what's collapsed vs expanded by default) — not visual mockups. Explicitly state this deliverable is a PROPOSAL requiring Aaradhya/Tisha sign-off before implementation, consistent with how this flag has been handled previously. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/26_dashboard_drilldown_ux.md",
-  "status": "pending",
-  "owner_account": null,
+  "status": "claimed",
+  "owner_account": "user8",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user6",
   "created_at": "2026-09-02T09:38:12Z",
-  "updated_at": "2026-09-02T09:38:12Z"
+  "updated_at": "2026-09-02T10:27:44Z"
 }
