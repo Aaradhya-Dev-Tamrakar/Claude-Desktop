@@ -582,11 +582,11 @@ Describe "TestHook contract" {
         Get-Command Get-EnrichedProfileRows -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Select-ProfileInteractive -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Add-NewProfile -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
-        Get-Command Ensure-LocalOrchestratorServer -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Start-LocalOrchestratorServer -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Get-DesktopBatchAllocation -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
-        Get-Command Ensure-VirtualDesktopTool -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Initialize-VirtualDesktopTool -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Get-WindowGridLayout -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Initialize-WindowHelperType -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
-        Get-Command Arrange-ClaudeWindows -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Set-ClaudeWindowsLayout -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
     }
 }

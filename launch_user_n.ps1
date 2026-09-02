@@ -506,7 +506,7 @@ function Select-ProfileInteractive {
     $allRows = Get-EnrichedProfileRows -Profiles $script:Profiles -AccountKeys $script:AccountKeys
     if ($allRows.Count -eq 0) {
         Write-Host "No profiles found in profiles.json." -ForegroundColor Yellow
-        $new = Add-NewProfile
+        Add-NewProfile | Out-Null
         $script:Profiles = Get-Content $script:ConfigFile | ConvertFrom-Json
         $script:AccountKeys = @($script:Profiles.psobject.properties.Name)
         $allRows = Get-EnrichedProfileRows -Profiles $script:Profiles -AccountKeys $script:AccountKeys
@@ -805,7 +805,7 @@ function Select-ProfileInteractive {
                         if ($filterText.Length -eq 0) {
                             try { [Console]::Clear() } catch { }
                             try { [Console]::CursorVisible = $true } catch { }
-                            $newAccount = Add-NewProfile
+                            Add-NewProfile | Out-Null
                             try { [Console]::CursorVisible = $false } catch { }
                             $script:Profiles = Get-Content $script:ConfigFile | ConvertFrom-Json
                             $script:AccountKeys = @($script:Profiles.psobject.properties.Name)
@@ -848,7 +848,7 @@ function Select-ProfileInteractive {
     }
 }
 
-function Ensure-LocalOrchestratorServer {
+function Start-LocalOrchestratorServer {
     param(
         [Parameter(Mandatory = $true)][string]$RepoRoot,
         [switch]$WhatIf
@@ -948,7 +948,7 @@ function Get-DesktopBatchAllocation {
     return $allocations
 }
 
-function Ensure-VirtualDesktopTool {
+function Initialize-VirtualDesktopTool {
     param(
         [Parameter(Mandatory = $true)][string]$RepoRoot
     )
@@ -1143,7 +1143,7 @@ public class ClaudeDesktopWindowHelper {
     }
 }
 
-function Arrange-ClaudeWindows {
+function Set-ClaudeWindowsLayout {
     param(
         [Parameter(Mandatory = $false)][string[]]$Accounts = @(),
         [int]$MaxPerDesktop = 4,
@@ -1247,7 +1247,7 @@ function Arrange-ClaudeWindows {
 
         # Multi-desktop allocation (max 4 per desktop)
         $allocations = Get-DesktopBatchAllocation -TotalCount $targets.Count -MaxPerDesktop $MaxPerDesktop
-        $vdExe = Ensure-VirtualDesktopTool -RepoRoot $PSScriptRoot
+        $vdExe = Initialize-VirtualDesktopTool -RepoRoot $PSScriptRoot
 
         $numDesktops = [int][Math]::Ceiling($targets.Count / [double]$MaxPerDesktop)
 
@@ -1773,7 +1773,7 @@ function Invoke-ProfileLaunch {
         }
 
         # Ensure local background orchestrator server is running for MCP endpoints
-        Ensure-LocalOrchestratorServer -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
+        Start-LocalOrchestratorServer -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
 
         # Team interlink: force-merge shared MCP servers into all profiles
         # (and active native AppData) claude_desktop_config.json. Opt out with -NoTeamSync.
@@ -1874,7 +1874,7 @@ if ($isInteractive -and -not $Users -and -not $Account) {
         Invoke-ProfileLaunch -Account $acc
     }
     if (($Concurrent -or $Snap) -and -not $NoSnap) {
-        Arrange-ClaudeWindows -Accounts $tuiChoice.Accounts -WhatIf:$WhatIf
+        Set-ClaudeWindowsLayout -Accounts $tuiChoice.Accounts -WhatIf:$WhatIf
     }
     
     if (-not $WhatIf) {
@@ -1930,7 +1930,7 @@ if ($Users -and $Users.Count -gt 0) {
         Invoke-ProfileLaunch -Account $resolvedAccount
     }
     if (($Concurrent -or $Snap) -and -not $NoSnap) {
-        Arrange-ClaudeWindows -Accounts $ResolvedAccounts -WhatIf:$WhatIf
+        Set-ClaudeWindowsLayout -Accounts $ResolvedAccounts -WhatIf:$WhatIf
     }
 }
 else {
@@ -1938,7 +1938,7 @@ else {
     $singleAccount = Resolve-SingleAccount -PresetAccount $Account -SkipTableDisplay:$tableAlreadyShown
     Invoke-ProfileLaunch -Account $singleAccount
     if (($Concurrent -or $Snap) -and -not $NoSnap) {
-        Arrange-ClaudeWindows -Accounts @($singleAccount) -WhatIf:$WhatIf
+        Set-ClaudeWindowsLayout -Accounts @($singleAccount) -WhatIf:$WhatIf
     }
 }
 
