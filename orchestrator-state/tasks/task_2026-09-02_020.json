@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-02_002",
   "kind": "text",
   "spec": "Track 38 — Licensing Strategy: Open-Core vs Commercial\nStream: K (Business/GTM) | Priority: Medium | Est: 30min | Feeds: Phase-2 business case\n\nCONTEXT: The repo currently ships under MIT LICENSE (full permissive open source) as a capstone/portfolio project.\n\nTASK: Research an open-core licensing strategy for a product transition: what would stay MIT/open-source (candidate: the core engine — fairness/, statistics, the locked schema, CLI, offline HTML report per Track 25's baseline) vs what would be commercial/enterprise-gated (candidate: the hosted dashboard/API from Tracks 25/32, continuous audit mode from Track 21, multi-tenant SaaS ops from Track 33, client data-governance tooling from Track 35). Cover: (1) 2-3 real open-core precedents in adjacent developer-tooling or compliance-tooling space and how they drew this line; (2) risk of the current MIT license on the whole repo undermining a future commercial layer if not restructured before wider release: flag this as a decision needed from Aaradhya/Tisha, don't unilaterally recommend re-licensing already-public code. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/38_licensing_strategy.md",
-  "status": "pending",
-  "owner_account": null,
+  "status": "done",
+  "owner_account": "user22",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user6",
   "created_at": "2026-09-02T09:38:12Z",
-  "updated_at": "2026-09-02T09:38:12Z"
+  "updated_at": "2026-09-02T10:42:52Z"
 }

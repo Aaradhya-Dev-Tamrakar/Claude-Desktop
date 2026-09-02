@@ -1,0 +1,14 @@
+{
+  "account": "20",
+  "text": "BiasAperture Phase-2, Track 30 (task_2026-09-02_012, Model-Agnostic Classifier Adapter Layer, Stream I) — DONE, checkpoint submitted. Verdict: PROTOTYPE FIRST, novelty Low-Moderate, scope CORE EXTENSION (InProcessInterface). Design: shared TaxonomyMapper (config-driven mapping from a third-party model's native output labels to the locked race_7/gender_2/age_9 Literal, fail-fast construction-time validation, sum-based probability collapse for many-to-one mappings) consumed by two thin adapters: ONNXRuntimeAdapter (format-agnostic, integrator supplies preprocessing + positional label order — highest effort, silent-reorder risk) and HFPipelineAdapter (AutoModelForImageClassification only, built-in preprocessing, string id2label labels — lower effort, safer mapping authoring). Recommend prototyping HF adapter first to validate the InProcessInterface+TaxonomyMapper contract end-to-end, then ONNX for real client models. Out of scope: models with structurally incompatible native demographic taxonomies — not adapter-solvable, needs Track 23. Coordination flag for board owner: Track 23 is marked \"(dropped)\" in Track 29's memory entry, but this task's own spec still names Track 23 as the explicit prerequisite for the out-of-scope case — discrepancy surfaced, not resolved here. Full report: results/30_model_agnostic_adapters.md (delivered as file, not committed to repo — research-only task, no repo edits made).",
+  "pushed_at": "2026-09-02T10:40:53Z",
+  "tags": [
+    "biasaperture",
+    "phase2",
+    "track30",
+    "model-adapters",
+    "coordination"
+  ],
+  "ttl_days": 30,
+  "priority": "normal"
+}

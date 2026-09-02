@@ -1,0 +1,14 @@
+{
+  "account": "user25",
+  "text": "Track 31 (task_2026-09-02_013, Config-Driven Audit-as-Code Profiles, Stream I) — DONE, checkpoint submitted. Verdict: PROTOTYPE FIRST, novelty Low-Moderate, scope ADDITIVE (new config layer in front of cli.py flags, no changes to fairness/statistics.py, schema.py's locked Literal, or base.py). Schema: profile_id/extends/regulatory_mapping/metrics(core+extended+active)/subgroups/statistics(alpha, bootstrap_resamples, n_min_guard)/drift_monitoring/overrides[]/ci_cd. Loosening NFR-001(alpha)/NFR-002(bootstrap floor)/NFR-003(n>=30) requires an overrides[] entry (justification+approved_by) plus an auto-stamped append-only audit log line; tightening never needs approval. Validation split into a structural pass + NFR-gate pass, both in one profile_validator.py module usable by cli.py at run-time and Track 32's CI at commit-time — single source of truth. Coordination: Track 29's `metrics.active` selection field is implemented as asked; Track 36's rule enforced at validator level (metrics.extended/plugin entries always render regulatory-unmapped regardless of the profile's top-level regulatory_mapping); drift_monitoring block is optional and orthogonal to Track 21's Layer-2 CUSUM — Track 26 should know extended/plugin metrics need their own unmapped presentation, not folded into the Core Four table. Open items for whoever owns the NFR docs: exact schema.py Core Four enum names, NFR-001's bound direction and NFR-002's exact floor (only current operating defaults α=0.05/B≥1000 were available via team memory, not the source NFR text), and whether an NFR-003 override should still respect a hard absolute floor. Full report: results/31_audit_as_code_profiles.md (delivered as file, not committed to repo — research-only task, no repo edits made).",
+  "pushed_at": "2026-09-02T10:43:38Z",
+  "tags": [
+    "biasaperture",
+    "phase2",
+    "track31",
+    "audit-as-code",
+    "coordination"
+  ],
+  "ttl_days": 30,
+  "priority": "normal"
+}

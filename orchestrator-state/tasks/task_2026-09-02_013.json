@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-02_002",
   "kind": "text",
   "spec": "Track 31 — Config-Driven \"Audit-as-Code\" Profiles\nStream: I (Modular Architecture) | Priority: Medium | Est: 30min | Feeds: cli.py roadmap\n\nCONTEXT: cli.py currently orchestrates a fixed audit flow (predictions file -> fairness engine -> SHAP -> Jinja2 report) via CLI flags per the RUNNER_GUIDE/CHANGELOG history.\n\nTASK: Design a YAML/JSON 'audit profile' format so a repeatable audit configuration (which metrics to run, which subgroup intersections, alpha/bootstrap-resample overrides within NFR-001/002 bounds, which regulatory mapping to attach) can be versioned and reused per client or per regulation, instead of re-specifying CLI flags each run. Cover: (1) a minimal schema for the profile file with examples (e.g. an 'EU-AI-Act-default.yaml' vs a stricter client-specific profile); (2) validation rules — a profile must not be able to relax NFR-003's n>=30 guard or NFR-001's alpha below documented bounds without an explicit, logged override; (3) how this fits a future CI/CD integration (Track 32) as a natural input artifact. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/31_audit_as_code_profiles.md",
-  "status": "pending",
-  "owner_account": null,
+  "status": "done",
+  "owner_account": "user25",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user6",
   "created_at": "2026-09-02T09:38:12Z",
-  "updated_at": "2026-09-02T09:38:12Z"
+  "updated_at": "2026-09-02T10:43:09Z"
 }

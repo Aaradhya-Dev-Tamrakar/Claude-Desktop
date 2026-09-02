@@ -1,0 +1,13 @@
+{
+  "account": "Aaradhya",
+  "text": "BiasAperture Phase-2 orchestrator board (parent task_2026-09-02_002) — account-naming inconsistency: several executors claimed/submitted tasks under bare-number account names instead of the \"userN\" convention used elsewhere on this board. Specifically: Track 26 (task_2026-09-02_008) done under account \"24\"; Track 30 (task_2026-09-02_012) done under account \"20\"; Track 32 (task_2026-09-02_014) done under account \"24\"; Track 37 (task_2026-09-02_019) claimed (not yet done) under account \"23\". No orchestrator tool exists to rename/relabel owner_account on a task after claim_task or submit_checkpoint has been called — release_task + re-claim under the correct name is the only in-band fix, and that requires the original claiming account to act (an orchestrator/different account can't do it on their behalf). For the 3 already-done tasks (26/30/32), there is currently no way to relabel provenance at all short of a manual edit to the underlying task store. Flagging this as a known, currently-unresolved provenance inconsistency on this board for anyone doing the eventual merge_results/synthesis pass.",
+  "pushed_at": "2026-09-02T10:43:13Z",
+  "tags": [
+    "biasaperture",
+    "orchestrator",
+    "provenance",
+    "task_2026-09-02_002"
+  ],
+  "ttl_days": 30,
+  "priority": "high"
+}

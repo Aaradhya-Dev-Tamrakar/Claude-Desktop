@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-02_002",
   "kind": "text",
   "spec": "Track 32 — API-First Service Layer\nStream: I (Modular Architecture) | Priority: High | Est: 60min | Feeds: Phase-2 architecture spec, depends on Track 25 dashboard decision\n\nCONTEXT: The engine (src/bias_aperture) is already decoupled from the CLI entry point (cli.py) — fairness/, report/, explainability.py, data_ingestion.py are importable as a library.\n\nTASK: Design a REST (or gRPC) service layer wrapping the existing engine for CI/CD and third-party integration (e.g. a company runs a bias audit as a pipeline step on every model release). Cover: (1) minimal endpoint set (submit predictions file/job, poll status, fetch report/JSON results) mapped onto existing engine calls — cite which existing modules each endpoint would call; (2) auth and rate-limiting considerations given this may process a client's proprietary model outputs (cross-reference Track 35 for data-governance depth, don't duplicate it here); (3) sync vs async job model given audit runtime can be non-trivial at scale (cross-reference Track 34 performance track, don't duplicate); (4) how this relates to Track 25's dashboard options — the API should be the dashboard's backend, not a parallel reimplementation. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/32_api_first_service_layer.md",
-  "status": "pending",
-  "owner_account": null,
+  "status": "done",
+  "owner_account": "24",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user6",
   "created_at": "2026-09-02T09:38:12Z",
-  "updated_at": "2026-09-02T09:38:12Z"
+  "updated_at": "2026-09-02T10:39:35Z"
 }
