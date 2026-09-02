@@ -23,6 +23,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 from typing import Any
 
 from mcp.server.mcpserver import MCPServer
@@ -50,6 +51,57 @@ th { background: #f2f2f2; }
 
 def _check_deps() -> list[str]:
     return [t for t in ("pandoc", "wkhtmltopdf") if shutil.which(t) is None]
+
+
+def _resolve_output_path(output_path: str) -> str:
+    candidate = output_path.strip()
+    if not candidate:
+        raise ValueError("output_path is required.")
+
+    if not os.path.isabs(candidate):
+        candidate = os.path.abspath(candidate)
+
+    directory = os.path.dirname(candidate) or os.getcwd()
+    try:
+        os.makedirs(directory, exist_ok=True)
+    except OSError:
+        fallback = os.path.join(tempfile.gettempdir(), "md2pdf-mcp", os.path.basename(candidate))
+        os.makedirs(os.path.dirname(fallback), exist_ok=True)
+        return fallback
+    return candidate
+
+
+def _read_source_content(markdown_content: str | None, source_path: str | None) -> str:
+    if markdown_content is not None and markdown_content.strip():
+        return markdown_content
+
+    if source_path:
+        source_path = source_path.strip()
+        if not source_path:
+            raise ValueError("source_path cannot be empty.")
+
+        if os.path.isfile(source_path):
+            with open(source_path, "r", encoding="utf-8") as f:
+                return f.read()
+
+        repo_root = Path(__file__).resolve().parents[2]
+        basename = os.path.basename(source_path)
+        matches = sorted(repo_root.rglob(basename))
+        if len(matches) == 1:
+            with matches[0].open("r", encoding="utf-8") as f:
+                return f.read()
+        if len(matches) > 1:
+            raise ValueError(
+                f"source_path not found: {source_path}. Multiple files with that name exist under the repo: "
+                + ", ".join(str(p) for p in matches[:5])
+            )
+
+        raise ValueError(
+            f"source_path not found: {source_path}. "
+            "If the file is only available in chat text, pass markdown_content instead."
+        )
+
+    raise ValueError("Provide either markdown_content or source_path.")
 
 
 def _run_conversion(md_content: str, save_path: str, margin_mm: int) -> None:
@@ -119,31 +171,23 @@ def convert_markdown_to_pdf(
             "Install via choco/brew/apt and retry."
         )
 
-    if not markdown_content and not source_path:
-        raise ValueError("Provide either markdown_content or source_path.")
-    if markdown_content and source_path:
+    if markdown_content is not None and source_path is not None:
         raise ValueError("Provide only one of markdown_content or source_path, not both.")
 
-    if source_path:
-        if not os.path.isfile(source_path):
-            raise ValueError(f"source_path not found: {source_path}")
-        with open(source_path, "r", encoding="utf-8") as f:
-            content = f.read()
-    else:
-        content = markdown_content or ""
+    if markdown_content is None and source_path is None:
+        raise ValueError("Provide either markdown_content or source_path.")
+
+    content = _read_source_content(markdown_content, source_path)
 
     if not content.strip():
         raise ValueError("No Markdown content to convert (empty input).")
 
-    out_dir = os.path.dirname(output_path)
-    if out_dir and not os.path.isdir(out_dir):
-        raise ValueError(f"Output directory does not exist: {out_dir}")
-
     if not (0 <= margin_mm <= 100):
         raise ValueError(f"margin_mm must be between 0 and 100, got {margin_mm}")
 
-    _run_conversion(content, output_path, margin_mm)
-    return {"status": "saved", "output_path": output_path}
+    resolved_output_path = _resolve_output_path(output_path)
+    _run_conversion(content, resolved_output_path, margin_mm)
+    return {"status": "saved", "output_path": resolved_output_path}
 
 
 def main() -> None:
