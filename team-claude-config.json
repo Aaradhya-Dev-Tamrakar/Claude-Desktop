@@ -29,6 +29,13 @@
       "env": {
         "ORCHESTRATOR_API_URL": "http://localhost:8000/api/v1"
       }
+    },
+    "md2pdf-mcp": {
+      "command": "python",
+      "args": [
+        "{{REPO_ROOT}}\\mcp-servers\\md2pdf-mcp\\run_server.py"
+      ],
+      "env": {}
     }
   },
   "preferences": {
