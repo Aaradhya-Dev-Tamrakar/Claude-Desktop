@@ -26,9 +26,14 @@ dev-logs/
 .claude-profiles/
 
 # Python bytecode/cache (mcp-servers/notebooklm-mcp/run_server.py)
+.venv/
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
 .env
 .env.*
@@ -36,13 +41,14 @@ __pycache__/
 
 # Local generated state / analysis artifacts
 graphify-out/*
+graphify-out/cache/**
 !graphify-out/.graphify*
-!graphify-out/cache/
 !graphify-out/graph.json
 !graphify-out/graph.html
 !graphify-out/GRAPH_REPORT.md
 !graphify-out/manifest.json
 !graphify-out/wiki/
+*.sig
 .gemini/
 GEMINI.md
 
