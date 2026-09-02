@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-02_002",
   "kind": "text",
   "spec": "Track 30 — Model-Agnostic Classifier Adapter Layer\nStream: I (Modular Architecture) | Priority: High | Est: 45min | Feeds: model_interface.py roadmap\n\nCONTEXT: model_interface.py's InProcessInterface is currently an abstract stub (NotImplementedError) reserved for the FairFace ResNet-34 baseline; PredictionsFileInterface (CSV/JSON ingestion) is the implemented, non-negotiable-core path.\n\nTASK: Research concrete adapter designs so BiasAperture can audit ARBITRARY third-party image classifiers, not just the FairFace baseline. Cover: (1) an ONNX Runtime adapter (model-format-agnostic, covers PyTorch/TensorFlow/etc. once exported) — what's needed to map arbitrary output logits back to this project's fixed race_7/gender_2/age_9 label space (this is the hard part: a client's model won't natively output FairFace's label taxonomy); (2) a HuggingFace `image-classification` pipeline adapter as a lower-effort alternative; (3) explicitly scope what's OUT of scope — auditing a model with a genuinely different demographic taxonomy than the M1 lock requires the Track 23 cross-modal schema work first, not this track; don't conflate the two. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/30_model_agnostic_adapters.md",
-  "status": "done",
+  "status": "merged",
   "owner_account": "20",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user6",
   "created_at": "2026-09-02T09:38:12Z",
-  "updated_at": "2026-09-02T10:40:46Z"
+  "updated_at": "2026-09-02T11:00:32Z"
 }

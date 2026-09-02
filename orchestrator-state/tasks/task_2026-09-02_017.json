@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-02_002",
   "kind": "text",
   "spec": "Track 35 — Data Privacy & Governance for Third-Party Client Audits\nStream: J (Deployment/Ops) | Priority: High | Est: 45min | Feeds: Phase-2 ops spec, Track 32/33 dependency\n\nCONTEXT: A product version of BiasAperture would process a CLIENT's proprietary model outputs and potentially sensitive demographic-labeled data, unlike the capstone's public FairFace benchmark use.\n\nTASK: Research a data-governance approach for handling third-party client audits. Cover: (1) on-prem/air-gapped vs isolated-cloud-tenancy options and which client sensitivity profiles map to each (cross-reference docs/DATA_GOVERNANCE.md if present in the repo and note explicitly whether this track's recommendations are consistent with or extend it); (2) data retention policy for predictions files and generated reports (how long, who can access, deletion guarantees); (3) whether demographic labels themselves (race/gender/age) count as sensitive/special-category data under relevant regimes (GDPR Art.9-adjacent reasoning) even though they're being used FOR fairness auditing, not against the subject — this nuance matters for the product's own compliance posture, not just the audited model's. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/35_data_privacy_governance.md",
-  "status": "done",
+  "status": "merged",
   "owner_account": "user25",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user6",
   "created_at": "2026-09-02T09:38:12Z",
-  "updated_at": "2026-09-02T10:50:36Z"
+  "updated_at": "2026-09-02T11:00:32Z"
 }
