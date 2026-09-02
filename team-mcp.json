@@ -13,6 +13,13 @@
         "{{REPO_ROOT}}\\mcp-servers\\orchestrator-mcp\\run_server.py"
       ],
       "env": {}
+    },
+    "md2pdf-mcp": {
+      "command": "python",
+      "args": [
+        "{{REPO_ROOT}}\\mcp-servers\\md2pdf-mcp\\run_server.py"
+      ],
+      "env": {}
     }
   },
   "_disabled_mcpServers": {
