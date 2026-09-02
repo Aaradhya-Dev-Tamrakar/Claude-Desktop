@@ -208,27 +208,36 @@ function Expand-TeamMcpPlaceholders {
 }
 
 function Sync-TeamMcpConfig {
-    # I/O wrapper around Merge-McpServers: reads team-mcp.json from the repo
-    # and the profile's own claude_desktop_config.json, merges, writes back.
-    # Best-effort — matches the rest of this script's philosophy (see
-    # cooldown-reminder.ps1's doc comment): a broken or missing team-mcp.json,
+    # Force-syncs shared MCP servers from team-mcp.json across all profiles
+    # in %USERPROFILE%\.claude-profiles and the active native AppData dir.
+    # Runs once per launch execution unless explicitly forced.
+    # Best-effort — matches the script's philosophy: a broken or missing team-mcp.json,
     # or a malformed existing config file, must never block the actual launch.
     param(
         [Parameter(Mandatory = $true)][string]$RepoRoot,
-        [Parameter(Mandatory = $true)][string]$TargetConfigDir,
-        [switch]$WhatIf
+        [string]$TargetConfigDir,
+        [switch]$WhatIf,
+        [switch]$Force
     )
+
+    if ($script:TeamMcpSyncCompleted -and -not $Force) {
+        return
+    }
 
     $SharedConfigPath = Join-Path $RepoRoot "team-mcp.json"
     if (-not (Test-Path $SharedConfigPath)) {
-        return  # No team-mcp.json checked in yet — nothing to sync, silently skip.
+        return
     }
 
     try {
-        $SharedConfig = Get-Content $SharedConfigPath -Raw | ConvertFrom-Json
+        $SharedConfig = Get-Content $SharedConfigPath -Raw -Encoding UTF8 | ConvertFrom-Json
     }
     catch {
         Write-Warning "team-mcp.json is not valid JSON ($_). Skipping team MCP sync this launch."
+        return
+    }
+
+    if (-not ($SharedConfig.PSObject.Properties.Name -contains "mcpServers")) {
         return
     }
 
@@ -240,48 +249,72 @@ function Sync-TeamMcpConfig {
         return
     }
 
-    $ProfileConfigPath = Join-Path $TargetConfigDir "claude_desktop_config.json"
-    $ProfileConfig = [PSCustomObject]@{}
-    if (Test-Path $ProfileConfigPath) {
-        try {
-            $ProfileConfig = Get-Content $ProfileConfigPath -Raw | ConvertFrom-Json
-        }
-        catch {
-            Write-Warning "Existing claude_desktop_config.json is not valid JSON ($_). Treating as empty for this merge rather than overwriting blind."
-            $ProfileConfig = [PSCustomObject]@{}
-        }
-    }
-
-    try {
-        $Merged = Merge-McpServers -ProfileConfig $ProfileConfig -SharedConfig $SharedConfig
-    }
-    catch {
-        Write-Warning "Failed to merge shared MCP servers ($_). Team MCP sync skipped this launch."
-        return
-    }
-
     $sharedServerNames = @($SharedConfig.mcpServers.PSObject.Properties.Name)
     $sharedCount = $sharedServerNames.Count
 
-    if ($WhatIf) {
-        Write-Host "[WhatIf] Would sync $sharedCount shared MCP server(s) ($($sharedServerNames -join ', ')) from team-mcp.json into '$ProfileConfigPath'." -ForegroundColor DarkCyan
+    # Locate all target profile directories
+    $ProfilesRoot = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
+    $Targets = @()
+
+    if ($TargetConfigDir) {
+        $Targets += [PSCustomObject]@{ Name = (Split-Path $TargetConfigDir -Leaf); Path = $TargetConfigDir }
     }
     else {
-        try {
-            if (-not (Test-Path $TargetConfigDir)) {
-                New-Item -ItemType Directory -Force -Path $TargetConfigDir | Out-Null
+        if (Test-Path $ProfilesRoot) {
+            $profileDirs = Get-ChildItem -Path $ProfilesRoot -Directory | Where-Object { $_.Name -match '^user\d+$' }
+            foreach ($p in $profileDirs) {
+                $Targets += [PSCustomObject]@{ Name = $p.Name; Path = $p.FullName }
             }
-            $Merged | ConvertTo-Json -Depth 10 | Set-Content $ProfileConfigPath -Encoding UTF8
-            Write-Host "  🔄 Syncing MCP Servers ($sharedCount):" -ForegroundColor Cyan
-            foreach ($srv in $sharedServerNames) {
-                Write-Host "     ● $srv" -ForegroundColor Green
-            }
-            Write-Host "     → Config updated: $ProfileConfigPath" -ForegroundColor DarkGray
         }
-        catch {
-            Write-Warning "Failed to write merged claude_desktop_config.json ($_). Team MCP sync skipped this launch."
+
+        # Also include active native AppData dir
+        $NativeAppDataDir = "$env:LOCALAPPDATA\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude"
+        if (-not (Test-Path (Split-Path $NativeAppDataDir -Parent))) {
+            $NativeAppDataDir = "$env:APPDATA\Claude"
+        }
+        if (Test-Path $NativeAppDataDir) {
+            $Targets += [PSCustomObject]@{ Name = "NativeAppData"; Path = $NativeAppDataDir }
         }
     }
+
+    if ($WhatIf) {
+        Write-Host "  🔄 [WhatIf] Would sync $sharedCount shared MCP server(s) ($($sharedServerNames -join ', ')) into $($Targets.Count) profile(s)/target(s)." -ForegroundColor DarkCyan
+    }
+    else {
+        Write-Host "  🔄 Syncing MCP Servers ($sharedCount) across $($Targets.Count) profile config(s):" -ForegroundColor Cyan
+        foreach ($srv in $sharedServerNames) {
+            Write-Host "     ● $srv" -ForegroundColor Green
+        }
+
+        $syncedCount = 0
+        foreach ($tgt in $Targets) {
+            $ProfileConfigPath = Join-Path $tgt.Path "claude_desktop_config.json"
+            $ProfileConfig = [PSCustomObject]@{}
+            if (Test-Path $ProfileConfigPath) {
+                try {
+                    $ProfileConfig = Get-Content $ProfileConfigPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                }
+                catch {
+                    $ProfileConfig = [PSCustomObject]@{}
+                }
+            }
+
+            try {
+                $Merged = Merge-McpServers -ProfileConfig $ProfileConfig -SharedConfig $SharedConfig
+                if (-not (Test-Path $tgt.Path)) {
+                    New-Item -ItemType Directory -Force -Path $tgt.Path | Out-Null
+                }
+                $Merged | ConvertTo-Json -Depth 10 | Set-Content $ProfileConfigPath -Encoding UTF8
+                $syncedCount++
+            }
+            catch {
+                Write-Warning "Failed to write merged claude_desktop_config.json for '$($tgt.Name)' ($_)."
+            }
+        }
+        Write-Host "     ✓ Successfully synced $syncedCount config file(s)." -ForegroundColor DarkGray
+    }
+
+    $script:TeamMcpSyncCompleted = $true
 }
 
 function Add-NewProfile {
@@ -1742,15 +1775,10 @@ function Invoke-ProfileLaunch {
         # Ensure local background orchestrator server is running for MCP endpoints
         Ensure-LocalOrchestratorServer -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
 
-        # Team interlink: force-merge shared MCP servers into this profile's
-        # claude_desktop_config.json. Opt out with -NoTeamSync. Best-effort
-        # no-op if team-mcp.json isn't checked in yet. Runs for both modes:
-        # $NativeAppDataDir is what swap-mode Claude reads (already restored
-        # by the mirror step above); $Dir is what Concurrent mode reads
-        # directly via --user-data-dir.
+        # Team interlink: force-merge shared MCP servers into all profiles
+        # (and active native AppData) claude_desktop_config.json. Opt out with -NoTeamSync.
         if (-not $NoTeamSync) {
-            $TeamConfigDir = if ($Concurrent) { $Dir } else { $NativeAppDataDir }
-            Sync-TeamMcpConfig -RepoRoot $PSScriptRoot -TargetConfigDir $TeamConfigDir -WhatIf:$WhatIf
+            Sync-TeamMcpConfig -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
         }
 
         $Role = if ($ProfileInfo.role) { [string]$ProfileInfo.role } else { "-" }
