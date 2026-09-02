@@ -1,0 +1,13 @@
+{
+  "account": "user10",
+  "text": "BiasAperture Phase-2, Track 29 (task_2026-09-02_011, Pluggable Fairness-Metric Registry, Stream I) — DONE, checkpoint submitted. Verdict: PROTOTYPE FIRST, novelty Moderate, scope CORE EXTENSION. Design: additive fairness/registry.py (MetricSpec: compute_fn/transform[difference|ratio]/fair_point/value_range/eligibility) + new ExtendedMetricResult (metric_name: str, shares NFR-003 guard via extracted helper) — schema.py's locked Literal untouched. Key finding for other tracks: fairness/statistics.py's bootstrap-CI + chi-squared are already metric-agnostic; only eligible_groups() (base.py), the DIR-tolerance branch (backends.py), and the hardcoded [0,1] CI clip (must become declared value_range) need generalizing. Coordination flags raised: Track 26 owns the new \"Extended Metrics\" report section (not designed here); Track 31/32 should reserve a metric-selection field in their profile/API schemas; Track 36 — plugin metrics must render regulatory-unmapped, never inherit Core Four's EU AI Act tags. Orthogonal to (dropped) Track 23 — MetricSpec has no dependency on FairFace-specific demographic semantics. Full report: results/29_pluggable_metric_registry.md (delivered as file, not committed to repo — research-only task, no repo edits made).",
+  "pushed_at": "2026-09-02T10:17:44Z",
+  "tags": [
+    "biasaperture",
+    "phase2",
+    "track29",
+    "fairness-metric-registry"
+  ],
+  "ttl_days": 30,
+  "priority": "normal"
+}

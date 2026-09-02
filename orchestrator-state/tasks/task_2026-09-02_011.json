@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-02_002",
   "kind": "text",
   "spec": "Track 29 — Pluggable Fairness-Metric Registry\nStream: I (Modular Architecture) | Priority: High | Est: 45min | Feeds: fairness/base.py roadmap\n\nCONTEXT: fairness/base.py implements a Strategy pattern (FairnessBackend ABC, FairlearnBackend/AIF360Backend concrete impls) for the Core Four metrics only. MetricResult.metric_name is currently a Literal of exactly 4 values (schema.py) — locked at M1.\n\nTASK: Design a plugin registry so third-party or later-added metrics (e.g. treatment equality, predictive parity) can be registered without modifying the M1-locked Literal type or the core engine. Cover: (1) how to widen metric_name from a hard Literal to a registry-validated str WITHOUT breaking existing Core-Four-only consumers (report templates, tests) — propose as an additive v2 type, not a schema.py edit; (2) what interface a plugin metric must implement to stay compatible with the existing n>=30 guard, bootstrap CI, and chi-squared pattern in MetricResult.__post_init__; (3) whether the fair-point asymmetry handling (DIR=1.0 vs others=0) needs to become a per-metric-plugin declared property rather than hardcoded. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/29_pluggable_metric_registry.md",
-  "status": "pending",
-  "owner_account": null,
+  "status": "done",
+  "owner_account": "user10",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user6",
   "created_at": "2026-09-02T09:38:12Z",
-  "updated_at": "2026-09-02T09:38:12Z"
+  "updated_at": "2026-09-02T10:15:57Z"
 }

@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-02_002",
   "kind": "text",
   "spec": "Track 34 — Enterprise-Scale Performance Profiling\nStream: J (Deployment/Ops) | Priority: Medium | Est: 45min | Feeds: Phase-2 ops spec\n\nCONTEXT: Current validated runtime target (BiasAperture-AT.md §9): full FairFace (108,501 img) <=4hr GPU; stratified dev subset (n=5,000) <=30min CPU. Actual verified run processed 10,954 validation images successfully.\n\nTASK: Research what changes at 10x-100x scale (a client dataset in the millions of images) beyond the current FairFace-sized benchmark. Cover: (1) where the pipeline likely bottlenecks first — inference (if InProcessInterface/Track 30 adapters are used), the dual-backend fairness computation (Fairlearn+AIF360 run independently per NFR/design), or the >=1,000-resample bootstrap CI step across many subgroup×metric combinations; (2) batching/streaming ingestion strategies for PredictionsFileInterface-scale files that don't fit comfortably in memory (current implementation loads full CSV/JSON via pandas); (3) whether bootstrap resample count or subgroup granularity should ever be reduced for speed — and if so, state clearly that this must never trade away NFR-001/002/003 guarantees, only wall-clock via parallelization. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/34_enterprise_scale_performance.md",
-  "status": "pending",
-  "owner_account": null,
+  "status": "done",
+  "owner_account": "user14",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user6",
   "created_at": "2026-09-02T09:38:12Z",
-  "updated_at": "2026-09-02T09:38:12Z"
+  "updated_at": "2026-09-02T10:16:55Z"
 }

@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-02_021",
+  "parent_id": "task_2026-08-15_001",
+  "kind": "text",
+  "spec": "Track 08 (EU AI Act Article 10 mapping) open-flags resolution. Resolves the three flags noted in Track 08's original submission: (1) MetricResult has no field for per-row regulatory tagging — schema-lock-m1.md keeps the field set closed pending Stream A/B decision; (2) Article 10(5) legal-basis statement for special-category data processing had no track owner; (3) Annex IV §5/§9 obligations fall outside all 20 tracks' scope and need explicit documentation as a boundary, not a silent gap. Deliverable via submit_checkpoint result_text: non-invasive regulatory-tag lookup-table workaround (no schema change), Art.10(5)-to-Art.4a relocation finding under the EU Digital Omnibus (in force 27 Jul 2026) with a draft legal-basis paragraph, and an Annex IV §5/§9 scope-boundary paragraph for the final report. Research only — no code changes, repo edits, or sync.ps1 invocation.",
+  "status": "done",
+  "owner_account": "user9",
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user9",
+  "created_at": "2026-09-02T10:22:42Z",
+  "updated_at": "2026-09-02T10:23:11Z"
+}

@@ -1,0 +1,14 @@
+{
+  "account": "Aaradhya",
+  "text": "Track 21 (Continuous/Streaming Audit Mode, task_2026-09-02_003, parent task_2026-09-02_002 Phase-2 sprint) — DONE, checkpoint submitted. Recommendation: two-layer design — Layer 1 = existing one-shot weekly audit unchanged (Fairlearn+AIF360, χ² α=0.05, bootstrap B≥1000, n≥30 guard); Layer 2 = CUSUM control chart over per-window Core-Four point estimates for trend/drift detection. Rejected per-record sequential testing (violates n≥30, Type-I inflation under naive continuous monitoring) and FairCanary's QDD metric (would add a 5th non-Core-Four metric, breaking M1 lock). New additive-only `DriftObservation` dataclass proposed — references MetricResult by value, does NOT modify the locked schema. Two-tier alerting: Watch (CUSUM alone) vs Alarm (CUSUM + fresh within-window χ² significance, dual-gate). Formal Lan-DeMets alpha-spending flagged as optional separate follow-on, not required for v1. Full deliverable: research/results/21_streaming_audit_mode.md. Relevant to any other Stream G/H/I track touching MetricResult or the report/alerting layer — flag here rather than re-deriving.",
+  "pushed_at": "2026-09-02T10:17:49Z",
+  "tags": [
+    "BiasAperture",
+    "Phase2",
+    "track21",
+    "streaming-audit",
+    "MetricResult"
+  ],
+  "ttl_days": 30,
+  "priority": "normal"
+}

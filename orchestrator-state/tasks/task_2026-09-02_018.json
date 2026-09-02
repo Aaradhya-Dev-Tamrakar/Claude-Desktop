@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-02_002",
   "kind": "text",
   "spec": "Track 36 — Regulatory Expansion Map Beyond EU AI Act\nStream: K (Business/Regulatory) | Priority: High | Est: 45min | Feeds: report regulatory-mapping roadmap\n\nCONTEXT: Current regulatory mapping covers EU AI Act Article 10 (10(2)-10(5), already validated against EUR-Lex per BiasAperture-AT.md §14) and NIST AI RMF (AI 100-1). This was sufficient for a capstone case study; a product needs broader coverage.\n\nTASK: Research and map additional regulatory frameworks BiasAperture's existing MetricResult output could be tagged against, following the SAME 'metric row -> specific clause' methodological template the project already used for Article 10 (cite Buscemi et al. 2025, already in lit review, as the template). Cover at minimum: (1) US state-level AI laws relevant to biometric/facial-analysis systems (e.g. Colorado AI Act, NYC Local Law 144, Illinois BIPA) — note which are audit-mandate laws vs disclosure-only; (2) ISO/IEC 42001 (AI management systems) as a certifiable-standard angle distinct from EU/US statute; (3) one sector-specific example (e.g. financial services model-risk-management guidance) to show the mapping generalizes beyond facial-analysis-specific law. For each, state clearly whether it's confirmed via source-checking (like the project's existing EUR-Lex verification) or needs legal review before being shipped as a compliance claim. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/36_regulatory_expansion_map.md",
-  "status": "pending",
-  "owner_account": null,
+  "status": "done",
+  "owner_account": "user12",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user6",
   "created_at": "2026-09-02T09:38:12Z",
-  "updated_at": "2026-09-02T09:38:12Z"
+  "updated_at": "2026-09-02T10:20:00Z"
 }

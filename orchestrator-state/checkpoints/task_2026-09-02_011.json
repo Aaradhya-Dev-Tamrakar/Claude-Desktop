@@ -1,0 +1,10 @@
+{
+  "task_id": "task_2026-09-02_011",
+  "kind": "text",
+  "summary": "Track 29 complete. Design: additive fairness/registry.py (MetricSpec: compute_fn, transform[difference|ratio], fair_point, value_range, eligibility) + new ExtendedMetricResult (metric_name: str, shares NFR-003 guard via extracted helper, MetricResult's Literal untouched). Key finding: statistics.py's bootstrap-CI + chi-squared are already metric-agnostic — main gaps are eligible_groups()'s name-string switch (base.py), backends.py's hardcoded DIR-tolerance branch, and the [0,1] CI clip which must become a declared value_range (treatment equality's unbounded FN/FP ratio breaks the current hardcoded clip). Novelty: Moderate (cites Fairlearn's make_derived_metric transform= as direct precedent; AIF360 extensibility is source/PR-level only, not a runtime registry). Recommendation: PROTOTYPE FIRST (build predictive parity, then treatment equality, before committing to the abstraction). Scope: CORE EXTENSION. Cross-track notes for 23 (orthogonal, dropped — not depended on), 26 (owns new report section), 31/32 (need metric-selection field), 36 (plugin metrics render unmapped). Full markdown in result_text; also saved to results/29_pluggable_metric_registry.md convention (not committed — research-only, no repo edits per task constraints).",
+  "branch_name": null,
+  "commit_sha": null,
+  "result_text": "See attached deliverable file 29_pluggable_metric_registry.md (full report: executive conclusion, current-state analysis with file:line citations, proposed MetricSpec/registry design, novelty analysis with Fairlearn/AIF360 prior-art citations, product value, architecture, risks, alternatives, PROTOTYPE FIRST recommendation, concrete next steps, cross-track synthesis, and FINAL VERDICT block). Delivered as a file rather than inlined here per length; key content duplicated in the summary field above.",
+  "submitted_by": "user10",
+  "submitted_at": "2026-09-02T10:15:57Z"
+}

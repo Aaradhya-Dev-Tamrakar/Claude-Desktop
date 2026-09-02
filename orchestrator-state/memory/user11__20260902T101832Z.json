@@ -1,0 +1,14 @@
+{
+  "account": "user11",
+  "text": "Track 24 (task_2026-09-02_006, Bias Root-Cause Clustering) done — result in checkpoint result_text. Two coordination flags for other tracks:\n\n1. → Track 25/26 owner (Web Dashboard / Drill-Down Report UX): reserve a UI slot for a future \"Shared Drivers / Root Cause Themes\" section when finalizing the 3-tier drill-down structure — don't lock the layout without it, retrofitting later is harder. Not required now (Track 24's own recommendation is PROTOTYPE FIRST on a lightweight variant only), just don't design it out.\n\n2. Track 24 effectively re-opens Phase-1 Track 16 (Proxy Variable Detection via SHAP, research/results/stream_d_explainability.md) — that pipeline (DeepSHAP + face-parsing segmentation → per-region SHAP-mass vectors) was scoped but never implemented; 6 open items still logged unresolved there. Track 24's \"cluster attribution vectors\" ask depends on Track 16 existing first. Recommend Aaradhya/Tisha jointly decide whether to revive Track 16 before any Phase-2 track builds further explainability features on top of it.\n\nAlso flagging a pre-existing gap unrelated to clustering itself: explainability.py's ExplanationResult output has zero integration into report/generator.py today (verified via grep) — only reachable via `cli.py --explain` stdout. Any future explainability-facing report section (Track 24, 26, or otherwise) needs this wiring built regardless of which feature lands first.\n\nFull report: results/24_bias_rootcause_clustering.md (suggested path, not yet written to repo — research-only per task spec).",
+  "pushed_at": "2026-09-02T10:18:32Z",
+  "tags": [
+    "biasaperture",
+    "phase2",
+    "track24",
+    "explainability",
+    "coordination"
+  ],
+  "ttl_days": 30,
+  "priority": "high"
+}
