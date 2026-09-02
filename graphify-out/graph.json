@@ -36,266 +36,6 @@
   },
   "nodes": [
     {
-      "id": "server_models_schemas_jobcreate",
-      "label": "JobCreate",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "jobcreate",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L15"
-    },
-    {
-      "id": "server_models_schemas_jobmetricsresponse",
-      "label": "JobMetricsResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "jobmetricsresponse",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L168"
-    },
-    {
-      "id": "server_models_schemas_jobresponse",
-      "label": "JobResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "jobresponse",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L24"
-    },
-    {
-      "id": "server_models_schemas_jobupdate",
-      "label": "JobUpdate",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "jobupdate",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L36"
-    },
-    {
-      "id": "server_models_schemas_contextupsert",
-      "label": "ContextUpsert",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_memory.py",
-      "file_type": "code",
-      "norm_label": "contextupsert",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L191"
-    },
-    {
-      "id": "server_models_schemas_memorycreate",
-      "label": "MemoryCreate",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_memory.py",
-      "file_type": "code",
-      "norm_label": "memorycreate",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L181"
-    },
-    {
-      "id": "server_models_schemas_checkpointresponse",
-      "label": "CheckpointResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "checkpointresponse",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L137"
-    },
-    {
-      "id": "server_models_schemas_checkpointsubmit",
-      "label": "CheckpointSubmit",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "checkpointsubmit",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L125"
-    },
-    {
-      "id": "server_models_schemas_qareviewresponse",
-      "label": "QAReviewResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "qareviewresponse",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L157"
-    },
-    {
-      "id": "server_models_schemas_qareviewsubmit",
-      "label": "QAReviewSubmit",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "qareviewsubmit",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L149"
-    },
-    {
-      "id": "server_models_schemas_taskblockrequest",
-      "label": "TaskBlockRequest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "taskblockrequest",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L89"
-    },
-    {
-      "id": "server_models_schemas_taskclaimrequest",
-      "label": "TaskClaimRequest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "taskclaimrequest",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L70"
-    },
-    {
-      "id": "server_models_schemas_taskclaimresponse",
-      "label": "TaskClaimResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "taskclaimresponse",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L75"
-    },
-    {
-      "id": "server_models_schemas_taskcreate",
-      "label": "TaskCreate",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "taskcreate",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L41"
-    },
-    {
-      "id": "server_models_schemas_taskleaserenewrequest",
-      "label": "TaskLeaseRenewRequest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "taskleaserenewrequest",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L80"
-    },
-    {
-      "id": "server_models_schemas_taskreleaserequest",
-      "label": "TaskReleaseRequest",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "taskreleaserequest",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L85"
-    },
-    {
-      "id": "server_models_schemas_taskresponse",
-      "label": "TaskResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "taskresponse",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L51"
-    },
-    {
-      "id": "server_models_schemas_workerregister",
-      "label": "WorkerRegister",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "workerregister",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L95"
-    },
-    {
-      "id": "server_models_schemas_workerheartbeat",
-      "label": "WorkerHeartbeat",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "code",
-      "norm_label": "workerheartbeat",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L104"
-    },
-    {
-      "id": "server_models_schemas_workerresponse",
-      "label": "WorkerResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "code",
-      "norm_label": "workerresponse",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L110"
-    },
-    {
       "id": "server_core_config_settings",
       "label": "Settings",
       "_callable": true,
@@ -378,6 +118,32 @@
       "norm_label": "contextresponse",
       "source_file": "server/models/schemas.py",
       "source_location": "L194"
+    },
+    {
+      "id": "server_models_schemas_contextupsert",
+      "label": "ContextUpsert",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 12,
+      "community_name": "routes_memory.py",
+      "file_type": "code",
+      "norm_label": "contextupsert",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L191"
+    },
+    {
+      "id": "server_models_schemas_memorycreate",
+      "label": "MemoryCreate",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 12,
+      "community_name": "routes_memory.py",
+      "file_type": "code",
+      "norm_label": "memorycreate",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L181"
     },
     {
       "id": "server_models_schemas_memoryresponse",
@@ -855,6 +621,240 @@
       "source_location": "L39"
     },
     {
+      "id": "server_models_schemas_jobcreate",
+      "label": "JobCreate",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "jobcreate",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L15"
+    },
+    {
+      "id": "server_models_schemas_jobmetricsresponse",
+      "label": "JobMetricsResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "jobmetricsresponse",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L168"
+    },
+    {
+      "id": "server_models_schemas_jobresponse",
+      "label": "JobResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "jobresponse",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L24"
+    },
+    {
+      "id": "server_models_schemas_jobupdate",
+      "label": "JobUpdate",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "jobupdate",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L36"
+    },
+    {
+      "id": "server_models_schemas_checkpointresponse",
+      "label": "CheckpointResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "checkpointresponse",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L137"
+    },
+    {
+      "id": "server_models_schemas_checkpointsubmit",
+      "label": "CheckpointSubmit",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "checkpointsubmit",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L125"
+    },
+    {
+      "id": "server_models_schemas_qareviewresponse",
+      "label": "QAReviewResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "qareviewresponse",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L157"
+    },
+    {
+      "id": "server_models_schemas_qareviewsubmit",
+      "label": "QAReviewSubmit",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "qareviewsubmit",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L149"
+    },
+    {
+      "id": "server_models_schemas_taskblockrequest",
+      "label": "TaskBlockRequest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "taskblockrequest",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L89"
+    },
+    {
+      "id": "server_models_schemas_taskclaimrequest",
+      "label": "TaskClaimRequest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "taskclaimrequest",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L70"
+    },
+    {
+      "id": "server_models_schemas_taskclaimresponse",
+      "label": "TaskClaimResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "taskclaimresponse",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L75"
+    },
+    {
+      "id": "server_models_schemas_taskcreate",
+      "label": "TaskCreate",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "taskcreate",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L41"
+    },
+    {
+      "id": "server_models_schemas_taskleaserenewrequest",
+      "label": "TaskLeaseRenewRequest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "taskleaserenewrequest",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L80"
+    },
+    {
+      "id": "server_models_schemas_taskreleaserequest",
+      "label": "TaskReleaseRequest",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "taskreleaserequest",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L85"
+    },
+    {
+      "id": "server_models_schemas_taskresponse",
+      "label": "TaskResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "taskresponse",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L51"
+    },
+    {
+      "id": "server_models_schemas_workerregister",
+      "label": "WorkerRegister",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "workerregister",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L95"
+    },
+    {
+      "id": "server_models_schemas_workerheartbeat",
+      "label": "WorkerHeartbeat",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "workerheartbeat",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L104"
+    },
+    {
+      "id": "server_models_schemas_workerresponse",
+      "label": "WorkerResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "workerresponse",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L110"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop",
       "label": "IVirtualDesktop",
       "_callable": true,
@@ -1042,150 +1042,6 @@
       "norm_label": "submit_qa_review()",
       "source_file": "server/api/routes_tasks.py",
       "source_location": "L353"
-    },
-    {
-      "id": "server_core_database_get_db",
-      "label": "get_db()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "get_db",
-      "file_type": "code",
-      "norm_label": "get_db()",
-      "source_file": "server/core/database.py",
-      "source_location": "L15"
-    },
-    {
-      "id": "server_api_routes_jobs_create_job",
-      "label": "create_job()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "create_job()",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L17"
-    },
-    {
-      "id": "server_api_routes_jobs_get_job",
-      "label": "get_job()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "get_job()",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L87"
-    },
-    {
-      "id": "server_api_routes_jobs_get_job_metrics",
-      "label": "get_job_metrics()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "get_job_metrics()",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L130"
-    },
-    {
-      "id": "server_api_routes_jobs_list_jobs",
-      "label": "list_jobs()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "list_jobs()",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L59"
-    },
-    {
-      "id": "server_api_routes_jobs_now_iso",
-      "label": "_now_iso()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "_now_iso()",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L13"
-    },
-    {
-      "id": "server_api_routes_jobs_update_job",
-      "label": "update_job()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "update_job()",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L108"
-    },
-    {
-      "id": "server_api_routes_workers_get_worker",
-      "label": "get_worker()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "code",
-      "norm_label": "get_worker()",
-      "source_file": "server/api/routes_workers.py",
-      "source_location": "L71"
-    },
-    {
-      "id": "server_api_routes_workers_list_workers",
-      "label": "list_workers()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "code",
-      "norm_label": "list_workers()",
-      "source_file": "server/api/routes_workers.py",
-      "source_location": "L41"
-    },
-    {
-      "id": "server_api_routes_workers_now_iso",
-      "label": "_now_iso()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "code",
-      "norm_label": "_now_iso()",
-      "source_file": "server/api/routes_workers.py",
-      "source_location": "L13"
-    },
-    {
-      "id": "server_api_routes_workers_register_worker",
-      "label": "register_worker()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "code",
-      "norm_label": "register_worker()",
-      "source_file": "server/api/routes_workers.py",
-      "source_location": "L17"
-    },
-    {
-      "id": "server_api_routes_workers_worker_heartbeat",
-      "label": "worker_heartbeat()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "code",
-      "norm_label": "worker_heartbeat()",
-      "source_file": "server/api/routes_workers.py",
-      "source_location": "L94"
     },
     {
       "id": "server_core_auth_verify_api_key",
@@ -1768,6 +1624,24 @@
       "norm_label": ".isviewpinned()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L210"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_pinview",
+      "label": ".PinView()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "Desktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".pinview()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L211"
     },
     {
       "id": "client_adapters_base_adapter_baseworkeradapter_check_health",
@@ -2586,24 +2460,6 @@
       "source_location": "L171"
     },
     {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray_getcount",
-      "label": ".GetCount()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "IApplicationViewCollection",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getcount()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L220"
-    },
-    {
       "id": "tools_virtualdesktop11_24h2_vdesktool_program_closewindowsondesktop",
       "label": ".CloseWindowsOnDesktop()",
       "_callable": true,
@@ -3036,6 +2892,24 @@
       "source_location": "L145"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray_getcount",
+      "label": ".GetCount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 18,
+      "community_name": "IApplicationViewCollection",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getcount()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L220"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getdesktopswitchincludeexcludeviews",
       "label": ".GetDesktopSwitchIncludeExcludeViews()",
       "_callable": true,
@@ -3460,24 +3334,6 @@
       "norm_label": ".setcloak()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L82"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_pinview",
-      "label": ".PinView()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "Desktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".pinview()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L211"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_isapplicationpinned",
@@ -5664,6 +5520,150 @@
       "source_location": "L29"
     },
     {
+      "id": "server_api_routes_jobs_create_job",
+      "label": "create_job()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "create_job()",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L17"
+    },
+    {
+      "id": "server_api_routes_jobs_get_job",
+      "label": "get_job()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "get_job()",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L87"
+    },
+    {
+      "id": "server_api_routes_jobs_get_job_metrics",
+      "label": "get_job_metrics()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "get_job_metrics()",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L130"
+    },
+    {
+      "id": "server_api_routes_jobs_list_jobs",
+      "label": "list_jobs()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "list_jobs()",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L59"
+    },
+    {
+      "id": "server_api_routes_jobs_now_iso",
+      "label": "_now_iso()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "_now_iso()",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L13"
+    },
+    {
+      "id": "server_api_routes_jobs_update_job",
+      "label": "update_job()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "update_job()",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L108"
+    },
+    {
+      "id": "server_api_routes_workers_get_worker",
+      "label": "get_worker()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "get_worker()",
+      "source_file": "server/api/routes_workers.py",
+      "source_location": "L71"
+    },
+    {
+      "id": "server_api_routes_workers_list_workers",
+      "label": "list_workers()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "list_workers()",
+      "source_file": "server/api/routes_workers.py",
+      "source_location": "L41"
+    },
+    {
+      "id": "server_api_routes_workers_now_iso",
+      "label": "_now_iso()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "_now_iso()",
+      "source_file": "server/api/routes_workers.py",
+      "source_location": "L13"
+    },
+    {
+      "id": "server_api_routes_workers_register_worker",
+      "label": "register_worker()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "register_worker()",
+      "source_file": "server/api/routes_workers.py",
+      "source_location": "L17"
+    },
+    {
+      "id": "server_api_routes_workers_worker_heartbeat",
+      "label": "worker_heartbeat()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "worker_heartbeat()",
+      "source_file": "server/api/routes_workers.py",
+      "source_location": "L94"
+    },
+    {
+      "id": "server_core_database_get_db",
+      "label": "get_db()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 69,
+      "community_name": "get_db",
+      "file_type": "code",
+      "norm_label": "get_db()",
+      "source_file": "server/core/database.py",
+      "source_location": "L15"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_create",
       "label": ".Create()",
       "_callable": true,
@@ -6669,248 +6669,6 @@
       "norm_label": "list tasks with flexible filtering.",
       "source_file": "server/api/routes_tasks.py",
       "source_location": "L74"
-    },
-    {
-      "id": "server_core_database_py_connection",
-      "label": "Connection",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "get_db",
-      "file_type": "code",
-      "norm_label": "connection",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "server_core_database_rationale_16",
-      "label": "Dependency for obtaining an async sqlite database connection in FastAPI routes.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "get_db",
-      "file_type": "rationale",
-      "norm_label": "dependency for obtaining an async sqlite database connection in fastapi routes.",
-      "source_file": "server/core/database.py",
-      "source_location": "L16"
-    },
-    {
-      "id": "server_api_routes_jobs",
-      "label": "routes_jobs.py",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "routes_jobs.py",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_api_routes_jobs_py_connection",
-      "label": "Connection",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "connection",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "server_api_routes_jobs_py_get",
-      "label": "get",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "get",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "server_api_routes_jobs_py_post",
-      "label": "post",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "code",
-      "norm_label": "post",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "server_api_routes_jobs_rationale_109",
-      "label": "Update job status or deadline.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "rationale",
-      "norm_label": "update job status or deadline.",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L109"
-    },
-    {
-      "id": "server_api_routes_jobs_rationale_131",
-      "label": "Retrieve throughput, rejection rate, and task statistics for a job.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "rationale",
-      "norm_label": "retrieve throughput, rejection rate, and task statistics for a job.",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L131"
-    },
-    {
-      "id": "server_api_routes_jobs_rationale_18",
-      "label": "Create a new client job / production batch.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "rationale",
-      "norm_label": "create a new client job / production batch.",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L18"
-    },
-    {
-      "id": "server_api_routes_jobs_rationale_63",
-      "label": "List all jobs with optional status filter.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "rationale",
-      "norm_label": "list all jobs with optional status filter.",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L63"
-    },
-    {
-      "id": "server_api_routes_jobs_rationale_88",
-      "label": "Retrieve details of a single job.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_jobs.py",
-      "file_type": "rationale",
-      "norm_label": "retrieve details of a single job.",
-      "source_file": "server/api/routes_jobs.py",
-      "source_location": "L88"
-    },
-    {
-      "id": "server_api_routes_tasks",
-      "label": "routes_tasks.py",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "routes_tasks.py",
-      "source_file": "server/api/routes_tasks.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_models_schemas",
-      "label": "schemas.py",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "schemas.py",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_models_schemas_py_basemodel",
-      "label": "BaseModel",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "basemodel",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "server_api_routes_workers",
-      "label": "routes_workers.py",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "code",
-      "norm_label": "routes_workers.py",
-      "source_file": "server/api/routes_workers.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_api_routes_workers_py_connection",
-      "label": "Connection",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "code",
-      "norm_label": "connection",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "server_api_routes_workers_py_get",
-      "label": "get",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "code",
-      "norm_label": "get",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "server_api_routes_workers_py_post",
-      "label": "post",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "code",
-      "norm_label": "post",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "server_api_routes_workers_rationale_18",
-      "label": "Register or update an AI worker node / profile.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "rationale",
-      "norm_label": "register or update an ai worker node / profile.",
-      "source_file": "server/api/routes_workers.py",
-      "source_location": "L18"
-    },
-    {
-      "id": "server_api_routes_workers_rationale_45",
-      "label": "List all registered worker nodes.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "rationale",
-      "norm_label": "list all registered worker nodes.",
-      "source_file": "server/api/routes_workers.py",
-      "source_location": "L45"
-    },
-    {
-      "id": "server_api_routes_workers_rationale_72",
-      "label": "Retrieve details for a specific worker.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "rationale",
-      "norm_label": "retrieve details for a specific worker.",
-      "source_file": "server/api/routes_workers.py",
-      "source_location": "L72"
-    },
-    {
-      "id": "server_api_routes_workers_rationale_95",
-      "label": "Process heartbeat from a worker, updating usage, cooldown, and status.",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "routes_workers.py",
-      "file_type": "rationale",
-      "norm_label": "process heartbeat from a worker, updating usage, cooldown, and status.",
-      "source_file": "server/api/routes_workers.py",
-      "source_location": "L95"
     },
     {
       "id": "fastapi",
@@ -8720,18 +8478,6 @@
       "source_location": "L9"
     },
     {
-      "id": "team_memory_local_git_workflow_auto_sync_sync_ps1",
-      "label": "Local Git Workflow & Auto-Sync (`sync.ps1`)",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "2026-08-22",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "local git workflow & auto-sync (`sync.ps1`)",
-      "source_file": "team-memory.md",
-      "source_location": "L569"
-    },
-    {
       "id": "team_memory_2026_08_05",
       "label": "2026-08-05",
       "_origin": "ast",
@@ -8768,6 +8514,18 @@
       "source_location": "L26"
     },
     {
+      "id": "team_memory_2026_08_10_30",
+      "label": "2026-08-10",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2026-08-10",
+      "source_file": "team-memory.md",
+      "source_location": "L30"
+    },
+    {
       "id": "team_memory_2026_08_11",
       "label": "2026-08-11",
       "_origin": "ast",
@@ -8778,6 +8536,42 @@
       "norm_label": "2026-08-11",
       "source_file": "team-memory.md",
       "source_location": "L45"
+    },
+    {
+      "id": "team_memory_2026_08_11_103",
+      "label": "2026-08-11",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2026-08-11",
+      "source_file": "team-memory.md",
+      "source_location": "L103"
+    },
+    {
+      "id": "team_memory_2026_08_11_155",
+      "label": "2026-08-11",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2026-08-11",
+      "source_file": "team-memory.md",
+      "source_location": "L155"
+    },
+    {
+      "id": "team_memory_2026_08_11_91",
+      "label": "2026-08-11",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2026-08-11",
+      "source_file": "team-memory.md",
+      "source_location": "L91"
     },
     {
       "id": "team_memory_2026_08_13",
@@ -8792,6 +8586,18 @@
       "source_location": "L180"
     },
     {
+      "id": "team_memory_2026_08_13_410",
+      "label": "2026-08-13",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2026-08-13",
+      "source_file": "team-memory.md",
+      "source_location": "L410"
+    },
+    {
       "id": "team_memory_2026_08_15",
       "label": "2026-08-15",
       "_origin": "ast",
@@ -8802,6 +8608,18 @@
       "norm_label": "2026-08-15",
       "source_file": "team-memory.md",
       "source_location": "L468"
+    },
+    {
+      "id": "team_memory_2026_08_15_483",
+      "label": "2026-08-15",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2026-08-15",
+      "source_file": "team-memory.md",
+      "source_location": "L483"
     },
     {
       "id": "team_memory_2026_08_21",
@@ -8828,6 +8646,30 @@
       "source_location": "L519"
     },
     {
+      "id": "team_memory_2026_08_22_528",
+      "label": "2026-08-22",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2026-08-22",
+      "source_file": "team-memory.md",
+      "source_location": "L528"
+    },
+    {
+      "id": "team_memory_2026_08_22_595",
+      "label": "2026-08-22",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2026-08-22",
+      "source_file": "team-memory.md",
+      "source_location": "L595"
+    },
+    {
       "id": "team_memory_2026_08_23",
       "label": "2026-08-23",
       "_origin": "ast",
@@ -8838,6 +8680,18 @@
       "norm_label": "2026-08-23",
       "source_file": "team-memory.md",
       "source_location": "L601"
+    },
+    {
+      "id": "team_memory_2026_08_23_605",
+      "label": "2026-08-23",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2026-08-23",
+      "source_file": "team-memory.md",
+      "source_location": "L605"
     },
     {
       "id": "team_memory_areas_6g_rf_presentation_md",
@@ -9152,6 +9006,18 @@
       "source_location": "L185"
     },
     {
+      "id": "team_memory_topics_coursework_md_350",
+      "label": "/topics/coursework.md",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "/topics/coursework.md",
+      "source_file": "team-memory.md",
+      "source_location": "L350"
+    },
+    {
       "id": "team_memory_topics_hobbies_md",
       "label": "/topics/hobbies.md",
       "_origin": "ast",
@@ -9162,6 +9028,18 @@
       "norm_label": "/topics/hobbies.md",
       "source_file": "team-memory.md",
       "source_location": "L192"
+    },
+    {
+      "id": "team_memory_topics_hobbies_md_357",
+      "label": "/topics/hobbies.md",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "/topics/hobbies.md",
+      "source_file": "team-memory.md",
+      "source_location": "L357"
     },
     {
       "id": "team_memory_topics_home_network_md",
@@ -9176,6 +9054,18 @@
       "source_location": "L203"
     },
     {
+      "id": "team_memory_topics_home_network_md_368",
+      "label": "/topics/home-network.md",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "/topics/home-network.md",
+      "source_file": "team-memory.md",
+      "source_location": "L368"
+    },
+    {
       "id": "team_memory_topics_recent_work_md",
       "label": "/topics/recent-work.md",
       "_origin": "ast",
@@ -9186,6 +9076,18 @@
       "norm_label": "/topics/recent-work.md",
       "source_file": "team-memory.md",
       "source_location": "L208"
+    },
+    {
+      "id": "team_memory_topics_recent_work_md_373",
+      "label": "/topics/recent-work.md",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "/topics/recent-work.md",
+      "source_file": "team-memory.md",
+      "source_location": "L373"
     },
     {
       "id": "team_memory_topics_tech_stack_md",
@@ -9200,6 +9102,18 @@
       "source_location": "L213"
     },
     {
+      "id": "team_memory_topics_tech_stack_md_378",
+      "label": "/topics/tech-stack.md",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "Memory Log",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "/topics/tech-stack.md",
+      "source_file": "team-memory.md",
+      "source_location": "L378"
+    },
+    {
       "id": "team_memory_work_context",
       "label": "Work context",
       "_origin": "ast",
@@ -9210,73 +9124,6 @@
       "norm_label": "work context",
       "source_file": "team-memory.md",
       "source_location": "L416"
-    },
-    {
-      "id": "reset_profiles",
-      "label": "reset_profiles.ps1",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "launch_user_n.ps1",
-      "file_type": "code",
-      "norm_label": "reset_profiles.ps1",
-      "source_file": "reset_profiles.ps1",
-      "source_location": "L1"
-    },
-    {
-      "id": "sync",
-      "label": "sync.ps1",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "launch_user_n.ps1",
-      "file_type": "code",
-      "norm_label": "sync.ps1",
-      "source_file": "sync.ps1",
-      "source_location": "L1"
-    },
-    {
-      "id": "sync_find_stagedsecrets",
-      "label": "Find-StagedSecrets()",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "launch_user_n.ps1",
-      "file_type": "code",
-      "norm_label": "find-stagedsecrets()",
-      "source_file": "sync.ps1",
-      "source_location": "L8"
-    },
-    {
-      "id": "sync_get_autocommitmessage",
-      "label": "Get-AutoCommitMessage()",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "launch_user_n.ps1",
-      "file_type": "code",
-      "norm_label": "get-autocommitmessage()",
-      "source_file": "sync.ps1",
-      "source_location": "L39"
-    },
-    {
-      "id": "sync_sync_memorytoteammemory",
-      "label": "Sync-MemoryToTeamMemory()",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "launch_user_n.ps1",
-      "file_type": "code",
-      "norm_label": "sync-memorytoteammemory()",
-      "source_file": "sync.ps1",
-      "source_location": "L123"
-    },
-    {
-      "id": "team_memory",
-      "label": "team-memory.md",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "launch_user_n.ps1",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "team-memory.md",
-      "source_file": "team-memory.md",
-      "source_location": "L1"
     },
     {
       "id": "tools_md2pdf_app",
@@ -10271,6 +10118,248 @@
       "source_location": "L1"
     },
     {
+      "id": "server_api_routes_jobs",
+      "label": "routes_jobs.py",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "routes_jobs.py",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_api_routes_jobs_py_connection",
+      "label": "Connection",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "connection",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_api_routes_jobs_py_get",
+      "label": "get",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "get",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_api_routes_jobs_py_post",
+      "label": "post",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "code",
+      "norm_label": "post",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_api_routes_jobs_rationale_109",
+      "label": "Update job status or deadline.",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "rationale",
+      "norm_label": "update job status or deadline.",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L109"
+    },
+    {
+      "id": "server_api_routes_jobs_rationale_131",
+      "label": "Retrieve throughput, rejection rate, and task statistics for a job.",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "rationale",
+      "norm_label": "retrieve throughput, rejection rate, and task statistics for a job.",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L131"
+    },
+    {
+      "id": "server_api_routes_jobs_rationale_18",
+      "label": "Create a new client job / production batch.",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "rationale",
+      "norm_label": "create a new client job / production batch.",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L18"
+    },
+    {
+      "id": "server_api_routes_jobs_rationale_63",
+      "label": "List all jobs with optional status filter.",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "rationale",
+      "norm_label": "list all jobs with optional status filter.",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L63"
+    },
+    {
+      "id": "server_api_routes_jobs_rationale_88",
+      "label": "Retrieve details of a single job.",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "routes_jobs.py",
+      "file_type": "rationale",
+      "norm_label": "retrieve details of a single job.",
+      "source_file": "server/api/routes_jobs.py",
+      "source_location": "L88"
+    },
+    {
+      "id": "server_api_routes_tasks",
+      "label": "routes_tasks.py",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "routes_tasks.py",
+      "source_file": "server/api/routes_tasks.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_models_schemas",
+      "label": "schemas.py",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "schemas.py",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_models_schemas_py_basemodel",
+      "label": "BaseModel",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "basemodel",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_api_routes_workers",
+      "label": "routes_workers.py",
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "routes_workers.py",
+      "source_file": "server/api/routes_workers.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_api_routes_workers_py_connection",
+      "label": "Connection",
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "connection",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_api_routes_workers_py_get",
+      "label": "get",
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "get",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_api_routes_workers_py_post",
+      "label": "post",
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "post",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_api_routes_workers_rationale_18",
+      "label": "Register or update an AI worker node / profile.",
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "rationale",
+      "norm_label": "register or update an ai worker node / profile.",
+      "source_file": "server/api/routes_workers.py",
+      "source_location": "L18"
+    },
+    {
+      "id": "server_api_routes_workers_rationale_45",
+      "label": "List all registered worker nodes.",
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "rationale",
+      "norm_label": "list all registered worker nodes.",
+      "source_file": "server/api/routes_workers.py",
+      "source_location": "L45"
+    },
+    {
+      "id": "server_api_routes_workers_rationale_72",
+      "label": "Retrieve details for a specific worker.",
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "rationale",
+      "norm_label": "retrieve details for a specific worker.",
+      "source_file": "server/api/routes_workers.py",
+      "source_location": "L72"
+    },
+    {
+      "id": "server_api_routes_workers_rationale_95",
+      "label": "Process heartbeat from a worker, updating usage, cooldown, and status.",
+      "_origin": "ast",
+      "community": 68,
+      "community_name": "routes_workers.py",
+      "file_type": "rationale",
+      "norm_label": "process heartbeat from a worker, updating usage, cooldown, and status.",
+      "source_file": "server/api/routes_workers.py",
+      "source_location": "L95"
+    },
+    {
+      "id": "server_core_database_py_connection",
+      "label": "Connection",
+      "_origin": "ast",
+      "community": 69,
+      "community_name": "get_db",
+      "file_type": "code",
+      "norm_label": "connection",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_core_database_rationale_16",
+      "label": "Dependency for obtaining an async sqlite database connection in FastAPI routes.",
+      "_origin": "ast",
+      "community": 69,
+      "community_name": "get_db",
+      "file_type": "rationale",
+      "norm_label": "dependency for obtaining an async sqlite database connection in fastapi routes.",
+      "source_file": "server/core/database.py",
+      "source_location": "L16"
+    },
+    {
       "id": "preservesig",
       "label": "PreserveSig",
       "_origin": "ast",
@@ -10280,6 +10369,30 @@
       "norm_label": "preservesig",
       "source_file": "",
       "source_location": ""
+    },
+    {
+      "id": "team_memory_2026_08_22_536",
+      "label": "2026-08-22",
+      "_origin": "ast",
+      "community": 70,
+      "community_name": "2026-08-22",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2026-08-22",
+      "source_file": "team-memory.md",
+      "source_location": "L536"
+    },
+    {
+      "id": "team_memory_local_git_workflow_auto_sync_sync_ps1",
+      "label": "Local Git Workflow & Auto-Sync (`sync.ps1`)",
+      "_origin": "ast",
+      "community": 70,
+      "community_name": "2026-08-22",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "local git workflow & auto-sync (`sync.ps1`)",
+      "source_file": "team-memory.md",
+      "source_location": "L569"
     },
     {
       "id": "guid",
@@ -10599,6 +10712,73 @@
       "norm_label": "test-profilepathwithinbase()",
       "source_file": "launch_user_n.ps1",
       "source_location": "L83"
+    },
+    {
+      "id": "reset_profiles",
+      "label": "reset_profiles.ps1",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "launch_user_n.ps1",
+      "file_type": "code",
+      "norm_label": "reset_profiles.ps1",
+      "source_file": "reset_profiles.ps1",
+      "source_location": "L1"
+    },
+    {
+      "id": "sync",
+      "label": "sync.ps1",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "launch_user_n.ps1",
+      "file_type": "code",
+      "norm_label": "sync.ps1",
+      "source_file": "sync.ps1",
+      "source_location": "L1"
+    },
+    {
+      "id": "sync_find_stagedsecrets",
+      "label": "Find-StagedSecrets()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "launch_user_n.ps1",
+      "file_type": "code",
+      "norm_label": "find-stagedsecrets()",
+      "source_file": "sync.ps1",
+      "source_location": "L8"
+    },
+    {
+      "id": "sync_get_autocommitmessage",
+      "label": "Get-AutoCommitMessage()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "launch_user_n.ps1",
+      "file_type": "code",
+      "norm_label": "get-autocommitmessage()",
+      "source_file": "sync.ps1",
+      "source_location": "L39"
+    },
+    {
+      "id": "sync_sync_memorytoteammemory",
+      "label": "Sync-MemoryToTeamMemory()",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "launch_user_n.ps1",
+      "file_type": "code",
+      "norm_label": "sync-memorytoteammemory()",
+      "source_file": "sync.ps1",
+      "source_location": "L123"
+    },
+    {
+      "id": "team_memory",
+      "label": "team-memory.md",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "launch_user_n.ps1",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "team-memory.md",
+      "source_file": "team-memory.md",
+      "source_location": "L1"
     },
     {
       "id": "claude_skills_cross_linking_hub",
@@ -24903,7 +25083,7 @@
       "weight": 1.0
     },
     {
-      "source": "team_memory_2026_08_22",
+      "source": "team_memory_2026_08_22_536",
       "target": "team_memory_local_git_workflow_auto_sync_sync_ps1",
       "relation": "contains",
       "_origin": "ast",
@@ -24915,6 +25095,28 @@
     },
     {
       "source": "team_memory_memory_log",
+      "target": "team_memory_2026_08_11_103",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_2026_08_11_155",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
       "target": "team_memory_2026_08_05",
       "relation": "contains",
       "_origin": "ast",
@@ -24922,6 +25124,72 @@
       "confidence_score": 1.0,
       "source_file": "team-memory.md",
       "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_2026_08_13",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L180",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_topics_coursework_md",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L185",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_topics_hobbies_md",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_topics_home_network_md",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L203",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_topics_recent_work_md",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L208",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_topics_tech_stack_md",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L213",
       "weight": 1.0
     },
     {
@@ -24981,6 +25249,17 @@
     },
     {
       "source": "team_memory_memory_log",
+      "target": "team_memory_2026_08_10",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
       "target": "team_memory_areas_kec_makerspace_website_md",
       "relation": "contains",
       "_origin": "ast",
@@ -25036,7 +25315,7 @@
     },
     {
       "source": "team_memory_memory_log",
-      "target": "team_memory_2026_08_10",
+      "target": "team_memory_2026_08_10_30",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -25113,7 +25392,7 @@
     },
     {
       "source": "team_memory_memory_log",
-      "target": "team_memory_topics_coursework_md",
+      "target": "team_memory_topics_coursework_md_350",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -25124,7 +25403,7 @@
     },
     {
       "source": "team_memory_memory_log",
-      "target": "team_memory_topics_hobbies_md",
+      "target": "team_memory_topics_hobbies_md_357",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -25135,7 +25414,7 @@
     },
     {
       "source": "team_memory_memory_log",
-      "target": "team_memory_topics_home_network_md",
+      "target": "team_memory_topics_home_network_md_368",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -25146,7 +25425,7 @@
     },
     {
       "source": "team_memory_memory_log",
-      "target": "team_memory_topics_recent_work_md",
+      "target": "team_memory_topics_recent_work_md_373",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -25157,7 +25436,7 @@
     },
     {
       "source": "team_memory_memory_log",
-      "target": "team_memory_topics_tech_stack_md",
+      "target": "team_memory_topics_tech_stack_md_378",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -25179,7 +25458,7 @@
     },
     {
       "source": "team_memory_memory_log",
-      "target": "team_memory_2026_08_13",
+      "target": "team_memory_2026_08_13_410",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -25256,6 +25535,17 @@
     },
     {
       "source": "team_memory_memory_log",
+      "target": "team_memory_2026_08_11",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
       "target": "team_memory_courses",
       "relation": "contains",
       "_origin": "ast",
@@ -25295,6 +25585,17 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "team-memory.md",
+      "source_location": "L468",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_2026_08_15_483",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
       "source_location": "L483",
       "weight": 1.0
     },
@@ -25317,6 +25618,39 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "team-memory.md",
+      "source_location": "L519",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_2026_08_22_528",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L528",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_2026_08_22_536",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
+      "source_location": "L536",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_2026_08_22_595",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
       "source_location": "L595",
       "weight": 1.0
     },
@@ -25328,12 +25662,23 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "team-memory.md",
+      "source_location": "L601",
+      "weight": 1.0
+    },
+    {
+      "source": "team_memory_memory_log",
+      "target": "team_memory_2026_08_23_605",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "team-memory.md",
       "source_location": "L605",
       "weight": 1.0
     },
     {
       "source": "team_memory_memory_log",
-      "target": "team_memory_2026_08_11",
+      "target": "team_memory_2026_08_11_91",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -30008,6 +30353,17 @@
     },
     {
       "source": "server_database_schema_tasks",
+      "target": "server_database_schema_tasks",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/database/schema.sql",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "server_database_schema_tasks",
       "target": "server_database_schema_workers",
       "relation": "references",
       "_origin": "ast",
@@ -30909,5 +31265,5 @@
       "source_file": "worker-prompts/orchestrator.md"
     }
   ],
-  "built_at_commit": "28cd7a0f1e67f61a53e352b8ad6508698f1af022"
+  "built_at_commit": "61b0fa0bfca0a8688e7cb5bf2f2741372d73618a"
 }

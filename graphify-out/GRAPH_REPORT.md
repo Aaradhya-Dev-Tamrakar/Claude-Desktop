@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `28cd7a0f`
+- Built from commit: `61b0fa0b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,14 +19,15 @@
 - main.py
 - orchestrator_mcp_test.py
 - Memory Log
-- test_remote_mcp.py
 - IApplicationView
 - orchestrator-mcp/run_server.py
+- test_remote_mcp.py
 - IVirtualDesktop
 - IntPtr
 - launch_user_n.ps1
 - Desktop
 - BaseWorkerAdapter
+- routes_memory.py
 - ClaudeDesktopCDPAdapter
 - ._eval_js
 - cloud-orchestrator-mcp/run_server.py
@@ -34,22 +35,22 @@
 - .Main
 - IApplicationViewCollection
 - Usage
-- ClaudeDesktopProxyAdapter
 - VirtualDesktop11-24H2.cs
 - schema.sql
 - IVirtualDesktopPinnedApps
 - Cross-Linking Hub
 - MD2PDFApp
+- ClaudeDesktopProxyAdapter
 - GroqAdapter
+- Handoff Protocol
 - Job & Pipeline Production Schema (v2)
 - QuotaAwareScheduler
 - MD2PDFApp
-- Handoff Protocol
 - orchestrator-state schema
 - APPLICATION_VIEW_COMPATIBILITY_POLICY
 - convert_markdown_to_pdf
 - orchestrator.md
-- routes_memory.py
+- OllamaLocalAdapter
 - usage-watchdog.ps1
 - _find_uvx
 - sync-mcp.ps1
@@ -75,7 +76,6 @@
 - routes_jobs.py
 - routes_tasks.py
 - routes_workers.py
-- OllamaLocalAdapter
 - get_db
 - 2026-08-22
 
@@ -128,13 +128,13 @@ Nodes (18): _load_run_server(), fixture, Path, pytest specs for orchestrator-mcp
 Cohesion: 0.04
 Nodes (54): 2026-08-05, 2026-08-06, 2026-08-10, 2026-08-10, 2026-08-11, 2026-08-11, 2026-08-11, 2026-08-11 (+46 more)
 
-### Community 4 - "test_remote_mcp.py"
-Cohesion: 0.26
-Nodes (36): Row, get_db_conn(), Obtain a direct async sqlite database connection., block_task(), claim_task(), create_task(), get_job(), get_job_metrics() (+28 more)
-
-### Community 6 - "orchestrator-mcp/run_server.py"
+### Community 5 - "orchestrator-mcp/run_server.py"
 Cohesion: 0.23
 Nodes (39): archive_memory(), _checkpoint_path(), claim_task(), create_job(), create_task(), decompose_task(), _ensure_dirs(), get_context_bundle() (+31 more)
+
+### Community 6 - "test_remote_mcp.py"
+Cohesion: 0.26
+Nodes (36): Row, get_db_conn(), Obtain a direct async sqlite database connection., block_task(), claim_task(), create_task(), get_job(), get_job_metrics() (+28 more)
 
 ### Community 7 - "IVirtualDesktop"
 Cohesion: 0.10
@@ -156,29 +156,29 @@ Nodes (7): DllImport, Desktop, Count, Current, IsVisible, Left, Right
 Cohesion: 0.18
 Nodes (9): ABC, BaseWorkerAdapter, Returns True if the backend AI model / profile is online and usable., Abstract interface for worker execution endpoints., GeminiFreeAdapter, Any, Adapter for Google AI Studio Free Tier (Gemini 2.5 / 3.0). Provides free tokens…, get_adapter() (+1 more)
 
-### Community 12 - "ClaudeDesktopCDPAdapter"
+### Community 12 - "routes_memory.py"
+Cohesion: 0.18
+Nodes (21): put, get_all_context(), get_context_by_key(), list_memory(), _now_iso(), push_memory(), Connection, get (+13 more)
+
+### Community 13 - "ClaudeDesktopCDPAdapter"
 Cohesion: 0.24
 Nodes (15): ClaudeDesktopCDPAdapter, Adapter automating a locally running Claude Desktop Electron app via Chrome…, Check if Claude Desktop Electron process is exposing CDP port and has an active…, patch, asyncio, test_cdp_adapter_init(), test_cdp_cooldown_detection_returns_429(), test_cdp_eval_js_exception() (+7 more)
 
-### Community 13 - "._eval_js"
+### Community 14 - "._eval_js"
 Cohesion: 0.20
 Nodes (10): Any, Automate Claude Desktop via CDP: 1. Connect to page 2. Check for rate limit /…, Scan DOM for 5-hour usage limit and cooldown warnings., Click new chat or reset conversation., Inject prompt into ProseMirror / contenteditable and click send safely without…, Poll until generation stop button disappears and text settles., Find the WebSocket debugger URL for the active Claude Desktop UI page., Send a JSON-RPC command over WebSocket and await result with timeout. (+2 more)
 
-### Community 14 - "cloud-orchestrator-mcp/run_server.py"
+### Community 15 - "cloud-orchestrator-mcp/run_server.py"
 Cohesion: 0.37
 Nodes (17): block_task(), claim_task(), get_job(), get_system_health(), get_task(), get_worker(), list_jobs(), list_tasks() (+9 more)
 
-### Community 15 - ".GetDesktop"
+### Community 16 - ".GetDesktop"
 Cohesion: 0.19
 Nodes (3): MarshalAs, DesktopManager, IServiceProvider10
 
-### Community 18 - "Usage"
+### Community 19 - "Usage"
 Cohesion: 0.17
 Nodes (11): Claude Desktop Multi-Profile & Sync Utilities, Concurrent Mode (Multiple Windows, Multiple Monitors), Features, Files, Launching Claude Desktop Profiles, Repo Structure, Running Autonomous Worker Daemons (v2), Running the Cloud Orchestration Backend (v2) (+3 more)
-
-### Community 19 - "ClaudeDesktopProxyAdapter"
-Cohesion: 0.25
-Nodes (5): ClaudeDesktopProxyAdapter, Any, Adapter representing a local Windows Claude Desktop profile session. Interfaces…, Execute task using Anthropic Claude API, CDP bridge, or structured prompt…, Stage-aware local processing engine producing structured deliverables.
 
 ### Community 20 - "VirtualDesktop11-24H2.cs"
 Cohesion: 0.18
@@ -192,97 +192,97 @@ Nodes (9): checkpoints, job_metrics, jobs, memory_entries, qa_reviews, task_atte
 Cohesion: 0.22
 Nodes (8): Cross-Linking Hub, Application rules, Coursework notebooks (IV/I, exam sequence order), Hub, Leaf nodes, Pending, Query Protocol (Token Savings), Unlinked notebooks
 
-### Community 25 - "GroqAdapter"
+### Community 25 - "ClaudeDesktopProxyAdapter"
+Cohesion: 0.25
+Nodes (5): ClaudeDesktopProxyAdapter, Any, Adapter representing a local Windows Claude Desktop profile session. Interfaces…, Execute task using Anthropic Claude API, CDP bridge, or structured prompt…, Stage-aware local processing engine producing structured deliverables.
+
+### Community 26 - "GroqAdapter"
 Cohesion: 0.28
 Nodes (5): GroqAdapter, Any, Adapter for Groq-hosted LLMs via the OpenAI-compatible chat completions API., test_groq_adapter_missing_key_returns_error(), test_groq_adapter_uses_env_model_override()
 
-### Community 26 - "Job & Pipeline Production Schema (v2)"
-Cohesion: 0.22
-Nodes (8): 1. Job Entity (`jobs` / `orchestrator-state/jobs/<job_id>.json`), 2. Extended Task Schema (`tasks`), 3. QA Review Schema (`qa_reviews`), 4. Worker Node Entity (`workers`), 5. Shared Memory & Team Context (`memory_entries`, `team_context`), Job & Pipeline Production Schema (v2), Memory Entry (`memory_entries`), Team Context (`team_context`)
-
-### Community 27 - "QuotaAwareScheduler"
-Cohesion: 0.28
-Nodes (5): Connection, QuotaAwareScheduler, Find pending tasks (or expired leases) and auto-assign to best available…, Find the optimal worker ID to claim a given pending task or expired lease., Evaluates pending tasks against registered workers using: Score(W) = w1 *…
-
-### Community 29 - "Handoff Protocol"
+### Community 27 - "Handoff Protocol"
 Cohesion: 0.22
 Nodes (6): graphify, Anti-Patterns (Wastes Tokens), Checkpoint Summary Format (max 500 chars), Handoff Protocol, Memory Entry Format, Session Bootstrap
 
-### Community 30 - "orchestrator-state schema"
+### Community 28 - "Job & Pipeline Production Schema (v2)"
+Cohesion: 0.22
+Nodes (8): 1. Job Entity (`jobs` / `orchestrator-state/jobs/<job_id>.json`), 2. Extended Task Schema (`tasks`), 3. QA Review Schema (`qa_reviews`), 4. Worker Node Entity (`workers`), 5. Shared Memory & Team Context (`memory_entries`, `team_context`), Job & Pipeline Production Schema (v2), Memory Entry (`memory_entries`), Team Context (`team_context`)
+
+### Community 29 - "QuotaAwareScheduler"
+Cohesion: 0.28
+Nodes (5): Connection, QuotaAwareScheduler, Find pending tasks (or expired leases) and auto-assign to best available…, Find the optimal worker ID to claim a given pending task or expired lease., Evaluates pending tasks against registered workers using: Score(W) = w1 *…
+
+### Community 31 - "orchestrator-state schema"
 Cohesion: 0.25
 Nodes (8): Directory listing as the index, orchestrator-state/checkpoints/<task_id>.json, orchestrator-state/live-status/\<account\>.json, orchestrator-state/memory/\<account\>\_\_\<entry_id\>.json, orchestrator-state/memory/archive/, orchestrator-state schema, orchestrator-state/tasks/<task_id>.json, Token-Efficient Session Bootstrap
 
-### Community 31 - "APPLICATION_VIEW_COMPATIBILITY_POLICY"
+### Community 32 - "APPLICATION_VIEW_COMPATIBILITY_POLICY"
 Cohesion: 0.25
 Nodes (6): APPLICATION_VIEW_COMPATIBILITY_POLICY, AVCP_HIGH_SCALE_FACTOR, AVCP_NONE, AVCP_SMALL_SCREEN, AVCP_TABLET_SMALL_SCREEN, AVCP_VERY_SMALL_SCREEN
 
-### Community 32 - "convert_markdown_to_pdf"
+### Community 33 - "convert_markdown_to_pdf"
 Cohesion: 0.38
 Nodes (5): _check_deps(), convert_markdown_to_pdf(), Any, tool, _run_conversion()
 
-### Community 33 - "orchestrator.md"
+### Community 34 - "orchestrator.md"
 Cohesion: 0.29
 Nodes (4): NotebookLM MCP, Directives:, Token Efficiency:, Worker Role: SEO & AEO Optimization Specialist
 
-### Community 34 - "routes_memory.py"
-Cohesion: 0.18
-Nodes (21): put, get_all_context(), get_context_by_key(), list_memory(), _now_iso(), push_memory(), Connection, get (+13 more)
+### Community 35 - "OllamaLocalAdapter"
+Cohesion: 0.33
+Nodes (3): OllamaLocalAdapter, Any, Adapter for local Ollama / LM Studio models (e.g. Qwen 2.5, Llama 3.3). $0…
 
-### Community 35 - "usage-watchdog.ps1"
+### Community 36 - "usage-watchdog.ps1"
 Cohesion: 0.60
 Nodes (5): Get-ClaudeTrayUsagePercent(), Invoke-AutoCheckpoint(), Invoke-WatchdogPoll(), Set-CheckpointFiredThisCycle(), Test-CheckpointAlreadyFiredThisCycle()
 
-### Community 36 - "_find_uvx"
+### Community 37 - "_find_uvx"
 Cohesion: 0.50
 Nodes (4): _find_uvx(), main(), Find the uvx executable, checking common locations first., Find uvx and launch the NotebookLM MCP server.
 
-### Community 40 - "team-context.md"
+### Community 41 - "team-context.md"
 Cohesion: 0.50
 Nodes (3): Orchestrator MCP Server, SPARK Project, Context
 
-### Community 41 - "Task Entity"
+### Community 42 - "Task Entity"
 Cohesion: 0.50
 Nodes (4): Job Entity, QA Review Entity, Task Entity, Worker Node Entity
 
-### Community 42 - "Worker Role: Formatter & Delivery Packaging"
+### Community 43 - "Worker Role: Formatter & Delivery Packaging"
 Cohesion: 0.50
 Nodes (3): Directives:, Token Efficiency:, Worker Role: Formatter & Delivery Packaging
 
-### Community 43 - "Worker Role: Orchestrator / Dispatcher"
+### Community 44 - "Worker Role: Orchestrator / Dispatcher"
 Cohesion: 0.50
 Nodes (4): Responsibilities:, Rules:, Token Efficiency:, Worker Role: Orchestrator / Dispatcher
 
-### Community 44 - "Worker Role: Quality Assurance (QA) & Fact-Checker"
+### Community 45 - "Worker Role: Quality Assurance (QA) & Fact-Checker"
 Cohesion: 0.50
 Nodes (3): Directives:, Token Efficiency:, Worker Role: Quality Assurance (QA) & Fact-Checker
 
-### Community 45 - "Worker Role: Researcher / Attribute Extractor"
+### Community 46 - "Worker Role: Researcher / Attribute Extractor"
 Cohesion: 0.50
 Nodes (4): Research Protocol:, Responsibilities:, Strict Rules:, Worker Role: Researcher / Attribute Extractor
 
-### Community 46 - "Worker Role: Copywriter / Drafting Specialist"
+### Community 47 - "Worker Role: Copywriter / Drafting Specialist"
 Cohesion: 0.50
 Nodes (3): Directives:, Token Efficiency:, Worker Role: Copywriter / Drafting Specialist
 
-### Community 48 - "mcp"
+### Community 49 - "mcp"
 Cohesion: 0.67
 Nodes (3): mcp, Orchestrator MCP Requirements, Server Requirements
 
-### Community 65 - "routes_jobs.py"
+### Community 66 - "routes_jobs.py"
 Cohesion: 0.19
 Nodes (18): create_job(), get_job(), get_job_metrics(), list_jobs(), _now_iso(), Connection, get, post (+10 more)
 
-### Community 66 - "routes_tasks.py"
+### Community 67 - "routes_tasks.py"
 Cohesion: 0.34
 Nodes (13): CheckpointResponse, CheckpointSubmit, BaseModel, QAReviewResponse, QAReviewSubmit, TaskBlockRequest, TaskClaimRequest, TaskClaimResponse (+5 more)
 
-### Community 67 - "routes_workers.py"
+### Community 68 - "routes_workers.py"
 Cohesion: 0.24
 Nodes (14): get_worker(), list_workers(), _now_iso(), Connection, get, post, Register or update an AI worker node / profile., List all registered worker nodes. (+6 more)
-
-### Community 68 - "OllamaLocalAdapter"
-Cohesion: 0.33
-Nodes (3): OllamaLocalAdapter, Any, Adapter for local Ollama / LM Studio models (e.g. Qwen 2.5, Llama 3.3). $0…
 
 ### Community 69 - "get_db"
 Cohesion: 0.67
@@ -298,7 +298,7 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `ClaudeDesktopProxyAdapter` connect `ClaudeDesktopProxyAdapter` to `main.py`, `BaseWorkerAdapter`, `ClaudeDesktopCDPAdapter`?**
   _High betweenness centrality (0.027) - this node is a cross-community bridge._
-- **Why does `IApplicationView` connect `IApplicationView` to `Size`, `IntPtr`, `IVirtualDesktop`, `Desktop`, `IApplicationViewCollection`, `VirtualDesktop11-24H2.cs`, `IVirtualDesktopPinnedApps`, `APPLICATION_VIEW_COMPATIBILITY_POLICY`?**
+- **Why does `IApplicationView` connect `IApplicationView` to `APPLICATION_VIEW_COMPATIBILITY_POLICY`, `IVirtualDesktop`, `IntPtr`, `Size`, `Desktop`, `IApplicationViewCollection`, `VirtualDesktop11-24H2.cs`, `IVirtualDesktopPinnedApps`?**
   _High betweenness centrality (0.023) - this node is a cross-community bridge._
 - **Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `ClaudeDesktopProxyAdapter`, `BaseWorkerAdapter`, `._eval_js`?**
   _High betweenness centrality (0.022) - this node is a cross-community bridge._
