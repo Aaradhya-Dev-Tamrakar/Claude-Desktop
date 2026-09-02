@@ -260,9 +260,11 @@ function Sync-TeamMcpConfig {
         return
     }
 
+    $sharedServerNames = @($SharedConfig.mcpServers.PSObject.Properties.Name)
+    $sharedCount = $sharedServerNames.Count
+
     if ($WhatIf) {
-        $sharedCount = ($SharedConfig.mcpServers.PSObject.Properties | Measure-Object).Count
-        Write-Host "[WhatIf] Would merge $sharedCount shared MCP server(s) from team-mcp.json into '$ProfileConfigPath'." -ForegroundColor DarkCyan
+        Write-Host "[WhatIf] Would sync $sharedCount shared MCP server(s) ($($sharedServerNames -join ', ')) from team-mcp.json into '$ProfileConfigPath'." -ForegroundColor DarkCyan
     }
     else {
         try {
@@ -270,7 +272,11 @@ function Sync-TeamMcpConfig {
                 New-Item -ItemType Directory -Force -Path $TargetConfigDir | Out-Null
             }
             $Merged | ConvertTo-Json -Depth 10 | Set-Content $ProfileConfigPath -Encoding UTF8
-            Write-Host "[+] Synced shared MCP config into '$ProfileConfigPath'." -ForegroundColor Gray
+            Write-Host "  🔄 Syncing MCP Servers ($sharedCount):" -ForegroundColor Cyan
+            foreach ($srv in $sharedServerNames) {
+                Write-Host "     ● $srv" -ForegroundColor Green
+            }
+            Write-Host "     → Config updated: $ProfileConfigPath" -ForegroundColor DarkGray
         }
         catch {
             Write-Warning "Failed to write merged claude_desktop_config.json ($_). Team MCP sync skipped this launch."
