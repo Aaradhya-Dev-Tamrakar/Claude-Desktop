@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-02_004",
+  "parent_id": "task_2026-09-02_002",
+  "kind": "text",
+  "spec": "Track 22 — Multi-Model Comparative Benchmarking & Leaderboard\nStream: G (Novelty) | Priority: High | Est: 45min | Feeds: Phase-2 novelty defense\n\nCONTEXT: Current scope audits one classifier at a time (FairFace ResNet-34 baseline, race_7/9-age/2-gender schema, Core Four metrics).\n\nTASK: Research how to extend BiasAperture to audit and RANK multiple models against the same schema and dataset — a 'fairness leaderboard'. Cover: (1) normalized scoring approach across the 4 metrics (DPD fair-point 0, DIR fair-point 1 — must handle asymmetry, per existing metric-aware logic principle) into one comparable composite score, with justification and cited precedent (e.g. HELM, model-card leaderboards); (2) how ModelInterface's dual-mode (in-process / predictions-file) supports batch-comparing N models; (3) report-template implications (comparison table/chart in the Jinja2 report) — flag as a coordination item for whoever owns report templates, don't silently redesign the report; (4) risk of the leaderboard being read as a bare pass/fail ranking (echo the existing project's caution against bare four-fifths-rule thresholds — Watkins et al. 2022 already in the lit review). Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/22_multi_model_leaderboard.md",
+  "status": "blocked",
+  "owner_account": "user6",
+  "branch_name": null,
+  "blocked_reason": "PARKED by decision (Aaradhya, 2026-09-02) — priority downgraded from High to hold. A multi-model leaderboard shifts the buyer mental model from \"compliance officer auditing one deployed system\" to \"ML engineer comparing models\" — a different product surface, not just a feature, and needs deliberate re-scoping before research effort goes into it. Hold until Track 25 (Web Dashboard Architecture, task_2026-09-02_007) and Track 36 (Regulatory Expansion Map, task_2026-09-02_018) land — both inform whether a comparison/leaderboard view even fits the intended product surface and buyer. Unblock and re-open only after that review.",
+  "created_by": "user6",
+  "created_at": "2026-09-02T09:38:12Z",
+  "updated_at": "2026-09-02T09:47:11Z"
+}

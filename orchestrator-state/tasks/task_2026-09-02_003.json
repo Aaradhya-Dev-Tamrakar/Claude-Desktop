@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-02_003",
+  "parent_id": "task_2026-09-02_002",
+  "kind": "text",
+  "spec": "Track 21 — Continuous / Streaming Audit Mode\nStream: G (Novelty) | Priority: High | Est: 45min | Feeds: Phase-2 novelty defense, WP6 spec draft\n\nCONTEXT: BiasAperture currently runs one-shot batch audits (predictions CSV/JSON in, HTML report out). Core Four metrics (DPD/EOD/EOP/DIR) computed via Fairlearn+AIF360 dual-backend, BCa bootstrap (B>=1000), chi-squared (alpha=0.05), n>=30 guard enforced in MetricResult.__post_init__.\n\nTASK: Design a 'continuous audit' mode that monitors a deployed model's prediction stream over time and flags fairness drift (e.g. DPD trending toward violation across weekly batches) instead of a single snapshot. Cover: (1) which drift-detection method fits the existing bootstrap/chi-squared framework without violating n>=30 (sequential testing, CUSUM, rolling-window bootstrap — compare tradeoffs); (2) minimal ADDITIVE-ONLY schema extension to MetricResult (e.g. timestamp/run_id) — must not modify existing locked fields; (3) alerting/threshold design (what triggers a flag vs a hard fail); (4) how this differentiates BiasAperture from one-shot toolkits (Aequitas, raw Fairlearn dashboards). Deliver as markdown: findings + a proposed spec section. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/21_streaming_audit_mode.md",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user6",
+  "created_at": "2026-09-02T09:38:12Z",
+  "updated_at": "2026-09-02T09:38:12Z"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-02_010",
+  "parent_id": "task_2026-09-02_002",
+  "kind": "text",
+  "spec": "Track 28 — Accessibility & Internationalization of Reports\nStream: H (UI/UX) | Priority: Medium | Est: 45min | Feeds: Phase-2 report UX spec\n\nCONTEXT: report/generator.py produces a self-contained Jinja2 HTML report (CSS with system font stack, print media query, base64-inlined charts/images — zero external dependencies by design).\n\nTASK: (1) Run a WCAG 2.1 AA-level desk audit against the DESIGN as documented (color contrast for any pass/fail or flagged-vs-not styling, keyboard navigability if any interactivity is added per Track 26, alt-text requirements for base64-inlined SHAP charts, semantic HTML/table structure for screen readers) — list concrete gaps and fixes, don't just cite the standard; (2) scaffold an i18n approach for the report template (string externalization strategy compatible with Jinja2, keeping the zero-external-dependency constraint — no CDN-hosted i18n libraries) and note which content is genuinely translatable (UI chrome, section headers) vs which must stay in English/numeric (metric names, statistical notation) for regulatory precision. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/28_accessibility_i18n.md",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user6",
+  "created_at": "2026-09-02T09:38:12Z",
+  "updated_at": "2026-09-02T09:38:12Z"
+}

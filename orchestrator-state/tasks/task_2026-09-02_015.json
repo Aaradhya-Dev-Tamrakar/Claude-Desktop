@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-02_015",
+  "parent_id": "task_2026-09-02_002",
+  "kind": "text",
+  "spec": "Track 33 — Containerized Deployment & Audit-as-a-Service Model\nStream: J (Deployment/Ops) | Priority: Medium | Est: 45min | Feeds: Phase-2 ops spec\n\nCONTEXT: Current stack is uv-managed Python 3.10+, pandas/numpy/scipy/Fairlearn/AIF360/SHAP/Jinja2, pytest+ruff. No containerization exists yet.\n\nTASK: Research a Docker packaging approach for the engine (and optionally the API layer from Track 32) and sketch a SaaS-vs-on-prem deployment comparison. Cover: (1) base image choice and size/build-time tradeoffs given AIF360's heavier dependency footprint vs Fairlearn's lighter one (cite the project's own cut-list logic — AIF360 was the LAST cut if ever needed, i.e. highest-value dependency to keep); (2) a rough SaaS multi-tenant model vs a single-tenant on-prem/air-gapped deployment model (relevant because Track 35 flags client model/data sensitivity) with a lightweight cost/complexity sketch for each, not a full cloud bill estimate. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/33_containerized_deployment.md",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user6",
+  "created_at": "2026-09-02T09:38:12Z",
+  "updated_at": "2026-09-02T09:38:12Z"
+}

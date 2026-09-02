@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-02_006",
+  "parent_id": "task_2026-09-02_002",
+  "kind": "text",
+  "spec": "Track 24 — Automated Bias Root-Cause Clustering\nStream: G (Novelty) | Priority: Medium | Est: 45min | Feeds: Phase-2 novelty defense, explainability.py roadmap\n\nCONTEXT: explainability.py already runs SHAP-based local feature attribution on flagged disparities (FR-005), answering 'which features drive this specific disparity'. Kurian et al. 2024 (already in lit review) shows CNNs can encode demographic info via proxy features (texture, lighting) with no explicit demographic label.\n\nTASK: Research a step beyond per-disparity SHAP: applying unsupervised clustering (e.g. k-means/HDBSCAN on SHAP attribution vectors) ACROSS all flagged disparities in an audit run, to auto-group recurring proxy-feature patterns ('disparities driven by lighting/skin-tone proxy' vs 'disparities driven by pose/angle proxy'). Cover: (1) candidate clustering method and why, given typically small numbers of flagged subgroups per audit (n likely <50 clusters worth of data — address the small-N clustering validity problem explicitly); (2) how this would present in the report (a new 'Root Cause Themes' section — flag as a report-template coordination item, don't redesign generator.py here); (3) whether this counts as new research novelty vs still engineering/integration novelty per the project's existing novelty-defense framing (BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md) — be honest about this, don't oversell it. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/24_bias_rootcause_clustering.md",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user6",
+  "created_at": "2026-09-02T09:38:12Z",
+  "updated_at": "2026-09-02T09:38:12Z"
+}

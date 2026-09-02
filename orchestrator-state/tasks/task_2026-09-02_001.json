@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-02_001",
+  "parent_id": null,
+  "kind": "text",
+  "spec": "TEST-PING: connectivity check only, ignore if received — Claude verifying orchestrator MCP responsiveness before submitting BiasAperture Phase-2 (Product Upgrade Sprint) research tracks.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user6",
+  "created_at": "2026-09-02T09:33:19Z",
+  "updated_at": "2026-09-02T09:33:19Z"
+}

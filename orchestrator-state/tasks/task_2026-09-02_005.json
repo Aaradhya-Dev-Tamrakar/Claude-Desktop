@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-02_005",
+  "parent_id": "task_2026-09-02_002",
+  "kind": "text",
+  "spec": "Track 23 — Cross-Modal Schema Generalization (v2 Architecture)\nStream: G (Novelty) | Priority: Medium | Est: 60min | Feeds: Phase-2 architecture spec\n\nCONTEXT: The M1 schema (schema.py) locks FairFace-specific fields (race_7/gender_2/age_9 labels) and is explicitly NOT to be modified. SubjectRecord and MetricResult are the two locked shapes.\n\nTASK: Research how the underlying PATTERN (demographic schema + MetricResult shape + n>=30 guard + dual-backend validation) could generalize to audit non-vision modalities (tabular hiring/credit models, voice/speech classifiers, text/NLP classifiers) as a v2 product line — WITHOUT touching the existing locked FairFace schema. Propose: (1) an abstraction layer (e.g. a base DemographicSchema class that FairFaceSchema subclasses/implements) that keeps M1 100% intact as one concrete instantiation; (2) what would need to change per modality (subject identity field, label vocab, protected-attribute sourcing); (3) which existing components (fairness/base.py Strategy pattern, statistics.py bootstrap/chi-squared) are already modality-agnostic and reusable as-is vs which are FairFace-coupled and need an adapter. Explicitly confirm in the deliverable that this track proposes ADDITIVE new modules only, zero modification to schema.py. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/23_cross_modal_schema.md",
+  "status": "blocked",
+  "owner_account": "user6",
+  "branch_name": null,
+  "blocked_reason": "DROPPED by decision (Aaradhya, 2026-09-02) — not a scheduling blocker, a scope call. Cross-modal generalization walks back into general-purpose fairness-toolkit territory (tabular/voice/text) that BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md explicitly argues is already crowded (Aequitas, Themis-ML, AIF360/Fairlearn direct) and NOT the gap BiasAperture fills. The defensible niche is specifically vision/face-classifier workflow-bridging + regulatory mapping. This track dilutes that differentiator. Do not claim/execute. Revisit only if a deliberate v2 pivot decision is made jointly by Aaradhya/Tisha.",
+  "created_by": "user6",
+  "created_at": "2026-09-02T09:38:12Z",
+  "updated_at": "2026-09-02T09:47:03Z"
+}

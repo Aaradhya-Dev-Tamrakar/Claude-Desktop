@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-02_019",
+  "parent_id": "task_2026-09-02_002",
+  "kind": "text",
+  "spec": "Track 37 — Pricing & Packaging Research for Bias-Audit-as-a-Service\nStream: K (Business/GTM) | Priority: Medium | Est: 30min | Feeds: Phase-2 business case\n\nCONTEXT: BiasAperture's differentiator per the existing novelty defense is dual-backend cross-validation, strict n>=30 statistical discipline, and regulatory-mapped-by-design reporting (BiasAperture_NOVELTY_INTEGRATION_DEFENSE.md) — a compliance/audit tool, not a general ML platform.\n\nTASK: Research comparable pricing/packaging models in adjacent compliance-tooling and MLOps-fairness markets (cite real comparables where findable — e.g. general compliance-audit SaaS tiering patterns, fairness/ML-monitoring tool pricing patterns) and propose 2-3 packaging tiers for BiasAperture (e.g. a free/open-core CLI tier vs a hosted dashboard+API tier vs an enterprise on-prem/audit-as-a-service tier) mapped to the Track 25/32/33/35 capabilities. Keep this grounded and comparable-driven, not speculative numbers pulled from nowhere — flag any figure that's an estimate rather than a sourced comparable. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/37_pricing_packaging.md",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user6",
+  "created_at": "2026-09-02T09:38:12Z",
+  "updated_at": "2026-09-02T09:38:12Z"
+}

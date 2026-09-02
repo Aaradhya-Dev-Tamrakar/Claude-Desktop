@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-02_002",
+  "parent_id": null,
+  "kind": "text",
+  "spec": "EPIC — BiasAperture Phase 2: \"Product Upgrade Sprint\" (post-capstone).\n\nContext: WP1-4 (schema, ingestion, fairness engine, SHAP) are 100% complete; WP5 integration is ~90% (inference done on 10,954 FairFace val images, audit-report generation is the last capstone step). This epic is SEPARATE from the capstone defense track — it plans BiasAperture's evolution from a graded capstone CLI tool into a standalone product. Diagnostic-only scope (no retrain/debias) and the M1 schema lock remain non-negotiable across all subtasks below.\n\n18 parallel research-only tracks (track_21–track_38), organized into 5 streams:\n- Stream G — Novelty & Differentiation (4 tracks)\n- Stream H — UI/UX & Product Experience (4 tracks)\n- Stream I — Modular Architecture & Extensibility (4 tracks)\n- Stream J — Deployment, Scale & Ops (3 tracks)\n- Stream K — Business / Go-to-Market & Regulatory Expansion (3 tracks)\n\nAll subtasks are RESEARCH-ONLY: no code changes, no repo edits, no git commits/pushes, no sync.ps1 execution. Each subtask's submit_checkpoint result_text is the sole handoff — a short summary plus a full markdown deliverable, filename suggested as results/NN_description.md following the existing research/results/ convention. Any proposed schema changes must be explicitly flagged as additive-only against the M1 lock, never a modification. Cross-track scope overlaps should be raised as coordination flags, not silently resolved (matches existing cross_track_conflict_log.md convention).",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user6",
+  "created_at": "2026-09-02T09:34:04Z",
+  "updated_at": "2026-09-02T09:34:04Z"
+}
