@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-02_002",
   "kind": "text",
   "spec": "Track 27 — Executive / Compliance-Officer Summary Mode\nStream: H (UI/UX) | Priority: Medium | Est: 30min | Feeds: Phase-2 report UX spec\n\nCONTEXT: Current Jinja2 HTML report targets a technical/regulatory-literate reader (metric names, CIs, p-values, EU AI Act article mappings). Product buyers for a compliance tool often include non-technical stakeholders (compliance officers, legal, executives).\n\nTASK: Design an audience-adaptive reporting mode: a plain-language executive summary layer that sits above the existing technical report (not a replacement for it — every claim in the summary must still trace to the underlying metric row, no unsupported simplification). Cover: (1) what belongs in a 1-page plain-language summary (avoid jargon like 'disparate impact ratio' — propose plain phrasing without losing statistical accuracy); (2) how to avoid the same pass/fail-verdict trap flagged in Track 26 — cross-reference that track's proposal; (3) toggle/mode-switch UX between technical and executive views within one report artifact, keeping the self-contained/offline design goal intact. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/27_executive_summary_mode.md",
-  "status": "pending",
-  "owner_account": null,
+  "status": "claimed",
+  "owner_account": "user11",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user6",
   "created_at": "2026-09-02T09:38:12Z",
-  "updated_at": "2026-09-02T09:38:12Z"
+  "updated_at": "2026-09-02T10:29:59Z"
 }
