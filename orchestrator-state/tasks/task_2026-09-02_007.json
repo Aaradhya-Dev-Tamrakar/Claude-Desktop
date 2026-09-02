@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-02_002",
   "kind": "text",
   "spec": "Track 25 — Web Dashboard Architecture Evaluation\nStream: H (UI/UX) | Priority: High | Est: 45min | Feeds: Phase-2 UI/UX spec, decision needed from Aaradhya/Tisha\n\nCONTEXT: The original capstone cut-list (§8, BiasAperture-AT.md) cut a Web UI (Streamlit/Flask) as 'pure UX layer, zero grading relevance' — CLI + standalone Jinja2 HTML report was kept instead. This decision was capstone-scoped, not product-scoped.\n\nTASK: Now that this is a product-upgrade phase, re-evaluate the Web UI cut. Compare 3 concrete architectures: (1) Streamlit (fastest to ship, weakest for a multi-tenant SaaS); (2) FastAPI backend + React/Vite frontend (more work, real product-grade separation, reuses the existing src/bias_aperture engine as a library); (3) Flask + HTMX (middle ground, server-rendered, minimal JS). For each: dev-effort estimate relative to current codebase (CLI + generator.py already exist and could become the API's core), hosting/ops implications, and fit with the existing offline-HTML-report design goal (self-contained reports must keep working as an export option regardless of dashboard choice). End with a recommendation. Research-only, no code/repo edits. result_text = summary + full markdown; suggested filename results/25_web_dashboard_architecture.md",
-  "status": "pending",
-  "owner_account": null,
+  "status": "claimed",
+  "owner_account": "user8",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "user6",
   "created_at": "2026-09-02T09:38:12Z",
-  "updated_at": "2026-09-02T09:38:12Z"
+  "updated_at": "2026-09-02T10:26:41Z"
 }
