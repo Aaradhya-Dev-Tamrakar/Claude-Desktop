@@ -31,7 +31,7 @@
       }
     },
     "md2pdf-mcp": {
-      "command": "python",
+      "command": "{{REPO_ROOT}}\\.venv\\Scripts\\python.exe",
       "args": [
         "{{REPO_ROOT}}\\mcp-servers\\md2pdf-mcp\\run_server.py"
       ],
