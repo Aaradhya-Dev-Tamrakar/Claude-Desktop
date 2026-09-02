@@ -65,10 +65,12 @@ def _resolve_output_path(output_path: str) -> str:
     directory = os.path.dirname(candidate) or os.getcwd()
     try:
         os.makedirs(directory, exist_ok=True)
-    except OSError:
-        fallback = os.path.join(tempfile.gettempdir(), "md2pdf-mcp", os.path.basename(candidate))
-        os.makedirs(os.path.dirname(fallback), exist_ok=True)
-        return fallback
+    except OSError as exc:
+        raise RuntimeError(
+            f"Cannot create output directory '{directory}': {exc}. "
+            "Pass an output_path under a directory this process can write to "
+            "— no silent fallback to temp storage."
+        ) from exc
     return candidate
 
 
