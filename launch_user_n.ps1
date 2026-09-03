@@ -1943,15 +1943,37 @@ function Invoke-ProfileLaunch {
         function Format-CardRow([string]$Label, [string]$Value, [int]$BoxWidth = 98) {
             $val = if ($null -ne $Value) { [string]$Value } else { "" }
             $prefix = "  * " + $Label.PadRight(13, ' ') + ": "
-            $valueCap = [Math]::Max(0, ($BoxWidth - 2) - $prefix.Length)
+            $contentWidth = $BoxWidth - 2
 
-            if ($val.Length -gt $valueCap) {
-                $val = $val.Substring(0, [Math]::Max(0, $valueCap - 3)) + "..."
+            if (($prefix + $val).Length -le $contentWidth) {
+                $content = ($prefix + $val).PadRight($contentWidth, ' ')
+                return "│$content│"
             }
 
-            $content = $prefix + $val
-            $content = $content.PadRight($BoxWidth - 2, ' ')
-            return "│$content│"
+            $prefixWidth = $prefix.Length
+            $maxVisible = [Math]::Max(0, $contentWidth - $prefixWidth)
+            $splitAt = -1
+            $candidate = $val.Substring(0, [Math]::Min($val.Length, $maxVisible))
+
+            if ($candidate.Contains("\")) {
+                $splitAt = $candidate.LastIndexOf("\")
+            }
+            if ($splitAt -lt 0 -and $val.Length -gt $maxVisible) {
+                $splitAt = $maxVisible
+            }
+
+            if ($splitAt -lt 0) {
+                $firstValue = $candidate
+                $secondValue = ""
+            }
+            else {
+                $firstValue = $val.Substring(0, [Math]::Min($val.Length, $splitAt + 1))
+                $secondValue = $val.Substring([Math]::Min($val.Length, $splitAt + 1))
+            }
+
+            $firstLine = ($prefix + $firstValue).PadRight($contentWidth, ' ')
+            $secondLine = ("  " + $secondValue).PadRight($contentWidth, ' ')
+            return "│$firstLine│`n│$secondLine│"
         }
 
         $bannerWidth = 98

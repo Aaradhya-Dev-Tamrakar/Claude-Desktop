@@ -368,6 +368,15 @@ Describe "Show-ProfileTable" {
             $output | Should -Not -Match "🔄|●|→|║|╔|╚|╭|╰|╯|╮|├|┤|─|│"
         }
     }
+
+    Context "launch card wrapping" {
+        It "wraps long executable paths onto a continuation line instead of truncating them" {
+            $output = & $ScriptPath -Account user1 -WhatIf *>&1 | Out-String
+            $output | Should -Match 'Executable'
+            $output | Should -Match 'claude\.exe'
+            $output | Should -Match 'app\\'
+        }
+    }
 }
 
 Describe "Get-EnrichedProfileRows" {
