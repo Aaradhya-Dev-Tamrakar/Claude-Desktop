@@ -1656,13 +1656,6 @@ function Invoke-ProfileLaunch {
                         Write-Host "Launch cancelled; concurrent work was left untouched." -ForegroundColor Green
                         return
                     }
-
-                    $secondConfirmation = Read-Host "FINAL confirmation: close concurrent instances and switch to '$Account'? Type YES"
-                    if ($secondConfirmation -cne "YES") {
-                        Write-Host "Launch cancelled; concurrent work was left untouched." -ForegroundColor Green
-                        return
-                    }
-
                     Write-Host "[i] Confirmed. Closing Claude instances for isolated profile '$Account'." -ForegroundColor Yellow
                 }
             }
