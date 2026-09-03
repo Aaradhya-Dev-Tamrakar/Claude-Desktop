@@ -21,15 +21,6 @@
       ],
       "env": {}
     },
-    "cloud-orchestrator-mcp": {
-      "command": "{{REPO_ROOT}}\\.venv\\Scripts\\python.exe",
-      "args": [
-        "{{REPO_ROOT}}\\mcp-servers\\cloud-orchestrator-mcp\\run_server.py"
-      ],
-      "env": {
-        "ORCHESTRATOR_API_URL": "http://localhost:8000/api/v1"
-      }
-    },
     "md2pdf-mcp": {
       "command": "{{REPO_ROOT}}\\.venv\\Scripts\\python.exe",
       "args": [
@@ -45,5 +36,16 @@
     "ccdScheduledTasksEnabled": false,
     "coworkWebSearchEnabled": true,
     "coworkPreferredBrowser": "built_in"
+  },
+  "_disabled_mcpServers": {
+    "cloud-orchestrator-mcp": {
+      "command": "{{REPO_ROOT}}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "{{REPO_ROOT}}\\mcp-servers\\cloud-orchestrator-mcp\\run_server.py"
+      ],
+      "env": {
+        "ORCHESTRATOR_API_URL": "http://localhost:8000/api/v1"
+      }
+    }
   }
 }
