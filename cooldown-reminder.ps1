@@ -48,14 +48,65 @@ param (
 $CooldownHours = 5
 $ScriptDir = $PSScriptRoot
 
+function Get-VisibleTextWidth {
+    param([string]$Text)
+
+    if ([string]::IsNullOrEmpty($Text)) { return 0 }
+
+    $width = 0
+    $i = 0
+    while ($i -lt $Text.Length) {
+        $current = [char]$Text[$i]
+        if ([char]::IsHighSurrogate($current) -and ($i + 1) -lt $Text.Length -and [char]::IsLowSurrogate([char]$Text[$i + 1])) {
+            $width += 2
+            $i += 2
+            continue
+        }
+
+        $code = [int][char]$Text[$i]
+        $isWide = (
+            ($code -ge 0x1100 -and (
+                $code -le 0x115F -or
+                $code -ge 0x2329 -and $code -le 0x232A -or
+                $code -ge 0x2E80 -and $code -le 0xA4CF -or
+                $code -ge 0xAC00 -and $code -le 0xD7A3 -or
+                $code -ge 0xF900 -and $code -le 0xFAFF -or
+                $code -ge 0xFE10 -and $code -le 0xFE19 -or
+                $code -ge 0xFE30 -and $code -le 0xFE6F -or
+                $code -ge 0xFF00 -and $code -le 0xFF60 -or
+                $code -ge 0xFFE0 -and $code -le 0xFFE6
+            )) -or $code -eq 0x3000
+        )
+
+        $width += if ($isWide) { 2 } else { 1 }
+        $i++
+    }
+
+    return $width
+}
+
+function Pad-VisibleRight {
+    param([string]$Text, [int]$Width)
+
+    $rawWidth = Get-VisibleTextWidth $Text
+    if ($rawWidth -ge $Width) { return $Text }
+    return $Text + (' ' * ($Width - $rawWidth))
+}
+
 function Write-CooldownBanner {
     param([string]$Nickname, [datetime]$LoginTime)
+
+    $boxWidth = 48
+    $title = "Cooldown Reminder"
+    $profileLine = "Profile: $Nickname"
+    $loginLine = "Login: $($LoginTime.ToString('yyyy-MM-dd HH:mm:ss'))"
+
     Write-Host "" 
-    Write-Host "╔══════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-    Write-Host "║ Cooldown Reminder                                  ║" -ForegroundColor Green
-    Write-Host "║ Profile: $($Nickname.PadRight(37, ' ')) ║" -ForegroundColor DarkGray
-    Write-Host "║ Login: $($LoginTime.ToString('yyyy-MM-dd HH:mm:ss').PadRight(34, ' ')) ║" -ForegroundColor DarkGray
-    Write-Host "╚══════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host ("╔" + ("═" * $boxWidth) + "╗") -ForegroundColor Cyan
+    Write-Host ("║ " + (Pad-VisibleRight -Text $title -Width ($boxWidth - 2)) + " ║") -ForegroundColor Green
+    Write-Host ("║ " + (Pad-VisibleRight -Text $profileLine -Width ($boxWidth - 2)) + " ║") -ForegroundColor DarkGray
+    Write-Host ("║ " + (Pad-VisibleRight -Text $loginLine -Width ($boxWidth - 2)) + " ║") -ForegroundColor DarkGray
+    Write-Host ("╚" + ("═" * $boxWidth) + "╝") -ForegroundColor Cyan
     Write-Host "" 
 }
 

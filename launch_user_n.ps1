@@ -38,6 +38,94 @@ try {
     $OutputEncoding = [System.Text.Encoding]::UTF8
 } catch { }
 
+function Get-VisibleTextWidth {
+    param([string]$Text)
+
+    if ([string]::IsNullOrEmpty($Text)) { return 0 }
+
+    $width = 0
+    $i = 0
+    while ($i -lt $Text.Length) {
+        $current = [char]$Text[$i]
+
+        if ([char]::IsHighSurrogate($current) -and ($i + 1) -lt $Text.Length -and [char]::IsLowSurrogate([char]$Text[$i + 1])) {
+            $width += 2
+            $i += 2
+            continue
+        }
+
+        $code = [int][char]$Text[$i]
+        $isWide = (
+            ($code -ge 0x1100 -and (
+                $code -le 0x115F -or
+                $code -ge 0x2329 -and $code -le 0x232A -or
+                $code -ge 0x2E80 -and $code -le 0xA4CF -or
+                $code -ge 0xAC00 -and $code -le 0xD7A3 -or
+                $code -ge 0xF900 -and $code -le 0xFAFF -or
+                $code -ge 0xFE10 -and $code -le 0xFE19 -or
+                $code -ge 0xFE30 -and $code -le 0xFE6F -or
+                $code -ge 0xFF00 -and $code -le 0xFF60 -or
+                $code -ge 0xFFE0 -and $code -le 0xFFE6
+            )) -or $code -eq 0x3000
+        )
+
+        $width += if ($isWide) { 2 } else { 1 }
+        $i++
+    }
+
+    return $width
+}
+
+function Pad-VisibleRight {
+    param(
+        [string]$Text,
+        [int]$Width
+    )
+
+    $rawWidth = Get-VisibleTextWidth $Text
+    if ($rawWidth -ge $Width) { return $Text }
+    return $Text + (' ' * ($Width - $rawWidth))
+}
+
+function Truncate-VisibleText {
+    param(
+        [string]$Text,
+        [int]$MaxWidth
+    )
+
+    if ([string]::IsNullOrEmpty($Text)) { return $Text }
+    if (Get-VisibleTextWidth $Text -le $MaxWidth) { return $Text }
+
+    $result = ""
+    $currentWidth = 0
+    $i = 0
+
+    while ($i -lt $Text.Length -and $currentWidth + 1 -le $MaxWidth - 3) {
+        $current = [char]$Text[$i]
+        if ([char]::IsHighSurrogate($current) -and ($i + 1) -lt $Text.Length -and [char]::IsLowSurrogate([char]$Text[$i + 1])) {
+            $segmentWidth = 2
+            if ($currentWidth + $segmentWidth -le $MaxWidth - 3) {
+                $result += $Text.Substring($i, 2)
+                $currentWidth += $segmentWidth
+                $i += 2
+                continue
+            }
+        }
+
+        $segmentWidth = 1
+        if ($currentWidth + $segmentWidth -le $MaxWidth - 3) {
+            $result += $current
+            $currentWidth += $segmentWidth
+            $i++
+            continue
+        }
+
+        break
+    }
+
+    return $result + "..."
+}
+
 if ($GCalReminder) {
     Write-Warning "GCalReminder: Google Calendar integration is currently paused. This switch has no effect until re-enabled in cooldown-reminder.ps1."
 }
@@ -1847,25 +1935,34 @@ function Invoke-ProfileLaunch {
         $Role = if ($ProfileInfo.role) { [string]$ProfileInfo.role } else { "-" }
         $modeDesc = if ($Concurrent) { "Concurrent (Side-by-Side)" } else { "Isolated (Session Swap)" }
 
-        function Format-CardRow([string]$Label, [string]$Value) {
+        function Format-CardRow([string]$Label, [string]$Value, [int]$BoxWidth = 98) {
+            $labelText = $Label
             $val = if ($null -ne $Value) { [string]$Value } else { "" }
-            if ($val.Length -gt 74) {
-                $val = $val.Substring(0, 71) + "..."
+            $labelWidth = 13
+            $maxValueWidth = $BoxWidth - 2 - $labelWidth - 8
+            if ((Get-VisibleTextWidth $val) -gt $maxValueWidth) {
+                $val = Truncate-VisibleText -Text $val -MaxWidth $maxValueWidth
             }
-            "│  ● " + $Label.PadRight(13) + ": " + $val.PadRight(74) + " │"
+
+            $content = "  * " + (Pad-VisibleRight -Text $labelText -Width $labelWidth) + ": " + $val
+            $content = Pad-VisibleRight -Text $content -Width ($BoxWidth - 2)
+            return "│$content│"
         }
 
-        Write-Host ("╭" + ("─" * 94) + "╮") -ForegroundColor Cyan
-        Write-Host ("│" + "  🚀 Launching Claude Desktop (Native)".PadRight(94) + "│") -ForegroundColor Green
-        Write-Host ("├" + ("─" * 94) + "┤") -ForegroundColor Cyan
-        Write-Host (Format-CardRow "Profile" $Account) -ForegroundColor Yellow
-        Write-Host (Format-CardRow "Nickname" $Nickname) -ForegroundColor Yellow
-        Write-Host (Format-CardRow "Role" $Role) -ForegroundColor Cyan
-        Write-Host (Format-CardRow "Mode" $modeDesc) -ForegroundColor Gray
-        Write-Host (Format-CardRow "Last Login" "$CurrentDate $CurrentTime") -ForegroundColor Gray
-        Write-Host (Format-CardRow "Storage" $TargetStorageDir) -ForegroundColor DarkGray
-        Write-Host (Format-CardRow "Executable" $ClaudeExe) -ForegroundColor DarkGray
-        Write-Host ("╰" + ("─" * 94) + "╯") -ForegroundColor Cyan
+        $bannerWidth = 98
+        $bannerTitle = "  Launching Claude Desktop (Native)"
+        $bannerLine = "│" + (Pad-VisibleRight -Text $bannerTitle -Width ($bannerWidth - 2)) + "│"
+        Write-Host ("╭" + ("─" * $bannerWidth) + "╮") -ForegroundColor Cyan
+        Write-Host $bannerLine -ForegroundColor Green
+        Write-Host ("├" + ("─" * $bannerWidth) + "┤") -ForegroundColor Cyan
+        Write-Host (Format-CardRow -Label "Profile" -Value $Account -BoxWidth $bannerWidth) -ForegroundColor Yellow
+        Write-Host (Format-CardRow -Label "Nickname" -Value $Nickname -BoxWidth $bannerWidth) -ForegroundColor Yellow
+        Write-Host (Format-CardRow -Label "Role" -Value $Role -BoxWidth $bannerWidth) -ForegroundColor Cyan
+        Write-Host (Format-CardRow -Label "Mode" -Value $modeDesc -BoxWidth $bannerWidth) -ForegroundColor Gray
+        Write-Host (Format-CardRow -Label "Last Login" -Value "$CurrentDate $CurrentTime" -BoxWidth $bannerWidth) -ForegroundColor Gray
+        Write-Host (Format-CardRow -Label "Storage" -Value $TargetStorageDir -BoxWidth $bannerWidth) -ForegroundColor DarkGray
+        Write-Host (Format-CardRow -Label "Executable" -Value $ClaudeExe -BoxWidth $bannerWidth) -ForegroundColor DarkGray
+        Write-Host ("╰" + ("─" * $bannerWidth) + "╯") -ForegroundColor Cyan
 
         # Redirect stdout/stderr to per-profile logs to suppress internal Electron/Node.js deprecation warnings (DEP0169)
         $LogsDir = Join-Path $ProfilesBaseDir "Logs\$Account"
