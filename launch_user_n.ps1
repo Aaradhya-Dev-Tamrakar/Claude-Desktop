@@ -169,6 +169,13 @@ function Merge-McpServers {
         }
     }
 
+    foreach ($serverName in $Merged.mcpServers.PSObject.Properties.Name) {
+        $server = $Merged.mcpServers.$serverName
+        if ($server.PSObject.Properties.Name -contains "args") {
+            $server.args = @($server.args)
+        }
+    }
+
     return $Merged
 }
 
@@ -205,6 +212,7 @@ function Expand-TeamMcpPlaceholders {
         }
 
         if ($server.PSObject.Properties.Name -contains "args" -and $server.args) {
+            $server.args = @($server.args)
             for ($i = 0; $i -lt $server.args.Count; $i++) {
                 if ($server.args[$i] -is [string]) {
                     $server.args[$i] = $server.args[$i].Replace($Placeholder, $RepoRoot)
@@ -652,7 +660,7 @@ function Select-ProfileInteractive {
                     $rankStr = if ($row.TodayRank -ne "-") { "#$($row.TodayRank)" } else { "-" }
                     $rankCell = $rankStr.PadRight(10)
 
-                    $statusStr = if ($row.IsActive -and $row.IsRunning) { "🟢 Active" } elseif ($row.IsRunning) { "⚡ Live" } elseif ($row.IsActive) { "● Active" } else { "" }
+                    $statusStr = if ($row.IsActive -and $row.IsRunning) { "* Active" } elseif ($row.IsRunning) { "> Live" } elseif ($row.IsActive) { "* Active" } else { "" }
                     $statusCell = $statusStr.PadRight(11)
 
                     $cells = @($selCell, $nickCell, $roleCell, $timeCell, $dateCell, $rankCell, $statusCell)

@@ -134,6 +134,16 @@ Describe "Merge-McpServers" {
             $result.mcpServers."private-tool".command | Should -Be "local-only"
             $result.mcpServers.github.command | Should -Be "npx"
         }
+
+        It "normalizes a profile server's single args value to an array" {
+            $profileConfig = '{"mcpServers":{"private-tool":{"command":"python","args":"run_server.py"}}}' | ConvertFrom-Json
+            $sharedConfig = '{"mcpServers":{}}' | ConvertFrom-Json
+
+            $result = Merge-McpServers -ProfileConfig $profileConfig -SharedConfig $sharedConfig
+
+            @($result.mcpServers."private-tool".args).Count | Should -Be 1
+            $result.mcpServers."private-tool".args[0] | Should -Be "run_server.py"
+        }
     }
 
     Context "non-mcpServers keys" {

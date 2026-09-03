@@ -78,6 +78,7 @@ function Expand-TeamMcpPlaceholders {
         }
 
         if ($server.PSObject.Properties.Name -contains "args" -and $server.args) {
+            $server.args = @($server.args)
             for ($i = 0; $i -lt $server.args.Count; $i++) {
                 if ($server.args[$i] -is [string]) {
                     $server.args[$i] = $server.args[$i].Replace($Placeholder, $Root)
@@ -113,6 +114,13 @@ function Merge-McpServers {
     if ($SharedConfig -and ($SharedConfig.PSObject.Properties.Name -contains "mcpServers")) {
         foreach ($serverName in $SharedConfig.mcpServers.PSObject.Properties.Name) {
             $Merged.mcpServers | Add-Member -NotePropertyName $serverName -NotePropertyValue $SharedConfig.mcpServers.$serverName -Force
+        }
+    }
+
+    foreach ($serverName in $Merged.mcpServers.PSObject.Properties.Name) {
+        $server = $Merged.mcpServers.$serverName
+        if ($server.PSObject.Properties.Name -contains "args") {
+            $server.args = @($server.args)
         }
     }
 
