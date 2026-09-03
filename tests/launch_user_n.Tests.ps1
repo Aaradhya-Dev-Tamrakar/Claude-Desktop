@@ -412,7 +412,8 @@ Describe "Show-ProfileTable" {
 
     Context "launch card wrapping" {
         It "wraps long executable paths onto a continuation line instead of truncating them" {
-            $output = & $ScriptPath -Account user1 -WhatIf *>&1 | Out-String
+            $longExecutablePath = "C:\Program Files\WindowsApps\Claude_1.44121.4.0_x64__pzs8sxrjxfjjc\app\claude.exe"
+            $output = Format-CardRow -Label "Executable" -Value $longExecutablePath
             $output | Should -Match 'Executable'
             $output | Should -Match 'claude\.exe'
             $output | Should -Match 'app\\'

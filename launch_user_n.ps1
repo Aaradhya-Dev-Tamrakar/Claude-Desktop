@@ -129,6 +129,42 @@ function Format-VisibleText {
     return $result + "..."
 }
 
+function Format-CardRow([string]$Label, [string]$Value, [int]$BoxWidth = 98) {
+    $val = if ($null -ne $Value) { [string]$Value } else { "" }
+    $prefix = "  * " + $Label.PadRight(13, ' ') + ": "
+    $contentWidth = $BoxWidth - 2
+
+    if (($prefix + $val).Length -le $contentWidth) {
+        $content = ($prefix + $val).PadRight($contentWidth, ' ')
+        return "│$content│"
+    }
+
+    $prefixWidth = $prefix.Length
+    $maxVisible = [Math]::Max(0, $contentWidth - $prefixWidth)
+    $splitAt = -1
+    $candidate = $val.Substring(0, [Math]::Min($val.Length, $maxVisible))
+
+    if ($candidate.Contains("\")) {
+        $splitAt = $candidate.LastIndexOf("\")
+    }
+    if ($splitAt -lt 0 -and $val.Length -gt $maxVisible) {
+        $splitAt = $maxVisible
+    }
+
+    if ($splitAt -lt 0) {
+        $firstValue = $candidate
+        $secondValue = ""
+    }
+    else {
+        $firstValue = $val.Substring(0, [Math]::Min($val.Length, $splitAt + 1))
+        $secondValue = $val.Substring([Math]::Min($val.Length, $splitAt + 1))
+    }
+
+    $firstLine = ($prefix + $firstValue).PadRight($contentWidth, ' ')
+    $secondLine = ("  " + $secondValue).PadRight($contentWidth, ' ')
+    return "│$firstLine│`n│$secondLine│"
+}
+
 if ($GCalReminder) {
     Write-Warning "GCalReminder: Google Calendar integration is currently paused. This switch has no effect until re-enabled in cooldown-reminder.ps1."
 }
@@ -1997,42 +2033,6 @@ function Invoke-ProfileLaunch {
 
         $Role = if ($ProfileInfo.role) { [string]$ProfileInfo.role } else { "-" }
         $modeDesc = if ($Concurrent) { "Concurrent (Side-by-Side)" } else { "Isolated (Session Swap)" }
-
-        function Format-CardRow([string]$Label, [string]$Value, [int]$BoxWidth = 98) {
-            $val = if ($null -ne $Value) { [string]$Value } else { "" }
-            $prefix = "  * " + $Label.PadRight(13, ' ') + ": "
-            $contentWidth = $BoxWidth - 2
-
-            if (($prefix + $val).Length -le $contentWidth) {
-                $content = ($prefix + $val).PadRight($contentWidth, ' ')
-                return "│$content│"
-            }
-
-            $prefixWidth = $prefix.Length
-            $maxVisible = [Math]::Max(0, $contentWidth - $prefixWidth)
-            $splitAt = -1
-            $candidate = $val.Substring(0, [Math]::Min($val.Length, $maxVisible))
-
-            if ($candidate.Contains("\")) {
-                $splitAt = $candidate.LastIndexOf("\")
-            }
-            if ($splitAt -lt 0 -and $val.Length -gt $maxVisible) {
-                $splitAt = $maxVisible
-            }
-
-            if ($splitAt -lt 0) {
-                $firstValue = $candidate
-                $secondValue = ""
-            }
-            else {
-                $firstValue = $val.Substring(0, [Math]::Min($val.Length, $splitAt + 1))
-                $secondValue = $val.Substring([Math]::Min($val.Length, $splitAt + 1))
-            }
-
-            $firstLine = ($prefix + $firstValue).PadRight($contentWidth, ' ')
-            $secondLine = ("  " + $secondValue).PadRight($contentWidth, ' ')
-            return "│$firstLine│`n│$secondLine│"
-        }
 
         $bannerWidth = 98
         $innerBannerWidth = $bannerWidth - 2
