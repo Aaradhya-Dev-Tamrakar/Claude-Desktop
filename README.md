@@ -106,6 +106,9 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 │   ├── checkpoints/.gitkeep
 │   └── memory/.gitkeep
 │
+├── dev-logs/                      # Human-readable development and migration notes
+├── outputs/                       # Generated reports and deliverables (not source)
+│
 └── tests/
     ├── launch_user_n.Tests.ps1    # Pester specs (path guard, profile table, MCP merge, placeholder expansion)
     ├── orchestrator_mcp_test.py   # pytest specs for orchestrator-mcp coordination server
@@ -114,6 +117,8 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 ```
 
 ## Files
+
+The repository keeps operational entry points and their root-relative configuration at the top level for compatibility with the Windows launchers. Runtime state belongs in `orchestrator-state/`, development notes in `dev-logs/`, new generated deliverables in `outputs/`, and graph reports in `graphify-out/`. Keep credentials, tokens, local databases, and new generated PDFs out of the tracked source layout.
 
 - **`launch_user_n.ps1`**: Profile launcher script. Two modes: **Isolated** (default) resolves the executable path and swaps a single profile's session data into the native AppData install; **Concurrent** (`-Mode Concurrent` / `-Concurrent`, optionally with `-Users <name1,name2,...>`) launches one or more profiles as independent windows via `--user-data-dir`, with no swap/mirror and no shared `claude://` handler changes. Auto-detects and launches the background FastAPI Orchestrator server (`Ensure-LocalOrchestratorServer`) on `http://127.0.0.1:8000` if not already running. Unless `-NoTeamSync`, force-merges `team-mcp.json` into each launching profile's `claude_desktop_config.json`. Supports `-NoCooldownAlarm` to skip scheduling the 5-hour reminder toast, and `-WhatIf` for dry-run simulation.
 - **`launch.bat`**: Double-click launcher for Windows File Explorer.

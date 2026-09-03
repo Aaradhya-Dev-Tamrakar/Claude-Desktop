@@ -84,3 +84,6 @@ cookies*.json
 *.sqlite-journal
 *.db-journal
 
+# Generated deliverables
+/outputs/*.pdf
+
