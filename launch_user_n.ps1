@@ -1321,6 +1321,31 @@ if ($TestHook) {
     return
 }
 
+function Invoke-NlmLogin {
+    param(
+        [switch]$WhatIf
+    )
+
+    $NlmCommand = Get-Command nlm -ErrorAction SilentlyContinue
+    if (-not $NlmCommand) {
+        Write-Warning "NotebookLM CLI 'nlm' was not found on PATH. Skipping automatic nlm login."
+        return
+    }
+
+    if ($WhatIf) {
+        Write-Host "[WhatIf] Would run 'nlm login' in this terminal." -ForegroundColor DarkCyan
+        return
+    }
+
+    Write-Host "[+] Running NotebookLM login..." -ForegroundColor Cyan
+    & $NlmCommand.Source login
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "'nlm login' exited with code $LASTEXITCODE. Continuing with Claude launch."
+    }
+}
+
+Invoke-NlmLogin -WhatIf:$WhatIf
+
 function Resolve-SingleAccount {
     # Interactive picker for one account: shows the table, accepts a number
     # or N (add new), or validates a pre-supplied name (offering to add it
