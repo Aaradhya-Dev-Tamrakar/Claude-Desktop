@@ -1,64 +1,66 @@
 # Graph Report - Claude-Desktop  (2026-09-03)
 
 ## Corpus Check
-- 312 files · ~219,214 words
+- 312 files · ~219,503 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 918 nodes · 1863 edges · 75 communities (48 shown, 17 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 75 edges (avg confidence: 0.91)
+- 920 nodes · 1870 edges · 80 communities (52 shown, 18 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 77 edges (avg confidence: 0.91)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a5174ee3`
+- Built from commit: `39f0aa9f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- main.py
+- routes_memory.py
 - orchestrator_mcp_test.py
 - MD2PDFApp
 - IApplicationView
+- test_remote_mcp.py
 - orchestrator-mcp/run_server.py
 - Memory Log
-- test_remote_mcp.py
 - launch_user_n.ps1
+- Connection
 - Desktop
 - IVirtualDesktop
-- Connection
+- BaseWorkerAdapter
 - IntPtr
-- routes_memory.py
 - IApplicationViewCollection
 - ClaudeDesktopCDPAdapter
-- routes_jobs.py
 - ._eval_js
 - .Main
 - cloud-orchestrator-mcp/run_server.py
-- routes_workers.py
-- routes_tasks.py
-- BaseWorkerAdapter
+- config.py
+- AsyncClient
+- main.py
 - sync.ps1
 - .GetDesktop
+- init_db
 - Usage
 - PipelineEngine
-- GeminiFreeAdapter
+- GroqAdapter
 - schema.sql
 - Cross-Linking Hub
 - ClaudeDesktopProxyAdapter
-- GroqAdapter
 - Handoff Protocol
 - convert_markdown_to_pdf
 - Job & Pipeline Production Schema (v2)
+- routes_jobs.py
 - QuotaAwareScheduler
 - IVirtualDesktopPinnedApps
+- FastAPI
 - Server Requirements
 - orchestrator-state schema
 - sync-mcp.ps1
 - APPLICATION_VIEW_COMPATIBILITY_POLICY
 - orchestrator.md
 - usage-watchdog.ps1
-- FastAPI
+- GeminiFreeAdapter
 - _find_uvx
+- validate_security_settings
 - VirtualDesktop11-24H2.cs
 - Size
 - Task Entity
@@ -68,10 +70,11 @@
 - Worker Role: Researcher / Attribute Extractor
 - Worker Role: Copywriter / Drafting Specialist
 - .execute_task
-- get_db
 - AGENTS.md
 - Cloudflared Service
 - mcp
+- routes_tasks.py
+- routes_workers.py
 - sync.ps1
 - Archive.org Skill
 - Assume Reader Intelligence Skill
@@ -80,6 +83,8 @@
 - PowerShell CI Job
 - MD2PDF MCP Requirements
 - notebooklm-mcp-cli
+- test_cloud_scheduler.py
+- get_db
 
 ## God Nodes (most connected - your core abstractions)
 1. `IApplicationView` - 64 edges
@@ -116,11 +121,11 @@
 - **CI Test Suite** — github_workflows_ci_python, github_workflows_ci_powershell [EXTRACTED 1.00]
 - **Worker Pipeline Flow** — worker_prompts_orchestrator, worker_prompts_researcher, worker_prompts_writer, worker_prompts_seo_optimizer, worker_prompts_qa_reviewer, worker_prompts_formatter [EXTRACTED 1.00]
 
-## Communities (75 total, 17 thin omitted)
+## Communities (80 total, 18 thin omitted)
 
-### Community 0 - "main.py"
-Cohesion: 0.05
-Nodes (52): AsyncClient, middleware, Request, BaseModel, Settings, validate_security_settings(), init_db(), Initialize database tables and indexes from schema.sql with automatic migration… (+44 more)
+### Community 0 - "routes_memory.py"
+Cohesion: 0.18
+Nodes (21): put, get_all_context(), get_context_by_key(), list_memory(), _now_iso(), push_memory(), Connection, get (+13 more)
 
 ### Community 1 - "orchestrator_mcp_test.py"
 Cohesion: 0.04
@@ -130,77 +135,73 @@ Nodes (18): _load_run_server(), fixture, Path, pytest specs for orchestrator-mcp
 Cohesion: 0.08
 Nodes (12): Frame, Tk, BatchItem, check_deps(), Config, main(), markdown_to_html(), MD2PDFApp (+4 more)
 
-### Community 4 - "orchestrator-mcp/run_server.py"
+### Community 4 - "test_remote_mcp.py"
+Cohesion: 0.24
+Nodes (38): Row, get_db_conn(), Obtain a direct async sqlite database connection., block_task(), claim_task(), create_task(), get_job(), get_job_metrics() (+30 more)
+
+### Community 5 - "orchestrator-mcp/run_server.py"
 Cohesion: 0.23
 Nodes (39): archive_memory(), _checkpoint_path(), claim_task(), create_job(), create_task(), decompose_task(), _ensure_dirs(), get_context_bundle() (+31 more)
 
-### Community 5 - "Memory Log"
+### Community 6 - "Memory Log"
 Cohesion: 0.05
 Nodes (41): 2026-08-05, 2026-08-06, 2026-08-10, 2026-08-11, 2026-08-13, 2026-08-15, 2026-08-21, 2026-08-22 (+33 more)
 
-### Community 6 - "test_remote_mcp.py"
-Cohesion: 0.26
-Nodes (36): Row, get_db_conn(), Obtain a direct async sqlite database connection., block_task(), claim_task(), create_task(), get_job(), get_job_metrics() (+28 more)
-
 ### Community 7 - "launch_user_n.ps1"
 Cohesion: 0.10
-Nodes (27): Get-VisibleTextWidth(), Pad-VisibleRight(), Write-CooldownBanner(), Add-NewProfile(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Get-DesktopBatchAllocation(), Get-EnrichedProfileRows() (+19 more)
+Nodes (27): Format-VisibleRight(), Get-VisibleTextWidth(), Write-CooldownBanner(), Add-NewProfile(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Format-VisibleRight(), Format-VisibleText() (+19 more)
 
-### Community 8 - "Desktop"
-Cohesion: 0.15
-Nodes (7): DllImport, Desktop, Count, Current, IsVisible, Left, Right
-
-### Community 9 - "IVirtualDesktop"
-Cohesion: 0.10
-Nodes (3): PreserveSig, IVirtualDesktop, IVirtualDesktopManagerInternal
-
-### Community 10 - "Connection"
+### Community 8 - "Connection"
 Cohesion: 0.14
 Nodes (24): block_task(), claim_task(), create_task(), get_checkpoint(), get_task(), list_tasks(), _now_iso(), Connection (+16 more)
 
-### Community 11 - "IntPtr"
+### Community 9 - "Desktop"
+Cohesion: 0.16
+Nodes (7): DllImport, Desktop, Count, Current, IsVisible, Left, Right
+
+### Community 10 - "IVirtualDesktop"
+Cohesion: 0.10
+Nodes (3): PreserveSig, IVirtualDesktop, IVirtualDesktopManagerInternal
+
+### Community 11 - "BaseWorkerAdapter"
+Cohesion: 0.16
+Nodes (11): ABC, BaseWorkerAdapter, Returns True if the backend AI model / profile is online and usable., Abstract interface for worker execution endpoints., OllamaLocalAdapter, Any, Adapter for local Ollama / LM Studio models (e.g. Qwen 2.5, Llama 3.3). $0…, get_adapter() (+3 more)
+
+### Community 12 - "IntPtr"
 Cohesion: 0.15
 Nodes (5): Guid, IntPtr, StringBuilder, IVirtualDesktopManager, UInt32
-
-### Community 12 - "routes_memory.py"
-Cohesion: 0.18
-Nodes (21): put, get_all_context(), get_context_by_key(), list_memory(), _now_iso(), push_memory(), Connection, get (+13 more)
 
 ### Community 14 - "ClaudeDesktopCDPAdapter"
 Cohesion: 0.24
 Nodes (15): ClaudeDesktopCDPAdapter, Adapter automating a locally running Claude Desktop Electron app via Chrome…, Check if Claude Desktop Electron process is exposing CDP port and has an active…, patch, asyncio, test_cdp_adapter_init(), test_cdp_cooldown_detection_returns_429(), test_cdp_eval_js_exception() (+7 more)
 
-### Community 15 - "routes_jobs.py"
-Cohesion: 0.19
-Nodes (18): create_job(), get_job(), get_job_metrics(), list_jobs(), _now_iso(), Connection, get, post (+10 more)
-
-### Community 16 - "._eval_js"
+### Community 15 - "._eval_js"
 Cohesion: 0.20
 Nodes (10): Any, Automate Claude Desktop via CDP: 1. Connect to page 2. Check for rate limit /…, Scan DOM for 5-hour usage limit and cooldown warnings., Click new chat or reset conversation., Inject prompt into ProseMirror / contenteditable and click send safely without…, Poll until generation stop button disappears and text settles., Find the WebSocket debugger URL for the active Claude Desktop UI page., Send a JSON-RPC command over WebSocket and await result with timeout. (+2 more)
 
-### Community 18 - "cloud-orchestrator-mcp/run_server.py"
+### Community 17 - "cloud-orchestrator-mcp/run_server.py"
 Cohesion: 0.37
 Nodes (17): block_task(), claim_task(), get_job(), get_system_health(), get_task(), get_worker(), list_jobs(), list_tasks() (+9 more)
 
-### Community 19 - "routes_workers.py"
-Cohesion: 0.23
-Nodes (15): get_worker(), list_workers(), _now_iso(), Connection, get, post, Register or update an AI worker node / profile., List all registered worker nodes. (+7 more)
+### Community 19 - "AsyncClient"
+Cohesion: 0.22
+Nodes (10): AsyncClient, Test that when multiple workers race to claim the same task simultaneously,…, Test that an active worker can extend its task lease before expiration., End-to-End Test: Intake a 3-item '100_product_descriptions' job through all 5…, test_concurrent_task_leasing_race_safety(), test_e2e_sku_pipeline_execution(), test_lease_renewal_heartbeat(), asyncio (+2 more)
 
-### Community 20 - "routes_tasks.py"
-Cohesion: 0.37
-Nodes (12): CheckpointResponse, CheckpointSubmit, BaseModel, QAReviewResponse, QAReviewSubmit, TaskBlockRequest, TaskClaimRequest, TaskClaimResponse (+4 more)
+### Community 20 - "main.py"
+Cohesion: 0.26
+Nodes (12): middleware, Request, log_request(), metrics_text(), record_request(), request_id(), health_check(), liveness_check() (+4 more)
 
-### Community 21 - "BaseWorkerAdapter"
-Cohesion: 0.16
-Nodes (11): ABC, BaseWorkerAdapter, Returns True if the backend AI model / profile is online and usable., Abstract interface for worker execution endpoints., OllamaLocalAdapter, Any, Adapter for local Ollama / LM Studio models (e.g. Qwen 2.5, Llama 3.3). $0…, get_adapter() (+3 more)
-
-### Community 22 - "sync.ps1"
+### Community 21 - "sync.ps1"
 Cohesion: 0.11
 Nodes (15): BiasAperture, BiasAperture Schema, EX751 Wireless Communications, gateway/receiver/wire_format.py, NotebookLM (NLM) MCP, Orchestrator MCP Server, Aaradhya Dev Tamrakar, SPARK Project (+7 more)
 
-### Community 23 - ".GetDesktop"
-Cohesion: 0.19
+### Community 22 - ".GetDesktop"
+Cohesion: 0.17
 Nodes (3): MarshalAs, DesktopManager, IServiceProvider10
+
+### Community 23 - "init_db"
+Cohesion: 0.15
+Nodes (13): init_db(), Initialize database tables and indexes from schema.sql with automatic migration…, fixture, Path, setup_test_db(), fixture, Path, setup_test_db() (+5 more)
 
 ### Community 24 - "Usage"
 Cohesion: 0.17
@@ -210,9 +211,9 @@ Nodes (11): Claude Desktop Multi-Profile & Sync Utilities, Concurrent Mode (Mult
 Cohesion: 0.23
 Nodes (8): _now_iso(), PipelineEngine, Connection, Checks whether all tasks for a job have reached terminal state (done/merged).…, Decomposes intake jobs into discrete, pipeline-staged tasks and manages stage…, Load SKU definition JSON from sku-templates directory., Takes a job and a list of parsed input items (e.g. from CSV/JSON). Creates…, When a task is verified (or passes QA), triggers generation of the next stage…
 
-### Community 26 - "GeminiFreeAdapter"
-Cohesion: 0.33
-Nodes (3): GeminiFreeAdapter, Any, Adapter for Google AI Studio Free Tier (Gemini 2.5 / 3.0). Provides free tokens…
+### Community 26 - "GroqAdapter"
+Cohesion: 0.27
+Nodes (5): GroqAdapter, Any, Adapter for Groq-hosted LLMs via the OpenAI-compatible chat completions API., test_groq_adapter_missing_key_returns_error(), test_groq_adapter_uses_env_model_override()
 
 ### Community 27 - "schema.sql"
 Cohesion: 0.47
@@ -226,25 +227,29 @@ Nodes (8): Cross-Linking Hub, Application rules, Coursework notebooks (IV/I, exa
 Cohesion: 0.25
 Nodes (5): ClaudeDesktopProxyAdapter, Any, Adapter representing a local Windows Claude Desktop profile session. Interfaces…, Execute task using Anthropic Claude API, CDP bridge, or structured prompt…, Stage-aware local processing engine producing structured deliverables.
 
-### Community 30 - "GroqAdapter"
-Cohesion: 0.27
-Nodes (5): GroqAdapter, Any, Adapter for Groq-hosted LLMs via the OpenAI-compatible chat completions API., test_groq_adapter_missing_key_returns_error(), test_groq_adapter_uses_env_model_override()
-
-### Community 31 - "Handoff Protocol"
+### Community 30 - "Handoff Protocol"
 Cohesion: 0.22
 Nodes (6): graphify, Anti-Patterns (Wastes Tokens), Checkpoint Summary Format (max 500 chars), Handoff Protocol, Memory Entry Format, Session Bootstrap
 
-### Community 32 - "convert_markdown_to_pdf"
+### Community 31 - "convert_markdown_to_pdf"
 Cohesion: 0.33
 Nodes (7): _check_deps(), convert_markdown_to_pdf(), Any, tool, _read_source_content(), _resolve_output_path(), _run_conversion()
 
-### Community 33 - "Job & Pipeline Production Schema (v2)"
+### Community 32 - "Job & Pipeline Production Schema (v2)"
 Cohesion: 0.22
 Nodes (8): 1. Job Entity (`jobs` / `orchestrator-state/jobs/<job_id>.json`), 2. Extended Task Schema (`tasks`), 3. QA Review Schema (`qa_reviews`), 4. Worker Node Entity (`workers`), 5. Shared Memory & Team Context (`memory_entries`, `team_context`), Job & Pipeline Production Schema (v2), Memory Entry (`memory_entries`), Team Context (`team_context`)
 
-### Community 35 - "QuotaAwareScheduler"
+### Community 33 - "routes_jobs.py"
+Cohesion: 0.19
+Nodes (18): create_job(), get_job(), get_job_metrics(), list_jobs(), _now_iso(), Connection, get, post (+10 more)
+
+### Community 34 - "QuotaAwareScheduler"
 Cohesion: 0.28
 Nodes (5): Connection, QuotaAwareScheduler, Find pending tasks (or expired leases) and auto-assign to best available…, Find the optimal worker ID to claim a given pending task or expired lease., Evaluates pending tasks against registered workers using: Score(W) = w1 *…
+
+### Community 36 - "FastAPI"
+Cohesion: 0.25
+Nodes (7): FastAPI, HTTPAuthorizationCredentials, Verify that incoming request provides a valid API token via Bearer header or…, verify_api_key(), lifespan(), Background supervisor monitoring heartbeats, dead workers, and auto-scheduling…, run_supervisor_loop()
 
 ### Community 37 - "Server Requirements"
 Cohesion: 0.29
@@ -270,13 +275,17 @@ Nodes (4): NotebookLM MCP, Directives:, Token Efficiency:, Worker Role: SEO & AE
 Cohesion: 0.48
 Nodes (5): Get-ClaudeTrayUsagePercent(), Invoke-AutoCheckpoint(), Invoke-WatchdogPoll(), Set-CheckpointFiredThisCycle(), Test-CheckpointAlreadyFiredThisCycle()
 
-### Community 44 - "FastAPI"
-Cohesion: 0.40
-Nodes (4): FastAPI, HTTPAuthorizationCredentials, Verify that incoming request provides a valid API token via Bearer header or…, verify_api_key()
+### Community 43 - "GeminiFreeAdapter"
+Cohesion: 0.33
+Nodes (3): GeminiFreeAdapter, Any, Adapter for Google AI Studio Free Tier (Gemini 2.5 / 3.0). Provides free tokens…
 
-### Community 45 - "_find_uvx"
+### Community 44 - "_find_uvx"
 Cohesion: 0.50
 Nodes (4): _find_uvx(), main(), Find the uvx executable, checking common locations first., Find uvx and launch the NotebookLM MCP server.
+
+### Community 46 - "validate_security_settings"
+Cohesion: 0.70
+Nodes (4): validate_security_settings(), test_development_allows_empty_auth_key(), test_production_accepts_strong_auth_key(), test_production_rejects_missing_auth_key()
 
 ### Community 47 - "VirtualDesktop11-24H2.cs"
 Cohesion: 0.18
@@ -306,29 +315,41 @@ Nodes (4): Research Protocol:, Responsibilities:, Strict Rules:, Worker Role: Re
 Cohesion: 0.50
 Nodes (3): Directives:, Token Efficiency:, Worker Role: Copywriter / Drafting Specialist
 
-### Community 57 - "get_db"
+### Community 60 - "routes_tasks.py"
+Cohesion: 0.34
+Nodes (13): CheckpointResponse, CheckpointSubmit, BaseModel, QAReviewResponse, QAReviewSubmit, TaskBlockRequest, TaskClaimRequest, TaskClaimResponse (+5 more)
+
+### Community 61 - "routes_workers.py"
+Cohesion: 0.24
+Nodes (14): get_worker(), list_workers(), _now_iso(), Connection, get, post, Register or update an AI worker node / profile., List all registered worker nodes. (+6 more)
+
+### Community 77 - "test_cloud_scheduler.py"
+Cohesion: 0.20
+Nodes (8): Periodic self-healing supervisor loop: 1. Identifies workers with stale…, run_supervisor_cycle(), fixture, Path, setup_test_db(), test_supervisor_dead_worker_recovery(), Test that tasks with expired leases can be claimed by a new worker or…, test_expired_lease_reclamation_and_recovery()
+
+### Community 78 - "get_db"
 Cohesion: 0.67
 Nodes (3): get_db(), Connection, Dependency for obtaining an async sqlite database connection in FastAPI routes.
 
 ## Knowledge Gaps
 - **131 isolated node(s):** `memory_entries`, `team_context`, `VirtualDesktop`, `AVCT_NONE`, `AVCT_DEFAULT` (+126 more)
   These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 349 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `ClaudeDesktopProxyAdapter` connect `ClaudeDesktopProxyAdapter` to `main.py`, `BaseWorkerAdapter`, `ClaudeDesktopCDPAdapter`?**
+- **Why does `ClaudeDesktopProxyAdapter` connect `ClaudeDesktopProxyAdapter` to `AsyncClient`, `config.py`, `BaseWorkerAdapter`, `ClaudeDesktopCDPAdapter`?**
   _High betweenness centrality (0.026) - this node is a cross-community bridge._
-- **Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `._eval_js`, `ClaudeDesktopProxyAdapter`, `BaseWorkerAdapter`?**
+- **Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `BaseWorkerAdapter`, `ClaudeDesktopProxyAdapter`, `._eval_js`?**
   _High betweenness centrality (0.020) - this node is a cross-community bridge._
-- **Why does `IApplicationView` connect `IApplicationView` to `IVirtualDesktopPinnedApps`, `APPLICATION_VIEW_COMPATIBILITY_POLICY`, `IVirtualDesktop`, `Desktop`, `IntPtr`, `IApplicationViewCollection`, `VirtualDesktop11-24H2.cs`, `Size`?**
+- **Why does `IApplicationView` connect `IApplicationView` to `IVirtualDesktopPinnedApps`, `APPLICATION_VIEW_COMPATIBILITY_POLICY`, `Desktop`, `IVirtualDesktop`, `IntPtr`, `IApplicationViewCollection`, `VirtualDesktop11-24H2.cs`, `Size`?**
   _High betweenness centrality (0.019) - this node is a cross-community bridge._
 - **What connects `memory_entries`, `team_context`, `VirtualDesktop` to the rest of the system?**
   _131 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `main.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.05407925407925408 - nodes in this community are weakly interconnected._
 - **Should `orchestrator_mcp_test.py` be split into smaller, more focused modules?**
   _Cohesion score 0.0425531914893617 - nodes in this community are weakly interconnected._
 - **Should `MD2PDFApp` be split into smaller, more focused modules?**
   _Cohesion score 0.08139534883720931 - nodes in this community are weakly interconnected._
+- **Should `IApplicationView` be split into smaller, more focused modules?**
+  _Cohesion score 0.04878048780487805 - nodes in this community are weakly interconnected._
