@@ -176,6 +176,17 @@ function Merge-McpServers {
         }
     }
 
+    if ($Merged.PSObject.Properties.Name -contains "preferences" -and $Merged.preferences) {
+        if ($Merged.preferences.PSObject.Properties.Name -contains "launchPreviewPersistedWorkspaces") {
+            if ($null -eq $Merged.preferences.launchPreviewPersistedWorkspaces) {
+                $Merged.preferences.launchPreviewPersistedWorkspaces = [System.Collections.ArrayList]::new()
+            }
+            else {
+                $Merged.preferences.launchPreviewPersistedWorkspaces = @($Merged.preferences.launchPreviewPersistedWorkspaces)
+            }
+        }
+    }
+
     return $Merged
 }
 

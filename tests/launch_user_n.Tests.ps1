@@ -155,6 +155,16 @@ Describe "Merge-McpServers" {
 
             $result.someOtherSetting | Should -Be "keepme"
         }
+
+        It "normalizes the persisted workspaces preference to an array" {
+            $profileConfig = '{"preferences":{"launchPreviewPersistedWorkspaces":null}}' | ConvertFrom-Json
+            $sharedConfig = '{"mcpServers":{}}' | ConvertFrom-Json
+
+            $result = Merge-McpServers -ProfileConfig $profileConfig -SharedConfig $sharedConfig
+
+            $null -ne $result.preferences.launchPreviewPersistedWorkspaces | Should -BeTrue
+            @($result.preferences.launchPreviewPersistedWorkspaces).Count | Should -Be 0
+        }
     }
 
     Context "immutability of the caller's input" {
