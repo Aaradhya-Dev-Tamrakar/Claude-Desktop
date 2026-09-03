@@ -1956,7 +1956,12 @@ function Invoke-ProfileLaunch {
         # Team interlink: force-merge shared MCP servers into all profiles
         # (and active native AppData) claude_desktop_config.json. Opt out with -NoTeamSync.
         if (-not $NoTeamSync) {
-            Sync-TeamMcpConfig -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
+            if ($script:DeferTeamSync) {
+                Write-Host "[i] Deferring team MCP sync until the concurrent launch batch is complete." -ForegroundColor DarkGray
+            }
+            else {
+                Sync-TeamMcpConfig -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
+            }
         }
 
         $Role = if ($ProfileInfo.role) { [string]$ProfileInfo.role } else { "-" }
@@ -2049,6 +2054,9 @@ function Invoke-ProfileLaunch {
         if ($WhatIf) {
             Write-Host "[WhatIf] Would auto-sync repository via sync.ps1 (pull, commit, push)." -ForegroundColor DarkCyan
         }
+        elseif ($script:DeferRepoSync) {
+            Write-Host "[i] Deferring repository sync until the concurrent launch batch is complete." -ForegroundColor DarkGray
+        }
         else {
             Write-Host "[+] Auto-syncing repository via sync.ps1..." -ForegroundColor Cyan
             & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "sync.ps1") -Message "chore(sync): auto-sync after launching profile '$Account' ($Nickname)"
@@ -2061,6 +2069,30 @@ function Invoke-ProfileLaunch {
         Write-Host "Account '$Account' not found in profiles.json" -ForegroundColor Red
         return
     }
+}
+
+function Sync-RepositoryAfterLaunchBatch {
+    param(
+        [Parameter(Mandatory = $true)][string[]]$Accounts
+    )
+
+    if ($WhatIf -or $Accounts.Count -le 1) { return }
+
+    Write-Host "[+] Auto-syncing repository once for the $($Accounts.Count)-profile launch batch..." -ForegroundColor Cyan
+    & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "sync.ps1") -Message "chore(sync): auto-sync after concurrent profile batch ($($Accounts -join ', '))"
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "[!] Batch auto-sync via sync.ps1 exited with code $LASTEXITCODE. Repo may be out of sync." -ForegroundColor Yellow
+    }
+}
+
+function Sync-TeamConfigAfterLaunchBatch {
+    param(
+        [Parameter(Mandatory = $true)][int]$AccountCount
+    )
+
+    if ($NoTeamSync -or $AccountCount -le 1) { return }
+
+    Sync-TeamMcpConfig -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
 }
 
 # ----------------------------------------------------------------------
@@ -2080,9 +2112,13 @@ if ($isInteractive -and -not $Users -and -not $Account) {
     }
 
     $Concurrent = ($tuiChoice.Mode -eq "Concurrent")
+    $script:DeferRepoSync = $Concurrent -and $tuiChoice.Accounts.Count -gt 1
+    $script:DeferTeamSync = $script:DeferRepoSync
     foreach ($acc in $tuiChoice.Accounts) {
         Invoke-ProfileLaunch -Account $acc
     }
+    Sync-RepositoryAfterLaunchBatch -Accounts $tuiChoice.Accounts
+    Sync-TeamConfigAfterLaunchBatch -AccountCount $tuiChoice.Accounts.Count
     if (($Concurrent -or $Snap) -and -not $NoSnap) {
         Set-ClaudeWindowsLayout -Accounts $tuiChoice.Accounts -WhatIf:$WhatIf
     }
@@ -2120,6 +2156,8 @@ if ($Concurrent -and -not $Users) {
 }
 
 if ($Users -and $Users.Count -gt 0) {
+    $script:DeferRepoSync = $Concurrent -and $Users.Count -gt 1
+    $script:DeferTeamSync = $script:DeferRepoSync
     $ResolvedAccounts = foreach ($u in $Users) {
         if ($u -match '^\d+$') {
             $idx = [int]$u - 1
@@ -2139,6 +2177,8 @@ if ($Users -and $Users.Count -gt 0) {
     foreach ($resolvedAccount in $ResolvedAccounts) {
         Invoke-ProfileLaunch -Account $resolvedAccount
     }
+    Sync-RepositoryAfterLaunchBatch -Accounts $ResolvedAccounts
+    Sync-TeamConfigAfterLaunchBatch -AccountCount $ResolvedAccounts.Count
     if (($Concurrent -or $Snap) -and -not $NoSnap) {
         Set-ClaudeWindowsLayout -Accounts $ResolvedAccounts -WhatIf:$WhatIf
     }

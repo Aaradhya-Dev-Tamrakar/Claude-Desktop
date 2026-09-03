@@ -259,6 +259,21 @@ Common Groq model choices include:
 
 Set the exact one you want via `GROQ_MODEL` in your environment or by passing a model override in code if you instantiate `GroqAdapter` directly.
 
+For low-memory machines running several workers, reduce idle polling and cap the
+worker HTTP pool with environment variables (the defaults are already modest):
+
+```powershell
+$env:WORKER_POLL_INTERVAL_SECONDS = "20"
+$env:WORKER_HTTP_MAX_CONNECTIONS = "4"
+$env:WORKER_HTTP_MAX_KEEPALIVE_CONNECTIONS = "2"
+$env:CLAUDE_CDP_POLL_INTERVAL_SECONDS = "2"
+python client/worker_daemon.py
+```
+
+These settings affect each daemon process independently. The CDP interval controls
+UI checks during generation; increase it for lower CPU use, or lower it for faster
+completion detection.
+
 ### Running Usage Watchdog
 
 Monitor Claude Desktop tray usage and auto-publish memory checkpoints on threshold breach:

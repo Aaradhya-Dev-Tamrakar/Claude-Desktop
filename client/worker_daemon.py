@@ -20,6 +20,12 @@ PROVIDER = os.getenv("PROVIDER", "groq")  # 'gemini_free', 'groq', 'ollama_local
 CDP_PORT = int(os.getenv("CDP_PORT") or os.getenv("CLAUDE_CDP_PORT") or "9222")
 LEASE_SECONDS = max(30, int(os.getenv("LEASE_SECONDS", "300")))
 LEASE_RENEWAL_SECONDS = max(10, int(os.getenv("LEASE_RENEWAL_SECONDS", str(LEASE_SECONDS // 3))))
+POLL_INTERVAL_SECONDS = max(1.0, float(os.getenv("WORKER_POLL_INTERVAL_SECONDS", "10")))
+HTTP_MAX_CONNECTIONS = max(2, int(os.getenv("WORKER_HTTP_MAX_CONNECTIONS", "10")))
+HTTP_MAX_KEEPALIVE_CONNECTIONS = max(1, min(
+    HTTP_MAX_CONNECTIONS,
+    int(os.getenv("WORKER_HTTP_MAX_KEEPALIVE_CONNECTIONS", "5")),
+))
 MAX_RECONNECT_DELAY_SECONDS = 60
 
 def get_adapter() -> BaseWorkerAdapter:
@@ -62,7 +68,11 @@ async def main_loop():
     print(f"[*] Starting Worker Daemon: {WORKER_ID} ({PROVIDER}) on {NODE_ID}")
     print(f"[*] Connecting to Orchestrator: {ORCHESTRATOR_URL}")
 
-    async with httpx.AsyncClient(timeout=30.0) as client:
+    limits = httpx.Limits(
+        max_connections=HTTP_MAX_CONNECTIONS,
+        max_keepalive_connections=HTTP_MAX_KEEPALIVE_CONNECTIONS,
+    )
+    async with httpx.AsyncClient(timeout=30.0, limits=limits) as client:
         # 1. Register with cloud orchestrator
         reg_payload = {
             "id": WORKER_ID,
@@ -136,7 +146,7 @@ async def main_loop():
 
                         
                 reconnect_delay = 1
-                await asyncio.sleep(10)
+                await asyncio.sleep(POLL_INTERVAL_SECONDS)
             except asyncio.CancelledError:
                 break
             except Exception as e:

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 from typing import Any
 import httpx
 import websockets
@@ -19,12 +20,16 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
         nickname: str,
         cdp_port: int = 9222,
         cdp_host: str = "127.0.0.1",
-        timeout: float = 180.0
+        timeout: float = 180.0,
+        poll_interval: float | None = None,
     ):
         super().__init__(worker_id, nickname, ["writing", "research", "code", "qa", "seo", "formatting"])
         self.cdp_port = cdp_port
         self.cdp_host = cdp_host
         self.timeout = timeout
+        self.poll_interval = poll_interval if poll_interval is not None else max(
+            0.5, float(os.getenv("CLAUDE_CDP_POLL_INTERVAL_SECONDS", "2"))
+        )
         self._msg_id = 0
 
     @property
@@ -315,6 +320,6 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
                     stable_count = 0
                     prev_text = current_text
 
-            await asyncio.sleep(1.0)
+            await asyncio.sleep(self.poll_interval)
 
         return {"success": False, "error": f"CDP Generation timed out after {self.timeout}s"}
