@@ -11,7 +11,7 @@ $RECYCLE.BIN/
 *.log
 *.tmp
 *.mht
-dev-logs/
+!dev-logs/
 
 # Visual Studio Code & IDE settings
 .vscode/*
