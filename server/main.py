@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from server.core.config import settings
+from server.core.config import settings, validate_security_settings
 from server.core.database import init_db, get_db_conn
 from server.api.routes_jobs import router as jobs_router
 from server.api.routes_tasks import router as tasks_router
@@ -16,6 +16,7 @@ from server.mcp_remote import mcp_server
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
+    validate_security_settings()
     await init_db()
     print(f"[{settings.PROJECT_NAME}] Database initialized at {settings.DATABASE_PATH}")
     
@@ -63,7 +64,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

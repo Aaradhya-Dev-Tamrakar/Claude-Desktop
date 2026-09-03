@@ -285,6 +285,28 @@ function Merge-McpServers {
     return $Merged
 }
 
+function Write-JsonConfigSafely {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)]$Config
+    )
+
+    $directory = Split-Path $Path -Parent
+    $tempPath = Join-Path $directory (".$([IO.Path]::GetFileName($Path)).$([guid]::NewGuid().ToString('N')).tmp")
+    try {
+        $Config | ConvertTo-Json -Depth 10 | Set-Content $tempPath -Encoding UTF8
+        if (Test-Path $Path) {
+            Copy-Item $Path "$Path.bak" -Force
+        }
+        Move-Item $tempPath $Path -Force
+    }
+    finally {
+        if (Test-Path $tempPath) {
+            Remove-Item $tempPath -Force -ErrorAction SilentlyContinue
+        }
+    }
+}
+
 function Expand-TeamMcpPlaceholders {
     # Rewrites the literal "{{REPO_ROOT}}" token in every mcpServers entry's
     # command/args/env string values to $RepoRoot (this machine's actual
@@ -435,7 +457,7 @@ function Sync-TeamMcpConfig {
                 if (-not (Test-Path $tgt.Path)) {
                     New-Item -ItemType Directory -Force -Path $tgt.Path | Out-Null
                 }
-                $Merged | ConvertTo-Json -Depth 10 | Set-Content $ProfileConfigPath -Encoding UTF8
+                Write-JsonConfigSafely -Path $ProfileConfigPath -Config $Merged
                 $syncedCount++
             }
             catch {

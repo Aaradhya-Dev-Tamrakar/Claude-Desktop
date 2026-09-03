@@ -202,6 +202,28 @@ if (Test-Path $NativeAppDataDir) {
 $SuccessCount = 0
 $ErrorCount = 0
 
+function Write-JsonConfigSafely {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)]$Config
+    )
+
+    $directory = Split-Path $Path -Parent
+    $tempPath = Join-Path $directory (".$([IO.Path]::GetFileName($Path)).$([guid]::NewGuid().ToString('N')).tmp")
+    try {
+        $Config | ConvertTo-Json -Depth 10 | Set-Content $tempPath -Encoding UTF8
+        if (Test-Path $Path) {
+            Copy-Item $Path "$Path.bak" -Force
+        }
+        Move-Item $tempPath $Path -Force
+    }
+    finally {
+        if (Test-Path $tempPath) {
+            Remove-Item $tempPath -Force -ErrorAction SilentlyContinue
+        }
+    }
+}
+
 function Sync-ConfigToDir([string]$DirName, [string]$DirPath) {
     $ConfigFile = Join-Path $DirPath "claude_desktop_config.json"
     $ExistingConfig = [PSCustomObject]@{}
@@ -226,7 +248,7 @@ function Sync-ConfigToDir([string]$DirName, [string]$DirPath) {
             if (-not (Test-Path $DirPath)) {
                 New-Item -ItemType Directory -Force -Path $DirPath | Out-Null
             }
-            $Merged | ConvertTo-Json -Depth 10 | Set-Content $ConfigFile -Encoding UTF8
+            Write-JsonConfigSafely -Path $ConfigFile -Config $Merged
             Write-Host "  [✓] Synced '$DirName'" -ForegroundColor Green
         }
         $script:SuccessCount++

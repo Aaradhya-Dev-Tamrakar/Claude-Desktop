@@ -11,6 +11,14 @@ class Settings(BaseModel):
     PROJECT_NAME: str = "Cloud AI Production Orchestrator"
     VERSION: str = "2.0.0"
     API_V1_STR: str = "/api/v1"
+    ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development").lower()
+    CORS_ORIGINS: list[str] = [
+        origin.strip()
+        for origin in os.getenv(
+            "CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
+        ).split(",")
+        if origin.strip()
+    ]
     
     # Storage
     DATA_DIR: Path = SERVER_ROOT / "data"
@@ -20,7 +28,7 @@ class Settings(BaseModel):
     TEAM_CONTEXT_PATH: Path = REPO_ROOT / "team-context.md"
     
     # Security
-    API_AUTH_KEY: str = os.getenv("API_AUTH_KEY", "dev-secret-key-change-in-prod")
+    API_AUTH_KEY: str = os.getenv("API_AUTH_KEY", "")
     
     # Scheduler & Supervisor Settings
     HEARTBEAT_TIMEOUT_SECONDS: int = 120
@@ -31,3 +39,8 @@ class Settings(BaseModel):
 
 settings = Settings()
 settings.DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+def validate_security_settings() -> None:
+    if settings.ENVIRONMENT == "production":
+        if len(settings.API_AUTH_KEY) < 32:
+            raise RuntimeError("Production requires API_AUTH_KEY with at least 32 characters")

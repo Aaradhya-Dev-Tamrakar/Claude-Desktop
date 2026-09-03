@@ -256,6 +256,24 @@ Describe "Expand-TeamMcpPlaceholders" {
     }
 }
 
+Describe "Write-JsonConfigSafely" {
+    It "backs up the existing config and writes a valid replacement" {
+        $directory = Join-Path $TestDrive "config"
+        New-Item -ItemType Directory -Path $directory | Out-Null
+        $path = Join-Path $directory "claude_desktop_config.json"
+        Set-Content -Path $path -Value '{"mcpServers":{"old":{"command":"old"}}}' -Encoding UTF8
+
+        Write-JsonConfigSafely -Path $path -Config ([PSCustomObject]@{
+            mcpServers = [PSCustomObject]@{
+                replacement = [PSCustomObject]@{ command = "new" }
+            }
+        })
+
+        (Get-Content $path -Raw | ConvertFrom-Json).mcpServers.replacement.command | Should -Be "new"
+        (Get-Content "$path.bak" -Raw | ConvertFrom-Json).mcpServers.old.command | Should -Be "old"
+    }
+}
+
 Describe "Show-ProfileTable" {
 
     Context "empty profile set" {

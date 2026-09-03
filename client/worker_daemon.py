@@ -18,6 +18,9 @@ NODE_ID = os.getenv("NODE_ID", "local-node-01")
 WORKER_ID = os.getenv("WORKER_ID", "groq_worker_01")
 PROVIDER = os.getenv("PROVIDER", "groq")  # 'gemini_free', 'groq', 'ollama_local', 'claude_desktop', 'claude_desktop_cdp'
 CDP_PORT = int(os.getenv("CDP_PORT") or os.getenv("CLAUDE_CDP_PORT") or "9222")
+LEASE_SECONDS = max(30, int(os.getenv("LEASE_SECONDS", "300")))
+LEASE_RENEWAL_SECONDS = max(10, int(os.getenv("LEASE_RENEWAL_SECONDS", str(LEASE_SECONDS // 3))))
+MAX_RECONNECT_DELAY_SECONDS = 60
 
 def get_adapter() -> BaseWorkerAdapter:
     if PROVIDER == "gemini_free":
@@ -30,6 +33,29 @@ def get_adapter() -> BaseWorkerAdapter:
         return ClaudeDesktopCDPAdapter(worker_id=WORKER_ID, nickname="Claude Desktop CDP", cdp_port=CDP_PORT)
     else:
         return ClaudeDesktopProxyAdapter(worker_id=WORKER_ID, nickname="Claude Desktop Proxy", profile_path="", cdp_port=CDP_PORT)
+
+async def renew_task_lease_periodically(
+    client: httpx.AsyncClient,
+    task_id: str,
+    claim_token: str,
+    stop_event: asyncio.Event,
+) -> None:
+    while not stop_event.is_set():
+        try:
+            await asyncio.wait_for(stop_event.wait(), timeout=LEASE_RENEWAL_SECONDS)
+            break
+        except asyncio.TimeoutError:
+            response = await client.post(
+                f"{ORCHESTRATOR_URL}/tasks/{task_id}/renew-lease",
+                json={
+                    "worker_id": WORKER_ID,
+                    "claim_token": claim_token,
+                    "lease_seconds": LEASE_SECONDS,
+                },
+            )
+            if response.status_code != 200:
+                print(f"[!] Lease renewal failed for {task_id}: HTTP {response.status_code}")
+                break
 
 async def main_loop():
     adapter = get_adapter()
@@ -49,11 +75,13 @@ async def main_loop():
         }
         try:
             r = await client.post(f"{ORCHESTRATOR_URL}/workers/register", json=reg_payload)
+            r.raise_for_status()
             print(f"[+] Registered worker successfully: {r.json().get('id')}")
         except Exception as e:
-            print(f"[!] Failed to register with orchestrator: {e}")
+            raise RuntimeError(f"Failed to register with orchestrator: {e}") from e
 
         # 2. Main pull & heartbeat loop
+        reconnect_delay = 1
         while True:
             try:
                 # Send Heartbeat
@@ -74,7 +102,15 @@ async def main_loop():
                             claim_token = claim_data.get("claim_token")
                             task_info = claim_data.get("task", t)
                             print(f"[>] Claimed task {task_id} (stage: {stage}). Executing...")
-                            exec_res = await adapter.execute_task(task_id, task_info["spec"], stage, {})
+                            lease_stop = asyncio.Event()
+                            lease_task = asyncio.create_task(
+                                renew_task_lease_periodically(client, task_id, claim_token, lease_stop)
+                            )
+                            try:
+                                exec_res = await adapter.execute_task(task_id, task_info["spec"], stage, {})
+                            finally:
+                                lease_stop.set()
+                                await lease_task
                             
                             if exec_res.get("success"):
                                 # Submit checkpoint
@@ -86,7 +122,8 @@ async def main_loop():
                                     "submitted_by": WORKER_ID,
                                     "claim_token": claim_token
                                 }
-                                await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/checkpoint", json=cp_payload)
+                                checkpoint_r = await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/checkpoint", json=cp_payload)
+                                checkpoint_r.raise_for_status()
                                 print(f"[+] Task {task_id} completed and checkpoint submitted!")
                             elif exec_res.get("error") == "RATE_LIMIT_429":
                                 print(f"[!] Rate limit 429 encountered! Triggering cooldown...")
@@ -98,12 +135,14 @@ async def main_loop():
                                 await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID, "claim_token": claim_token})
 
                         
+                reconnect_delay = 1
                 await asyncio.sleep(10)
             except asyncio.CancelledError:
                 break
             except Exception as e:
                 print(f"[!] Error in worker daemon loop: {e}")
-                await asyncio.sleep(10)
+                await asyncio.sleep(reconnect_delay)
+                reconnect_delay = min(MAX_RECONNECT_DELAY_SECONDS, reconnect_delay * 2)
 
 if __name__ == "__main__":
     try:
