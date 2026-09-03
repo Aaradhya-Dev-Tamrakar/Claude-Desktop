@@ -10,6 +10,7 @@ Default priority ("normal"): max 280 characters.
     [PROJECT_TAG] one-line fact or decision
 
 Examples:
+
 - `[SPARK] Chapter 3 dataset fix verified — SisFall/self-collected wording correct`
 - `[BiasAperture] Track 05 checkpoint submitted, fairness metric baseline = 0.83`
 

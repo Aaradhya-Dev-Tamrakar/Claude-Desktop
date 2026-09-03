@@ -106,6 +106,7 @@ Represents execution endpoints (Claude Desktop profiles, Gemini Free API, Ollama
 Provides persistent database-backed cross-profile shared memory and durable team context.
 
 ### Memory Entry (`memory_entries`)
+
 ```json
 {
   "id": 1,
@@ -118,6 +119,7 @@ Provides persistent database-backed cross-profile shared memory and durable team
 ```
 
 ### Team Context (`team_context`)
+
 ```json
 {
   "key": "standing_instructions",
