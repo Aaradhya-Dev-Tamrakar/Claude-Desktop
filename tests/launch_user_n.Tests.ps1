@@ -361,6 +361,13 @@ Describe "Show-ProfileTable" {
             $output | Should -Match "\[N\] Add New Profile"
         }
     }
+
+    Context "sync banner layout" {
+        It "uses ASCII-only banner text so the borders stay aligned" {
+            $output = & (Join-Path $PSScriptRoot "..\sync-mcp.ps1") -WhatIf 2>&1 | Out-String
+            $output | Should -Not -Match "🔄|●|→|║|╔|╚|╭|╰|╯|╮|├|┤|─|│"
+        }
+    }
 }
 
 Describe "Get-EnrichedProfileRows" {

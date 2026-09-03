@@ -27,12 +27,22 @@ $SharedConfigPath = Join-Path $RepoRoot "team-mcp.json"
 
 function Write-McpBanner {
     param([string]$Title, [string]$Subtitle)
-    Write-Host "" 
-    Write-Host "╔══════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-    Write-Host "║ $($Title.PadRight(46, ' ')) ║" -ForegroundColor Green
-    Write-Host "║ $($Subtitle.Substring(0, [Math]::Min($Subtitle.Length, 46)).PadRight(46, ' ')) ║" -ForegroundColor DarkGray
-    Write-Host "╚══════════════════════════════════════════════════════╝" -ForegroundColor Cyan
-    Write-Host "" 
+
+    $bannerWidth = 54
+    $titleText = $Title.Substring(0, [Math]::Min($Title.Length, $bannerWidth - 2))
+    $subtitleText = $Subtitle.Substring(0, [Math]::Min($Subtitle.Length, $bannerWidth - 2))
+
+    function Format-AsciiBorderRow([string]$Text, [string]$Left, [string]$Right) {
+        $line = $Text.PadRight($bannerWidth - 2, ' ')
+        return "$Left$line$Right"
+    }
+
+    Write-Host ""
+    Write-Host (Format-AsciiBorderRow "" "+" "+") -ForegroundColor Cyan
+    Write-Host (Format-AsciiBorderRow $titleText "|" "|") -ForegroundColor Green
+    Write-Host (Format-AsciiBorderRow $subtitleText "|" "|") -ForegroundColor DarkGray
+    Write-Host (Format-AsciiBorderRow "" "+" "+") -ForegroundColor Cyan
+    Write-Host ""
 }
 
 Write-McpBanner -Title "MCP Sync" -Subtitle "Shared config -> profile configs"
@@ -144,19 +154,19 @@ $ExpandedShared = Expand-TeamMcpPlaceholders -Config $SharedConfig -Root $RepoRo
 $SharedServerNames = @($ExpandedShared.mcpServers.PSObject.Properties.Name)
 $SharedCount = $SharedServerNames.Count
 
-function Format-BannerRow([string]$Text, [int]$Width = 66) {
+function Format-BannerRow([string]$Text, [int]$Width = 68) {
     if ($Text.Length -gt $Width) {
         $Text = $Text.Substring(0, $Width - 3) + "..."
     }
-    return "│ " + $Text.PadRight($Width) + " │"
+    return "| " + $Text.PadRight($Width - 2, ' ') + " |"
 }
 
-Write-Host ("╭" + ("─" * 68) + "╮") -ForegroundColor Cyan
-Write-Host ("│" + "  🔄 Force Syncing MCP Servers to Profiles".PadRight(68) + "│") -ForegroundColor Green
-Write-Host ("├" + ("─" * 68) + "┤") -ForegroundColor Cyan
-Write-Host (Format-BannerRow " ● Shared Servers ($SharedCount) : $($SharedServerNames -join ', ')") -ForegroundColor Yellow
-Write-Host (Format-BannerRow " ● Source Config     : team-mcp.json") -ForegroundColor DarkGray
-Write-Host ("╰" + ("─" * 68) + "╯") -ForegroundColor Cyan
+Write-Host ("+" + ("-" * 70) + "+") -ForegroundColor Cyan
+Write-Host ("|" + "  Force Syncing MCP Servers to Profiles".PadRight(68, ' ') + "|") -ForegroundColor Green
+Write-Host ("+" + ("-" * 70) + "+") -ForegroundColor Cyan
+Write-Host (Format-BannerRow " Shared Servers ($SharedCount) : $($SharedServerNames -join ', ')") -ForegroundColor Yellow
+Write-Host (Format-BannerRow " Source Config     : team-mcp.json") -ForegroundColor DarkGray
+Write-Host ("+" + ("-" * 70) + "+") -ForegroundColor Cyan
 
 # Locate profile directories
 $ProfilesRoot = Join-Path $env:USERPROFILE ".claude-profiles"
