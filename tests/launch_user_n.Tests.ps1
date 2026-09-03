@@ -157,13 +157,15 @@ Describe "Merge-McpServers" {
         }
 
         It "normalizes the persisted workspaces preference to an array" {
-            $profileConfig = '{"preferences":{"launchPreviewPersistedWorkspaces":null}}' | ConvertFrom-Json
+            $profileConfig = '{"preferences":{"launchPreviewPersistedWorkspaces":null,"launchPreviewSessionScopedSessions":null}}' | ConvertFrom-Json
             $sharedConfig = '{"mcpServers":{}}' | ConvertFrom-Json
 
             $result = Merge-McpServers -ProfileConfig $profileConfig -SharedConfig $sharedConfig
 
             $null -ne $result.preferences.launchPreviewPersistedWorkspaces | Should -BeTrue
             @($result.preferences.launchPreviewPersistedWorkspaces).Count | Should -Be 0
+            $null -ne $result.preferences.launchPreviewSessionScopedSessions | Should -BeTrue
+            @($result.preferences.launchPreviewSessionScopedSessions).Count | Should -Be 0
         }
     }
 

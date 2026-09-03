@@ -125,12 +125,14 @@ function Merge-McpServers {
     }
 
     if ($Merged.PSObject.Properties.Name -contains "preferences" -and $Merged.preferences) {
-        if ($Merged.preferences.PSObject.Properties.Name -contains "launchPreviewPersistedWorkspaces") {
-            if ($null -eq $Merged.preferences.launchPreviewPersistedWorkspaces) {
-                $Merged.preferences.launchPreviewPersistedWorkspaces = [System.Collections.ArrayList]::new()
-            }
-            else {
-                $Merged.preferences.launchPreviewPersistedWorkspaces = @($Merged.preferences.launchPreviewPersistedWorkspaces)
+        foreach ($preferenceName in @("launchPreviewPersistedWorkspaces", "launchPreviewSessionScopedSessions")) {
+            if ($Merged.preferences.PSObject.Properties.Name -contains $preferenceName) {
+                if ($null -eq $Merged.preferences.$preferenceName) {
+                    $Merged.preferences.$preferenceName = [System.Collections.ArrayList]::new()
+                }
+                else {
+                    $Merged.preferences.$preferenceName = @($Merged.preferences.$preferenceName)
+                }
             }
         }
     }
