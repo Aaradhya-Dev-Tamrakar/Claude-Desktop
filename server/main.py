@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import asyncio
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from time import perf_counter
+from fastapi import FastAPI, HTTPException, Request, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 
 from server.core.config import settings, validate_security_settings
 from server.core.database import init_db, get_db_conn
+from server.core.observability import log_request, metrics_text, record_request, request_id
 from server.api.routes_jobs import router as jobs_router
 from server.api.routes_tasks import router as tasks_router
 from server.api.routes_workers import router as workers_router
@@ -70,6 +72,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def observe_http_requests(request: Request, call_next):
+    correlation_id = request_id(request.headers.get("X-Request-ID"))
+    started = perf_counter()
+    response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+    try:
+        response = await call_next(request)
+        response_status = response.status_code
+        return response
+    finally:
+        duration = perf_counter() - started
+        record_request(request.method, request.url.path, response_status, duration)
+        log_request(correlation_id, request.method, request.url.path, response_status, duration)
+        if "response" in locals():
+            response.headers["X-Request-ID"] = correlation_id
+
 app.include_router(jobs_router, prefix=settings.API_V1_STR)
 app.include_router(tasks_router, prefix=settings.API_V1_STR)
 app.include_router(workers_router, prefix=settings.API_V1_STR)
@@ -85,6 +103,27 @@ async def health_check():
         "version": settings.VERSION,
         "mcp_endpoint": settings.MCP_PATH,
     }
+
+@app.get("/health/live")
+async def liveness_check():
+    return {"status": "ok", "version": settings.VERSION}
+
+@app.get("/health/ready")
+async def readiness_check():
+    db = None
+    try:
+        db = await get_db_conn()
+        await db.execute("SELECT 1")
+        return {"status": "ready", "database": "ok", "version": settings.VERSION}
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail="Database is not ready") from exc
+    finally:
+        if db:
+            await db.close()
+
+@app.get("/metrics")
+async def metrics():
+    return Response(content=metrics_text(), media_type="text/plain; version=0.0.4")
 
 if __name__ == "__main__":
     import uvicorn
