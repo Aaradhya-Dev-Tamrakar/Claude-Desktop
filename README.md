@@ -274,6 +274,21 @@ These settings affect each daemon process independently. The CDP interval contro
 UI checks during generation; increase it for lower CPU use, or lower it for faster
 completion detection.
 
+### Benchmarking Efficiency
+
+Run the side-effect-free benchmark for a four-profile batch:
+
+```powershell
+pwsh -NoProfile -File .\benchmarks\benchmark-efficiency.ps1
+```
+
+Choose profiles and repetitions, or include a snapshot of currently running Claude
+processes:
+
+```powershell
+pwsh -NoProfile -File .\benchmarks\benchmark-efficiency.ps1 -Profiles user1,user2,user3,user4,user5 -Iterations 5 -IncludeProcessSnapshot
+```
+
 ### Running Usage Watchdog
 
 Monitor Claude Desktop tray usage and auto-publish memory checkpoints on threshold breach:
