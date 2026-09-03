@@ -5,7 +5,7 @@
     "path": "%USERPROFILE%\\.claude-profiles\\user1",
     "first_login_time": "2026-09-03 22:31:55",
     "last_login_date": "2026-09-03",
-    "last_login_time": "23:33:39"
+    "last_login_time": "23:34:41"
   },
   "user2": {
     "nickname": "dev83",
@@ -13,7 +13,7 @@
     "path": "%USERPROFILE%\\.claude-profiles\\user2",
     "first_login_time": "2026-09-03 18:48:11",
     "last_login_date": "2026-09-03",
-    "last_login_time": "23:33:40"
+    "last_login_time": "23:34:42"
   },
   "user3": {
     "nickname": "xavier",
@@ -21,7 +21,7 @@
     "path": "%USERPROFILE%\\.claude-profiles\\user3",
     "first_login_time": "2026-09-03 19:18:20",
     "last_login_date": "2026-09-03",
-    "last_login_time": "23:33:41"
+    "last_login_time": "23:34:43"
   },
   "user4": {
     "path": "%USERPROFILE%\\.claude-profiles\\user4",
@@ -29,7 +29,7 @@
     "role": "writer",
     "first_login_time": "2026-09-03 19:40:44",
     "last_login_date": "2026-09-03",
-    "last_login_time": "23:34:12"
+    "last_login_time": "23:34:43"
   },
   "user5": {
     "nickname": "games2061",
