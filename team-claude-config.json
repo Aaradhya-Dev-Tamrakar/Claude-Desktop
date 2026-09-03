@@ -3,7 +3,7 @@
     "site-mcp": {
       "command": "python",
       "args": [
-        "D:\\Aaradhya-Dev-Tamrakar\\Aaradhya-Dev-Tamrakar.github.io\\mcp-server\\site_mcp.py"
+        "F:\\AaradhyaDT\\AaradhyaDT.github.io\\mcp-server\\site_mcp.py"
       ],
       "env": {}
     },

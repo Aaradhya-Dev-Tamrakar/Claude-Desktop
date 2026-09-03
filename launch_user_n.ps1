@@ -87,9 +87,9 @@ function Write-LaunchBanner {
     )
     Write-Host "" 
     Write-Host "╔══════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-    Write-Host "║ $($Title.PadRight(46, ' ')) ║" -ForegroundColor Green
+    Write-Host "║ $($Title.PadRight(52, ' ')) ║" -ForegroundColor Green
     if ($Subtitle) {
-        Write-Host "║ $($Subtitle.Substring(0, [Math]::Min($Subtitle.Length, 46)).PadRight(46, ' ')) ║" -ForegroundColor DarkGray
+        Write-Host "║ $($Subtitle.Substring(0, [Math]::Min($Subtitle.Length, 52)).PadRight(52, ' ')) ║" -ForegroundColor DarkGray
     }
     Write-Host "╚══════════════════════════════════════════════════════╝" -ForegroundColor Cyan
     Write-Host "" 
