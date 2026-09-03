@@ -85,7 +85,7 @@ function Get-VisibleTextWidth {
     return $width
 }
 
-function Pad-VisibleRight {
+function Format-VisibleRight {
     param([string]$Text, [int]$Width)
 
     $rawWidth = Get-VisibleTextWidth $Text
@@ -103,9 +103,9 @@ function Write-CooldownBanner {
 
     Write-Host "" 
     Write-Host ("╔" + ("═" * $boxWidth) + "╗") -ForegroundColor Cyan
-    Write-Host ("║ " + (Pad-VisibleRight -Text $title -Width ($boxWidth - 2)) + " ║") -ForegroundColor Green
-    Write-Host ("║ " + (Pad-VisibleRight -Text $profileLine -Width ($boxWidth - 2)) + " ║") -ForegroundColor DarkGray
-    Write-Host ("║ " + (Pad-VisibleRight -Text $loginLine -Width ($boxWidth - 2)) + " ║") -ForegroundColor DarkGray
+    Write-Host ("║ " + (Format-VisibleRight -Text $title -Width ($boxWidth - 2)) + " ║") -ForegroundColor Green
+    Write-Host ("║ " + (Format-VisibleRight -Text $profileLine -Width ($boxWidth - 2)) + " ║") -ForegroundColor DarkGray
+    Write-Host ("║ " + (Format-VisibleRight -Text $loginLine -Width ($boxWidth - 2)) + " ║") -ForegroundColor DarkGray
     Write-Host ("╚" + ("═" * $boxWidth) + "╝") -ForegroundColor Cyan
     Write-Host "" 
 }

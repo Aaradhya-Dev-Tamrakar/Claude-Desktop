@@ -146,3 +146,64 @@ async def test_fastapi_rest_routes():
         search_mem = await client.get("/api/v1/memory/search", params={"q": "REST"})
         assert search_mem.status_code == 200
         assert len(search_mem.json()) >= 1
+
+@pytest.mark.asyncio
+async def test_checkpoint_retry_is_idempotent():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        await client.post("/api/v1/workers/register", json={
+            "id": "idempotent_worker", "provider": "ollama_local", "node_id": "node-1",
+            "nickname": "Idempotent Worker", "capabilities": ["writing"]
+        })
+        await client.post("/api/v1/tasks", json={
+            "id": "task_idempotent", "stage": "draft", "kind": "text", "spec": "retry test"
+        })
+        claim = await client.post("/api/v1/tasks/task_idempotent/claim", json={
+            "worker_id": "idempotent_worker"
+        })
+        checkpoint = {
+            "task_id": "task_idempotent", "kind": "text", "summary": "done",
+            "result_text": "result", "submitted_by": "idempotent_worker",
+            "claim_token": claim.json()["claim_token"]
+        }
+        first = await client.post("/api/v1/tasks/task_idempotent/checkpoint", json=checkpoint)
+        second = await client.post("/api/v1/tasks/task_idempotent/checkpoint", json=checkpoint)
+
+    assert first.status_code == 201
+    assert second.status_code == 201
+    assert second.json()["submitted_at"] == first.json()["submitted_at"]
+
+@pytest.mark.asyncio
+async def test_released_attempts_are_closed_and_limit_is_enforced(monkeypatch):
+    monkeypatch.setattr(settings, "MAX_TASK_ATTEMPTS", 1)
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        await client.post("/api/v1/workers/register", json={
+            "id": "limited_worker", "provider": "ollama_local", "node_id": "node-1",
+            "nickname": "Limited Worker", "capabilities": ["writing"]
+        })
+        await client.post("/api/v1/tasks", json={
+            "id": "task_attempt_limit", "stage": "draft", "kind": "text", "spec": "attempt test"
+        })
+        claim = await client.post("/api/v1/tasks/task_attempt_limit/claim", json={
+            "worker_id": "limited_worker"
+        })
+        release = await client.post("/api/v1/tasks/task_attempt_limit/release", json={
+            "worker_id": "limited_worker", "claim_token": claim.json()["claim_token"]
+        })
+        blocked_claim = await client.post("/api/v1/tasks/task_attempt_limit/claim", json={
+            "worker_id": "limited_worker"
+        })
+
+    assert release.status_code == 200
+    assert blocked_claim.status_code == 409
+    async with aiosqlite.connect(str(settings.DATABASE_PATH)) as db:
+        db.row_factory = aiosqlite.Row
+        attempt = await (await db.execute(
+            "SELECT status FROM task_attempts WHERE task_id = 'task_attempt_limit'"
+        )).fetchone()
+        task = await (await db.execute(
+            "SELECT status FROM tasks WHERE id = 'task_attempt_limit'"
+        )).fetchone()
+    assert attempt["status"] == "failed"
+    assert task["status"] == "failed"

@@ -1,15 +1,25 @@
 {
   "communities": {
     "0": [
-      "row",
+      "asyncclient",
+      "asyncio",
+      "basemodel",
+      "fixture",
+      "get",
+      "middleware",
+      "path",
+      "request",
       "server_core_config",
-      "server_core_config_py_basemodel",
       "server_core_config_settings",
+      "server_core_config_validate_security_settings",
       "server_core_database",
-      "server_core_database_get_db_conn",
       "server_core_database_init_db",
       "server_core_database_rationale_24",
-      "server_core_database_rationale_8",
+      "server_core_observability",
+      "server_core_observability_log_request",
+      "server_core_observability_metrics_text",
+      "server_core_observability_record_request",
+      "server_core_observability_request_id",
       "server_core_pipeline_engine",
       "server_core_supervisor",
       "server_core_supervisor_rationale_9",
@@ -17,37 +27,12 @@
       "server_main",
       "server_main_health_check",
       "server_main_lifespan",
-      "server_main_py_get",
-      "server_main_rationale_35",
+      "server_main_liveness_check",
+      "server_main_metrics",
+      "server_main_observe_http_requests",
+      "server_main_rationale_38",
+      "server_main_readiness_check",
       "server_main_run_supervisor_loop",
-      "server_mcp_remote",
-      "server_mcp_remote_block_task",
-      "server_mcp_remote_claim_task",
-      "server_mcp_remote_create_task",
-      "server_mcp_remote_get_job",
-      "server_mcp_remote_get_job_metrics",
-      "server_mcp_remote_get_system_health",
-      "server_mcp_remote_get_task",
-      "server_mcp_remote_get_worker",
-      "server_mcp_remote_list_jobs",
-      "server_mcp_remote_list_tasks",
-      "server_mcp_remote_list_workers",
-      "server_mcp_remote_now_iso",
-      "server_mcp_remote_push_memory",
-      "server_mcp_remote_py_any",
-      "server_mcp_remote_py_tool",
-      "server_mcp_remote_read_team_context",
-      "server_mcp_remote_read_team_memory",
-      "server_mcp_remote_register_worker",
-      "server_mcp_remote_release_task",
-      "server_mcp_remote_renew_task_lease",
-      "server_mcp_remote_row_to_dict",
-      "server_mcp_remote_search_memory",
-      "server_mcp_remote_submit_checkpoint",
-      "server_mcp_remote_submit_job_from_template",
-      "server_mcp_remote_submit_qa_review",
-      "server_mcp_remote_unblock_task",
-      "server_mcp_remote_worker_heartbeat",
       "tests_test_cloud_scheduler",
       "tests_test_cloud_scheduler_py_fixture",
       "tests_test_cloud_scheduler_py_path",
@@ -61,24 +46,27 @@
       "tests_test_e2e_pipeline_rationale_136",
       "tests_test_e2e_pipeline_rationale_173",
       "tests_test_e2e_pipeline_rationale_232",
+      "tests_test_e2e_pipeline_rationale_30",
       "tests_test_e2e_pipeline_setup_test_db",
       "tests_test_e2e_pipeline_test_concurrent_task_leasing_race_safety",
+      "tests_test_e2e_pipeline_test_e2e_sku_pipeline_execution",
       "tests_test_e2e_pipeline_test_expired_lease_reclamation_and_recovery",
       "tests_test_e2e_pipeline_test_lease_renewal_heartbeat",
+      "tests_test_health",
+      "tests_test_health_setup_test_db",
+      "tests_test_health_test_health_endpoints_and_request_correlation",
+      "tests_test_health_test_metrics_endpoint_exposes_request_counters",
       "tests_test_pipeline_engine",
       "tests_test_pipeline_engine_py_fixture",
       "tests_test_pipeline_engine_py_path",
       "tests_test_pipeline_engine_setup_test_db",
       "tests_test_pipeline_engine_test_pipeline_decomposition_and_waterfall",
-      "tests_test_remote_mcp",
-      "tests_test_remote_mcp_py_asyncio",
       "tests_test_remote_mcp_py_fixture",
       "tests_test_remote_mcp_setup_test_db",
-      "tests_test_remote_mcp_test_fastapi_rest_routes",
-      "tests_test_remote_mcp_test_mcp_jobs_and_qa_review",
-      "tests_test_remote_mcp_test_mcp_memory_and_context",
-      "tests_test_remote_mcp_test_mcp_system_health_and_fleet",
-      "tests_test_remote_mcp_test_mcp_task_lifecycle"
+      "tests_test_security_config",
+      "tests_test_security_config_test_development_allows_empty_auth_key",
+      "tests_test_security_config_test_production_accepts_strong_auth_key",
+      "tests_test_security_config_test_production_rejects_missing_auth_key"
     ],
     "1": [
       "tests_orchestrator_mcp_test",
@@ -177,76 +165,39 @@
       "tools_md2pdf_app_run_conversion"
     ],
     "3": [
-      "team_memory_2026_08_05",
-      "team_memory_2026_08_06",
-      "team_memory_2026_08_10",
-      "team_memory_2026_08_11",
-      "team_memory_2026_08_13",
-      "team_memory_2026_08_15",
-      "team_memory_2026_08_21",
-      "team_memory_2026_08_23",
-      "team_memory_areas_6g_rf_presentation_md",
-      "team_memory_areas_fairness_bias_audit_md",
-      "team_memory_areas_fusemachines_fellowship_md",
-      "team_memory_areas_kec_makerspace_website_md",
-      "team_memory_areas_makerspace_ambassador_bio_md",
-      "team_memory_areas_master_profile_system_md",
-      "team_memory_areas_nexus_md",
-      "team_memory_areas_personal_notebook_md",
-      "team_memory_areas_portfolio_site_md",
-      "team_memory_areas_spark_md",
-      "team_memory_canteen_price_list",
-      "team_memory_courses",
-      "team_memory_fusemachines_ai_fellowship",
-      "team_memory_memory_log",
-      "team_memory_people_dipen_manandhar_md",
-      "team_memory_people_rupesh_kadel_md",
-      "team_memory_people_sankalpa_lamsal_md",
-      "team_memory_people_sonia_thapa_md",
-      "team_memory_personal_context",
-      "team_memory_portfolio_website",
-      "team_memory_preferences_md",
-      "team_memory_profile_md",
-      "team_memory_spark_project",
-      "team_memory_tools_and_environment",
-      "team_memory_top_of_mind_as_of_this_session",
-      "team_memory_topics_coursework_md",
-      "team_memory_topics_hobbies_md",
-      "team_memory_topics_home_network_md",
-      "team_memory_topics_recent_work_md",
-      "team_memory_topics_tech_stack_md",
-      "team_memory_work_context"
-    ],
-    "4": [
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_applyoperation",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_canreceiveinput",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_flash",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getappusermodelid",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getenterpriseid",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getlastactivationtimestamp",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getmonitor",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getneediness",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getrootswitchableowner",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getscalefactor",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getshowinswitchers",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getsizeconstraints",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getsizeconstraintsfordpi",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getthumbnailwindow",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getviewstate",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getvisibility",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_insertafterwindow",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_isequalbyappusermodelid",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_isinhighzorderband",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_ismirrored",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_issplashscreenpresented",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_istray",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_onminsizepreferencesupdated",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setappusermodelid",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setfocus",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setlastactivationtimestamp",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setposition",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setshowinswitchers",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setsizeconstraintsfordpi",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setviewstate",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_switchto",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_tryinvokeback",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown1",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown10",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown11",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown12",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown2",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown3",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown4",
@@ -254,10 +205,9 @@
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown6",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown7",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown8",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown9",
-      "tools_virtualdesktop11_24h2_virtualdesktop_size"
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown9"
     ],
-    "5": [
+    "4": [
       "mcp_servers_orchestrator_mcp_run_server",
       "mcp_servers_orchestrator_mcp_run_server_archive_memory",
       "mcp_servers_orchestrator_mcp_run_server_checkpoint_path",
@@ -299,9 +249,92 @@
       "taskkind",
       "taskstatus"
     ],
+    "5": [
+      "team_memory_2026_08_05",
+      "team_memory_2026_08_06",
+      "team_memory_2026_08_10",
+      "team_memory_2026_08_11",
+      "team_memory_2026_08_13",
+      "team_memory_2026_08_15",
+      "team_memory_2026_08_21",
+      "team_memory_2026_08_23",
+      "team_memory_areas_6g_rf_presentation_md",
+      "team_memory_areas_fairness_bias_audit_md",
+      "team_memory_areas_fusemachines_fellowship_md",
+      "team_memory_areas_kec_makerspace_website_md",
+      "team_memory_areas_makerspace_ambassador_bio_md",
+      "team_memory_areas_master_profile_system_md",
+      "team_memory_areas_nexus_md",
+      "team_memory_areas_personal_notebook_md",
+      "team_memory_areas_portfolio_site_md",
+      "team_memory_areas_spark_md",
+      "team_memory_canteen_price_list",
+      "team_memory_courses",
+      "team_memory_fusemachines_ai_fellowship",
+      "team_memory_memory_log",
+      "team_memory_people_dipen_manandhar_md",
+      "team_memory_people_rupesh_kadel_md",
+      "team_memory_people_sankalpa_lamsal_md",
+      "team_memory_people_sonia_thapa_md",
+      "team_memory_personal_context",
+      "team_memory_portfolio_website",
+      "team_memory_preferences_md",
+      "team_memory_profile_md",
+      "team_memory_spark_project",
+      "team_memory_tools_and_environment",
+      "team_memory_top_of_mind_as_of_this_session",
+      "team_memory_topics_coursework_md",
+      "team_memory_topics_hobbies_md",
+      "team_memory_topics_home_network_md",
+      "team_memory_topics_recent_work_md",
+      "team_memory_topics_tech_stack_md",
+      "team_memory_work_context"
+    ],
     "6": [
+      "row",
+      "server_core_database_get_db_conn",
+      "server_core_database_rationale_8",
+      "server_mcp_remote",
+      "server_mcp_remote_block_task",
+      "server_mcp_remote_claim_task",
+      "server_mcp_remote_create_task",
+      "server_mcp_remote_get_job",
+      "server_mcp_remote_get_job_metrics",
+      "server_mcp_remote_get_system_health",
+      "server_mcp_remote_get_task",
+      "server_mcp_remote_get_worker",
+      "server_mcp_remote_list_jobs",
+      "server_mcp_remote_list_tasks",
+      "server_mcp_remote_list_workers",
+      "server_mcp_remote_now_iso",
+      "server_mcp_remote_push_memory",
+      "server_mcp_remote_py_any",
+      "server_mcp_remote_py_tool",
+      "server_mcp_remote_read_team_context",
+      "server_mcp_remote_read_team_memory",
+      "server_mcp_remote_register_worker",
+      "server_mcp_remote_release_task",
+      "server_mcp_remote_renew_task_lease",
+      "server_mcp_remote_row_to_dict",
+      "server_mcp_remote_search_memory",
+      "server_mcp_remote_submit_checkpoint",
+      "server_mcp_remote_submit_job_from_template",
+      "server_mcp_remote_submit_qa_review",
+      "server_mcp_remote_unblock_task",
+      "server_mcp_remote_worker_heartbeat",
+      "tests_test_remote_mcp",
+      "tests_test_remote_mcp_py_asyncio",
+      "tests_test_remote_mcp_test_fastapi_rest_routes",
+      "tests_test_remote_mcp_test_mcp_jobs_and_qa_review",
+      "tests_test_remote_mcp_test_mcp_memory_and_context",
+      "tests_test_remote_mcp_test_mcp_system_health_and_fleet",
+      "tests_test_remote_mcp_test_mcp_task_lifecycle"
+    ],
+    "7": [
       "cooldown_reminder",
+      "cooldown_reminder_get_visibletextwidth",
       "cooldown_reminder_new_cooldowncalendarevent",
+      "cooldown_reminder_pad_visibleright",
       "cooldown_reminder_register_cooldowntoast",
       "cooldown_reminder_update_firstlogindate",
       "cooldown_reminder_write_cooldownbanner",
@@ -312,6 +345,7 @@
       "launch_user_n_get_desktopbatchallocation",
       "launch_user_n_get_enrichedprofilerows",
       "launch_user_n_get_validatedprofilepath",
+      "launch_user_n_get_visibletextwidth",
       "launch_user_n_get_windowgridlayout",
       "launch_user_n_initialize_virtualdesktoptool",
       "launch_user_n_initialize_windowhelpertype",
@@ -320,6 +354,7 @@
       "launch_user_n_merge_mcpservers",
       "launch_user_n_new_border",
       "launch_user_n_new_row",
+      "launch_user_n_pad_visibleright",
       "launch_user_n_resolve_singleaccount",
       "launch_user_n_select_profileinteractive",
       "launch_user_n_set_claudewindowslayout",
@@ -327,30 +362,47 @@
       "launch_user_n_start_localorchestratorserver",
       "launch_user_n_sync_teammcpconfig",
       "launch_user_n_test_profilepathwithinbase",
+      "launch_user_n_truncate_visibletext",
+      "launch_user_n_write_jsonconfigsafely",
       "launch_user_n_write_launchbanner",
-      "readme_team_mcp_json",
-      "reset_profiles",
-      "reset_profiles_write_resetbanner",
-      "sync",
-      "sync_find_stagedsecrets",
-      "sync_get_autocommitmessage",
-      "sync_sync_memorytoteammemory",
-      "sync_write_notice",
-      "sync_write_status",
-      "sync_write_success"
+      "readme_team_mcp_json"
     ],
-    "7": [
-      "preservesig",
+    "8": [
+      "dllimport",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_attachthreadinput",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_count",
       "tools_virtualdesktop11_24h2_virtualdesktop_desktop_create",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_current",
       "tools_virtualdesktop11_24h2_virtualdesktop_desktop_equals",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_findwindow",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_getcurrentthreadid",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_getforegroundwindow",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_gethashcode",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_getwindowthreadprocessid",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_isvisible",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_iswindowpinned",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_left",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_makevisible",
       "tools_virtualdesktop11_24h2_virtualdesktop_desktop_move",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_moveactivewindow",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_pinactivewindow",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_pinwindow",
       "tools_virtualdesktop11_24h2_virtualdesktop_desktop_remove",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_removeall",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_right",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_setanimation",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_setforegroundwindow",
       "tools_virtualdesktop11_24h2_virtualdesktop_desktop_setwallpaperpath",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getdesktop",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getdesktopindex",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray_getat",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_showwindow",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_unpinactivewindow",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_unpinwindow",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_waitforanimationtocomplete",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_isviewpinned",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_pinview"
+    ],
+    "9": [
+      "preservesig",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_setallwallpaperpaths",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_isremote",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_isviewvisible",
@@ -359,81 +411,21 @@
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_copydesktopstate",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_createdesktop",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_createremotedesktop",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_finddesktop",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getadjacentdesktop",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getcount",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getcurrentdesktop",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getdesktops",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getdesktopswitchincludeexcludeviews",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getlastactivedesktop",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_movedesktop",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_moveviewtodesktop",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_removedesktop",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_setdesktopname",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_setdesktopwallpaper",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_switchdesktopandmoveforegroundview",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_switchremotedesktop"
-    ],
-    "8": [
-      "guid",
-      "intptr",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_getwindowthreadprocessid",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_haswindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_movewindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getapplicationview",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_applyoperation",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getmonitor",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getposition",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getthumbnailwindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getvirtualdesktopid",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_insertafterwindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_onminsizepreferencesupdated",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setposition",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setvirtualdesktopid",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_tryinvokeback",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewforhwnd",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_getid",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanager",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanager_getwindowdesktopid",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanager_iswindowoncurrentvirtualdesktop",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanager_movewindowtodesktop",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_finddesktop",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_moveviewtodesktop"
-    ],
-    "9": [
-      "dllimport",
-      "marshalas",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_attachthreadinput",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_count",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_current",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_desktopnamefromdesktop",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_desktopwallpaperfromindex",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_findwindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_getcurrentthreadid",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_getforegroundwindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_gethashcode",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_hasdesktopnamefromindex",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_isvisible",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_iswindowpinned",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_left",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_makevisible",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_moveactivewindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_pinactivewindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_pinwindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_right",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_setallwallpaperpaths",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_setanimation",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_setforegroundwindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_showwindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_unpinactivewindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_unpinwindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_getname",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_getwallpaperpath",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_switchdesktop",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_switchdesktopandmoveforegroundview",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_switchdesktopwithanimation",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_updatewallpaperpathforalldesktops",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_waitforanimationtocomplete",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_isviewpinned",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_pinview",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_unpinview"
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_switchremotedesktop",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_updatewallpaperpathforalldesktops"
     ],
     "10": [
       "server_api_routes_tasks_block_task",
@@ -462,16 +454,28 @@
       "server_api_routes_tasks_submit_qa_review"
     ],
     "11": [
-      "biasaperture_project",
-      "biasaperture_schema",
-      "ex751_exam",
-      "gateway_receiver_wire_format",
-      "nlm_mcp",
-      "profile_aaradhya",
-      "spark_project",
-      "spark_tracker",
-      "sync_ps1",
-      "team_memory"
+      "intptr",
+      "stringbuilder",
+      "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproc",
+      "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctoclose",
+      "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctolist",
+      "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctomovewindows",
+      "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctoswap",
+      "tools_virtualdesktop11_24h2_vdesktool_program_getwindowtext",
+      "tools_virtualdesktop11_24h2_vdesktool_program_iswindowvisible",
+      "tools_virtualdesktop11_24h2_vdesktool_program_sendmessage",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_fromdesktop",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_fromwindow",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_haswindow",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_movewindow",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getapplicationview",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewforhwnd",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_getid",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanager",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanager_getwindowdesktopid",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanager_iswindowoncurrentvirtualdesktop",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanager_movewindowtodesktop",
+      "uint32"
     ],
     "12": [
       "put",
@@ -498,27 +502,27 @@
       "server_models_schemas_memoryresponse"
     ],
     "13": [
-      "abc",
-      "client_adapters_base_adapter",
-      "client_adapters_base_adapter_baseworkeradapter",
-      "client_adapters_base_adapter_baseworkeradapter_check_health",
-      "client_adapters_base_adapter_baseworkeradapter_init",
-      "client_adapters_base_adapter_rationale_30",
-      "client_adapters_base_adapter_rationale_7",
-      "client_adapters_claude_desktop_cdp",
-      "client_adapters_claude_desktop_proxy",
-      "client_adapters_gemini_free_adapter",
-      "client_adapters_groq_adapter",
-      "client_adapters_ollama_local_adapter",
-      "client_adapters_ollama_local_adapter_ollamalocaladapter",
-      "client_adapters_ollama_local_adapter_ollamalocaladapter_check_health",
-      "client_adapters_ollama_local_adapter_ollamalocaladapter_execute_task",
-      "client_adapters_ollama_local_adapter_ollamalocaladapter_init",
-      "client_adapters_ollama_local_adapter_py_any",
-      "client_adapters_ollama_local_adapter_rationale_10",
-      "client_worker_daemon",
-      "client_worker_daemon_get_adapter",
-      "client_worker_daemon_main_loop"
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_removeall",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getdesktop",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getdesktopindex",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_enumerateownershiptree",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewforapplication",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewforappusermodelid",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewinfocus",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviews",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewsbyappusermodelid",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewsbyzorder",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_refreshcollection",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_registerforapplicationviewchanges",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_unknown1",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_unregisterforapplicationviewchanges",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray_getat",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray_getcount",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getcount",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getdesktops"
     ],
     "14": [
       "client_adapters_claude_desktop_cdp_claudedesktopcdpadapter",
@@ -583,6 +587,26 @@
       "websocketclientprotocol"
     ],
     "17": [
+      "enumdelegate",
+      "tools_virtualdesktop11_24h2_vdesktool_program",
+      "tools_virtualdesktop11_24h2_vdesktool_program_closewindowsondesktop",
+      "tools_virtualdesktop11_24h2_vdesktool_program_enumdesktopwindows",
+      "tools_virtualdesktop11_24h2_vdesktool_program_getmainwindowhandle",
+      "tools_virtualdesktop11_24h2_vdesktool_program_getwindowfromtitle",
+      "tools_virtualdesktop11_24h2_vdesktool_program_helpscreen",
+      "tools_virtualdesktop11_24h2_vdesktool_program_listwindowsondesktop",
+      "tools_virtualdesktop11_24h2_vdesktool_program_main",
+      "tools_virtualdesktop11_24h2_vdesktool_program_movewindowstodesktop",
+      "tools_virtualdesktop11_24h2_vdesktool_program_swapdesktops",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_desktopnamefromdesktop",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_desktopnamefromindex",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_fromindex",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_hasdesktopnamefromindex",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_searchdesktop",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_setname",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_getname"
+    ],
+    "18": [
       "mcp_servers_cloud_orchestrator_mcp_run_server",
       "mcp_servers_cloud_orchestrator_mcp_run_server_block_task",
       "mcp_servers_cloud_orchestrator_mcp_run_server_claim_task",
@@ -602,7 +626,7 @@
       "mcp_servers_cloud_orchestrator_mcp_run_server_submit_job_from_template",
       "mcp_servers_cloud_orchestrator_mcp_run_server_submit_task_checkpoint"
     ],
-    "18": [
+    "19": [
       "server_api_routes_workers",
       "server_api_routes_workers_get_worker",
       "server_api_routes_workers_list_workers",
@@ -620,58 +644,7 @@
       "server_models_schemas_workerregister",
       "server_models_schemas_workerresponse"
     ],
-    "19": [
-      "enumdelegate",
-      "stringbuilder",
-      "tools_virtualdesktop11_24h2_vdesktool_program",
-      "tools_virtualdesktop11_24h2_vdesktool_program_closewindowsondesktop",
-      "tools_virtualdesktop11_24h2_vdesktool_program_enumdesktopwindows",
-      "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproc",
-      "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctoclose",
-      "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctolist",
-      "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctomovewindows",
-      "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctoswap",
-      "tools_virtualdesktop11_24h2_vdesktool_program_getmainwindowhandle",
-      "tools_virtualdesktop11_24h2_vdesktool_program_getwindowfromtitle",
-      "tools_virtualdesktop11_24h2_vdesktool_program_getwindowtext",
-      "tools_virtualdesktop11_24h2_vdesktool_program_helpscreen",
-      "tools_virtualdesktop11_24h2_vdesktool_program_iswindowvisible",
-      "tools_virtualdesktop11_24h2_vdesktool_program_listwindowsondesktop",
-      "tools_virtualdesktop11_24h2_vdesktool_program_main",
-      "tools_virtualdesktop11_24h2_vdesktool_program_movewindowstodesktop",
-      "tools_virtualdesktop11_24h2_vdesktool_program_sendmessage",
-      "tools_virtualdesktop11_24h2_vdesktool_program_swapdesktops",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_desktopnamefromindex",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_fromdesktop",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_fromindex",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_fromwindow",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_searchdesktop",
-      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_setname",
-      "uint32"
-    ],
     "20": [
-      "orchestrator_mcp",
-      "team_context",
-      "team_context_context"
-    ],
-    "21": [
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_enumerateownershiptree",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewforapplication",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewforappusermodelid",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewinfocus",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviews",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewsbyappusermodelid",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewsbyzorder",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_refreshcollection",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_registerforapplicationviewchanges",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_unknown1",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_unregisterforapplicationviewchanges",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray_getcount",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getdesktopswitchincludeexcludeviews"
-    ],
-    "22": [
       "server_api_routes_tasks",
       "server_models_schemas",
       "server_models_schemas_checkpointresponse",
@@ -687,7 +660,52 @@
       "server_models_schemas_taskreleaserequest",
       "server_models_schemas_taskresponse"
     ],
+    "21": [
+      "abc",
+      "client_adapters_base_adapter",
+      "client_adapters_base_adapter_baseworkeradapter",
+      "client_adapters_base_adapter_baseworkeradapter_check_health",
+      "client_adapters_base_adapter_baseworkeradapter_init",
+      "client_adapters_base_adapter_rationale_30",
+      "client_adapters_base_adapter_rationale_7",
+      "client_adapters_claude_desktop_cdp",
+      "client_adapters_claude_desktop_proxy",
+      "client_adapters_gemini_free_adapter",
+      "client_adapters_groq_adapter",
+      "client_adapters_ollama_local_adapter",
+      "client_worker_daemon"
+    ],
+    "22": [
+      "biasaperture_project",
+      "biasaperture_schema",
+      "ex751_exam",
+      "gateway_receiver_wire_format",
+      "nlm_mcp",
+      "orchestrator_mcp",
+      "profile_aaradhya",
+      "spark_project",
+      "spark_tracker",
+      "sync_ps1",
+      "team_context",
+      "team_context_context",
+      "team_memory"
+    ],
     "23": [
+      "csharp_namespace:736c16d950f7f787",
+      "csharp_namespace:deff8ae5bc12d399",
+      "guid",
+      "marshalas",
+      "tools_virtualdesktop11_24h2",
+      "tools_virtualdesktop11_24h2_virtualdesktop_desktop_desktopwallpaperfromindex",
+      "tools_virtualdesktop11_24h2_virtualdesktop_guids",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getposition",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getvirtualdesktopid",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setvirtualdesktopid",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iserviceprovider10",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iserviceprovider10_queryservice",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_getwallpaperpath"
+    ],
+    "24": [
       "readme",
       "readme_claude_desktop_multi_profile_sync_utilities",
       "readme_concurrent_mode_multiple_windows_multiple_monitors",
@@ -701,7 +719,7 @@
       "readme_syncing_git_repository",
       "readme_usage"
     ],
-    "24": [
+    "25": [
       "server_core_pipeline_engine_now_iso",
       "server_core_pipeline_engine_pipelineengine",
       "server_core_pipeline_engine_pipelineengine_advance_task_to_next_stage",
@@ -715,33 +733,18 @@
       "server_core_pipeline_engine_rationale_33",
       "server_core_pipeline_engine_rationale_80"
     ],
-    "25": [
-      "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter",
-      "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_check_health",
-      "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_local_profile_stage",
-      "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_task",
-      "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_init",
-      "client_adapters_claude_desktop_proxy_py_any",
-      "client_adapters_claude_desktop_proxy_rationale_12",
-      "client_adapters_claude_desktop_proxy_rationale_30",
-      "client_adapters_claude_desktop_proxy_rationale_76",
-      "tests_test_e2e_pipeline_rationale_30",
-      "tests_test_e2e_pipeline_test_e2e_sku_pipeline_execution"
-    ],
     "26": [
-      "csharp_namespace:736c16d950f7f787",
-      "csharp_namespace:deff8ae5bc12d399",
-      "tools_virtualdesktop11_24h2",
-      "tools_virtualdesktop11_24h2_virtualdesktop_application_view_cloak_type",
-      "tools_virtualdesktop11_24h2_virtualdesktop_application_view_cloak_type_avct_default",
-      "tools_virtualdesktop11_24h2_virtualdesktop_application_view_cloak_type_avct_none",
-      "tools_virtualdesktop11_24h2_virtualdesktop_application_view_cloak_type_avct_virtual_desktop",
-      "tools_virtualdesktop11_24h2_virtualdesktop_guids",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getextendedframeposition",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setcloak",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iserviceprovider10",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iserviceprovider10_queryservice",
-      "tools_virtualdesktop11_24h2_virtualdesktop_rect"
+      "baseworkeradapter",
+      "client_adapters_gemini_free_adapter_geminifreeadapter",
+      "client_adapters_gemini_free_adapter_geminifreeadapter_check_health",
+      "client_adapters_gemini_free_adapter_geminifreeadapter_execute_task",
+      "client_adapters_gemini_free_adapter_geminifreeadapter_init",
+      "client_adapters_gemini_free_adapter_py_any",
+      "client_adapters_gemini_free_adapter_rationale_10",
+      "client_worker_daemon_get_adapter",
+      "client_worker_daemon_main_loop",
+      "client_worker_daemon_renew_task_lease_periodically",
+      "event"
     ],
     "27": [
       "server_database_schema",
@@ -756,17 +759,6 @@
       "server_database_schema_workers"
     ],
     "28": [
-      "mcp_servers_md2pdf_mcp_run_server",
-      "mcp_servers_md2pdf_mcp_run_server_check_deps",
-      "mcp_servers_md2pdf_mcp_run_server_convert_markdown_to_pdf",
-      "mcp_servers_md2pdf_mcp_run_server_main",
-      "mcp_servers_md2pdf_mcp_run_server_py_any",
-      "mcp_servers_md2pdf_mcp_run_server_py_tool",
-      "mcp_servers_md2pdf_mcp_run_server_read_source_content",
-      "mcp_servers_md2pdf_mcp_run_server_resolve_output_path",
-      "mcp_servers_md2pdf_mcp_run_server_run_conversion"
-    ],
-    "29": [
       "claude_skills_cross_linking_hub",
       "claude_skills_mcp_cross_linking_hub",
       "claude_skills_mcp_cross_linking_hub_application_rules",
@@ -776,6 +768,17 @@
       "claude_skills_mcp_cross_linking_hub_pending",
       "claude_skills_mcp_cross_linking_hub_query_protocol_token_savings",
       "claude_skills_mcp_cross_linking_hub_unlinked_notebooks"
+    ],
+    "29": [
+      "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter",
+      "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_check_health",
+      "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_local_profile_stage",
+      "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_task",
+      "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_init",
+      "client_adapters_claude_desktop_proxy_py_any",
+      "client_adapters_claude_desktop_proxy_rationale_12",
+      "client_adapters_claude_desktop_proxy_rationale_30",
+      "client_adapters_claude_desktop_proxy_rationale_76"
     ],
     "30": [
       "client_adapters_groq_adapter_groqadapter",
@@ -800,6 +803,17 @@
       "orchestrator_state_schema"
     ],
     "32": [
+      "mcp_servers_md2pdf_mcp_run_server",
+      "mcp_servers_md2pdf_mcp_run_server_check_deps",
+      "mcp_servers_md2pdf_mcp_run_server_convert_markdown_to_pdf",
+      "mcp_servers_md2pdf_mcp_run_server_main",
+      "mcp_servers_md2pdf_mcp_run_server_py_any",
+      "mcp_servers_md2pdf_mcp_run_server_py_tool",
+      "mcp_servers_md2pdf_mcp_run_server_read_source_content",
+      "mcp_servers_md2pdf_mcp_run_server_resolve_output_path",
+      "mcp_servers_md2pdf_mcp_run_server_run_conversion"
+    ],
+    "33": [
       "orchestrator_state_job_schema",
       "orchestrator_state_job_schema_1_job_entity_jobs_orchestrator_state_jobs_job_id_json",
       "orchestrator_state_job_schema_2_extended_task_schema_tasks",
@@ -810,7 +824,18 @@
       "orchestrator_state_job_schema_memory_entry_memory_entries",
       "orchestrator_state_job_schema_team_context_team_context"
     ],
-    "33": [
+    "34": [
+      "reset_profiles",
+      "reset_profiles_write_resetbanner",
+      "sync",
+      "sync_find_stagedsecrets",
+      "sync_get_autocommitmessage",
+      "sync_sync_memorytoteammemory",
+      "sync_write_notice",
+      "sync_write_status",
+      "sync_write_success"
+    ],
+    "35": [
       "server_core_scheduler",
       "server_core_scheduler_py_connection",
       "server_core_scheduler_quotaawarescheduler",
@@ -821,18 +846,28 @@
       "server_core_scheduler_rationale_23",
       "server_core_scheduler_rationale_9"
     ],
-    "34": [
+    "36": [
       "tools_virtualdesktop11_24h2_virtualdesktop_desktop_isapplicationpinned",
       "tools_virtualdesktop11_24h2_virtualdesktop_desktop_pinapplication",
       "tools_virtualdesktop11_24h2_virtualdesktop_desktop_unpinapplication",
       "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getappid",
-      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getappusermodelid",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_isappidpinned",
       "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_pinappid",
-      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_unpinappid"
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_unpinappid",
+      "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_unpinview"
     ],
-    "35": [
+    "37": [
+      "github_workflows_ci_python",
+      "server_requirements",
+      "server_requirements_aiosqlite",
+      "server_requirements_fastapi",
+      "server_requirements_mcp",
+      "server_requirements_pydantic",
+      "server_requirements_pytest",
+      "server_requirements_uvicorn"
+    ],
+    "38": [
       "orchestrator_state_schema_directory_listing_as_the_index",
       "orchestrator_state_schema_orchestrator_state_checkpoints_task_id_json",
       "orchestrator_state_schema_orchestrator_state_live_status_account_json",
@@ -842,7 +877,17 @@
       "orchestrator_state_schema_orchestrator_state_tasks_task_id_json",
       "orchestrator_state_schema_token_efficient_session_bootstrap"
     ],
-    "36": [
+    "39": [
+      "sync_mcp",
+      "sync_mcp_expand_teammcpplaceholders",
+      "sync_mcp_format_asciiborderrow",
+      "sync_mcp_format_bannerrow",
+      "sync_mcp_merge_mcpservers",
+      "sync_mcp_sync_configtodir",
+      "sync_mcp_write_jsonconfigsafely",
+      "sync_mcp_write_mcpbanner"
+    ],
+    "40": [
       "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy",
       "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_high_scale_factor",
       "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_none",
@@ -852,7 +897,7 @@
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getcompatibilitypolicytype",
       "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setcompatibilitypolicytype"
     ],
-    "37": [
+    "41": [
       "notebooklm_mcp",
       "worker_prompts_orchestrator",
       "worker_prompts_researcher",
@@ -861,7 +906,7 @@
       "worker_prompts_seo_optimizer_token_efficiency",
       "worker_prompts_seo_optimizer_worker_role_seo_aeo_optimization_specialist"
     ],
-    "38": [
+    "42": [
       "usage_watchdog",
       "usage_watchdog_get_claudetrayusagepercent",
       "usage_watchdog_invoke_autocheckpoint",
@@ -870,216 +915,234 @@
       "usage_watchdog_test_checkpointalreadyfiredthiscycle",
       "usage_watchdog_write_watchdogbanner"
     ],
-    "39": [
-      "client_adapters_gemini_free_adapter_geminifreeadapter",
-      "client_adapters_gemini_free_adapter_geminifreeadapter_check_health",
-      "client_adapters_gemini_free_adapter_geminifreeadapter_execute_task",
-      "client_adapters_gemini_free_adapter_geminifreeadapter_init",
-      "client_adapters_gemini_free_adapter_py_any",
-      "client_adapters_gemini_free_adapter_rationale_10"
+    "43": [
+      "client_adapters_ollama_local_adapter_ollamalocaladapter",
+      "client_adapters_ollama_local_adapter_ollamalocaladapter_check_health",
+      "client_adapters_ollama_local_adapter_ollamalocaladapter_execute_task",
+      "client_adapters_ollama_local_adapter_ollamalocaladapter_init",
+      "client_adapters_ollama_local_adapter_py_any",
+      "client_adapters_ollama_local_adapter_rationale_10"
     ],
-    "40": [
-      "sync_mcp",
-      "sync_mcp_expand_teammcpplaceholders",
-      "sync_mcp_format_bannerrow",
-      "sync_mcp_merge_mcpservers",
-      "sync_mcp_sync_configtodir",
-      "sync_mcp_write_mcpbanner"
-    ],
-    "41": [
+    "44": [
       "fastapi",
       "httpauthorizationcredentials",
       "server_core_auth",
       "server_core_auth_rationale_13",
       "server_core_auth_verify_api_key"
     ],
-    "42": [
+    "45": [
       "mcp_servers_notebooklm_mcp_run_server",
       "mcp_servers_notebooklm_mcp_run_server_find_uvx",
       "mcp_servers_notebooklm_mcp_run_server_main",
       "mcp_servers_notebooklm_mcp_run_server_rationale_21",
       "mcp_servers_notebooklm_mcp_run_server_rationale_70"
     ],
-    "43": [
+    "46": [
       "readme_mcp_remote_py",
       "readme_pipeline_engine_py",
       "readme_scheduler_py",
       "readme_server_main_py",
       "readme_worker_daemon_py"
     ],
-    "44": [
-      "team_memory_2026_08_22",
-      "team_memory_local_git_workflow_auto_sync_sync_ps1"
+    "47": [
+      "tools_virtualdesktop11_24h2_virtualdesktop_application_view_cloak_type",
+      "tools_virtualdesktop11_24h2_virtualdesktop_application_view_cloak_type_avct_default",
+      "tools_virtualdesktop11_24h2_virtualdesktop_application_view_cloak_type_avct_none",
+      "tools_virtualdesktop11_24h2_virtualdesktop_application_view_cloak_type_avct_virtual_desktop",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setcloak"
     ],
-    "45": [
+    "48": [
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getsizeconstraints",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getsizeconstraintsfordpi",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setsizeconstraintsfordpi",
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown12",
+      "tools_virtualdesktop11_24h2_virtualdesktop_size"
+    ],
+    "49": [
       "orchestrator_state_job_schema_jobs",
       "orchestrator_state_job_schema_qa_reviews",
       "orchestrator_state_job_schema_tasks",
       "orchestrator_state_job_schema_workers"
     ],
-    "46": [
+    "50": [
       "worker_prompts_formatter",
       "worker_prompts_formatter_directives",
       "worker_prompts_formatter_token_efficiency",
       "worker_prompts_formatter_worker_role_formatter_delivery_packaging"
     ],
-    "47": [
+    "51": [
       "worker_prompts_orchestrator_responsibilities",
       "worker_prompts_orchestrator_rules",
       "worker_prompts_orchestrator_token_efficiency",
       "worker_prompts_orchestrator_worker_role_orchestrator_dispatcher"
     ],
-    "48": [
+    "52": [
       "worker_prompts_qa_reviewer",
       "worker_prompts_qa_reviewer_directives",
       "worker_prompts_qa_reviewer_token_efficiency",
       "worker_prompts_qa_reviewer_worker_role_quality_assurance_qa_fact_checker"
     ],
-    "49": [
+    "53": [
       "worker_prompts_researcher_research_protocol",
       "worker_prompts_researcher_responsibilities",
       "worker_prompts_researcher_strict_rules",
       "worker_prompts_researcher_worker_role_researcher_attribute_extractor"
     ],
-    "50": [
+    "54": [
       "worker_prompts_writer",
       "worker_prompts_writer_directives",
       "worker_prompts_writer_token_efficiency",
       "worker_prompts_writer_worker_role_copywriter_drafting_specialist"
     ],
-    "51": [
+    "55": [
       "client_adapters_base_adapter_baseworkeradapter_execute_task",
       "client_adapters_base_adapter_py_any",
       "client_adapters_base_adapter_rationale_16"
     ],
-    "52": [
-      "mcp_library",
-      "mcp_servers_orchestrator_mcp_requirements",
-      "server_requirements"
-    ],
-    "53": [
+    "56": [
       "outputs_md2pdf_gui_persist_check_pdf",
       "outputs_md2pdf_persist_check_md",
       "outputs_md2pdf_persist_check_pdf"
     ],
-    "54": [
+    "57": [
       "server_core_database_get_db",
       "server_core_database_py_connection",
       "server_core_database_rationale_16"
     ],
-    "55": [
+    "58": [
       "agents",
       "agents_git_workflow"
     ],
-    "56": [
+    "59": [
       "docker_cloudflared_service",
       "docker_orchestrator_service"
     ],
-    "57": [
-      "agents_sync_ps1"
-    ],
-    "58": [
-      "bypass_all_profiles"
-    ],
-    "59": [
-      "claude_skills_archive_org"
-    ],
     "60": [
-      "claude_skills_assume_reader_intelligence"
+      "mcp_library",
+      "mcp_servers_orchestrator_mcp_requirements"
     ],
     "61": [
-      "claude_skills_mcp_archive_org"
+      "team_memory_2026_08_22",
+      "team_memory_local_git_workflow_auto_sync_sync_ps1"
     ],
     "62": [
-      "claude_skills_mcp_assume_reader_intelligence"
+      "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getextendedframeposition",
+      "tools_virtualdesktop11_24h2_virtualdesktop_rect"
     ],
     "63": [
-      "claude_skills_mcp_pwsh_sandbox_setup"
+      "agents_sync_ps1"
     ],
     "64": [
-      "claude_skills_mcp_repo_conventions"
+      "bypass_all_profiles"
     ],
     "65": [
-      "claude_skills_pwsh_sandbox_setup"
+      "claude_skills_archive_org"
     ],
     "66": [
-      "claude_skills_repo_conventions"
+      "claude_skills_assume_reader_intelligence"
     ],
     "67": [
-      "mcp_servers_md2pdf_mcp_requirements"
+      "claude_skills_mcp_archive_org"
+    ],
+    "68": [
+      "claude_skills_mcp_assume_reader_intelligence"
+    ],
+    "69": [
+      "claude_skills_mcp_pwsh_sandbox_setup"
     ],
     "70": [
-      "notebooklm_mcp_cli"
+      "claude_skills_mcp_repo_conventions"
     ],
     "71": [
-      "output_pdf"
+      "claude_skills_pwsh_sandbox_setup"
     ],
     "72": [
-      "readme_profiles_json"
+      "claude_skills_repo_conventions"
     ],
     "73": [
+      "github_workflows_ci_powershell"
+    ],
+    "74": [
+      "mcp_servers_md2pdf_mcp_requirements"
+    ],
+    "75": [
+      "notebooklm_mcp_cli"
+    ],
+    "76": [
+      "output_pdf"
+    ],
+    "77": [
+      "readme_profiles_json"
+    ],
+    "78": [
+      "server_core_config_py_basemodel"
+    ],
+    "79": [
+      "server_main_py_get"
+    ],
+    "80": [
       "tests_launch_user_n_tests"
     ]
   },
   "cohesion": {
-    "0": 0.08591408591408592,
+    "0": 0.05128205128205128,
     "1": 0.0425531914893617,
     "2": 0.08139534883720931,
-    "3": 0.05128205128205128,
-    "4": 0.05689900426742532,
-    "5": 0.23333333333333334,
-    "6": 0.08250355618776671,
-    "7": 0.11724137931034483,
-    "8": 0.12318840579710146,
-    "9": 0.08888888888888889,
+    "3": 0.04878048780487805,
+    "4": 0.23333333333333334,
+    "5": 0.05128205128205128,
+    "6": 0.2603129445234708,
+    "7": 0.0957983193277311,
+    "8": 0.10967741935483871,
+    "9": 0.13,
     "10": 0.14130434782608695,
-    "11": 0.2222222222222222,
+    "11": 0.19480519480519481,
     "12": 0.1774891774891775,
-    "13": 0.18095238095238095,
+    "13": 0.1380952380952381,
     "14": 0.23976608187134502,
     "15": 0.19298245614035087,
     "16": 0.19607843137254902,
-    "17": 0.3660130718954248,
-    "18": 0.225,
-    "19": 0.18233618233618235,
-    "20": 0.6666666666666666,
-    "21": 0.1523809523809524,
-    "22": 0.37362637362637363,
+    "17": 0.26143790849673204,
+    "18": 0.3660130718954248,
+    "19": 0.225,
+    "20": 0.37362637362637363,
+    "21": 0.3076923076923077,
+    "22": 0.16666666666666666,
     "23": 0.16666666666666666,
-    "24": 0.22727272727272727,
-    "25": 0.2,
-    "26": 0.15384615384615385,
+    "24": 0.16666666666666666,
+    "25": 0.22727272727272727,
+    "26": 0.18181818181818182,
     "27": 0.4666666666666667,
-    "28": 0.3333333333333333,
-    "29": 0.2222222222222222,
+    "28": 0.2222222222222222,
+    "29": 0.25,
     "30": 0.2777777777777778,
     "31": 0.2222222222222222,
-    "32": 0.2222222222222222,
-    "33": 0.2777777777777778,
-    "34": 0.3333333333333333,
-    "35": 0.25,
-    "36": 0.25,
+    "32": 0.3333333333333333,
+    "33": 0.2222222222222222,
+    "34": 0.3055555555555556,
+    "35": 0.2777777777777778,
+    "36": 0.3333333333333333,
     "37": 0.2857142857142857,
-    "38": 0.47619047619047616,
-    "39": 0.3333333333333333,
-    "40": 0.4,
-    "41": 0.4,
-    "42": 0.5,
-    "43": 0.4,
-    "44": 1.0,
+    "38": 0.25,
+    "39": 0.35714285714285715,
+    "40": 0.25,
+    "41": 0.2857142857142857,
+    "42": 0.47619047619047616,
+    "43": 0.3333333333333333,
+    "44": 0.4,
     "45": 0.5,
-    "46": 0.5,
-    "47": 0.5,
-    "48": 0.5,
+    "46": 0.4,
+    "47": 0.4,
+    "48": 0.4,
     "49": 0.5,
     "50": 0.5,
-    "51": 0.6666666666666666,
-    "52": 0.6666666666666666,
-    "53": 0.6666666666666666,
-    "54": 0.6666666666666666,
-    "55": 1.0,
-    "56": 1.0,
-    "57": 1.0,
+    "51": 0.5,
+    "52": 0.5,
+    "53": 0.5,
+    "54": 0.5,
+    "55": 0.6666666666666666,
+    "56": 0.6666666666666666,
+    "57": 0.6666666666666666,
     "58": 1.0,
     "59": 1.0,
     "60": 1.0,
@@ -1090,10 +1153,19 @@
     "65": 1.0,
     "66": 1.0,
     "67": 1.0,
+    "68": 1.0,
+    "69": 1.0,
     "70": 1.0,
     "71": 1.0,
     "72": 1.0,
-    "73": 1.0
+    "73": 1.0,
+    "74": 1.0,
+    "75": 1.0,
+    "76": 1.0,
+    "77": 1.0,
+    "78": 1.0,
+    "79": 1.0,
+    "80": 1.0
   },
   "gods": [
     {
@@ -1124,7 +1196,7 @@
     {
       "id": "client_adapters_claude_desktop_cdp_claudedesktopcdpadapter",
       "label": "ClaudeDesktopCDPAdapter",
-      "degree": 29
+      "degree": 28
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop",
@@ -1207,28 +1279,28 @@
   "questions": [
     {
       "type": "bridge_node",
-      "question": "Why does `ClaudeDesktopProxyAdapter` connect `ClaudeDesktopProxyAdapter` to `test_remote_mcp.py`, `BaseWorkerAdapter`, `ClaudeDesktopCDPAdapter`?",
-      "why": "High betweenness centrality (0.025) - this node is a cross-community bridge."
+      "question": "Why does `ClaudeDesktopProxyAdapter` connect `ClaudeDesktopProxyAdapter` to `main.py`, `get_adapter`, `BaseWorkerAdapter`, `ClaudeDesktopCDPAdapter`?",
+      "why": "High betweenness centrality (0.024) - this node is a cross-community bridge."
     },
     {
       "type": "bridge_node",
-      "question": "Why does `IApplicationView` connect `IApplicationView` to `IVirtualDesktopPinnedApps`, `APPLICATION_VIEW_COMPATIBILITY_POLICY`, `IVirtualDesktop`, `IntPtr`, `Desktop`, `IApplicationViewCollection`, `VirtualDesktop11-24H2.cs`?",
-      "why": "High betweenness centrality (0.021) - this node is a cross-community bridge."
-    },
-    {
-      "type": "bridge_node",
-      "question": "Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `._eval_js`, `ClaudeDesktopProxyAdapter`, `BaseWorkerAdapter`?",
+      "question": "Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `._eval_js`, `ClaudeDesktopProxyAdapter`, `get_adapter`, `BaseWorkerAdapter`?",
       "why": "High betweenness centrality (0.020) - this node is a cross-community bridge."
     },
     {
+      "type": "bridge_node",
+      "question": "Why does `IApplicationView` connect `IApplicationView` to `IVirtualDesktopPinnedApps`, `APPLICATION_VIEW_COMPATIBILITY_POLICY`, `IVirtualDesktop`, `Desktop`, `IntPtr`, `IApplicationViewCollection`, `APPLICATION_VIEW_CLOAK_TYPE`, `Size`, `VirtualDesktop11-24H2.cs`, `.GetExtendedFramePosition`?",
+      "why": "High betweenness centrality (0.019) - this node is a cross-community bridge."
+    },
+    {
       "type": "isolated_nodes",
-      "question": "What connects `Concurrent Mode (Multiple Windows, Multiple Monitors)`, `Features`, `Files` to the rest of the system?",
-      "why": "125 weakly-connected nodes found - possible documentation gaps or missing edges."
+      "question": "What connects `VirtualDesktop`, `VDeskTool`, `Concurrent Mode (Multiple Windows, Multiple Monitors)` to the rest of the system?",
+      "why": "131 weakly-connected nodes found - possible documentation gaps or missing edges."
     },
     {
       "type": "low_cohesion",
-      "question": "Should `test_remote_mcp.py` be split into smaller, more focused modules?",
-      "why": "Cohesion score 0.08591408591408592 - nodes in this community are weakly interconnected."
+      "question": "Should `main.py` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.05128205128205128 - nodes in this community are weakly interconnected."
     },
     {
       "type": "low_cohesion",

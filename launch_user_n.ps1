@@ -76,7 +76,7 @@ function Get-VisibleTextWidth {
     return $width
 }
 
-function Pad-VisibleRight {
+function Format-VisibleRight {
     param(
         [string]$Text,
         [int]$Width
@@ -87,7 +87,7 @@ function Pad-VisibleRight {
     return $Text + (' ' * ($Width - $rawWidth))
 }
 
-function Truncate-VisibleText {
+function Format-VisibleText {
     param(
         [string]$Text,
         [int]$MaxWidth
@@ -1629,7 +1629,7 @@ function Invoke-ProfileLaunch {
             }
             $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
 
-            if ($RunningClaude -and ($ActiveAccount -eq $Account)) {
+            if ($RunningClaude -and ($ActiveAccount -eq $Account) -and -not $WhatIf) {
                 Write-Host "----------------------------------------" -ForegroundColor Cyan
                 Write-Host " Profile '$Account' ($Nickname) is already open." -ForegroundColor Green
                 Write-Host " No action taken." -ForegroundColor Gray

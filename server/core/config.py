@@ -35,6 +35,7 @@ class Settings(BaseModel):
     SUPERVISOR_INTERVAL_SECONDS: int = 30
     SCHEDULER_INTERVAL_SECONDS: int = 15
     DEFAULT_COOLDOWN_MINUTES: int = 300  # 5 hours
+    MAX_TASK_ATTEMPTS: int = 3
     MCP_PATH: str = "/mcp"
 
 settings = Settings()

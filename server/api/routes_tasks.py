@@ -6,6 +6,7 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException, Query
 import aiosqlite
 
+from server.core.config import settings
 from server.core.database import get_db
 from server.core.pipeline_engine import pipeline_engine
 from server.models.schemas import (
@@ -178,6 +179,13 @@ async def claim_task(task_id: str, req: TaskClaimRequest, db: aiosqlite.Connecti
     # Record attempt
     attempt_cursor = await db.execute("SELECT COUNT(*) FROM task_attempts WHERE task_id = ?", (task_id,))
     attempt_num = (await attempt_cursor.fetchone())[0] + 1
+    if attempt_num > settings.MAX_TASK_ATTEMPTS:
+        await db.execute(
+            "UPDATE tasks SET status = 'failed', owner_worker_id = NULL, claim_token = NULL, lease_expires_at = NULL, updated_at = ? WHERE id = ?",
+            (now_iso, task_id),
+        )
+        await db.commit()
+        raise HTTPException(status_code=409, detail=f"Task '{task_id}' exceeded the maximum attempt limit")
     await db.execute(
         "INSERT INTO task_attempts (task_id, worker_id, attempt_number, status, started_at) VALUES (?, ?, ?, 'running', ?)",
         (task_id, req.worker_id, attempt_num, now_iso)
@@ -247,6 +255,10 @@ async def release_task(task_id: str, req: TaskReleaseRequest, db: aiosqlite.Conn
         (now, task_id)
     )
     await db.execute("UPDATE workers SET status = 'idle', last_heartbeat = ? WHERE id = ?", (now, req.worker_id))
+    await db.execute(
+        "UPDATE task_attempts SET status = 'failed', finished_at = ? WHERE task_id = ? AND worker_id = ? AND status = 'running'",
+        (now, task_id, req.worker_id),
+    )
     await db.commit()
     return await get_task(task_id, db)
 
@@ -277,6 +289,17 @@ async def submit_checkpoint(task_id: str, cp: CheckpointSubmit, db: aiosqlite.Co
     task = await cursor.fetchone()
     if not task:
         raise HTTPException(status_code=404, detail=f"Task '{task_id}' not found")
+    if task["status"] in ("done", "merged"):
+        existing_cursor = await db.execute("SELECT * FROM checkpoints WHERE task_id = ?", (task_id,))
+        existing = await existing_cursor.fetchone()
+        if existing and existing["submitted_by"] == cp.submitted_by:
+            return CheckpointResponse(
+                task_id=existing["task_id"], job_id=existing["job_id"], kind=existing["kind"],
+                summary=existing["summary"], result_text=existing["result_text"],
+                branch_name=existing["branch_name"], commit_sha=existing["commit_sha"],
+                submitted_by=existing["submitted_by"], submitted_at=existing["submitted_at"],
+            )
+        raise HTTPException(status_code=409, detail=f"Task '{task_id}' is already completed")
     if task["owner_worker_id"] != cp.submitted_by:
         raise HTTPException(status_code=403, detail=f"Task is owned by '{task['owner_worker_id']}', not '{cp.submitted_by}'")
 
