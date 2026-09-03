@@ -1955,11 +1955,12 @@ function Invoke-ProfileLaunch {
         }
 
         $bannerWidth = 98
+        $innerBannerWidth = $bannerWidth - 2
         $bannerTitle = "  Launching Claude Desktop (Native)"
-        $bannerLine = "│" + $bannerTitle.PadRight($bannerWidth - 2, ' ') + "│"
-        Write-Host ("╭" + ("─" * $bannerWidth) + "╮") -ForegroundColor Cyan
+        $bannerLine = "│" + $bannerTitle.PadRight($innerBannerWidth, ' ') + "│"
+        Write-Host ("╭" + ("─" * $innerBannerWidth) + "╮") -ForegroundColor Cyan
         Write-Host $bannerLine -ForegroundColor Green
-        Write-Host ("├" + ("─" * $bannerWidth) + "┤") -ForegroundColor Cyan
+        Write-Host ("├" + ("─" * $innerBannerWidth) + "┤") -ForegroundColor Cyan
         Write-Host (Format-CardRow -Label "Profile" -Value $Account -BoxWidth $bannerWidth) -ForegroundColor Yellow
         Write-Host (Format-CardRow -Label "Nickname" -Value $Nickname -BoxWidth $bannerWidth) -ForegroundColor Yellow
         Write-Host (Format-CardRow -Label "Role" -Value $Role -BoxWidth $bannerWidth) -ForegroundColor Cyan
@@ -1967,7 +1968,7 @@ function Invoke-ProfileLaunch {
         Write-Host (Format-CardRow -Label "Last Login" -Value "$CurrentDate $CurrentTime" -BoxWidth $bannerWidth) -ForegroundColor Gray
         Write-Host (Format-CardRow -Label "Storage" -Value $TargetStorageDir -BoxWidth $bannerWidth) -ForegroundColor DarkGray
         Write-Host (Format-CardRow -Label "Executable" -Value $ClaudeExe -BoxWidth $bannerWidth) -ForegroundColor DarkGray
-        Write-Host ("╰" + ("─" * $bannerWidth) + "╯") -ForegroundColor Cyan
+        Write-Host ("╰" + ("─" * $innerBannerWidth) + "╯") -ForegroundColor Cyan
 
         # Redirect stdout/stderr to per-profile logs to suppress internal Electron/Node.js deprecation warnings (DEP0169)
         $LogsDir = Join-Path $ProfilesBaseDir "Logs\$Account"
