@@ -1,12 +1,5 @@
 {
   "mcpServers": {
-    "site-mcp": {
-      "command": "python",
-      "args": [
-        "F:\\AaradhyaDT\\AaradhyaDT.github.io\\mcp-server\\site_mcp.py"
-      ],
-      "env": {}
-    },
     "notebooklm-mcp": {
       "command": "python",
       "args": [
@@ -30,6 +23,13 @@
     }
   },
   "_disabled_mcpServers": {
+    "site-mcp": {
+      "command": "python",
+      "args": [
+        "F:\\AaradhyaDT\\AaradhyaDT.github.io\\mcp-server\\site_mcp.py"
+      ],
+      "env": {}
+    },
     "cloud-orchestrator-mcp": {
       "command": "{{REPO_ROOT}}\\.venv\\Scripts\\python.exe",
       "args": [

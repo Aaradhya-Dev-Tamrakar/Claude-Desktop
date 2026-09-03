@@ -260,6 +260,7 @@ function Merge-McpServers {
     # Cloud orchestration is paused; remove stale active registrations while
     # preserving the disabled definition in the shared config for later reuse.
     $Merged.mcpServers.PSObject.Properties.Remove("cloud-orchestrator-mcp")
+    $Merged.mcpServers.PSObject.Properties.Remove("site-mcp")
 
     foreach ($serverName in $Merged.mcpServers.PSObject.Properties.Name) {
         $server = $Merged.mcpServers.$serverName
@@ -1940,22 +1941,22 @@ function Invoke-ProfileLaunch {
         $modeDesc = if ($Concurrent) { "Concurrent (Side-by-Side)" } else { "Isolated (Session Swap)" }
 
         function Format-CardRow([string]$Label, [string]$Value, [int]$BoxWidth = 98) {
-            $labelText = $Label
             $val = if ($null -ne $Value) { [string]$Value } else { "" }
-            $labelWidth = 13
-            $maxValueWidth = $BoxWidth - 2 - $labelWidth - 8
-            if ((Get-VisibleTextWidth $val) -gt $maxValueWidth) {
-                $val = Truncate-VisibleText -Text $val -MaxWidth $maxValueWidth
+            $prefix = "  * " + $Label.PadRight(13, ' ') + ": "
+            $valueCap = [Math]::Max(0, ($BoxWidth - 2) - $prefix.Length)
+
+            if ($val.Length -gt $valueCap) {
+                $val = $val.Substring(0, [Math]::Max(0, $valueCap - 3)) + "..."
             }
 
-            $content = "  * " + (Pad-VisibleRight -Text $labelText -Width $labelWidth) + ": " + $val
-            $content = Pad-VisibleRight -Text $content -Width ($BoxWidth - 2)
+            $content = $prefix + $val
+            $content = $content.PadRight($BoxWidth - 2, ' ')
             return "│$content│"
         }
 
         $bannerWidth = 98
         $bannerTitle = "  Launching Claude Desktop (Native)"
-        $bannerLine = "│" + (Pad-VisibleRight -Text $bannerTitle -Width ($bannerWidth - 2)) + "│"
+        $bannerLine = "│" + $bannerTitle.PadRight($bannerWidth - 2, ' ') + "│"
         Write-Host ("╭" + ("─" * $bannerWidth) + "╮") -ForegroundColor Cyan
         Write-Host $bannerLine -ForegroundColor Green
         Write-Host ("├" + ("─" * $bannerWidth) + "┤") -ForegroundColor Cyan

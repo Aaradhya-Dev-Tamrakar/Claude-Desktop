@@ -130,6 +130,7 @@ function Merge-McpServers {
     # Cloud orchestration is paused; remove stale active registrations while
     # preserving the disabled definition in the shared config for later reuse.
     $Merged.mcpServers.PSObject.Properties.Remove("cloud-orchestrator-mcp")
+    $Merged.mcpServers.PSObject.Properties.Remove("site-mcp")
 
     foreach ($serverName in $Merged.mcpServers.PSObject.Properties.Name) {
         $server = $Merged.mcpServers.$serverName
