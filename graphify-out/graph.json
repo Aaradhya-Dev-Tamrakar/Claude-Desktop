@@ -113,7 +113,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "Size",
+      "community_name": "IApplicationView",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -353,25 +353,6 @@
       "source_location": "L11"
     },
     {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy",
-      "label": "APPLICATION_VIEW_COMPATIBILITY_POLICY",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "APPLICATION_VIEW_COMPATIBILITY_POLICY",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": "application_view_compatibility_policy",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L62"
-    },
-    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_cloak_type",
       "label": "APPLICATION_VIEW_CLOAK_TYPE",
       "_callable": true,
@@ -389,6 +370,25 @@
       "norm_label": "application_view_cloak_type",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L55"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy",
+      "label": "APPLICATION_VIEW_COMPATIBILITY_POLICY",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "VirtualDesktop11-24H2.cs",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": "application_view_compatibility_policy",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L62"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_guids",
@@ -429,19 +429,6 @@
       "source_location": "L46"
     },
     {
-      "id": "server_models_schemas_workerregister",
-      "label": "WorkerRegister",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "workerregister",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L95"
-    },
-    {
       "id": "server_models_schemas_workerheartbeat",
       "label": "WorkerHeartbeat",
       "_callable": true,
@@ -453,6 +440,19 @@
       "norm_label": "workerheartbeat",
       "source_file": "server/models/schemas.py",
       "source_location": "L104"
+    },
+    {
+      "id": "server_models_schemas_workerregister",
+      "label": "WorkerRegister",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "workerregister",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L95"
     },
     {
       "id": "server_models_schemas_workerresponse",
@@ -500,7 +500,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": ".GetDesktop",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -519,7 +519,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "IntPtr",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -571,13 +571,39 @@
       "source_location": "L259"
     },
     {
+      "id": "server_models_schemas_checkpointsubmit",
+      "label": "CheckpointSubmit",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "schemas.py",
+      "file_type": "code",
+      "norm_label": "checkpointsubmit",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L125"
+    },
+    {
+      "id": "server_models_schemas_contextupsert",
+      "label": "ContextUpsert",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "schemas.py",
+      "file_type": "code",
+      "norm_label": "contextupsert",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L191"
+    },
+    {
       "id": "server_models_schemas_jobcreate",
       "label": "JobCreate",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_jobs.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "jobcreate",
       "source_file": "server/models/schemas.py",
@@ -590,24 +616,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_jobs.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "jobupdate",
       "source_file": "server/models/schemas.py",
       "source_location": "L36"
-    },
-    {
-      "id": "server_models_schemas_contextupsert",
-      "label": "ContextUpsert",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "routes_memory.py",
-      "file_type": "code",
-      "norm_label": "contextupsert",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L191"
     },
     {
       "id": "server_models_schemas_memorycreate",
@@ -616,24 +629,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_memory.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "memorycreate",
       "source_file": "server/models/schemas.py",
       "source_location": "L181"
-    },
-    {
-      "id": "server_models_schemas_checkpointsubmit",
-      "label": "CheckpointSubmit",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "checkpointsubmit",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L125"
     },
     {
       "id": "server_models_schemas_qareviewresponse",
@@ -642,7 +642,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "qareviewresponse",
       "source_file": "server/models/schemas.py",
@@ -655,7 +655,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "qareviewsubmit",
       "source_file": "server/models/schemas.py",
@@ -668,7 +668,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "taskblockrequest",
       "source_file": "server/models/schemas.py",
@@ -681,7 +681,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "taskclaimrequest",
       "source_file": "server/models/schemas.py",
@@ -694,7 +694,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "taskcreate",
       "source_file": "server/models/schemas.py",
@@ -707,7 +707,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "taskleaserenewrequest",
       "source_file": "server/models/schemas.py",
@@ -720,7 +720,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "taskreleaserequest",
       "source_file": "server/models/schemas.py",
@@ -784,7 +784,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": "pipelineengine",
       "source_file": "server/core/pipeline_engine.py",
@@ -855,7 +855,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 4,
-      "community_name": ".GetDesktop",
+      "community_name": "IVirtualDesktop",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -975,6 +975,24 @@
       "norm_label": "program",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L713"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getapplicationview",
+      "label": ".GetApplicationView()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "IApplicationView",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getapplicationview()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L282"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_applyoperation",
@@ -1155,6 +1173,42 @@
       "norm_label": ".getshowinswitchers()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L97"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getsizeconstraints",
+      "label": ".GetSizeConstraints()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "IApplicationView",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getsizeconstraints()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L103"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getsizeconstraintsfordpi",
+      "label": ".GetSizeConstraintsForDpi()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "IApplicationView",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getsizeconstraintsfordpi()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L104"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getthumbnailwindow",
@@ -1427,6 +1481,24 @@
       "source_location": "L98"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setsizeconstraintsfordpi",
+      "label": ".SetSizeConstraintsForDpi()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "IApplicationView",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".setsizeconstraintsfordpi()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L105"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setviewstate",
       "label": ".SetViewState()",
       "_callable": true,
@@ -1533,6 +1605,24 @@
       "norm_label": ".unknown11()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L126"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown12",
+      "label": ".Unknown12()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "IApplicationView",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".unknown12()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L127"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown2",
@@ -1679,30 +1769,12 @@
       "source_location": "L124"
     },
     {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getapplicationview",
-      "label": ".GetApplicationView()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getapplicationview()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L282"
-    },
-    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationviewcollection_getviewforhwnd",
       "label": ".GetViewForHwnd()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "IntPtr",
+      "community_name": "IApplicationView",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -1713,78 +1785,6 @@
       "norm_label": ".getviewforhwnd()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L138"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getsizeconstraints",
-      "label": ".GetSizeConstraints()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Size",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getsizeconstraints()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L103"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getsizeconstraintsfordpi",
-      "label": ".GetSizeConstraintsForDpi()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Size",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getsizeconstraintsfordpi()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L104"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setsizeconstraintsfordpi",
-      "label": ".SetSizeConstraintsForDpi()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Size",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".setsizeconstraintsfordpi()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L105"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_unknown12",
-      "label": ".Unknown12()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "Size",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".unknown12()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L127"
     },
     {
       "id": "tests_orchestrator_mcp_test_load_run_server",
@@ -2321,6 +2321,24 @@
       "source_location": "L629"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_movewindow",
+      "label": ".MoveWindow()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "Desktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".movewindow()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L603"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_pinactivewindow",
       "label": ".PinActiveWindow()",
       "_callable": true,
@@ -2463,24 +2481,6 @@
       "norm_label": ".isviewpinned()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L210"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_movewindow",
-      "label": ".MoveWindow()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 10,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".movewindow()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L603"
     },
     {
       "id": "client_adapters_base_adapter_baseworkeradapter_check_health",
@@ -2824,7 +2824,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 14,
-      "community_name": "APPLICATION_VIEW_COMPATIBILITY_POLICY",
+      "community_name": "VirtualDesktop11-24H2.cs",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -2835,24 +2835,6 @@
       "norm_label": ".getcompatibilitypolicytype()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L101"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setcompatibilitypolicytype",
-      "label": ".SetCompatibilityPolicyType()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "APPLICATION_VIEW_COMPATIBILITY_POLICY",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".setcompatibilitypolicytype()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L102"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getextendedframeposition",
@@ -2889,6 +2871,24 @@
       "norm_label": ".setcloak()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L82"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_setcompatibilitypolicytype",
+      "label": ".SetCompatibilityPolicyType()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "VirtualDesktop11-24H2.cs",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".setcompatibilitypolicytype()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L102"
     },
     {
       "id": "client_adapters_claude_desktop_cdp_claudedesktopcdpadapter_check_cooldown_banner",
@@ -3304,7 +3304,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": ".GetDesktop",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -3317,48 +3317,12 @@
       "source_location": "L430"
     },
     {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iserviceprovider10_queryservice",
-      "label": ".QueryService()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 19,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".queryservice()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L229"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_getwallpaperpath",
-      "label": ".GetWallpaperPath()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 19,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getwallpaperpath()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L157"
-    },
-    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_haswindow",
       "label": ".HasWindow()",
       "_callable": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "IntPtr",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -3376,7 +3340,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "IntPtr",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -3394,7 +3358,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "IntPtr",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -3412,7 +3376,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "IntPtr",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -3425,12 +3389,30 @@
       "source_location": "L96"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iserviceprovider10_queryservice",
+      "label": ".QueryService()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Guid",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".queryservice()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L229"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_getid",
       "label": ".GetId()",
       "_callable": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "IntPtr",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -3443,12 +3425,30 @@
       "source_location": "L154"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_getwallpaperpath",
+      "label": ".GetWallpaperPath()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Guid",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getwallpaperpath()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L157"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanager_getwindowdesktopid",
       "label": ".GetWindowDesktopId()",
       "_callable": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "IntPtr",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -3466,7 +3466,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "IntPtr",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -3484,7 +3484,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "IntPtr",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -3502,7 +3502,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 19,
-      "community_name": "IntPtr",
+      "community_name": "Guid",
       "file_type": "code",
       "metadata": {
         "namespace": "VirtualDesktop",
@@ -4276,11 +4276,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 23,
-      "community_name": "FastAPI",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "verify_api_key()",
       "source_file": "server/core/auth.py",
       "source_location": "L9"
+    },
+    {
+      "id": "tests_test_pipeline_engine_setup_test_db",
+      "label": "setup_test_db()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "setup_test_db()",
+      "source_file": "tests/test_pipeline_engine.py",
+      "source_location": "L16"
     },
     {
       "id": "tests_test_pipeline_engine_test_pipeline_decomposition_and_waterfall",
@@ -4295,18 +4307,6 @@
       "source_location": "L23"
     },
     {
-      "id": "tests_test_pipeline_engine_setup_test_db",
-      "label": "setup_test_db()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 23,
-      "community_name": "init_db",
-      "file_type": "code",
-      "norm_label": "setup_test_db()",
-      "source_file": "tests/test_pipeline_engine.py",
-      "source_location": "L16"
-    },
-    {
       "id": "server_core_database_init_db",
       "label": "init_db()",
       "_callable": true,
@@ -4317,6 +4317,18 @@
       "norm_label": "init_db()",
       "source_file": "server/core/database.py",
       "source_location": "L23"
+    },
+    {
+      "id": "tests_test_cloud_scheduler_setup_test_db",
+      "label": "setup_test_db()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "init_db",
+      "file_type": "code",
+      "norm_label": "setup_test_db()",
+      "source_file": "tests/test_cloud_scheduler.py",
+      "source_location": "L16"
     },
     {
       "id": "tests_test_e2e_pipeline_setup_test_db",
@@ -4355,24 +4367,12 @@
       "source_location": "L21"
     },
     {
-      "id": "tests_test_cloud_scheduler_setup_test_db",
-      "label": "setup_test_db()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "test_cloud_scheduler.py",
-      "file_type": "code",
-      "norm_label": "setup_test_db()",
-      "source_file": "tests/test_cloud_scheduler.py",
-      "source_location": "L16"
-    },
-    {
       "id": "server_core_pipeline_engine_now_iso",
       "label": "_now_iso()",
       "_callable": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": "_now_iso()",
       "source_file": "server/core/pipeline_engine.py",
@@ -4384,7 +4384,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": ".advance_task_to_next_stage()",
       "source_file": "server/core/pipeline_engine.py",
@@ -4396,7 +4396,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": ".check_and_finalize_job()",
       "source_file": "server/core/pipeline_engine.py",
@@ -4408,7 +4408,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": ".decompose_job_into_tasks()",
       "source_file": "server/core/pipeline_engine.py",
@@ -4420,7 +4420,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": ".load_sku_template()",
       "source_file": "server/core/pipeline_engine.py",
@@ -4485,24 +4485,6 @@
       "norm_label": "test_metrics_endpoint_exposes_request_counters()",
       "source_file": "tests/test_health.py",
       "source_location": "L34"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getappusermodelid",
-      "label": ".GetAppUserModelId()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "IApplicationView",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getappusermodelid()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L87"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_isapplicationpinned",
@@ -4575,6 +4557,24 @@
       "norm_label": ".getappid()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L289"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_getappusermodelid",
+      "label": ".GetAppUserModelId()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "IVirtualDesktopPinnedApps",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getappusermodelid()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L87"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktoppinnedapps_isappidpinned",
@@ -5140,7 +5140,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 31,
-      "community_name": "test_cloud_scheduler.py",
+      "community_name": "test_e2e_pipeline.py",
       "file_type": "code",
       "norm_label": "run_supervisor_cycle()",
       "source_file": "server/core/supervisor.py",
@@ -5152,7 +5152,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 31,
-      "community_name": "test_cloud_scheduler.py",
+      "community_name": "test_e2e_pipeline.py",
       "file_type": "code",
       "norm_label": "test_quota_scheduler_capability_matching()",
       "source_file": "tests/test_cloud_scheduler.py",
@@ -5164,7 +5164,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 31,
-      "community_name": "test_cloud_scheduler.py",
+      "community_name": "test_e2e_pipeline.py",
       "file_type": "code",
       "norm_label": "test_scheduler_cooldown_filtering()",
       "source_file": "tests/test_cloud_scheduler.py",
@@ -5176,7 +5176,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 31,
-      "community_name": "test_cloud_scheduler.py",
+      "community_name": "test_e2e_pipeline.py",
       "file_type": "code",
       "norm_label": "test_supervisor_dead_worker_recovery()",
       "source_file": "tests/test_cloud_scheduler.py",
@@ -5188,7 +5188,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 31,
-      "community_name": "test_cloud_scheduler.py",
+      "community_name": "test_e2e_pipeline.py",
       "file_type": "code",
       "norm_label": "test_expired_lease_reclamation_and_recovery()",
       "source_file": "tests/test_e2e_pipeline.py",
@@ -5351,186 +5351,6 @@
       "source_location": "L22"
     },
     {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_desktopnamefromdesktop",
-      "label": ".DesktopNameFromDesktop()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".desktopnamefromdesktop()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L377"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_hasdesktopnamefromindex",
-      "label": ".HasDesktopNameFromIndex()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".hasdesktopnamefromindex()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L413"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_removeall",
-      "label": ".RemoveAll()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".removeall()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L485"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getdesktop",
-      "label": ".GetDesktop()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getdesktop()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L251"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getdesktopindex",
-      "label": ".GetDesktopIndex()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getdesktopindex()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L263"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray_getat",
-      "label": ".GetAt()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getat()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L221"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray_getcount",
-      "label": ".GetCount()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getcount()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L220"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_getname",
-      "label": ".GetName()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getname()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L155"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getcount",
-      "label": ".GetCount()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getcount()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L167"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getdesktops",
-      "label": ".GetDesktops()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".getdesktops()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L171"
-    },
-    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_create",
       "label": ".Create()",
       "_callable": true,
@@ -5549,6 +5369,24 @@
       "source_location": "L458"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_desktopnamefromdesktop",
+      "label": ".DesktopNameFromDesktop()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "IVirtualDesktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".desktopnamefromdesktop()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L377"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_equals",
       "label": ".Equals()",
       "_callable": true,
@@ -5565,6 +5403,24 @@
       "norm_label": ".equals()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L341"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_hasdesktopnamefromindex",
+      "label": ".HasDesktopNameFromIndex()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "IVirtualDesktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".hasdesktopnamefromindex()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L413"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_move",
@@ -5603,6 +5459,24 @@
       "source_location": "L463"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_removeall",
+      "label": ".RemoveAll()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "IVirtualDesktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".removeall()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L485"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_setallwallpaperpaths",
       "label": ".SetAllWallpaperPaths()",
       "_callable": true,
@@ -5637,6 +5511,96 @@
       "norm_label": ".setwallpaperpath()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L512"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getdesktop",
+      "label": ".GetDesktop()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "IVirtualDesktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getdesktop()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L251"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktopmanager_getdesktopindex",
+      "label": ".GetDesktopIndex()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "IVirtualDesktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getdesktopindex()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L263"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray_getat",
+      "label": ".GetAt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "IVirtualDesktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getat()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L221"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_iobjectarray_getcount",
+      "label": ".GetCount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "IVirtualDesktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getcount()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L220"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_getname",
+      "label": ".GetName()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "IVirtualDesktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getname()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L155"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktop_isremote",
@@ -5765,6 +5729,24 @@
       "source_location": "L172"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getcount",
+      "label": ".GetCount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "IVirtualDesktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getcount()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L167"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getcurrentdesktop",
       "label": ".GetCurrentDesktop()",
       "_callable": true,
@@ -5781,6 +5763,24 @@
       "norm_label": ".getcurrentdesktop()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L170"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getdesktops",
+      "label": ".GetDesktops()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "IVirtualDesktop",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".getdesktops()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L171"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_ivirtualdesktopmanagerinternal_getlastactivedesktop",
@@ -5999,12 +5999,24 @@
       "source_location": "L189"
     },
     {
+      "id": "server_core_config_validate_security_settings",
+      "label": "validate_security_settings()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "validate_security_settings",
+      "file_type": "code",
+      "norm_label": "validate_security_settings()",
+      "source_file": "server/core/config.py",
+      "source_location": "L44"
+    },
+    {
       "id": "server_main_lifespan",
       "label": "lifespan()",
       "_callable": true,
       "_origin": "ast",
       "community": 41,
-      "community_name": "FastAPI",
+      "community_name": "validate_security_settings",
       "file_type": "code",
       "norm_label": "lifespan()",
       "source_file": "server/main.py",
@@ -6016,23 +6028,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 41,
-      "community_name": "FastAPI",
+      "community_name": "validate_security_settings",
       "file_type": "code",
       "norm_label": "run_supervisor_loop()",
       "source_file": "server/main.py",
       "source_location": "L37"
-    },
-    {
-      "id": "server_core_config_validate_security_settings",
-      "label": "validate_security_settings()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "validate_security_settings",
-      "file_type": "code",
-      "norm_label": "validate_security_settings()",
-      "source_file": "server/core/config.py",
-      "source_location": "L44"
     },
     {
       "id": "tests_test_security_config_test_development_allows_empty_auth_key",
@@ -6556,7 +6556,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "block_task()",
       "source_file": "server/api/routes_tasks.py",
@@ -6568,7 +6568,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "claim_task()",
       "source_file": "server/api/routes_tasks.py",
@@ -6580,7 +6580,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "create_task()",
       "source_file": "server/api/routes_tasks.py",
@@ -6592,7 +6592,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "get_checkpoint()",
       "source_file": "server/api/routes_tasks.py",
@@ -6604,7 +6604,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "get_task()",
       "source_file": "server/api/routes_tasks.py",
@@ -6616,7 +6616,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "list_tasks()",
       "source_file": "server/api/routes_tasks.py",
@@ -6628,7 +6628,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "_now_iso()",
       "source_file": "server/api/routes_tasks.py",
@@ -6640,7 +6640,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "release_task()",
       "source_file": "server/api/routes_tasks.py",
@@ -6652,7 +6652,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "renew_task_lease()",
       "source_file": "server/api/routes_tasks.py",
@@ -6664,7 +6664,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "submit_checkpoint()",
       "source_file": "server/api/routes_tasks.py",
@@ -6676,7 +6676,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "submit_qa_review()",
       "source_file": "server/api/routes_tasks.py",
@@ -6719,6 +6719,96 @@
       "source_location": "L2336"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproc",
+      "label": ".EnumWindowsProc()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": ".Main",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VDeskTool",
+        "scope_chain": [
+          "s25537"
+        ]
+      },
+      "norm_label": ".enumwindowsproc()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L2347"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctoclose",
+      "label": ".EnumWindowsProcToClose()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": ".Main",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VDeskTool",
+        "scope_chain": [
+          "s25537"
+        ]
+      },
+      "norm_label": ".enumwindowsproctoclose()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L2409"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctolist",
+      "label": ".EnumWindowsProcToList()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": ".Main",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VDeskTool",
+        "scope_chain": [
+          "s25537"
+        ]
+      },
+      "norm_label": ".enumwindowsproctolist()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L2388"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctomovewindows",
+      "label": ".EnumWindowsProcToMoveWindows()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": ".Main",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VDeskTool",
+        "scope_chain": [
+          "s25537"
+        ]
+      },
+      "norm_label": ".enumwindowsproctomovewindows()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L2431"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctoswap",
+      "label": ".EnumWindowsProcToSwap()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": ".Main",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VDeskTool",
+        "scope_chain": [
+          "s25537"
+        ]
+      },
+      "norm_label": ".enumwindowsproctoswap()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L2454"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_vdesktool_program_getmainwindowhandle",
       "label": ".GetMainWindowHandle()",
       "_callable": true,
@@ -6755,6 +6845,24 @@
       "source_location": "L2366"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_vdesktool_program_getwindowtext",
+      "label": ".GetWindowText()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": ".Main",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VDeskTool",
+        "scope_chain": [
+          "s25537"
+        ]
+      },
+      "norm_label": ".getwindowtext()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L2339"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_vdesktool_program_helpscreen",
       "label": ".HelpScreen()",
       "_callable": true,
@@ -6771,6 +6879,24 @@
       "norm_label": ".helpscreen()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L2493"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_vdesktool_program_iswindowvisible",
+      "label": ".IsWindowVisible()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": ".Main",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VDeskTool",
+        "scope_chain": [
+          "s25537"
+        ]
+      },
+      "norm_label": ".iswindowvisible()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L2332"
     },
     {
       "id": "tools_virtualdesktop11_24h2_vdesktool_program_listwindowsondesktop",
@@ -6827,6 +6953,24 @@
       "source_location": "L2442"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_vdesktool_program_sendmessage",
+      "label": ".SendMessage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": ".Main",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VDeskTool",
+        "scope_chain": [
+          "s25537"
+        ]
+      },
+      "norm_label": ".sendmessage()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L2327"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_vdesktool_program_swapdesktops",
       "label": ".SwapDesktops()",
       "_callable": true,
@@ -6863,6 +7007,24 @@
       "source_location": "L395"
     },
     {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_fromdesktop",
+      "label": ".FromDesktop()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": ".Main",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".fromdesktop()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L372"
+    },
+    {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_fromindex",
       "label": ".FromIndex()",
       "_callable": true,
@@ -6879,6 +7041,24 @@
       "norm_label": ".fromindex()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L357"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_fromwindow",
+      "label": ".FromWindow()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": ".Main",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": ".fromwindow()",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L362"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_searchdesktop",
@@ -6917,191 +7097,11 @@
       "source_location": "L507"
     },
     {
-      "id": "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproc",
-      "label": ".EnumWindowsProc()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VDeskTool",
-        "scope_chain": [
-          "s25537"
-        ]
-      },
-      "norm_label": ".enumwindowsproc()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2347"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctoclose",
-      "label": ".EnumWindowsProcToClose()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VDeskTool",
-        "scope_chain": [
-          "s25537"
-        ]
-      },
-      "norm_label": ".enumwindowsproctoclose()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2409"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctolist",
-      "label": ".EnumWindowsProcToList()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VDeskTool",
-        "scope_chain": [
-          "s25537"
-        ]
-      },
-      "norm_label": ".enumwindowsproctolist()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2388"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctomovewindows",
-      "label": ".EnumWindowsProcToMoveWindows()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VDeskTool",
-        "scope_chain": [
-          "s25537"
-        ]
-      },
-      "norm_label": ".enumwindowsproctomovewindows()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2431"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_vdesktool_program_enumwindowsproctoswap",
-      "label": ".EnumWindowsProcToSwap()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VDeskTool",
-        "scope_chain": [
-          "s25537"
-        ]
-      },
-      "norm_label": ".enumwindowsproctoswap()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2454"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_vdesktool_program_getwindowtext",
-      "label": ".GetWindowText()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VDeskTool",
-        "scope_chain": [
-          "s25537"
-        ]
-      },
-      "norm_label": ".getwindowtext()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2339"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_vdesktool_program_iswindowvisible",
-      "label": ".IsWindowVisible()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VDeskTool",
-        "scope_chain": [
-          "s25537"
-        ]
-      },
-      "norm_label": ".iswindowvisible()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2332"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_vdesktool_program_sendmessage",
-      "label": ".SendMessage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VDeskTool",
-        "scope_chain": [
-          "s25537"
-        ]
-      },
-      "norm_label": ".sendmessage()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L2327"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_fromdesktop",
-      "label": ".FromDesktop()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".fromdesktop()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L372"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_desktop_fromwindow",
-      "label": ".FromWindow()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "IntPtr",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": ".fromwindow()",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L362"
-    },
-    {
       "id": "intptr",
       "label": "IntPtr",
       "_origin": "ast",
       "community": 0,
-      "community_name": "IntPtr",
+      "community_name": "IApplicationView",
       "file_type": "code",
       "norm_label": "intptr",
       "source_file": "",
@@ -7578,91 +7578,6 @@
       "source_location": "L35"
     },
     {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_high_scale_factor",
-      "label": "AVCP_HIGH_SCALE_FACTOR",
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "APPLICATION_VIEW_COMPATIBILITY_POLICY",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": "avcp_high_scale_factor",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L68"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_none",
-      "label": "AVCP_NONE",
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "APPLICATION_VIEW_COMPATIBILITY_POLICY",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": "avcp_none",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L64"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_small_screen",
-      "label": "AVCP_SMALL_SCREEN",
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "APPLICATION_VIEW_COMPATIBILITY_POLICY",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": "avcp_small_screen",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L65"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_tablet_small_screen",
-      "label": "AVCP_TABLET_SMALL_SCREEN",
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "APPLICATION_VIEW_COMPATIBILITY_POLICY",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": "avcp_tablet_small_screen",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L66"
-    },
-    {
-      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_very_small_screen",
-      "label": "AVCP_VERY_SMALL_SCREEN",
-      "_origin": "ast",
-      "community": 14,
-      "community_name": "APPLICATION_VIEW_COMPATIBILITY_POLICY",
-      "file_type": "code",
-      "metadata": {
-        "namespace": "VirtualDesktop",
-        "scope_chain": [
-          "s972"
-        ]
-      },
-      "norm_label": "avcp_very_small_screen",
-      "source_file": "tools/VirtualDesktop11-24H2.cs",
-      "source_location": "L67"
-    },
-    {
       "id": "csharp_namespace:736c16d950f7f787",
       "label": "VirtualDesktop",
       "_origin": "ast",
@@ -7755,6 +7670,91 @@
       "norm_label": "avct_virtual_desktop",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L59"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_high_scale_factor",
+      "label": "AVCP_HIGH_SCALE_FACTOR",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "VirtualDesktop11-24H2.cs",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": "avcp_high_scale_factor",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L68"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_none",
+      "label": "AVCP_NONE",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "VirtualDesktop11-24H2.cs",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": "avcp_none",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L64"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_small_screen",
+      "label": "AVCP_SMALL_SCREEN",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "VirtualDesktop11-24H2.cs",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": "avcp_small_screen",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L65"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_tablet_small_screen",
+      "label": "AVCP_TABLET_SMALL_SCREEN",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "VirtualDesktop11-24H2.cs",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": "avcp_tablet_small_screen",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L66"
+    },
+    {
+      "id": "tools_virtualdesktop11_24h2_virtualdesktop_application_view_compatibility_policy_avcp_very_small_screen",
+      "label": "AVCP_VERY_SMALL_SCREEN",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "VirtualDesktop11-24H2.cs",
+      "file_type": "code",
+      "metadata": {
+        "namespace": "VirtualDesktop",
+        "scope_chain": [
+          "s972"
+        ]
+      },
+      "norm_label": "avcp_very_small_screen",
+      "source_file": "tools/VirtualDesktop11-24H2.cs",
+      "source_location": "L67"
     },
     {
       "id": "client_adapters_claude_desktop_cdp_py_any",
@@ -7904,7 +7904,7 @@
       "label": "FastAPI",
       "_origin": "ast",
       "community": 17,
-      "community_name": "FastAPI",
+      "community_name": "routes_workers.py",
       "file_type": "code",
       "norm_label": "fastapi",
       "source_file": "",
@@ -8098,24 +8098,24 @@
       "source_location": "L88"
     },
     {
-      "id": "marshalas",
-      "label": "MarshalAs",
-      "_origin": "ast",
-      "community": 19,
-      "community_name": ".GetDesktop",
-      "file_type": "code",
-      "norm_label": "marshalas",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "guid",
       "label": "Guid",
       "_origin": "ast",
       "community": 19,
-      "community_name": "IntPtr",
+      "community_name": "Guid",
       "file_type": "code",
       "norm_label": "guid",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "marshalas",
+      "label": "MarshalAs",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "Guid",
+      "file_type": "code",
+      "norm_label": "marshalas",
       "source_file": "",
       "source_location": ""
     },
@@ -8234,7 +8234,7 @@
       "label": "schemas.py",
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "schemas.py",
       "source_file": "server/models/schemas.py",
@@ -8245,7 +8245,7 @@
       "label": "BaseModel",
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "basemodel",
       "source_file": "",
@@ -8256,7 +8256,7 @@
       "label": "HTTPAuthorizationCredentials",
       "_origin": "ast",
       "community": 23,
-      "community_name": "FastAPI",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "httpauthorizationcredentials",
       "source_file": "",
@@ -8267,22 +8267,11 @@
       "label": "auth.py",
       "_origin": "ast",
       "community": 23,
-      "community_name": "FastAPI",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "auth.py",
       "source_file": "server/core/auth.py",
       "source_location": "L1"
-    },
-    {
-      "id": "server_core_auth_rationale_13",
-      "label": "Verify that incoming request provides a valid API token via Bearer header or\u2026",
-      "_origin": "ast",
-      "community": 23,
-      "community_name": "FastAPI",
-      "file_type": "rationale",
-      "norm_label": "verify that incoming request provides a valid api token via bearer header or...",
-      "source_file": "server/core/auth.py",
-      "source_location": "L13"
     },
     {
       "id": "server_core_config",
@@ -8333,7 +8322,7 @@
       "label": "fixture",
       "_origin": "ast",
       "community": 23,
-      "community_name": "init_db",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "fixture",
       "source_file": "",
@@ -8344,6 +8333,39 @@
       "label": "Path",
       "_origin": "ast",
       "community": 23,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "path",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_core_auth_rationale_13",
+      "label": "Verify that incoming request provides a valid API token via Bearer header or\u2026",
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "config.py",
+      "file_type": "rationale",
+      "norm_label": "verify that incoming request provides a valid api token via bearer header or...",
+      "source_file": "server/core/auth.py",
+      "source_location": "L13"
+    },
+    {
+      "id": "tests_test_cloud_scheduler_py_fixture",
+      "label": "fixture",
+      "_origin": "ast",
+      "community": 24,
+      "community_name": "init_db",
+      "file_type": "code",
+      "norm_label": "fixture",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_cloud_scheduler_py_path",
+      "label": "Path",
+      "_origin": "ast",
+      "community": 24,
       "community_name": "init_db",
       "file_type": "code",
       "norm_label": "path",
@@ -8417,33 +8439,22 @@
       "source_location": "L24"
     },
     {
-      "id": "tests_test_cloud_scheduler_py_fixture",
-      "label": "fixture",
+      "id": "server_core_pipeline_engine",
+      "label": "pipeline_engine.py",
       "_origin": "ast",
-      "community": 24,
-      "community_name": "test_cloud_scheduler.py",
+      "community": 25,
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
-      "norm_label": "fixture",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_cloud_scheduler_py_path",
-      "label": "Path",
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "test_cloud_scheduler.py",
-      "file_type": "code",
-      "norm_label": "path",
-      "source_file": "",
-      "source_location": ""
+      "norm_label": "pipeline_engine.py",
+      "source_file": "server/core/pipeline_engine.py",
+      "source_location": "L1"
     },
     {
       "id": "server_core_pipeline_engine_py_connection",
       "label": "Connection",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": "connection",
       "source_file": "",
@@ -8454,7 +8465,7 @@
       "label": "Checks whether all tasks for a job have reached terminal state (done/merged).\u2026",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "rationale",
       "norm_label": "checks whether all tasks for a job have reached terminal state (done/merged)....",
       "source_file": "server/core/pipeline_engine.py",
@@ -8465,7 +8476,7 @@
       "label": "Decomposes intake jobs into discrete, pipeline-staged tasks and manages stage\u2026",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "rationale",
       "norm_label": "decomposes intake jobs into discrete, pipeline-staged tasks and manages stage...",
       "source_file": "server/core/pipeline_engine.py",
@@ -8476,7 +8487,7 @@
       "label": "Load SKU definition JSON from sku-templates directory.",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "rationale",
       "norm_label": "load sku definition json from sku-templates directory.",
       "source_file": "server/core/pipeline_engine.py",
@@ -8487,7 +8498,7 @@
       "label": "Takes a job and a list of parsed input items (e.g. from CSV/JSON). Creates\u2026",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "rationale",
       "norm_label": "takes a job and a list of parsed input items (e.g. from csv/json). creates...",
       "source_file": "server/core/pipeline_engine.py",
@@ -8498,29 +8509,18 @@
       "label": "When a task is verified (or passes QA), triggers generation of the next stage\u2026",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "rationale",
       "norm_label": "when a task is verified (or passes qa), triggers generation of the next stage...",
       "source_file": "server/core/pipeline_engine.py",
       "source_location": "L80"
     },
     {
-      "id": "server_core_pipeline_engine",
-      "label": "pipeline_engine.py",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "pipeline_engine.py",
-      "source_file": "server/core/pipeline_engine.py",
-      "source_location": "L1"
-    },
-    {
       "id": "team_context",
       "label": "team-context.md",
       "_origin": "ast",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "document",
       "norm_label": "team-context.md",
       "source_file": "team-context.md",
@@ -8531,7 +8531,7 @@
       "label": "Context",
       "_origin": "ast",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "document",
       "norm_label": "context",
       "source_file": "team-context.md",
@@ -8542,7 +8542,7 @@
       "label": "team-memory.md",
       "_origin": "ast",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "team-memory.md",
@@ -8559,7 +8559,6 @@
       "file_type": "document",
       "node_kind": "page",
       "norm_label": "readme.md",
-      "rationale": "Root documentation describing the system architecture and file structure.",
       "source_file": "README.md",
       "source_location": "L1"
     },
@@ -8585,7 +8584,7 @@
       "node_kind": "heading",
       "norm_label": "concurrent mode (multiple windows, multiple monitors)",
       "source_file": "README.md",
-      "source_location": "L163"
+      "source_location": "L183"
     },
     {
       "id": "readme_features",
@@ -8609,7 +8608,7 @@
       "node_kind": "heading",
       "norm_label": "files",
       "source_file": "README.md",
-      "source_location": "L116"
+      "source_location": "L134"
     },
     {
       "id": "readme_launching_claude_desktop_profiles",
@@ -8621,7 +8620,7 @@
       "node_kind": "heading",
       "norm_label": "launching claude desktop profiles",
       "source_file": "README.md",
-      "source_location": "L146"
+      "source_location": "L166"
     },
     {
       "id": "readme_repo_structure",
@@ -8645,7 +8644,7 @@
       "node_kind": "heading",
       "norm_label": "running autonomous worker daemons (v2)",
       "source_file": "README.md",
-      "source_location": "L211"
+      "source_location": "L231"
     },
     {
       "id": "readme_running_the_cloud_orchestration_backend_v2",
@@ -8657,7 +8656,7 @@
       "node_kind": "heading",
       "norm_label": "running the cloud orchestration backend (v2)",
       "source_file": "README.md",
-      "source_location": "L188"
+      "source_location": "L208"
     },
     {
       "id": "readme_running_usage_watchdog",
@@ -8669,7 +8668,7 @@
       "node_kind": "heading",
       "norm_label": "running usage watchdog",
       "source_file": "README.md",
-      "source_location": "L242"
+      "source_location": "L262"
     },
     {
       "id": "readme_syncing_git_repository",
@@ -8681,7 +8680,7 @@
       "node_kind": "heading",
       "norm_label": "syncing git repository",
       "source_file": "README.md",
-      "source_location": "L257"
+      "source_location": "L277"
     },
     {
       "id": "readme_usage",
@@ -8693,7 +8692,7 @@
       "node_kind": "heading",
       "norm_label": "usage",
       "source_file": "README.md",
-      "source_location": "L144"
+      "source_location": "L164"
     },
     {
       "id": "asyncclient",
@@ -8876,21 +8875,10 @@
       "label": "supervisor.py",
       "_origin": "ast",
       "community": 31,
-      "community_name": "config.py",
+      "community_name": "test_e2e_pipeline.py",
       "file_type": "code",
       "norm_label": "supervisor.py",
       "source_file": "server/core/supervisor.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_e2e_pipeline",
-      "label": "test_e2e_pipeline.py",
-      "_origin": "ast",
-      "community": 31,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "test_e2e_pipeline.py",
-      "source_file": "tests/test_e2e_pipeline.py",
       "source_location": "L1"
     },
     {
@@ -8898,10 +8886,21 @@
       "label": "test_cloud_scheduler.py",
       "_origin": "ast",
       "community": 31,
-      "community_name": "test_cloud_scheduler.py",
+      "community_name": "test_e2e_pipeline.py",
       "file_type": "code",
       "norm_label": "test_cloud_scheduler.py",
       "source_file": "tests/test_cloud_scheduler.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_e2e_pipeline",
+      "label": "test_e2e_pipeline.py",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "code",
+      "norm_label": "test_e2e_pipeline.py",
+      "source_file": "tests/test_e2e_pipeline.py",
       "source_location": "L1"
     },
     {
@@ -8909,7 +8908,7 @@
       "label": "Periodic self-healing supervisor loop: 1. Identifies workers with stale\u2026",
       "_origin": "ast",
       "community": 31,
-      "community_name": "test_cloud_scheduler.py",
+      "community_name": "test_e2e_pipeline.py",
       "file_type": "rationale",
       "norm_label": "periodic self-healing supervisor loop: 1. identifies workers with stale...",
       "source_file": "server/core/supervisor.py",
@@ -8920,7 +8919,7 @@
       "label": "Test that tasks with expired leases can be claimed by a new worker or\u2026",
       "_origin": "ast",
       "community": 31,
-      "community_name": "test_cloud_scheduler.py",
+      "community_name": "test_e2e_pipeline.py",
       "file_type": "rationale",
       "norm_label": "test that tasks with expired leases can be claimed by a new worker or...",
       "source_file": "tests/test_e2e_pipeline.py",
@@ -9583,17 +9582,6 @@
       "source_location": "L181"
     },
     {
-      "id": "server_main_rationale_38",
-      "label": "Background supervisor monitoring heartbeats, dead workers, and auto-scheduling\u2026",
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "FastAPI",
-      "file_type": "rationale",
-      "norm_label": "background supervisor monitoring heartbeats, dead workers, and auto-scheduling...",
-      "source_file": "server/main.py",
-      "source_location": "L38"
-    },
-    {
       "id": "tests_test_security_config",
       "label": "test_security_config.py",
       "_origin": "ast",
@@ -9603,6 +9591,17 @@
       "norm_label": "test_security_config.py",
       "source_file": "tests/test_security_config.py",
       "source_location": "L1"
+    },
+    {
+      "id": "server_main_rationale_38",
+      "label": "Background supervisor monitoring heartbeats, dead workers, and auto-scheduling\u2026",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "validate_security_settings",
+      "file_type": "rationale",
+      "norm_label": "background supervisor monitoring heartbeats, dead workers, and auto-scheduling...",
+      "source_file": "server/main.py",
+      "source_location": "L38"
     },
     {
       "id": "sync_mcp",
@@ -9697,7 +9696,7 @@
       "label": "cooldown-reminder.ps1",
       "_origin": "ast",
       "community": 43,
-      "community_name": "launch_user_n.ps1",
+      "community_name": "cooldown-reminder.ps1",
       "file_type": "code",
       "norm_label": "cooldown-reminder.ps1",
       "source_file": "cooldown-reminder.ps1",
@@ -9708,7 +9707,7 @@
       "label": "Format-VisibleRight()",
       "_origin": "ast",
       "community": 43,
-      "community_name": "launch_user_n.ps1",
+      "community_name": "cooldown-reminder.ps1",
       "file_type": "code",
       "norm_label": "format-visibleright()",
       "source_file": "cooldown-reminder.ps1",
@@ -9719,7 +9718,7 @@
       "label": "Get-VisibleTextWidth()",
       "_origin": "ast",
       "community": 43,
-      "community_name": "launch_user_n.ps1",
+      "community_name": "cooldown-reminder.ps1",
       "file_type": "code",
       "norm_label": "get-visibletextwidth()",
       "source_file": "cooldown-reminder.ps1",
@@ -9730,7 +9729,7 @@
       "label": "New-CooldownCalendarEvent()",
       "_origin": "ast",
       "community": 43,
-      "community_name": "launch_user_n.ps1",
+      "community_name": "cooldown-reminder.ps1",
       "file_type": "code",
       "norm_label": "new-cooldowncalendarevent()",
       "source_file": "cooldown-reminder.ps1",
@@ -9741,7 +9740,7 @@
       "label": "Register-CooldownToast()",
       "_origin": "ast",
       "community": 43,
-      "community_name": "launch_user_n.ps1",
+      "community_name": "cooldown-reminder.ps1",
       "file_type": "code",
       "norm_label": "register-cooldowntoast()",
       "source_file": "cooldown-reminder.ps1",
@@ -9752,7 +9751,7 @@
       "label": "Update-FirstLoginDate()",
       "_origin": "ast",
       "community": 43,
-      "community_name": "launch_user_n.ps1",
+      "community_name": "cooldown-reminder.ps1",
       "file_type": "code",
       "norm_label": "update-firstlogindate()",
       "source_file": "cooldown-reminder.ps1",
@@ -9763,7 +9762,7 @@
       "label": "Write-CooldownBanner()",
       "_origin": "ast",
       "community": 43,
-      "community_name": "launch_user_n.ps1",
+      "community_name": "cooldown-reminder.ps1",
       "file_type": "code",
       "norm_label": "write-cooldownbanner()",
       "source_file": "cooldown-reminder.ps1",
@@ -10906,7 +10905,7 @@
       "label": "reset_profiles.ps1",
       "_origin": "ast",
       "community": 61,
-      "community_name": "sync.ps1",
+      "community_name": "reset_profiles.ps1",
       "file_type": "code",
       "norm_label": "reset_profiles.ps1",
       "source_file": "reset_profiles.ps1",
@@ -10917,7 +10916,7 @@
       "label": "Write-ResetBanner()",
       "_origin": "ast",
       "community": 61,
-      "community_name": "sync.ps1",
+      "community_name": "reset_profiles.ps1",
       "file_type": "code",
       "norm_label": "write-resetbanner()",
       "source_file": "reset_profiles.ps1",
@@ -10928,7 +10927,7 @@
       "label": "2026-08-22",
       "_origin": "ast",
       "community": 62,
-      "community_name": "Memory Log",
+      "community_name": "2026-08-22",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "2026-08-22",
@@ -10940,7 +10939,7 @@
       "label": "Local Git Workflow & Auto-Sync (`sync.ps1`)",
       "_origin": "ast",
       "community": 62,
-      "community_name": "Memory Log",
+      "community_name": "2026-08-22",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "local git workflow & auto-sync (`sync.ps1`)",
@@ -10995,11 +10994,22 @@
       "source_location": "L1"
     },
     {
+      "id": "server_api_routes_tasks",
+      "label": "routes_tasks.py",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "routes_tasks.py",
+      "source_file": "server/api/routes_tasks.py",
+      "source_location": "L1"
+    },
+    {
       "id": "server_api_routes_tasks_py_connection",
       "label": "Connection",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "connection",
       "source_file": "",
@@ -11010,7 +11020,7 @@
       "label": "get",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "get",
       "source_file": "",
@@ -11021,7 +11031,7 @@
       "label": "post",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "post",
       "source_file": "",
@@ -11032,7 +11042,7 @@
       "label": "Get single task details.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "get single task details.",
       "source_file": "server/api/routes_tasks.py",
@@ -11043,7 +11053,7 @@
       "label": "Claim a pending or expired task atomically with a lease duration.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "claim a pending or expired task atomically with a lease duration.",
       "source_file": "server/api/routes_tasks.py",
@@ -11054,7 +11064,7 @@
       "label": "Renew the lease on an actively claimed task.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "renew the lease on an actively claimed task.",
       "source_file": "server/api/routes_tasks.py",
@@ -11065,7 +11075,7 @@
       "label": "Release a claimed task back to pending.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "release a claimed task back to pending.",
       "source_file": "server/api/routes_tasks.py",
@@ -11076,7 +11086,7 @@
       "label": "Create a new task in the queue.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "create a new task in the queue.",
       "source_file": "server/api/routes_tasks.py",
@@ -11087,7 +11097,7 @@
       "label": "Mark a claimed task as blocked.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "mark a claimed task as blocked.",
       "source_file": "server/api/routes_tasks.py",
@@ -11098,7 +11108,7 @@
       "label": "Submit finished task deliverable, mark task 'done', and advance pipeline stage.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "submit finished task deliverable, mark task 'done', and advance pipeline stage.",
       "source_file": "server/api/routes_tasks.py",
@@ -11109,7 +11119,7 @@
       "label": "Retrieve checkpoint deliverable for a task.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "retrieve checkpoint deliverable for a task.",
       "source_file": "server/api/routes_tasks.py",
@@ -11120,7 +11130,7 @@
       "label": "Submit a QA verification pass/fail/revision review.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "submit a qa verification pass/fail/revision review.",
       "source_file": "server/api/routes_tasks.py",
@@ -11131,22 +11141,11 @@
       "label": "List tasks with flexible filtering.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "list tasks with flexible filtering.",
       "source_file": "server/api/routes_tasks.py",
       "source_location": "L75"
-    },
-    {
-      "id": "server_api_routes_tasks",
-      "label": "routes_tasks.py",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "routes_tasks.py",
-      "source_file": "server/api/routes_tasks.py",
-      "source_location": "L1"
     },
     {
       "id": "claude_skills_mcp_repo_conventions",
@@ -11176,7 +11175,7 @@
       "label": "StringBuilder",
       "_origin": "ast",
       "community": 8,
-      "community_name": "IntPtr",
+      "community_name": ".Main",
       "file_type": "code",
       "norm_label": "stringbuilder",
       "source_file": "",
@@ -11187,7 +11186,7 @@
       "label": "UInt32",
       "_origin": "ast",
       "community": 8,
-      "community_name": "IntPtr",
+      "community_name": ".Main",
       "file_type": "code",
       "norm_label": "uint32",
       "source_file": "",
@@ -11827,7 +11826,7 @@
       "label": "BiasAperture Schema",
       "_origin": "semantic",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "code",
       "norm_label": "biasaperture schema",
       "rationale": "Locked internal schema for BiasAperture metrics and subgroup fields (race_7, gender_2, age_9).",
@@ -11838,7 +11837,7 @@
       "label": "gateway/receiver/wire_format.py",
       "_origin": "semantic",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "code",
       "norm_label": "gateway/receiver/wire_format.py",
       "rationale": "Implements WIRE_FORMAT_v1 for the SPARK gateway, including JSON parsing and validation.",
@@ -11849,7 +11848,7 @@
       "label": "sync.ps1",
       "_origin": "semantic",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "code",
       "norm_label": "sync.ps1",
       "rationale": "PowerShell script for synchronizing memory entries and managing git commits to avoid conflicts.",
@@ -11860,7 +11859,7 @@
       "label": "BiasAperture",
       "_origin": "semantic",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "concept",
       "norm_label": "biasaperture",
       "rationale": "Capstone project: AI fairness diagnostic tool for auditing bias in classifiers.",
@@ -11871,7 +11870,7 @@
       "label": "EX751 Wireless Communications",
       "_origin": "semantic",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "concept",
       "norm_label": "ex751 wireless communications",
       "rationale": "Coursework and exam preparation involving cellular concepts and propagation models.",
@@ -11882,7 +11881,7 @@
       "label": "NotebookLM (NLM) MCP",
       "_origin": "semantic",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "concept",
       "norm_label": "notebooklm (nlm) mcp",
       "rationale": "Tool for querying project-specific knowledge bases (SPARK, BiasAperture, Personal).",
@@ -11893,7 +11892,7 @@
       "label": "Aaradhya Dev Tamrakar",
       "_origin": "semantic",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "concept",
       "norm_label": "aaradhya dev tamrakar",
       "rationale": "Primary user and orchestrator; BEI student at KEC, IEEE Vice Chair, and Fusemachines Fellow.",
@@ -11904,7 +11903,7 @@
       "label": "SPARK Project",
       "_origin": "semantic",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "concept",
       "norm_label": "spark project",
       "source_file": "team-context.md"
@@ -11914,7 +11913,7 @@
       "label": "SPARK Tracker",
       "_origin": "semantic",
       "community": 26,
-      "community_name": "sync.ps1",
+      "community_name": "SPARK Project",
       "file_type": "document",
       "norm_label": "spark tracker",
       "rationale": "Living document (v54 as of Aug 2026) tracking SPARK project status and hardware/software locks.",
@@ -12020,6 +12019,17 @@
       "source_location": null
     },
     {
+      "id": "dev_logs_upgrade_log_md",
+      "label": "dev-logs/upgrade-log.md",
+      "_origin": "semantic",
+      "community": 73,
+      "community_name": "dev-logs/upgrade-log.md",
+      "file_type": "document",
+      "norm_label": "dev-logs/upgrade-log.md",
+      "rationale": "Audit log of completed upgrades and security enhancements.",
+      "source_file": "dev-logs/upgrade-log.md"
+    },
+    {
       "id": "notebooklm_mcp_cli",
       "label": "notebooklm-mcp-cli",
       "_origin": "semantic",
@@ -12035,7 +12045,7 @@
       "label": "Orchestrator MCP Server",
       "_origin": "semantic",
       "community": 77,
-      "community_name": "sync.ps1",
+      "community_name": "Orchestrator MCP Server",
       "file_type": "code",
       "norm_label": "orchestrator mcp server",
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py"
@@ -12045,7 +12055,7 @@
       "label": "server/mcp_remote.py",
       "_origin": "semantic",
       "community": 79,
-      "community_name": "server/main.py",
+      "community_name": "server/mcp_remote.py",
       "file_type": "code",
       "norm_label": "server/mcp_remote.py",
       "source_file": "server/mcp_remote.py",
@@ -12056,7 +12066,7 @@
       "label": "server/core/pipeline_engine.py",
       "_origin": "semantic",
       "community": 80,
-      "community_name": "server/main.py",
+      "community_name": "server/core/pipeline_engine.py",
       "file_type": "code",
       "norm_label": "server/core/pipeline_engine.py",
       "source_file": "server/core/pipeline_engine.py",
@@ -12078,7 +12088,7 @@
       "label": "server/core/scheduler.py",
       "_origin": "semantic",
       "community": 82,
-      "community_name": "server/main.py",
+      "community_name": "server/core/scheduler.py",
       "file_type": "code",
       "norm_label": "server/core/scheduler.py",
       "source_file": "server/core/scheduler.py",
@@ -12100,7 +12110,7 @@
       "label": "team-mcp.json",
       "_origin": "semantic",
       "community": 84,
-      "community_name": "launch_user_n.ps1",
+      "community_name": "team-mcp.json",
       "file_type": "document",
       "norm_label": "team-mcp.json",
       "source_file": "team-mcp.json",
@@ -12111,20 +12121,11 @@
       "label": "client/worker_daemon.py",
       "_origin": "semantic",
       "community": 85,
-      "community_name": "server/main.py",
+      "community_name": "client/worker_daemon.py",
       "file_type": "code",
       "norm_label": "client/worker_daemon.py",
       "source_file": "client/worker_daemon.py",
       "source_location": null
-    },
-    {
-      "id": "dev_logs_upgrade_log_md",
-      "label": "dev-logs/upgrade-log.md",
-      "community": 73,
-      "file_type": "document",
-      "norm_label": "dev-logs/upgrade-log.md",
-      "rationale": "Audit log of completed upgrades and security enhancements.",
-      "source_file": "dev-logs/upgrade-log.md"
     }
   ],
   "links": [
@@ -25843,7 +25844,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L116",
+      "source_location": "L134",
       "weight": 1.0
     },
     {
@@ -25854,7 +25855,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L144",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -25887,7 +25888,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L146",
+      "source_location": "L166",
       "weight": 1.0
     },
     {
@@ -25898,7 +25899,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L163",
+      "source_location": "L183",
       "weight": 1.0
     },
     {
@@ -25909,7 +25910,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L188",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
@@ -25920,7 +25921,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L211",
+      "source_location": "L231",
       "weight": 1.0
     },
     {
@@ -25931,7 +25932,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L242",
+      "source_location": "L262",
       "weight": 1.0
     },
     {
@@ -25942,7 +25943,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L257",
+      "source_location": "L277",
       "weight": 1.0
     },
     {
@@ -33973,5 +33974,5 @@
       "source_file": "worker-prompts/orchestrator.md"
     }
   ],
-  "built_at_commit": "b55aed7e849191993aa26ca87d9032221d1bafdc"
+  "built_at_commit": "293f88fbf32a261a074e96e013d7284cc660d070"
 }

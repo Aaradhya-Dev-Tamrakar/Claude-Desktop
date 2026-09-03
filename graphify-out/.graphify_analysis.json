@@ -1294,8 +1294,41 @@
       "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
     }
   ],
-  "tokens": {
-    "input": 7269,
-    "output": 1351
-  }
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `ClaudeDesktopProxyAdapter` connect `ClaudeDesktopProxyAdapter` to `BaseWorkerAdapter`, `AsyncClient`, `ClaudeDesktopCDPAdapter`, `test_e2e_pipeline.py`?",
+      "why": "High betweenness centrality (0.025) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `ClaudeDesktopProxyAdapter`, `BaseWorkerAdapter`, `._eval_js`?",
+      "why": "High betweenness centrality (0.020) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `IApplicationView` connect `IApplicationView` to `IVirtualDesktop`, `Desktop`, `VirtualDesktop11-24H2.cs`, `Guid`, `IApplicationViewCollection`, `IVirtualDesktopPinnedApps`?",
+      "why": "High betweenness centrality (0.019) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `Count`, `Current`, `IsVisible` to the rest of the system?",
+      "why": "131 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `IApplicationView` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.05319148936170213 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `orchestrator_mcp_test.py` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.0425531914893617 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `MD2PDFApp` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.08139534883720931 - nodes in this community are weakly interconnected."
+    }
+  ]
 }
