@@ -195,6 +195,12 @@ pwsh -File .\launch_user_n.ps1 -Concurrent -Account user1
 pwsh -File .\launch_user_n.ps1 -Concurrent -Account user2
 ```
 
+Isolated mode still closes other Claude instances and switches the shared native
+storage, which is useful as an emergency “close everything and switch” action. If
+concurrent instances using `.claude-profiles` are running, the launcher asks twice
+before proceeding so an accidental isolated launch does not destroy active work.
+Use `-ForceIsolated` to skip those confirmations in a deliberate scripted action.
+
 `claude://` sign-in is a single OS-wide handler shared by every window, routing to whichever instance last had focus — profiles don't need to be closed to run concurrently, but a profile that still needs sign-in should be given focus first (or run alone) so the callback routes to it, not to whichever other window is topmost. A profile that fails to launch (missing exe, unknown name) doesn't block the rest of the `-Users` list.
 
 Preview what a profile switch would do without touching any files, the registry, or running processes:

@@ -30,7 +30,10 @@ param (
     # Disable automatic window snapping / grid arrangement for concurrent launches
     [switch]$NoSnap,
     # Explicitly force window snapping / grid arrangement
-    [switch]$Snap
+    [switch]$Snap,
+    # Skip the two-step confirmation before isolated mode closes concurrent
+    # profile instances. This is unsafe by design.
+    [switch]$ForceIsolated
 )
 
 try {
@@ -226,6 +229,20 @@ function Get-ValidatedProfilePath {
     }
 
     return $Check.ExpandedFull
+}
+
+function Get-ConcurrentClaudeInstances {
+    param(
+        [Parameter(Mandatory = $true)]$Processes,
+        [Parameter(Mandatory = $true)][string]$ProfilesBaseDir
+    )
+
+    $normalizedBaseDir = [System.IO.Path]::GetFullPath($ProfilesBaseDir).TrimEnd('\')
+    return @($Processes | Where-Object {
+        $_.CommandLine -and
+        $_.CommandLine -match '(?i)--user-data-dir(?:=|\s+)' -and
+        $_.CommandLine -match [regex]::Escape($normalizedBaseDir) + '\\'
+    })
 }
 
 function Merge-McpServers {
@@ -1628,6 +1645,27 @@ function Invoke-ProfileLaunch {
                 $ActiveAccount = (Get-Content $StateFile -Raw).Trim()
             }
             $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
+
+            if ($RunningClaude -and -not $ForceIsolated -and -not $WhatIf) {
+                $ConcurrentInstances = @(Get-ConcurrentClaudeInstances -Processes @(Get-CimInstance Win32_Process -Filter "Name = 'claude.exe'" -ErrorAction SilentlyContinue) -ProfilesBaseDir $ProfilesBaseDir)
+                if ($ConcurrentInstances.Count -gt 0) {
+                    Write-Host "[!] $($ConcurrentInstances.Count) concurrent Claude instance(s) are running." -ForegroundColor Red
+                    Write-Host "    Isolated mode will close all Claude instances and mirror shared native storage." -ForegroundColor Yellow
+                    $firstConfirmation = Read-Host "Proceed with isolated mode and close them? [y/N]"
+                    if ($firstConfirmation -notmatch '^[Yy]$') {
+                        Write-Host "Launch cancelled; concurrent work was left untouched." -ForegroundColor Green
+                        return
+                    }
+
+                    $secondConfirmation = Read-Host "FINAL confirmation: close concurrent instances and switch to '$Account'? Type YES"
+                    if ($secondConfirmation -cne "YES") {
+                        Write-Host "Launch cancelled; concurrent work was left untouched." -ForegroundColor Green
+                        return
+                    }
+
+                    Write-Host "[i] Confirmed. Closing Claude instances for isolated profile '$Account'." -ForegroundColor Yellow
+                }
+            }
 
             if ($RunningClaude -and ($ActiveAccount -eq $Account) -and -not $WhatIf) {
                 Write-Host "----------------------------------------" -ForegroundColor Cyan

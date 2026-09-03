@@ -100,6 +100,29 @@ Describe "Get-ValidatedProfilePath (accept path only — reject path exits and i
     }
 }
 
+Describe "Get-ConcurrentClaudeInstances" {
+    It "finds Claude processes using a profile data directory" {
+        $processes = @(
+            [pscustomobject]@{ CommandLine = 'Claude.exe --user-data-dir="C:\Users\Test\.claude-profiles\user1"' },
+            [pscustomobject]@{ CommandLine = 'Claude.exe' }
+        )
+
+        $result = Get-ConcurrentClaudeInstances -Processes $processes -ProfilesBaseDir 'C:\Users\Test\.claude-profiles'
+
+        $result.Count | Should -Be 1
+    }
+
+    It "ignores profile-like paths outside the approved base" {
+        $processes = @(
+            [pscustomobject]@{ CommandLine = 'Claude.exe --user-data-dir="C:\Users\Test\.claude-profiles-evil\user1"' }
+        )
+
+        $result = Get-ConcurrentClaudeInstances -Processes $processes -ProfilesBaseDir 'C:\Users\Test\.claude-profiles'
+
+        $result.Count | Should -Be 0
+    }
+}
+
 Describe "Merge-McpServers" {
 
     Context "merging into a profile with no existing mcpServers" {
