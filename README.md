@@ -44,6 +44,7 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 │   └── adapters/                  # LLM provider adapters
 │       ├── base_adapter.py        # Abstract adapter interface
 │       ├── claude_desktop_proxy.py # Claude Desktop UI/MCP bridge adapter
+│       ├── gemini_free_adapter.py # Gemini free-tier execution adapter
 │       ├── groq_adapter.py       # Groq-hosted LLM execution adapter
 │       └── ollama_local_adapter.py # Local Ollama LLM provider adapter
 │
@@ -60,8 +61,9 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 │   │   └── routes_memory.py       # Shared database memory & durable team context
 │   ├── core/                      # Core backend logic
 │   │   ├── auth.py                # Bearer token / API key security dependency
-│   │   ├── config.py              # Settings & database connection strings
+│   │   ├── config.py              # Settings & database paths
 │   │   ├── database.py            # SQLite WAL connection & migration manager
+│   │   ├── observability.py       # Request correlation, logging & Prometheus metrics
 │   │   ├── pipeline_engine.py     # SKU template decomposition into DAG tasks & stage advancement
 │   │   ├── scheduler.py           # Quota-aware task-to-worker capability matching & atomic leasing
 │   │   └── supervisor.py          # Dead worker watchdog & stranded task / expired lease recovery
@@ -94,10 +96,17 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 │   └── notebooklm-mcp-0.9.5.mcpb  # Packaged NotebookLM MCP extension bundle
 │
 ├── mcp-servers/
+│   ├── cloud-orchestrator-mcp/
+│   │   └── run_server.py          # Launcher for the cloud orchestrator MCP server
+│   ├── md2pdf-mcp/
+│   │   ├── requirements.txt       # PDF service dependencies
+│   │   └── run_server.py          # Markdown-to-PDF MCP server launcher
 │   ├── notebooklm-mcp/
+│   │   ├── requirements.txt       # NotebookLM MCP dependencies
 │   │   └── run_server.py          # uvx-shim launcher for the published NotebookLM CLI
 │   └── orchestrator-mcp/
-│       └── run_server.py          # Hand-written MCP server, 14 tools, requires `pip install mcp`
+│       ├── requirements.txt       # Local orchestrator MCP dependencies
+│       └── run_server.py           # Hand-written local coordination server, 21 tools
 │
 ├── orchestrator-state/
 │   ├── SCHEMA.md                  # File contract for tasks/live-status/checkpoints/memory
@@ -112,8 +121,14 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 └── tests/
     ├── launch_user_n.Tests.ps1    # Pester specs (path guard, profile table, MCP merge, placeholder expansion)
     ├── orchestrator_mcp_test.py   # pytest specs for orchestrator-mcp coordination server
+    ├── test_claude_cdp_adapter.py  # Claude Desktop CDP adapter tests
     ├── test_cloud_scheduler.py    # pytest specs for cloud scheduler capability matching & supervisor recovery
-    └── test_pipeline_engine.py    # pytest specs for SKU pipeline decomposition & task waterfall
+    ├── test_e2e_pipeline.py        # End-to-end job, lease, checkpoint & worker flow tests
+    ├── test_groq_adapter.py        # Groq adapter tests
+    ├── test_health.py              # Health, correlation ID & metrics endpoint tests
+    ├── test_pipeline_engine.py     # pytest specs for SKU pipeline decomposition & task waterfall
+    ├── test_remote_mcp.py          # Hosted MCP and memory route tests
+    └── test_security_config.py     # Production authentication configuration tests
 ```
 
 ## Files
@@ -131,7 +146,7 @@ The repository keeps operational entry points and their root-relative configurat
 - **`team-claude-config.json`**: Sanitized baseline desktop configuration template declaring shared MCP servers and global preferences (`coworkBrowserToolsEnabled`, `coworkWebSearchEnabled`, `coworkPreferredBrowser`), omitting account-specific authentication tokens.
 - **`Claude Skills + MCP/`**: Directory housing custom Claude skill definitions (`.skill`), extension bundles (`.mcpb`), and `Cross-Linking Hub.md` (the authoritative mapping of leaf GitHub repositories and NotebookLM notebooks to the central Engineer's Personal Notebook hub).
 - **`mcp-servers/notebooklm-mcp/run_server.py`**: `uvx` launcher for the NotebookLM MCP server, referenced by `team-mcp.json`. Falls back through common per-platform `uvx` install locations when it's missing from `PATH`. Auth is shared across all profiles via `%USERPROFILE%\.notebooklm-mcp-cli\`.
-- **`mcp-servers/orchestrator-mcp/run_server.py`**: Hand-written MCP server coordinating orchestrator/divider/executor roles across profiles via local files in `orchestrator-state/`. Exposes 19 tools across task lifecycles, checkpoints, live status, shared memory, and job metrics.
+- **`mcp-servers/orchestrator-mcp/run_server.py`**: Hand-written MCP server coordinating orchestrator/divider/executor roles across profiles via local files in `orchestrator-state/`. Exposes 21 tools across task lifecycles, checkpoints, live status, shared memory, and job metrics.
 - **`server/mcp_remote.py`**: High-concurrency Hosted Remote MCP Server with **23 unified tools** mounted directly at `/mcp` (SSE / Streamable HTTP), integrating SQLite WAL state, atomic leasing, automated pipeline handoffs, shared memory search, and durable team context.
 - **`team-context.md`**: Static identity/context scaffold. Edit it directly with standing project context and durable preferences — callable directly in chat via orchestrator-mcp's `read_team_context` tool.
 - **`team-memory.md`**: Shared team memory log distributed across profiles via `sync.ps1`. New orchestrator memory entries (`orchestrator-state/memory/*.json`) are automatically appended under date headers by `sync.ps1`.
@@ -192,7 +207,7 @@ Every non-`-WhatIf` launch auto-runs `sync.ps1` as its last step (pull, auto-mem
 
 ### Running the Cloud Orchestration Backend (v2)
 
-Start the cloud FastAPI server and PostgreSQL database stack:
+Start the SQLite-backed FastAPI server and optional Cloudflare tunnel:
 
 ```bash
 cd server

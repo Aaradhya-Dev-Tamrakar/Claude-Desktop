@@ -1410,10 +1410,10 @@
     "semantic_hash": "832644b0ffbc8393108bdb8f5e9fd40c"
   },
   "README.md": {
-    "mtime": 1788145533.0722792,
-    "seen": 1788329568.4789865,
-    "ast_hash": "91cbed8098dc27cccdb80e37cfede57a",
-    "semantic_hash": "91cbed8098dc27cccdb80e37cfede57a"
+    "mtime": 1788457051.8467805,
+    "seen": 1788457053.5171819,
+    "ast_hash": "5c1e748f601739ce55e36946dc9bfae6",
+    "semantic_hash": "5c1e748f601739ce55e36946dc9bfae6"
   },
   "orchestrator-state/SCHEMA.md": {
     "mtime": 1788148533.4208663,
@@ -1924,5 +1924,11 @@
     "seen": 1788456032.7880971,
     "ast_hash": "9f8023a9e5a517ea11a3390256acff58",
     "semantic_hash": "9f8023a9e5a517ea11a3390256acff58"
+  },
+  "dev-logs/upgrade-log.md": {
+    "mtime": 1788456495.977691,
+    "seen": 1788457053.5171852,
+    "ast_hash": "1d42e9c2538b8897dcdfcbdae4b23a94",
+    "semantic_hash": "1d42e9c2538b8897dcdfcbdae4b23a94"
   }
 }
