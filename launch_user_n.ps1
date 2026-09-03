@@ -80,6 +80,23 @@ if (-not (Test-Path $ConfigFile)) {
 $Profiles = Get-Content $ConfigFile | ConvertFrom-Json
 $AccountKeys = @($Profiles.psobject.properties.Name)
 
+function Write-LaunchBanner {
+    param(
+        [string]$Title,
+        [string]$Subtitle = ""
+    )
+    Write-Host "" 
+    Write-Host "╔══════════════════════════════════════════════════════╗" -ForegroundColor Cyan
+    Write-Host "║ $($Title.PadRight(46, ' ')) ║" -ForegroundColor Green
+    if ($Subtitle) {
+        Write-Host "║ $($Subtitle.Substring(0, [Math]::Min($Subtitle.Length, 46)).PadRight(46, ' ')) ║" -ForegroundColor DarkGray
+    }
+    Write-Host "╚══════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host "" 
+}
+
+Write-LaunchBanner -Title "Claude Desktop Launcher" -Subtitle "Mode: $(if ($Concurrent) { 'Concurrent' } else { 'Isolated' })"
+
 function Test-ProfilePathWithinBase {
     # Pure predicate: does $RawPath resolve inside the approved
     # .claude-profiles base directory? No side effects (no Write-Host,

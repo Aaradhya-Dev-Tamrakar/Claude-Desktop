@@ -62,6 +62,20 @@ param(
 Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
 
+function Write-WatchdogBanner {
+    param([string]$Account, [int]$Threshold, [int]$IntervalSeconds)
+    Write-Host "" 
+    Write-Host "╔══════════════════════════════════════════════════════╗" -ForegroundColor Cyan
+    Write-Host "║ Usage Watchdog                                     ║" -ForegroundColor Green
+    Write-Host "║ Account: $($Account.PadRight(36, ' ')) ║" -ForegroundColor DarkGray
+    Write-Host "║ Threshold: $($Threshold.ToString().PadRight(32, ' ')) ║" -ForegroundColor DarkGray
+    Write-Host "║ Poll: $($IntervalSeconds.ToString().PadRight(38, ' ')) ║" -ForegroundColor DarkGray
+    Write-Host "╚══════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host "" 
+}
+
+Write-WatchdogBanner -Account $Account -Threshold $Threshold -IntervalSeconds $IntervalSeconds
+
 $RepoRoot = $PSScriptRoot
 $ProfilesPath = Join-Path $RepoRoot "profiles.json"
 

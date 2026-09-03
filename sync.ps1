@@ -1,9 +1,41 @@
+<#
+.SYNOPSIS
+Safely sync a Git repo, check staged changes for secrets, and commit when appropriate.
+
+.DESCRIPTION
+Pulls the latest changes from the configured origin remote, appends new orchestrator memory
+entries to team-memory.md, prevents accidental credential commits, and exits cleanly when there
+is nothing to commit.
+#>
+
+[CmdletBinding()]
 param (
     [Alias("m")]
     [string]$Message,
 
     [switch]$PullOnly
 )
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+
+function Write-Status {
+    param(
+        [string]$Message,
+        [System.ConsoleColor]$Color = [System.ConsoleColor]::Cyan
+    )
+    Write-Host "[$((Get-Date).ToString('HH:mm:ss'))] $Message" -ForegroundColor $Color
+}
+
+function Write-Notice {
+    param([string]$Message)
+    Write-Status -Message $Message -Color ([System.ConsoleColor]::Yellow)
+}
+
+function Write-Success {
+    param([string]$Message)
+    Write-Status -Message $Message -Color ([System.ConsoleColor]::Green)
+}
 
 function Find-StagedSecrets {
     $stagedDiff = git diff --cached -U0 2>$null
@@ -28,12 +60,17 @@ function Find-StagedSecrets {
     foreach ($line in $addedLines) {
         foreach ($pattern in $secretPatterns) {
             if ($line -match $pattern) {
-                $hits += [PSCustomObject]@{ Pattern = $pattern; Snippet = $line.Trim().Substring(0, [Math]::Min(60, $line.Trim().Length)) }
+                $snippet = $line.Trim()
+                $hits += [PSCustomObject]@{
+                    Pattern = $pattern
+                    Snippet = $snippet.Substring(0, [Math]::Min(60, $snippet.Length))
+                }
                 break
             }
         }
     }
-    return $hits
+
+    return @($hits)
 }
 
 function Get-AutoCommitMessage {
@@ -54,11 +91,11 @@ function Get-AutoCommitMessage {
         else { $modifiedFiles += $fileName }
     }
 
-    $allChanged = $addedFiles + $modifiedFiles + $deletedFiles
-    if ($allChanged.Count -eq 0) { return $null }
+    $allChanged = @($addedFiles + $modifiedFiles + $deletedFiles)
+    if (@($allChanged).Count -eq 0) { return $null }
 
     $prefix = "chore"
-    if ($addedFiles.Count -gt 0) { $prefix = "feat" }
+    if (@($addedFiles).Count -gt 0) { $prefix = "feat" }
     elseif ($modifiedFiles | Where-Object { $_ -match '\.(ps1|json)$' }) { $prefix = "refactor" }
 
     $summary = ""
@@ -93,16 +130,16 @@ function Get-AutoCommitMessage {
     }
     else {
         $hunkContext = $rawDiff |
-        Select-String '^@@.*@@\s*(\S.*)$' |
-        ForEach-Object { $_.Matches[0].Groups[1].Value } |
-        Select-Object -First 1
+            Select-String '^@@.*@@\s*(\S.*)$' |
+            ForEach-Object { $_.Matches[0].Groups[1].Value } |
+            Select-Object -First 1
 
         if (-not $hunkContext) {
             $addedLine = $rawDiff |
-            Select-String '^\+[^+]' |
-            ForEach-Object { $_.Line.Substring(1).Trim() } |
-            Where-Object { $_.Length -gt 0 } |
-            Select-Object -First 1
+                Select-String '^\+[^+]' |
+                ForEach-Object { $_.Line.Substring(1).Trim() } |
+                Where-Object { $_.Length -gt 0 } |
+                Select-Object -First 1
             if ($addedLine) {
                 $snippet = $addedLine
                 if ($snippet -match '(?i)(api[_-]?key|secret|password|token|passwd)\s*[:=]') {
@@ -117,6 +154,7 @@ function Get-AutoCommitMessage {
     if ($hunkContext) {
         return "${prefix}: update ${summary} - ${hunkContext}${churn}"
     }
+
     return "${prefix}: update ${summary}${churn}"
 }
 
@@ -136,7 +174,7 @@ function Sync-MemoryToTeamMemory {
     }
 
     $entryFiles = Get-ChildItem -Path $memoryDir -Filter "*.json" -File -ErrorAction SilentlyContinue |
-    Sort-Object Name
+        Sort-Object Name
     if (-not $entryFiles) { return }
 
     $newLines = @()
@@ -150,7 +188,7 @@ function Sync-MemoryToTeamMemory {
             $json = Get-Content $f.FullName -Raw | ConvertFrom-Json
         }
         catch {
-            Write-Host "[Sync] Skipping unparseable memory entry: $($f.Name)" -ForegroundColor Yellow
+            Write-Status -Message "Skipping unparseable memory entry: $($f.Name)" -Color ([System.ConsoleColor]::Yellow)
             continue
         }
 
@@ -158,11 +196,11 @@ function Sync-MemoryToTeamMemory {
         $text = $json.text
         $pushedAtRaw = $json.pushed_at
         if (-not $account -or -not $text -or -not $pushedAtRaw) {
-            Write-Host "[Sync] Skipping malformed memory entry (missing field): $($f.Name)" -ForegroundColor Yellow
+            Write-Status -Message "Skipping malformed memory entry (missing field): $($f.Name)" -Color ([System.ConsoleColor]::Yellow)
             continue
         }
-        $pushedAt = if ($pushedAtRaw -is [DateTime]) { $pushedAtRaw.ToString("yyyy-MM-ddTHH:mm:ssZ") } else { [string]$pushedAtRaw }
 
+        $pushedAt = if ($pushedAtRaw -is [DateTime]) { $pushedAtRaw.ToString("yyyy-MM-ddTHH:mm:ssZ") } else { [string]$pushedAtRaw }
         $day = $pushedAt.Substring(0, 10)
         $line = "- [$account, $pushedAt] $text"
         $newLines += [PSCustomObject]@{ Day = $day; Line = $line }
@@ -191,69 +229,99 @@ function Sync-MemoryToTeamMemory {
     Set-Content -Path $teamMemoryPath -Value $content -NoNewline
     Add-Content -Path $trackerPath -Value $newIds
 
-    Write-Host "[Sync] Auto-appended $($newIds.Count) orchestrator memory entr$(if ($newIds.Count -eq 1) {'y'} else {'ies'}) to team-memory.md." -ForegroundColor Cyan
+    Write-Status -Message "Auto-appended $($newIds.Count) orchestrator memory entr$(if ($newIds.Count -eq 1) { 'y' } else { 'ies' }) to team-memory.md." -Color ([System.ConsoleColor]::Cyan)
 }
 
 $RepoPath = $PSScriptRoot
-if (-not (Test-Path "$RepoPath\.git")) {
-    Write-Host "Not a git repo: $RepoPath" -ForegroundColor Red
+if (-not (Test-Path (Join-Path $RepoPath '.git'))) {
+    Write-Error "Not a git repo: $RepoPath"
     exit 1
 }
+
 Push-Location $RepoPath
+try {
+    $currentBranch = (git branch --show-current 2>$null)
+    if ($currentBranch) { $currentBranch = $currentBranch.Trim() }
+    if (-not $currentBranch) { $currentBranch = "main" }
 
-$currentBranch = (git branch --show-current 2>$null)
-if ($currentBranch) { $currentBranch = $currentBranch.Trim() }
-if (-not $currentBranch) { $currentBranch = "main" }
-
-Write-Host "[Sync] Pulling latest from origin $currentBranch..." -ForegroundColor Cyan
-git pull --rebase --autostash origin $currentBranch
-
-Sync-MemoryToTeamMemory -RepoPath $RepoPath
-
-if ($PullOnly) {
-    Write-Host "[Sync] Pull complete (PullOnly flag set)." -ForegroundColor Green
-    Pop-Location
-    exit 0
-}
-
-Write-Host "[Sync] Staging changes..." -ForegroundColor Cyan
-git add -A
-
-$secretHits = Find-StagedSecrets
-if ($secretHits.Count -gt 0) {
-    Write-Host "[Sync] Aborting: possible secret(s) detected in staged changes." -ForegroundColor Red
-    foreach ($hit in $secretHits) {
-        Write-Host "    Pattern: $($hit.Pattern)" -ForegroundColor Yellow
-        Write-Host "    Line   : $($hit.Snippet)..." -ForegroundColor Gray
+    $hasOrigin = $false
+    try {
+        git remote get-url origin *> $null
+        $hasOrigin = $true
     }
-    Write-Host "[Sync] Unstage or remove the offending content, then re-run." -ForegroundColor Red
-    git reset
-    Pop-Location
-    exit 1
-}
-
-if (-not $Message) {
-    $Message = Get-AutoCommitMessage
-    if ($Message) {
-        Write-Host "[Sync] Auto-generated commit message: '$Message'" -ForegroundColor Yellow
+    catch {
+        $hasOrigin = $false
     }
-}
 
-if ($Message) {
-    Write-Host "[Sync] Committing: '$Message'..." -ForegroundColor Cyan
-    git commit -m "$Message"
+    Write-Status -Message "Repository: $RepoPath"
+    Write-Status -Message "Current branch: $currentBranch"
 
-    Write-Host "[Sync] Pushing to origin $currentBranch..." -ForegroundColor Cyan
-    git push origin $currentBranch
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "[Sync] Push rejected. Re-pulling and retrying push..." -ForegroundColor Yellow
+    if ($hasOrigin) {
+        Write-Status -Message "Pulling latest from origin/$currentBranch..."
         git pull --rebase --autostash origin $currentBranch
-        git push origin $currentBranch
+    }
+    else {
+        Write-Notice -Message "No 'origin' remote configured; skipping pull and push to avoid a broken sync step."
+    }
+
+    Sync-MemoryToTeamMemory -RepoPath $RepoPath
+
+    if ($PullOnly) {
+        Write-Success -Message "Pull complete; no commit was created because -PullOnly was set."
+        exit 0
+    }
+
+    Write-Status -Message "Staging all tracked and new files..."
+    git add -A
+
+    git diff --cached --quiet 2>$null
+    if ($LASTEXITCODE -eq 0) {
+        Write-Success -Message "No local changes detected. Nothing to commit."
+        exit 0
+    }
+
+    $secretHits = Find-StagedSecrets
+    if (@($secretHits).Count -gt 0) {
+        Write-Error "Possible secret(s) detected in staged changes. The repo was left unstaged for safety."
+        foreach ($hit in @($secretHits)) {
+            Write-Host "    Pattern: $($hit.Pattern)" -ForegroundColor Yellow
+            Write-Host "    Line   : $($hit.Snippet)..." -ForegroundColor Gray
+        }
+        Write-Notice -Message "Unstage or remove the offending content, then re-run the script."
+        git reset
+        exit 1
+    }
+
+    if (-not $Message) {
+        $Message = Get-AutoCommitMessage
+        if ($Message) {
+            Write-Notice -Message "Auto-generated commit message: '$Message'"
+        }
+    }
+
+    if ($Message) {
+        Write-Status -Message "Committing: '$Message'..."
+        git commit -m "$Message"
+
+        if ($hasOrigin) {
+            Write-Status -Message "Pushing to origin/$currentBranch..."
+            git push origin $currentBranch
+            if ($LASTEXITCODE -ne 0) {
+                Write-Notice -Message "Push rejected. Re-pulling and retrying push..."
+                git pull --rebase --autostash origin $currentBranch
+                git push origin $currentBranch
+            }
+        }
+        else {
+            Write-Notice -Message "Commit created locally, but no 'origin' remote was available to push it."
+        }
+
+        Write-Success -Message "Workspace synced successfully."
+    }
+    else {
+        Write-Success -Message "No local changes detected to commit."
     }
 }
-else {
-    Write-Host "[Sync] No local changes detected to commit." -ForegroundColor Gray
+finally {
+    Pop-Location
 }
-
-Pop-Location
-Write-Host "[Sync] Workspace is clean and fully synchronized!" -ForegroundColor Green

@@ -10,9 +10,17 @@ if (-not (Test-Path (Split-Path $NativeAppDataDir -Parent))) {
     $NativeAppDataDir = "$env:APPDATA\Claude"
 }
 
+function Write-ResetBanner {
+    param([string]$Step, [string]$Detail)
+    Write-Host "" 
+    Write-Host "[Reset] $Step" -ForegroundColor Cyan
+    Write-Host "    $Detail" -ForegroundColor DarkGray
+}
+
 Write-Host "----------------------------------------" -ForegroundColor Cyan
 Write-Host " Reset Claude Desktop Profiles" -ForegroundColor Green
 Write-Host "----------------------------------------" -ForegroundColor Cyan
+Write-ResetBanner -Step "Starting reset" -Detail "This will clear local profile state, active session data, and the repo sync checkpoint."
 
 if (-not $WhatIf) {
     $confirm = Read-Host "This will delete ALL profiles, sessions, and logs, and reset the active Claude session. Type 'RESET' to confirm"
@@ -22,6 +30,7 @@ if (-not $WhatIf) {
     }
 }
 
+Write-ResetBanner -Step "Stopping Claude" -Detail "Closing any active Claude process so locked files can be safely reset."
 # Close any running Claude process so files aren't locked
 $RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
 if ($RunningClaude) {
@@ -35,6 +44,7 @@ if ($RunningClaude) {
     }
 }
 
+Write-ResetBanner -Step "Clearing profile storage" -Detail "Removing user profile directories and cached Claude state."
 # Wipe all profile storage, logs, state, and registry backups
 if (Test-Path $ProfilesBaseDir) {
     if ($WhatIf) {
@@ -72,6 +82,7 @@ try {
 }
 catch { }
 
+Write-ResetBanner -Step "Resetting config" -Detail "Writing a clean profiles.json state so the next launch starts fresh."
 # Reset profiles.json to empty object (zero state, not deleted)
 if ($WhatIf) {
     Write-Host "[WhatIf] Would reset '$ConfigFile' to '{}'." -ForegroundColor DarkCyan
@@ -90,6 +101,7 @@ else {
 }
 Write-Host "----------------------------------------" -ForegroundColor Cyan
 
+Write-ResetBanner -Step "Syncing repository" -Detail "Auto-pulling, checking for secrets, and pushing the reset state back to repo."
 # Auto-sync repo (profiles.json reset to {}) via sync.ps1 on every reset.
 # Spawned as a separate pwsh process (not dot-sourced/called in-process) so that
 # sync.ps1's internal `exit` calls (e.g. secret-scan abort) cannot terminate this
@@ -103,4 +115,4 @@ else {
     if ($LASTEXITCODE -ne 0) {
         Write-Host "[!] Auto-sync via sync.ps1 exited with code $LASTEXITCODE. Repo may be out of sync." -ForegroundColor Yellow
     }
-}
+}

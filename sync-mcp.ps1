@@ -25,6 +25,18 @@ param(
 $RepoRoot = $PSScriptRoot
 $SharedConfigPath = Join-Path $RepoRoot "team-mcp.json"
 
+function Write-McpBanner {
+    param([string]$Title, [string]$Subtitle)
+    Write-Host "" 
+    Write-Host "╔══════════════════════════════════════════════════════╗" -ForegroundColor Cyan
+    Write-Host "║ $($Title.PadRight(46, ' ')) ║" -ForegroundColor Green
+    Write-Host "║ $($Subtitle.Substring(0, [Math]::Min($Subtitle.Length, 46)).PadRight(46, ' ')) ║" -ForegroundColor DarkGray
+    Write-Host "╚══════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host "" 
+}
+
+Write-McpBanner -Title "MCP Sync" -Subtitle "Shared config -> profile configs"
+
 if (-not (Test-Path $SharedConfigPath)) {
     Write-Host "[!] team-mcp.json not found at '$SharedConfigPath'." -ForegroundColor Red
     exit 1

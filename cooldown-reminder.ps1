@@ -48,6 +48,19 @@ param (
 $CooldownHours = 5
 $ScriptDir = $PSScriptRoot
 
+function Write-CooldownBanner {
+    param([string]$Nickname, [datetime]$LoginTime)
+    Write-Host "" 
+    Write-Host "╔══════════════════════════════════════════════════════╗" -ForegroundColor Cyan
+    Write-Host "║ Cooldown Reminder                                  ║" -ForegroundColor Green
+    Write-Host "║ Profile: $($Nickname.PadRight(37, ' ')) ║" -ForegroundColor DarkGray
+    Write-Host "║ Login: $($LoginTime.ToString('yyyy-MM-dd HH:mm:ss').PadRight(34, ' ')) ║" -ForegroundColor DarkGray
+    Write-Host "╚══════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host "" 
+}
+
+Write-CooldownBanner -Nickname $Nickname -LoginTime $LoginTime
+
 # ---------------------------------------------------------------------------
 # 0. Track first_login_time (immutable once set for each profile) and return
 #    the anchor the 5-hour cooldown counts from.
@@ -273,4 +286,4 @@ if (-not $DisableToast) {
 # GCal integration paused (not invoked by default; uncomment if $EnableGCal to re-enable)
 # if ($EnableGCal) {
 #     New-CooldownCalendarEvent -ReadyTime $ReadyTime -Nickname $Nickname -ScriptDir $ScriptDir
-# }
+# }
