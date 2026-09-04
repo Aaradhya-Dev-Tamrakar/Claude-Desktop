@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>Claude-Desktop — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 928 nodes, 1868 edges, 92 communities. Commit: c935ff4</p>
+<p class="subtitle">Generated from graphify knowledge graph: 932 nodes, 1868 edges, 96 communities. Commit: 6ae2936</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -94,7 +94,7 @@ flowchart LR
     class BUILD_GRAPH_321CBB04 module;
     ANALYSIS_CLUSTERING_C79796DA("Analysis &amp; Clustering<br/><small>43 nodes</small>")
     class ANALYSIS_CLUSTERING_C79796DA module;
-    CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>126 nodes</small>")
+    CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>130 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
     INGEST_CACHE_UPDATE_FF457338("Ingestion &amp; Updates<br/><small>9 nodes</small>")
     class INGEST_CACHE_UPDATE_FF457338 module;
@@ -146,7 +146,7 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Extraction Pipeline</td><td>4</td><td><code>53</code></td></tr><tr><td>Graph Build</td><td>89</td><td><code>2, 25, 32, 37, 40, 49, 81, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>43</td><td><code>3, 91</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>126</td><td><code>11, 15, 8, 20, 27, 33, 34, 35, 88, 65, 66, 67, 68, 69, 70, 71, 72, 83</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>9</td><td><code>36</code></td></tr><tr><td>Serving API</td><td>98</td><td><code>7, 12, 18, 16, 17</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>167</td><td><code>1, 5, 13, 24, 28, 31, 30, 23, 41, 86</code></td></tr><tr><td>IApplicationView</td><td>41</td><td><code>0</code></td></tr><tr><td>Memory Log</td><td>39</td><td><code>6</code></td></tr><tr><td>launch_user_n.ps1</td><td>30</td><td><code>9</code></td></tr><tr><td>IVirtualDesktop</td><td>29</td><td><code>4</code></td></tr><tr><td>IntPtr</td><td>27</td><td><code>19</code></td></tr><tr><td>Desktop</td><td>24</td><td><code>10</code></td></tr><tr><td>.GetDesktop</td><td>16</td><td><code>87</code></td></tr><tr><td>Other</td><td>186</td><td><code>21, 22, 26, 14, 29, 38, 39, 42, 89, 43, 44, 45, 46, 47, 48, 90, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 73, 74, 75, 76, 77, 78, 79, 80, 82, 85</code></td></tr>
+      <tr><td>Extraction Pipeline</td><td>4</td><td><code>53</code></td></tr><tr><td>Graph Build</td><td>89</td><td><code>2, 25, 32, 37, 40, 49, 81, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>43</td><td><code>3, 91</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>130</td><td><code>11, 15, 8, 20, 27, 33, 34, 35, 88, 65, 66, 67, 68, 69, 70, 71, 72, 83, 92, 93, 94, 95</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>9</td><td><code>36</code></td></tr><tr><td>Serving API</td><td>98</td><td><code>7, 12, 18, 16, 17</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>167</td><td><code>1, 5, 13, 24, 28, 31, 30, 23, 41, 86</code></td></tr><tr><td>IApplicationView</td><td>41</td><td><code>0</code></td></tr><tr><td>Memory Log</td><td>39</td><td><code>6</code></td></tr><tr><td>launch_user_n.ps1</td><td>30</td><td><code>9</code></td></tr><tr><td>IVirtualDesktop</td><td>29</td><td><code>4</code></td></tr><tr><td>IntPtr</td><td>27</td><td><code>19</code></td></tr><tr><td>Desktop</td><td>24</td><td><code>10</code></td></tr><tr><td>.GetDesktop</td><td>16</td><td><code>87</code></td></tr><tr><td>Other</td><td>186</td><td><code>21, 22, 26, 14, 29, 38, 39, 42, 89, 43, 44, 45, 46, 47, 48, 90, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 73, 74, 75, 76, 77, 78, 79, 80, 82, 85</code></td></tr>
     </table>
   </div>
   <div class="card">
@@ -158,7 +158,7 @@ flowchart LR
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>928 nodes · 1868 edges · 92 communities (54 shown, 20 thin omitted)</li>
+      <li>932 nodes · 1868 edges · 96 communities (54 shown, 20 thin omitted)</li>
       <li>Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 76 edges (avg confidence: 0.91)</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `IApplicationView` - 64 edges</li>
@@ -960,12 +960,12 @@ flowchart LR
 
 <!-- ====== 5. CLI & Skill Installers ====== -->
 <h2 id="cli-skills">5. CLI &amp; Skill Installers</h2>
-<p>CLI &amp; Skill Installers groups implementation around claude, client, adapters, desktop, mostly in client/adapters/claude_desktop_cdp.py, tools/VirtualDesktop11-24H2.cs, README.md. This section covers 126 nodes and 179 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>CLI &amp; Skill Installers groups implementation around claude, client, adapters, desktop, mostly in client/adapters/claude_desktop_cdp.py, tools/VirtualDesktop11-24H2.cs, README.md. This section covers 130 nodes and 179 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: CLI &amp; Skill Installers (126 nodes, 179 edges)
+    %% Section: CLI &amp; Skill Installers (130 nodes, 179 edges)
     subgraph cli_skills_client_adapters_claude_desktop_proxy_b804bc11["client/adapters/claude_desktop_proxy.py"]
         client_adapters_claude_desktop_proxy_claudedeskt_73403d88("ClaudeDesktopProxyAdapter<br/><small>client/adapters/claude_desktop_proxy.py</small>")
         client_adapters_claude_desktop_proxy_claudedeskt_d74c5f61("__init__()<br/><small>client/adapters/claude_desktop_proxy.py</small>")
@@ -1008,7 +1008,7 @@ flowchart LR
     client_worker_daemon_272f3044 -->|imports| client_adapters_ollama_local_adapter_ollamalocal_479f5c26
     client_worker_daemon_272f3044 -->|imports| client_adapters_claude_desktop_proxy_claudedeskt_73403d88
     client_worker_daemon_272f3044 -->|imports| client_adapters_base_adapter_baseworkeradapter_d28b45a8
-    %% Omitted for readability: 108 nodes, 0 edges
+    %% Omitted for readability: 112 nodes, 0 edges
     class client_adapters_claude_desktop_proxy_claudedeskt_73403d88 klass;
     class client_adapters_claude_desktop_proxy_claudedeskt_d74c5f61 function;
     class client_adapters_claude_desktop_proxy_claudedeskt_fa0aa283 function;
@@ -4752,10 +4752,10 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>928</td></tr>
+      <tr><td>Nodes</td><td>932</td></tr>
       <tr><td>Edges</td><td>1868</td></tr>
       <tr><td>Hyperedges</td><td>6</td></tr>
-      <tr><td>Communities</td><td>92</td></tr>
+      <tr><td>Communities</td><td>96</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
@@ -4771,7 +4771,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>Claude-Desktop — Architecture Documentation</p>
-  <p>Generated: 2026-09-04 03:53 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-09-04 06:17 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->

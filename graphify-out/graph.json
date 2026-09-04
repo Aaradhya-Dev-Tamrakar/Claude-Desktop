@@ -11235,7 +11235,7 @@
       "file_type": "code",
       "norm_label": "add-newprofile()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L526"
+      "source_location": "L528"
     },
     {
       "id": "launch_user_n_expand_teammcpplaceholders",
@@ -11246,7 +11246,7 @@
       "file_type": "code",
       "norm_label": "expand-teammcpplaceholders()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L363"
+      "source_location": "L365"
     },
     {
       "id": "launch_user_n_format_cardrow",
@@ -11257,7 +11257,7 @@
       "file_type": "code",
       "norm_label": "format-cardrow()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L132"
+      "source_location": "L134"
     },
     {
       "id": "launch_user_n_format_visibleright",
@@ -11268,7 +11268,7 @@
       "file_type": "code",
       "norm_label": "format-visibleright()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L82"
+      "source_location": "L84"
     },
     {
       "id": "launch_user_n_format_visibletext",
@@ -11279,7 +11279,7 @@
       "file_type": "code",
       "norm_label": "format-visibletext()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L93"
+      "source_location": "L95"
     },
     {
       "id": "launch_user_n_get_concurrentclaudeinstances",
@@ -11290,7 +11290,7 @@
       "file_type": "code",
       "norm_label": "get-concurrentclaudeinstances()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L270"
+      "source_location": "L272"
     },
     {
       "id": "launch_user_n_get_desktopbatchallocation",
@@ -11301,7 +11301,7 @@
       "file_type": "code",
       "norm_label": "get-desktopbatchallocation()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1116"
+      "source_location": "L1118"
     },
     {
       "id": "launch_user_n_get_enrichedprofilerows",
@@ -11312,7 +11312,7 @@
       "file_type": "code",
       "norm_label": "get-enrichedprofilerows()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L581"
+      "source_location": "L583"
     },
     {
       "id": "launch_user_n_get_validatedprofilepath",
@@ -11323,7 +11323,7 @@
       "file_type": "code",
       "norm_label": "get-validatedprofilepath()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L250"
+      "source_location": "L252"
     },
     {
       "id": "launch_user_n_get_visibletextwidth",
@@ -11334,7 +11334,7 @@
       "file_type": "code",
       "norm_label": "get-visibletextwidth()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L44"
+      "source_location": "L46"
     },
     {
       "id": "launch_user_n_get_windowgridlayout",
@@ -11345,7 +11345,7 @@
       "file_type": "code",
       "norm_label": "get-windowgridlayout()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1193"
+      "source_location": "L1195"
     },
     {
       "id": "launch_user_n_initialize_virtualdesktoptool",
@@ -11356,7 +11356,7 @@
       "file_type": "code",
       "norm_label": "initialize-virtualdesktoptool()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1157"
+      "source_location": "L1159"
     },
     {
       "id": "launch_user_n_initialize_windowhelpertype",
@@ -11367,7 +11367,7 @@
       "file_type": "code",
       "norm_label": "initialize-windowhelpertype()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1257"
+      "source_location": "L1259"
     },
     {
       "id": "launch_user_n_invoke_nlmlogin",
@@ -11378,7 +11378,7 @@
       "file_type": "code",
       "norm_label": "invoke-nlmlogin()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1530"
+      "source_location": "L1532"
     },
     {
       "id": "launch_user_n_invoke_profilelaunch",
@@ -11389,7 +11389,7 @@
       "file_type": "code",
       "norm_label": "invoke-profilelaunch()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1629"
+      "source_location": "L1643"
     },
     {
       "id": "launch_user_n_merge_mcpservers",
@@ -11400,7 +11400,7 @@
       "file_type": "code",
       "norm_label": "merge-mcpservers()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L284"
+      "source_location": "L286"
     },
     {
       "id": "launch_user_n_new_border",
@@ -11411,7 +11411,7 @@
       "file_type": "code",
       "norm_label": "new-border()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L668"
+      "source_location": "L670"
     },
     {
       "id": "launch_user_n_new_row",
@@ -11422,7 +11422,7 @@
       "file_type": "code",
       "norm_label": "new-row()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L671"
+      "source_location": "L673"
     },
     {
       "id": "launch_user_n_resolve_singleaccount",
@@ -11433,7 +11433,7 @@
       "file_type": "code",
       "norm_label": "resolve-singleaccount()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1555"
+      "source_location": "L1569"
     },
     {
       "id": "launch_user_n_select_profileinteractive",
@@ -11444,7 +11444,7 @@
       "file_type": "code",
       "norm_label": "select-profileinteractive()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L694"
+      "source_location": "L696"
     },
     {
       "id": "launch_user_n_set_claudewindowslayout",
@@ -11455,7 +11455,7 @@
       "file_type": "code",
       "norm_label": "set-claudewindowslayout()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1352"
+      "source_location": "L1354"
     },
     {
       "id": "launch_user_n_show_profiletable",
@@ -11466,7 +11466,7 @@
       "file_type": "code",
       "norm_label": "show-profiletable()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L651"
+      "source_location": "L653"
     },
     {
       "id": "launch_user_n_start_localorchestratorserver",
@@ -11477,7 +11477,7 @@
       "file_type": "code",
       "norm_label": "start-localorchestratorserver()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1057"
+      "source_location": "L1059"
     },
     {
       "id": "launch_user_n_sync_repositoryafterlaunchbatch",
@@ -11488,7 +11488,7 @@
       "file_type": "code",
       "norm_label": "sync-repositoryafterlaunchbatch()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L2105"
+      "source_location": "L2119"
     },
     {
       "id": "launch_user_n_sync_teamconfigafterlaunchbatch",
@@ -11499,7 +11499,7 @@
       "file_type": "code",
       "norm_label": "sync-teamconfigafterlaunchbatch()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L2119"
+      "source_location": "L2133"
     },
     {
       "id": "launch_user_n_sync_teammcpconfig",
@@ -11510,7 +11510,7 @@
       "file_type": "code",
       "norm_label": "sync-teammcpconfig()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L416"
+      "source_location": "L418"
     },
     {
       "id": "launch_user_n_test_profilepathwithinbase",
@@ -11521,7 +11521,7 @@
       "file_type": "code",
       "norm_label": "test-profilepathwithinbase()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L227"
+      "source_location": "L229"
     },
     {
       "id": "launch_user_n_write_jsonconfigsafely",
@@ -11532,7 +11532,7 @@
       "file_type": "code",
       "norm_label": "write-jsonconfigsafely()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L341"
+      "source_location": "L343"
     },
     {
       "id": "launch_user_n_write_launchbanner",
@@ -11543,7 +11543,7 @@
       "file_type": "code",
       "norm_label": "write-launchbanner()",
       "source_file": "launch_user_n.ps1",
-      "source_location": "L210"
+      "source_location": "L212"
     },
     {
       "id": "benchmarks_benchmark_efficiency",
@@ -11577,6 +11577,54 @@
       "norm_label": "measure-milliseconds()",
       "source_file": "benchmarks/benchmark-efficiency.ps1",
       "source_location": "L13"
+    },
+    {
+      "id": "claude_skills_mcp_biasaperture_workflow",
+      "label": "biasaperture-workflow.skill",
+      "_origin": "ast",
+      "community": 92,
+      "community_name": "biasaperture-workflow.skill",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "biasaperture-workflow.skill",
+      "source_file": "Claude Skills + MCP/biasaperture-workflow.skill",
+      "source_location": "L1"
+    },
+    {
+      "id": "claude_skills_mcp_desktop_orchestration",
+      "label": "desktop-orchestration.skill",
+      "_origin": "ast",
+      "community": 93,
+      "community_name": "desktop-orchestration.skill",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "desktop-orchestration.skill",
+      "source_file": "Claude Skills + MCP/desktop-orchestration.skill",
+      "source_location": "L1"
+    },
+    {
+      "id": "claude_skills_mcp_portfolio_site_workflow",
+      "label": "portfolio-site-workflow.skill",
+      "_origin": "ast",
+      "community": 94,
+      "community_name": "portfolio-site-workflow.skill",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "portfolio-site-workflow.skill",
+      "source_file": "Claude Skills + MCP/portfolio-site-workflow.skill",
+      "source_location": "L1"
+    },
+    {
+      "id": "claude_skills_mcp_spark_workflow",
+      "label": "spark-workflow.skill",
+      "_origin": "ast",
+      "community": 95,
+      "community_name": "spark-workflow.skill",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "spark-workflow.skill",
+      "source_file": "Claude Skills + MCP/spark-workflow.skill",
+      "source_location": "L1"
     },
     {
       "id": "claude_skills_cross_linking_hub",
@@ -24063,7 +24111,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L88",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -24074,7 +24122,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L100",
+      "source_location": "L102",
       "weight": 1.0
     },
     {
@@ -24085,7 +24133,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L256",
+      "source_location": "L258",
       "weight": 1.0
     },
     {
@@ -24096,7 +24144,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1654",
+      "source_location": "L1668",
       "weight": 1.0
     },
     {
@@ -24107,7 +24155,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1686",
+      "source_location": "L1700",
       "weight": 1.0
     },
     {
@@ -24118,7 +24166,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L2021",
+      "source_location": "L2035",
       "weight": 1.0
     },
     {
@@ -24129,7 +24177,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L2030",
+      "source_location": "L2044",
       "weight": 1.0
     },
     {
@@ -24140,7 +24188,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L2044",
+      "source_location": "L2058",
       "weight": 1.0
     },
     {
@@ -24151,7 +24199,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1580",
+      "source_location": "L1594",
       "weight": 1.0
     },
     {
@@ -24162,7 +24210,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1585",
+      "source_location": "L1599",
       "weight": 1.0
     },
     {
@@ -24173,7 +24221,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L712",
+      "source_location": "L714",
       "weight": 1.0
     },
     {
@@ -24184,7 +24232,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L715",
+      "source_location": "L717",
       "weight": 1.0
     },
     {
@@ -24195,7 +24243,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1360",
+      "source_location": "L1362",
       "weight": 1.0
     },
     {
@@ -24206,7 +24254,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1455",
+      "source_location": "L1457",
       "weight": 1.0
     },
     {
@@ -24217,7 +24265,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1456",
+      "source_location": "L1458",
       "weight": 1.0
     },
     {
@@ -24228,7 +24276,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1485",
+      "source_location": "L1487",
       "weight": 1.0
     },
     {
@@ -24239,7 +24287,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L659",
+      "source_location": "L661",
       "weight": 1.0
     },
     {
@@ -24250,7 +24298,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L679",
+      "source_location": "L681",
       "weight": 1.0
     },
     {
@@ -24261,7 +24309,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L682",
+      "source_location": "L684",
       "weight": 1.0
     },
     {
@@ -24272,7 +24320,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L2126",
+      "source_location": "L2140",
       "weight": 1.0
     },
     {
@@ -24283,7 +24331,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L451",
+      "source_location": "L453",
       "weight": 1.0
     },
     {
@@ -24294,7 +24342,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L509",
+      "source_location": "L511",
       "weight": 1.0
     },
     {
@@ -24305,7 +24353,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L513",
+      "source_location": "L515",
       "weight": 1.0
     },
     {
@@ -24811,7 +24859,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1057",
+      "source_location": "L1059",
       "weight": 1.0
     },
     {
@@ -24822,7 +24870,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1116",
+      "source_location": "L1118",
       "weight": 1.0
     },
     {
@@ -24833,7 +24881,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1157",
+      "source_location": "L1159",
       "weight": 1.0
     },
     {
@@ -24844,7 +24892,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1193",
+      "source_location": "L1195",
       "weight": 1.0
     },
     {
@@ -24855,7 +24903,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1257",
+      "source_location": "L1259",
       "weight": 1.0
     },
     {
@@ -24866,7 +24914,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L132",
+      "source_location": "L134",
       "weight": 1.0
     },
     {
@@ -24877,7 +24925,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1352",
+      "source_location": "L1354",
       "weight": 1.0
     },
     {
@@ -24888,7 +24936,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1530",
+      "source_location": "L1532",
       "weight": 1.0
     },
     {
@@ -24899,7 +24947,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1555",
+      "source_location": "L1569",
       "weight": 1.0
     },
     {
@@ -24910,18 +24958,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L1629",
-      "weight": 1.0
-    },
-    {
-      "source": "launch_user_n",
-      "target": "launch_user_n_write_launchbanner",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "launch_user_n.ps1",
-      "source_location": "L210",
+      "source_location": "L1643",
       "weight": 1.0
     },
     {
@@ -24932,7 +24969,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L2105",
+      "source_location": "L2119",
+      "weight": 1.0
+    },
+    {
+      "source": "launch_user_n",
+      "target": "launch_user_n_write_launchbanner",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "launch_user_n.ps1",
+      "source_location": "L212",
       "weight": 1.0
     },
     {
@@ -24943,7 +24991,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L2119",
+      "source_location": "L2133",
       "weight": 1.0
     },
     {
@@ -24954,7 +25002,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L227",
+      "source_location": "L229",
       "weight": 1.0
     },
     {
@@ -24965,7 +25013,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L250",
+      "source_location": "L252",
       "weight": 1.0
     },
     {
@@ -24976,7 +25024,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L270",
+      "source_location": "L272",
       "weight": 1.0
     },
     {
@@ -24987,7 +25035,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L284",
+      "source_location": "L286",
       "weight": 1.0
     },
     {
@@ -24998,7 +25046,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L341",
+      "source_location": "L343",
       "weight": 1.0
     },
     {
@@ -25009,7 +25057,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L363",
+      "source_location": "L365",
       "weight": 1.0
     },
     {
@@ -25020,7 +25068,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L416",
+      "source_location": "L418",
       "weight": 1.0
     },
     {
@@ -25031,7 +25079,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L44",
+      "source_location": "L46",
       "weight": 1.0
     },
     {
@@ -25042,7 +25090,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L526",
+      "source_location": "L528",
       "weight": 1.0
     },
     {
@@ -25053,7 +25101,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L581",
+      "source_location": "L583",
       "weight": 1.0
     },
     {
@@ -25064,7 +25112,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L651",
+      "source_location": "L653",
       "weight": 1.0
     },
     {
@@ -25075,7 +25123,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L668",
+      "source_location": "L670",
       "weight": 1.0
     },
     {
@@ -25086,7 +25134,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L671",
+      "source_location": "L673",
       "weight": 1.0
     },
     {
@@ -25097,7 +25145,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L694",
+      "source_location": "L696",
       "weight": 1.0
     },
     {
@@ -25108,7 +25156,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L82",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -25119,7 +25167,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
-      "source_location": "L93",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -34140,5 +34188,5 @@
       "source_file": "worker-prompts/orchestrator.md"
     }
   ],
-  "built_at_commit": "c935ff476f957e30ebb21d96194f090ff76808cc"
+  "built_at_commit": "6ae293612253ea39bf4cbaf5a136649cfb3c3d7d"
 }

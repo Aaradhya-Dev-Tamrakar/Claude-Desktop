@@ -90,5 +90,9 @@
   "88": "FastAPI",
   "89": "APPLICATION_VIEW_COMPATIBILITY_POLICY",
   "90": "Size",
-  "91": "benchmark-efficiency.ps1"
+  "91": "benchmark-efficiency.ps1",
+  "92": "biasaperture-workflow.skill",
+  "93": "desktop-orchestration.skill",
+  "94": "portfolio-site-workflow.skill",
+  "95": "spark-workflow.skill"
 }

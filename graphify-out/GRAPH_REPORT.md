@@ -1,16 +1,16 @@
 # Graph Report - Claude-Desktop  (2026-09-04)
 
 ## Corpus Check
-- 314 files · ~221,209 words
+- 318 files · ~221,538 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 928 nodes · 1868 edges · 92 communities (54 shown, 20 thin omitted)
+- 932 nodes · 1868 edges · 96 communities (54 shown, 20 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 76 edges (avg confidence: 0.91)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c935ff47`
+- Built from commit: `6ae29361`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -125,7 +125,7 @@
 - **CI Test Suite** — github_workflows_ci_python, github_workflows_ci_powershell [EXTRACTED 1.00]
 - **Worker Pipeline Flow** — worker_prompts_orchestrator, worker_prompts_researcher, worker_prompts_writer, worker_prompts_seo_optimizer, worker_prompts_qa_reviewer, worker_prompts_formatter [EXTRACTED 1.00]
 
-## Communities (92 total, 20 thin omitted)
+## Communities (96 total, 20 thin omitted)
 
 ### Community 1 - "orchestrator_mcp_test.py"
 Cohesion: 0.04
@@ -345,7 +345,7 @@ Nodes (6): APPLICATION_VIEW_COMPATIBILITY_POLICY, AVCP_HIGH_SCALE_FACTOR, AVCP_N
 
 ## Knowledge Gaps
 - **132 isolated node(s):** `memory_entries`, `team_context`, `VirtualDesktop`, `AVCT_NONE`, `AVCT_DEFAULT` (+127 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 357 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 361 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **20 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions

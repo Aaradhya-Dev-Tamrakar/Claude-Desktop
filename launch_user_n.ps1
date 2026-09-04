@@ -33,7 +33,9 @@ param (
     [switch]$Snap,
     # Skip the two-step confirmation before isolated mode closes concurrent
     # profile instances. This is unsafe by design.
-    [switch]$ForceIsolated
+    [switch]$ForceIsolated,
+    # Skip automatic NotebookLM authentication check/login on launch
+    [switch]$NoNlmLogin
 )
 
 try {
@@ -1529,8 +1531,13 @@ if ($TestHook) {
 
 function Invoke-NlmLogin {
     param(
-        [switch]$WhatIf
+        [switch]$WhatIf,
+        [switch]$Skip
     )
+
+    if ($Skip) {
+        return
+    }
 
     $NlmCommand = Get-Command nlm -ErrorAction SilentlyContinue
     if (-not $NlmCommand) {
@@ -1539,7 +1546,14 @@ function Invoke-NlmLogin {
     }
 
     if ($WhatIf) {
-        Write-Host "[WhatIf] Would run 'nlm login' in this terminal." -ForegroundColor DarkCyan
+        Write-Host "[WhatIf] Would check NotebookLM auth." -ForegroundColor DarkCyan
+        return
+    }
+
+    Write-Host "[+] Checking NotebookLM auth..." -ForegroundColor Cyan
+    $doctorOutput = & $NlmCommand.Source doctor 2>&1
+    if ($LASTEXITCODE -eq 0 -and ($doctorOutput -match "Cookies:\s*present" -or $doctorOutput -match "All checks passed")) {
+        Write-Host "[+] NotebookLM authentication is already active." -ForegroundColor Green
         return
     }
 
@@ -1550,7 +1564,7 @@ function Invoke-NlmLogin {
     }
 }
 
-Invoke-NlmLogin -WhatIf:$WhatIf
+Invoke-NlmLogin -WhatIf:$WhatIf -Skip:$NoNlmLogin
 
 function Resolve-SingleAccount {
     # Interactive picker for one account: shows the table, accepts a number
