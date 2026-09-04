@@ -108,9 +108,9 @@
   "user15": {
     "nickname": "ieeekecktm",
     "path": "%USERPROFILE%\\.claude-profiles\\user15",
-    "first_login_time": "2026-09-02 15:47:25",
-    "last_login_date": "2026-09-02",
-    "last_login_time": "15:52:50"
+    "last_login_date": "2026-09-04",
+    "last_login_time": "14:51:17",
+    "first_login_time": "2026-09-04 14:51:17"
   },
   "user16": {
     "path": "%USERPROFILE%\\.claude-profiles\\user16",
@@ -143,30 +143,30 @@
   "user20": {
     "nickname": "offheart",
     "path": "%USERPROFILE%\\.claude-profiles\\user20",
-    "last_login_date": "2026-09-02",
-    "last_login_time": "16:17:53",
-    "first_login_time": "2026-09-02 16:17:53"
+    "last_login_date": "2026-09-04",
+    "last_login_time": "14:51:18",
+    "first_login_time": "2026-09-04 14:51:18"
   },
   "user21": {
     "path": "%USERPROFILE%\\.claude-profiles\\user21",
     "nickname": "a.claude2",
-    "first_login_time": "2026-09-02 16:18:00",
-    "last_login_date": "2026-09-02",
-    "last_login_time": "17:48:19"
+    "last_login_date": "2026-09-04",
+    "last_login_time": "14:51:17",
+    "first_login_time": "2026-09-04 14:51:17"
   },
   "user22": {
     "path": "%USERPROFILE%\\.claude-profiles\\user22",
     "nickname": "a.claude3",
-    "last_login_date": "2026-09-02",
-    "last_login_time": "16:18:07",
-    "first_login_time": "2026-09-02 16:18:07"
+    "last_login_date": "2026-09-04",
+    "last_login_time": "14:51:16",
+    "first_login_time": "2026-09-04 14:51:16"
   },
   "user23": {
     "path": "%USERPROFILE%\\.claude-profiles\\user23",
     "nickname": "a.claude4",
-    "last_login_date": "2026-09-02",
-    "last_login_time": "16:18:14",
-    "first_login_time": "2026-09-02 16:18:14"
+    "last_login_date": "2026-09-04",
+    "last_login_time": "14:51:16",
+    "first_login_time": "2026-09-04 14:51:16"
   },
   "user24": {
     "nickname": "a.claude5",
