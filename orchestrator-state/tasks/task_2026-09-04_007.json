@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-04_007",
+  "parent_id": "task_2026-09-04_006",
+  "kind": "text",
+  "spec": "GATE 0 — Anti-drift guard. Repo: Aaradhya-Dev-Tamrakar/BiasAperture @ main, READ-ONLY clone, do not commit/push. Draft (as result_text, do not write to repo): (1) full content of scripts/check_stale_claims.py — a pre-commit-hook-compatible Python script that scans staged .md/.tex files and fails if it finds: bare '108,501'/'108501' NOT within ~15 words of 'released'/'pre-discard'/'pre-annotation'; 'UTKFace' NOT within ~15 words of 'cut' specifically (not 'secondary' — that phrasing is itself the undersell pattern already flagged in research/results/DISCREPANCY_LEDGER.md); 'SHAP' NOT within ~15 words of 'surrogate'/'deferred'/'fallback'. (2) the exact new 'repo: local' hook block to add to .pre-commit-config.yaml. (3) the exact one-line addition to docs/research/VERIFICATION_AND_SCRUTINY_GUIDE.md §5's checklist. Ground truth for patterns: research/results/DISCREPANCY_LEDGER.md and README.md:12 (canonical caveat sentences). Test the script logic against at least 3 known-stale lines (report/src/backmatter/back.tex:20, report/src/frontmatter/abstract.tex:4, docs/PROPOSAL_DEFENSE_GUIDE.md:386-388) and 3 known-clean lines (README.md:12, specs/07-explainability.md:9, data/README.md:26) to confirm zero false negatives/positives before submitting. submit_checkpoint with account=user6, task_id=task_2026-09-04_007, result_text = full script + config diff + test results.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-09-04T08:39:21Z",
+  "updated_at": "2026-09-04T08:39:21Z"
+}

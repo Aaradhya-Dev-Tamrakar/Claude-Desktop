@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-04_010",
+  "parent_id": "task_2026-09-04_006",
+  "kind": "text",
+  "spec": "GATE 2 — MED severity fixes. Repo: Aaradhya-Dev-Tamrakar/BiasAperture @ main, READ-ONLY clone, do not commit/push. For the 15 MED items in research/results/DISCREPANCY_LEDGER.md (literatureReview.tex:18,20,88; requirements.tex:15 FR-005, 32 NFR-008, 52; systemArchitectureAndMethodology.tex:37,55,77; README.md:32,59,205,213,220; docs/research/HIGH_LEVEL_SYNTHESIS.md:16,33,59,74,118; context-summary/low-level-summary.md:34,409,417,438,448,469,508,517,691; context-summary/high-level-summary.md:51,104; dev-logs/weekly-reports/2026-08-27_WK4_report.md:14,20,60; docs/BiasAperture-AT.md:71,97,239; research/context feed/BiasAperture-AT.md; research/research tracks/track_34...:13; research/results/stream_b_report_generation.md:27), draft exact replacement text as unified diffs. Same canonical-phrasing rule as Gate 1 (anchor to README.md:12's two sentences). Flag any line where the ledger's file:line citation doesn't match live repo content before drafting a fix for it — do not fix a citation that's already stale itself. Do not edit any file. submit_checkpoint with account=user9, task_id=task_2026-09-04_010, result_text = full diff set grouped by file, plus a list of any ledger citations that didn't match live content.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-09-04T08:39:21Z",
+  "updated_at": "2026-09-04T08:39:21Z"
+}

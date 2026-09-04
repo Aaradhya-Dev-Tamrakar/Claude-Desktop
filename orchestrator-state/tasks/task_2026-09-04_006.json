@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-04_006",
+  "parent_id": null,
+  "kind": "text",
+  "spec": "BiasAperture — Discrepancy Fix Execution (Gates 0-3). Parent for the finalized work path from research/results/DISCREPANCY_LEDGER.md plus the 2 gap items found outside the original 4 tracks' checklists (docs/fellowship/*.pdf). Monday defense deadline. All subtasks are READ+PROPOSE for now (draft exact diffs / script content as result_text) — no repo writes, no commits, until per-item sign-off from Aaradhya. Repo: Aaradhya-Dev-Tamrakar/BiasAperture @ main.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-09-04T08:38:51Z",
+  "updated_at": "2026-09-04T08:38:51Z"
+}

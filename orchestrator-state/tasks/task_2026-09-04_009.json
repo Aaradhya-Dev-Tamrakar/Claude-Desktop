@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-04_009",
+  "parent_id": "task_2026-09-04_006",
+  "kind": "text",
+  "spec": "GATE 1b — Design Patterns table fix. Repo: Aaradhya-Dev-Tamrakar/BiasAperture @ main, READ-ONLY clone, do not commit/push. In report/src/chapters/systemArchitectureAndMethodology.tex's Design Patterns table (per research/results/DISCREPANCY_LEDGER.md cluster C), strike the 5 fictitious class names (AuditOrchestrator, DirectInferenceAdapter/PredictionsFileAdapter, TestMatrixBuilder, ReportFactory/HTMLReportBuilder, AuditReport) and replace with the actual src/ classes verified in the ledger: CrossValidationOrchestrator (fairness/backends.py), InProcessInterface/PredictionsFileInterface, DataIngestionPipeline, HTMLReportGenerator, and drop the AuditReport row entirely (no equivalent exists). Re-verify each replacement class actually exists via grep -rn '^class ' src/bias_aperture/ before finalizing — do not trust the ledger's names without a fresh check. Draft as a unified diff, do not edit the file. submit_checkpoint with account=user8, task_id=task_2026-09-04_009, result_text = diff + grep verification output.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-09-04T08:39:21Z",
+  "updated_at": "2026-09-04T08:39:21Z"
+}
