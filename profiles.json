@@ -3,9 +3,9 @@
     "nickname": "adevtmr",
     "role": "orchestrator",
     "path": "%USERPROFILE%\\.claude-profiles\\user1",
+    "first_login_time": "2026-09-04 09:33:27",
     "last_login_date": "2026-09-04",
-    "last_login_time": "09:33:27",
-    "first_login_time": "2026-09-04 09:33:27"
+    "last_login_time": "11:32:59"
   },
   "user2": {
     "nickname": "dev83",
