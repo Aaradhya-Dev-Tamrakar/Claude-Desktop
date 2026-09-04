@@ -12,10 +12,10 @@
     "semantic_hash": "2556d3ee83dd12376ce7aad11dc80475"
   },
   "client/adapters/claude_desktop_cdp.py": {
-    "mtime": 1788018004.947092,
-    "seen": 1788329568.4789865,
-    "ast_hash": "0b2e0374ae55a5f44a137b7f23b0e92b",
-    "semantic_hash": "0b2e0374ae55a5f44a137b7f23b0e92b"
+    "mtime": 1788457376.7654808,
+    "seen": 1788494004.3920283,
+    "ast_hash": "0e93ecb4ed895b3b1e3eb5dca59a9463",
+    "semantic_hash": ""
   },
   "client/adapters/claude_desktop_proxy.py": {
     "mtime": 1788018004.9480996,
@@ -42,10 +42,10 @@
     "semantic_hash": "12df2d16832ef94aca648239f0034c71"
   },
   "client/worker_daemon.py": {
-    "mtime": 1788455657.4734776,
-    "seen": 1788456032.7689352,
-    "ast_hash": "671dcedb38c683d8070bed9516c0c96e",
-    "semantic_hash": "671dcedb38c683d8070bed9516c0c96e"
+    "mtime": 1788457299.1955583,
+    "seen": 1788494004.392035,
+    "ast_hash": "445fc142746171e7e10482df232cda4e",
+    "semantic_hash": ""
   },
   "cooldown-reminder.ps1": {
     "mtime": 1788456297.4610765,
@@ -54,10 +54,10 @@
     "semantic_hash": "3e1ba0cf93bc59110ed3f084b159b56f"
   },
   "launch_user_n.ps1": {
-    "mtime": 1788456297.4610765,
-    "seen": 1788456525.6982405,
-    "ast_hash": "5039159cd693237c9ac67b19f2afe496",
-    "semantic_hash": "5039159cd693237c9ac67b19f2afe496"
+    "mtime": 1788458828.3891027,
+    "seen": 1788494004.3920372,
+    "ast_hash": "b8254ea7c30587db9abf1320030bfba4",
+    "semantic_hash": ""
   },
   "mcp-servers/cloud-orchestrator-mcp/run_server.py": {
     "mtime": 1788024848.8254774,
@@ -1236,10 +1236,10 @@
     "semantic_hash": "e9091216a526021912560dd4f61bf1a7"
   },
   "profiles.json": {
-    "mtime": 1788456414.5536742,
-    "seen": 1788456525.7134912,
-    "ast_hash": "5dfdde7b494c46d563c1943cbd42b679",
-    "semantic_hash": "5dfdde7b494c46d563c1943cbd42b679"
+    "mtime": 1788493707.3524485,
+    "seen": 1788494004.3922904,
+    "ast_hash": "c636a83896d74cd204f8f9fff0922182",
+    "semantic_hash": ""
   },
   "reset_profiles.ps1": {
     "mtime": 1788452860.7676556,
@@ -1356,10 +1356,10 @@
     "semantic_hash": "f6ac37488a3b0f173c9be37825d9dc42"
   },
   "tests/launch_user_n.Tests.ps1": {
-    "mtime": 1788455421.26874,
-    "seen": 1788456032.7874372,
-    "ast_hash": "f81bc3335ab9af99bd53f49f449fa566",
-    "semantic_hash": "f81bc3335ab9af99bd53f49f449fa566"
+    "mtime": 1788458828.3989189,
+    "seen": 1788494004.3923235,
+    "ast_hash": "c3c8790e291a7bf18c0d03be53e367e2",
+    "semantic_hash": ""
   },
   "tests/orchestrator_mcp_test.py": {
     "mtime": 1788148268.2678597,
@@ -1410,14 +1410,14 @@
     "semantic_hash": "832644b0ffbc8393108bdb8f5e9fd40c"
   },
   "README.md": {
-    "mtime": 1788457051.8467805,
-    "seen": 1788457053.5171819,
-    "ast_hash": "5c1e748f601739ce55e36946dc9bfae6",
-    "semantic_hash": "5c1e748f601739ce55e36946dc9bfae6"
+    "mtime": 1788458146.4627044,
+    "seen": 1788494004.3923502,
+    "ast_hash": "0e108cc8c71eade92e3a7ffc45e86201",
+    "semantic_hash": ""
   },
   "orchestrator-state/SCHEMA.md": {
-    "mtime": 1788148533.4208663,
-    "seen": 1788329839.701441,
+    "mtime": 1788458344.266438,
+    "seen": 1788494004.3923578,
     "ast_hash": "167283f63a533b21ee8fce9057b6cbed",
     "semantic_hash": "167283f63a533b21ee8fce9057b6cbed"
   },
@@ -1452,10 +1452,10 @@
     "semantic_hash": "d7ab74ed62da4e4e128dfb504c1240e3"
   },
   "orchestrator-state/JOB_SCHEMA.md": {
-    "mtime": 1788145540.0682254,
-    "seen": 1788329568.4789865,
-    "ast_hash": "836fa021dfd01f2178b11a877694f979",
-    "semantic_hash": "836fa021dfd01f2178b11a877694f979"
+    "mtime": 1788458321.1600082,
+    "seen": 1788494004.3923569,
+    "ast_hash": "9ef226ac929173496ee758e21b58b29e",
+    "semantic_hash": ""
   },
   "server/docker-compose.yml": {
     "mtime": 1788017996.3250678,
@@ -1470,40 +1470,40 @@
     "semantic_hash": "38360b9f501dfdaf8822f1393e408e79"
   },
   "worker-prompts/formatter.md": {
-    "mtime": 1788147075.1295204,
-    "seen": 1788329839.701441,
-    "ast_hash": "9ea9cd10e1d34fad15d471d454a8b1e9",
-    "semantic_hash": "9ea9cd10e1d34fad15d471d454a8b1e9"
+    "mtime": 1788458333.9772303,
+    "seen": 1788494004.3923643,
+    "ast_hash": "74420eebadd645d7ad187e2f3aaae63f",
+    "semantic_hash": ""
   },
   "worker-prompts/orchestrator.md": {
-    "mtime": 1788147057.3115668,
-    "seen": 1788329839.701441,
-    "ast_hash": "668db44817f31954ace7f39ef25d0f90",
-    "semantic_hash": "668db44817f31954ace7f39ef25d0f90"
+    "mtime": 1788458314.9345746,
+    "seen": 1788494004.392365,
+    "ast_hash": "8bd4025d28c90c282525f88a7b88121a",
+    "semantic_hash": ""
   },
   "worker-prompts/qa-reviewer.md": {
-    "mtime": 1788147073.4822516,
-    "seen": 1788329839.701441,
-    "ast_hash": "76c8aa21b5eaeb5b56112bf69da2dddd",
-    "semantic_hash": "76c8aa21b5eaeb5b56112bf69da2dddd"
+    "mtime": 1788458325.9185483,
+    "seen": 1788494004.3923666,
+    "ast_hash": "2a33ccba8f164dbcdd5efb369a0050cd",
+    "semantic_hash": ""
   },
   "worker-prompts/researcher.md": {
-    "mtime": 1788147060.5108635,
-    "seen": 1788329839.701441,
-    "ast_hash": "28953402cb79ab96d7acd84d2010c5de",
-    "semantic_hash": "28953402cb79ab96d7acd84d2010c5de"
+    "mtime": 1788458327.6443446,
+    "seen": 1788494004.3923676,
+    "ast_hash": "e6d21c1c4be6ee8b9c37079a3d438e01",
+    "semantic_hash": ""
   },
   "worker-prompts/seo-optimizer.md": {
-    "mtime": 1788147071.758551,
-    "seen": 1788329839.701441,
-    "ast_hash": "9027fbd1598dbc579bb391f62279b866",
-    "semantic_hash": "9027fbd1598dbc579bb391f62279b866"
+    "mtime": 1788458329.6062255,
+    "seen": 1788494004.3923683,
+    "ast_hash": "aea264357bb4b5e2cb9e8848ba070b46",
+    "semantic_hash": ""
   },
   "worker-prompts/writer.md": {
-    "mtime": 1788147070.2747457,
-    "seen": 1788329839.701441,
-    "ast_hash": "f073a656fe77910ffaa55d071b686108",
-    "semantic_hash": "f073a656fe77910ffaa55d071b686108"
+    "mtime": 1788458331.753974,
+    "seen": 1788494004.3923693,
+    "ast_hash": "a22d109b3a8fb2da45b2b1cd69989541",
+    "semantic_hash": ""
   },
   "server/api/routes_memory.py": {
     "mtime": 1788143781.5980954,
@@ -1536,10 +1536,10 @@
     "semantic_hash": "195aa1cc7b6a63a8207136d92372df82"
   },
   "orchestrator-state/HANDOFF_PROTOCOL.md": {
-    "mtime": 1788147064.241945,
-    "seen": 1788329839.701441,
-    "ast_hash": "0890a0c7d28845c8eac96ebf7deb4fce",
-    "semantic_hash": "0890a0c7d28845c8eac96ebf7deb4fce"
+    "mtime": 1788458318.6399307,
+    "seen": 1788494004.3923562,
+    "ast_hash": "c2d812dbff1d7a1aca82ffb3b2d2af42",
+    "semantic_hash": ""
   },
   "mcp-servers/md2pdf-mcp/run_server.py": {
     "mtime": 1788337174.8973489,
@@ -1930,5 +1930,11 @@
     "seen": 1788457053.5171852,
     "ast_hash": "1d42e9c2538b8897dcdfcbdae4b23a94",
     "semantic_hash": "1d42e9c2538b8897dcdfcbdae4b23a94"
+  },
+  "benchmarks/benchmark-efficiency.ps1": {
+    "mtime": 1788457620.8065667,
+    "seen": 1788494004.3920135,
+    "ast_hash": "da54663be03db50254c9f4b1df2350bb",
+    "semantic_hash": ""
   }
 }
