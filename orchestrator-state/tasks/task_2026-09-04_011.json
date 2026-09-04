@@ -3,11 +3,11 @@
   "parent_id": "task_2026-09-04_006",
   "kind": "text",
   "spec": "GATE 3 RESEARCH — Decision-support for the 6 open items (NOT fixes, just the information Aaradhya needs to decide). Repo: Aaradhya-Dev-Tamrakar/BiasAperture @ main, READ-ONLY clone, do not commit/push, do not decide anything yourself. For each of: (1) WP3 PDF-export claim and WP5's '--backend'/'--bca-bootstrap'/'audit' CLI flag claim in dev-logs — confirm via cli.py::build_parser() read exactly what flags/subcommands DO exist today, and estimate rough effort to add the missing ones vs. just correcting the claim; (2) WP5 '90%' claim — compute what percentage 10,954/97,698 actually is and how README currently phrases the val-split scope; (3) report/src/images/architecture_highlevel.jpg — list every stale element needing regen per ledger cluster C; (4) report/generator.py vs report/templates/generator.py — diff the two files, confirm which is dead code vs. actually imported/used anywhere (grep -rn 'import.*generator' src/ report/); (5) docs/fellowship/BiasAperture_User_Requirement_Document.pdf and BiasAperture_Literature_Review.pdf — confirm via pdftotext -layout there is genuinely no .tex/.md source anywhere in the repo (search harder than the last pass: check for .docx, .odt, google-docs export remnants, or a docs/fellowship/src/ dir), and note how BiasAperture-AT.md §13 previously handled an analogous already-submitted-PDF gap (feasibility_study.pdf) as a precedent; (6) nothing to research for this one, it's just Aaradhya's sign-off on the Gate 0 script — skip. Present findings as a decision brief, not a recommendation. submit_checkpoint with account=user10, task_id=task_2026-09-04_011, result_text = the decision brief covering items 1-5.",
-  "status": "pending",
-  "owner_account": null,
+  "status": "claimed",
+  "owner_account": "user10",
   "branch_name": null,
   "blocked_reason": null,
   "created_by": "orchestrator",
   "created_at": "2026-09-04T08:39:21Z",
-  "updated_at": "2026-09-04T08:39:21Z"
+  "updated_at": "2026-09-04T08:52:30Z"
 }
