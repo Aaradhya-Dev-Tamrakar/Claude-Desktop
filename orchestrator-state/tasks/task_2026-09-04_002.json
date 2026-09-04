@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-04_002",
+  "parent_id": "task_2026-09-04_001",
+  "kind": "text",
+  "spec": "SUBTASK A — Dataset scale & UTKFace claims. Clone/fetch Aaradhya-Dev-Tamrakar/BiasAperture main (READ-ONLY, no writes/commits). Grep entire repo for '108,501'|'108501'|'97,698'|'97698'|'20,000+' and every UTKFace mention. For each hit, record file:line, exact claim text, and whether it matches verified ground truth (97,698 = 86,744 train + 10,954 val per docs/research/CLAIM_LEDGER.md R-002; UTKFace = CUT from implementation per Cut-List #2, profiled only). Flag any file NOT yet corrected (report/main.tex, report/main.pdf text layer if extractable, docs/PROPOSAL_DEFENSE_GUIDE.md, docs/PRE_PROPOSAL_READING_GUIDE.md, docs/BiasAperture-AT.md, research/context feed/*, research/research tracks/*, dev-logs/*, context-summary/*, specs/*). Output a markdown table: Claim | File:Line | Current Text | Verified Correct Value | Status (MATCHES/STALE). Do not edit any file.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user1",
+  "created_at": "2026-09-04T08:07:26Z",
+  "updated_at": "2026-09-04T08:07:26Z"
+}

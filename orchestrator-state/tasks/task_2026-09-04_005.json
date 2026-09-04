@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-04_005",
+  "parent_id": "task_2026-09-04_001",
+  "kind": "text",
+  "spec": "SUBTASK D — Milestone/WP completion percentage claims vs CLAIM_LEDGER.md verified status. Clone/fetch same repo READ-ONLY. Ground truth = docs/research/CLAIM_LEDGER.md (VERIFIED/REPRODUCIBLE/VALIDATED seals) and actual test suite state (src/tests/, run: grep -c 'def test_' across src/tests/*.py per module, note if tests exist for claimed-complete features). Compare against README.md's WP1-WP5 percentage/status table, dev-logs/weekly-reports/*, dev-logs/2026-09-*.md session logs. Flag any WP/module marked 'Completed' or a specific % in README/dev-logs that does NOT have a corresponding VERIFIED/REPRODUCIBLE claim in CLAIM_LEDGER.md, or where test coverage looks thin relative to the claim. Output markdown table: WP/Module | Claimed Status (Location) | CLAIM_LEDGER Seal Found? | Test Evidence Found? | Status (SUPPORTED/UNSUPPORTED/NEEDS REVIEW). Do not edit any file.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user1",
+  "created_at": "2026-09-04T08:07:26Z",
+  "updated_at": "2026-09-04T08:07:26Z"
+}

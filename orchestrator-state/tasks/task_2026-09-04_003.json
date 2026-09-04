@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-09-04_003",
+  "parent_id": "task_2026-09-04_001",
+  "kind": "text",
+  "spec": "SUBTASK B — Explainability method claims (SHAP vs demographic-dummy surrogate). Clone/fetch same repo READ-ONLY. Ground truth: actual implementation in src/bias_aperture/explainability.py uses demographic-dummy surrogate attribution (per README.md abstract line ~12: 'current explainability implementation uses demographic-dummy surrogate attribution; richer spatial SHAP and ITA analysis remain deferred'). Search entire repo for every claim that SHAP is the (sole/current) explainability method, without a surrogate/deferred caveat, in: report/src/chapters/*.tex (intro.tex, literatureReview.tex, requirements.tex FR-005/NFR-008, systemArchitectureAndMethodology.tex), report/src/images/architecture_highlevel.jpg (note only — cannot edit images, flag as image needing regen), docs/PROPOSAL_DEFENSE_GUIDE.md (esp. Q12/Q13 answers and the quoted defense script), docs/PRE_PROPOSAL_READING_GUIDE.md, docs/BiasAperture-AT.md, README.md (recheck current state), docs/research/*SYNTHESIS*.md, context-summary/*. For each hit: file:line, exact claim, whether a surrogate-caveat is present nearby or absent. Output markdown table: Location | Claim Text | Caveat Present? (Y/N) | Severity (HIGH=examiner-facing script assumes SHAP runs live / MED=doc only / LOW=historical record). Do not edit any file.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "user1",
+  "created_at": "2026-09-04T08:07:26Z",
+  "updated_at": "2026-09-04T08:07:26Z"
+}
