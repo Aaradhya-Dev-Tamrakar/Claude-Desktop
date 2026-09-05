@@ -94,5 +94,6 @@
   "92": "biasaperture-workflow.skill",
   "93": "desktop-orchestration.skill",
   "94": "portfolio-site-workflow.skill",
-  "95": "spark-workflow.skill"
+  "95": "spark-workflow.skill",
+  "96": "disable-autoupdate.ps1"
 }

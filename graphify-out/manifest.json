@@ -54,9 +54,9 @@
     "semantic_hash": "3e1ba0cf93bc59110ed3f084b159b56f"
   },
   "launch_user_n.ps1": {
-    "mtime": 1788502598.2711785,
-    "seen": 1788502631.3191302,
-    "ast_hash": "a813fa04e2b2c83028d84d71468ffcb7",
+    "mtime": 1788585182.080582,
+    "seen": 1788585203.929635,
+    "ast_hash": "056fa20d0cfe75a6faf0eb28161ecfdf",
     "semantic_hash": ""
   },
   "mcp-servers/cloud-orchestrator-mcp/run_server.py": {
@@ -468,10 +468,10 @@
     "semantic_hash": "9e3a21d9341ea464cd0c292eb7c0e9c3"
   },
   "orchestrator-state/live-status/user10.json": {
-    "mtime": 1787386430.656582,
-    "seen": 1788329568.4789865,
-    "ast_hash": "d63591aa6737e9466aae3a27c8e17c1a",
-    "semantic_hash": "d63591aa6737e9466aae3a27c8e17c1a"
+    "mtime": 1788583960.8231864,
+    "seen": 1788585203.9297457,
+    "ast_hash": "3bbb132e59899b51232b903c161a9926",
+    "semantic_hash": ""
   },
   "orchestrator-state/live-status/user12.json": {
     "mtime": 1787386308.2660134,
@@ -1236,9 +1236,9 @@
     "semantic_hash": "e9091216a526021912560dd4f61bf1a7"
   },
   "profiles.json": {
-    "mtime": 1788500879.5207427,
-    "seen": 1788502631.3196566,
-    "ast_hash": "22960f5a519fe392d62c4074f3e21d5b",
+    "mtime": 1788584794.692507,
+    "seen": 1788585203.9299314,
+    "ast_hash": "eb1902e34251678cf2d961b2bc631a00",
     "semantic_hash": ""
   },
   "reset_profiles.ps1": {
@@ -1428,10 +1428,10 @@
     "semantic_hash": "64beb1f1cbf10c756ef0dde810052959"
   },
   "team-memory.md": {
-    "mtime": 1788346343.0148246,
-    "seen": 1788453680.7894652,
-    "ast_hash": "12c1ffb52cf155ad5d9f51215f1377a9",
-    "semantic_hash": "12c1ffb52cf155ad5d9f51215f1377a9"
+    "mtime": 1788584743.044027,
+    "seen": 1788585203.9300017,
+    "ast_hash": "d7f4d34de014ee0b2ccb41faf4acaf6b",
+    "semantic_hash": ""
   },
   "AGENTS.md": {
     "mtime": 1785292688.2642217,
@@ -1959,6 +1959,132 @@
     "mtime": 1788473964.0,
     "seen": 1788502631.3197718,
     "ast_hash": "5921058ad9f0f234a020bc64d0d2e1a7",
+    "semantic_hash": ""
+  },
+  "disable-autoupdate.ps1": {
+    "mtime": 1788585151.3706007,
+    "seen": 1788585203.9296324,
+    "ast_hash": "6e480aa1ccc8f26dabe16c26e3d23e97",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/checkpoints/task_2026-09-04_002.json": {
+    "mtime": 1788509779.082405,
+    "seen": 1788585203.929729,
+    "ast_hash": "6aceb55c156fcbad6cd965f63a33f961",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/checkpoints/task_2026-09-04_003.json": {
+    "mtime": 1788509810.3419082,
+    "seen": 1788585203.9297307,
+    "ast_hash": "2c1cb4f3846198b77c6c5f9561c0b44e",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/checkpoints/task_2026-09-04_004.json": {
+    "mtime": 1788509858.4354734,
+    "seen": 1788585203.929732,
+    "ast_hash": "17ad9405d876731dda48326aa0183f0f",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/checkpoints/task_2026-09-04_005.json": {
+    "mtime": 1788509775.5311556,
+    "seen": 1788585203.929733,
+    "ast_hash": "2cbc4ba4364fd9e70e62055e2dd89732",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/checkpoints/task_2026-09-04_007.json": {
+    "mtime": 1788514503.3436782,
+    "seen": 1788585203.929734,
+    "ast_hash": "d650bb6c48c2027a4f3780b4acd13715",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/checkpoints/task_2026-09-04_008.json": {
+    "mtime": 1788584033.0735033,
+    "seen": 1788585203.929735,
+    "ast_hash": "2c4ba770264f2cdbb495c1fb529523c4",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/checkpoints/task_2026-09-04_009.json": {
+    "mtime": 1788583883.2379072,
+    "seen": 1788585203.929736,
+    "ast_hash": "f0d09e399c95d2e577cea313eb5cca57",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/checkpoints/task_2026-09-04_011.json": {
+    "mtime": 1788584008.430644,
+    "seen": 1788585203.9297373,
+    "ast_hash": "dd68576497bc64969de07a5b8b7a5215",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/memory/user10__20260905T045350Z.json": {
+    "mtime": 1788584030.7296007,
+    "seen": 1788585203.9297912,
+    "ast_hash": "8eab9396b13470bc4f9a295656eb3861",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/tasks/task_2026-09-04_001.json": {
+    "mtime": 1788509226.2614665,
+    "seen": 1788585203.9299154,
+    "ast_hash": "47eabc67032a7fa251eb0410f25ee1ad",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/tasks/task_2026-09-04_002.json": {
+    "mtime": 1788509893.4504468,
+    "seen": 1788585203.9299164,
+    "ast_hash": "d5e523bcebc13d5b67c68b127fdbd8c6",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/tasks/task_2026-09-04_003.json": {
+    "mtime": 1788509893.4519546,
+    "seen": 1788585203.9299173,
+    "ast_hash": "6573b337140d27dc5cccc67371496e80",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/tasks/task_2026-09-04_004.json": {
+    "mtime": 1788509893.4519546,
+    "seen": 1788585203.9299185,
+    "ast_hash": "d82a0fb8b410af247ba5dd97984f5f96",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/tasks/task_2026-09-04_005.json": {
+    "mtime": 1788509893.452963,
+    "seen": 1788585203.9299192,
+    "ast_hash": "885a08a2c601d80ff5f47376276626ae",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/tasks/task_2026-09-04_006.json": {
+    "mtime": 1788511131.6634653,
+    "seen": 1788585203.9299242,
+    "ast_hash": "f50f7d79f9c88d189e3974a7711b7553",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/tasks/task_2026-09-04_007.json": {
+    "mtime": 1788514503.3436782,
+    "seen": 1788585203.9299254,
+    "ast_hash": "2f5a69f9b6d6a4f8df35c8715354b0e5",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/tasks/task_2026-09-04_008.json": {
+    "mtime": 1788584033.0780127,
+    "seen": 1788585203.9299262,
+    "ast_hash": "50069bcc8899fdbe276a5448c6000160",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/tasks/task_2026-09-04_009.json": {
+    "mtime": 1788583883.2379072,
+    "seen": 1788585203.9299273,
+    "ast_hash": "1b93cb801569f9f67fbeb9ed8a5459ac",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/tasks/task_2026-09-04_010.json": {
+    "mtime": 1788584996.196951,
+    "seen": 1788585203.9299283,
+    "ast_hash": "c64eaf8f9558a1b98a939d6e63abc58c",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/tasks/task_2026-09-04_011.json": {
+    "mtime": 1788584008.430644,
+    "seen": 1788585203.929929,
+    "ast_hash": "232fc6620db9cd1497484ea307df3d4d",
     "semantic_hash": ""
   }
 }

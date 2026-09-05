@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>Claude-Desktop — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 932 nodes, 1868 edges, 96 communities. Commit: 6ae2936</p>
+<p class="subtitle">Generated from graphify knowledge graph: 933 nodes, 1868 edges, 97 communities. Commit: 2aadd5c</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -116,7 +116,7 @@ flowchart LR
     class DESKTOP_3B5A9F79 module;
     GETDESKTOP_AECE7CE3(".GetDesktop<br/><small>16 nodes</small>")
     class GETDESKTOP_AECE7CE3 module;
-    OTHER_D0941E68("Other<br/><small>186 nodes</small>")
+    OTHER_D0941E68("Other<br/><small>187 nodes</small>")
     class OTHER_D0941E68 module;
     SERVE_API_35EC8E86 -->|uses x33| OTHER_D0941E68
     CLI_SKILLS_9964CBB8 -->|calls x23| TESTS_FIXTURES_B84B1DCC
@@ -146,7 +146,7 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Extraction Pipeline</td><td>4</td><td><code>53</code></td></tr><tr><td>Graph Build</td><td>89</td><td><code>2, 25, 32, 37, 40, 49, 81, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>43</td><td><code>3, 91</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>130</td><td><code>11, 15, 8, 20, 27, 33, 34, 35, 88, 65, 66, 67, 68, 69, 70, 71, 72, 83, 92, 93, 94, 95</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>9</td><td><code>36</code></td></tr><tr><td>Serving API</td><td>98</td><td><code>7, 12, 18, 16, 17</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>167</td><td><code>1, 5, 13, 24, 28, 31, 30, 23, 41, 86</code></td></tr><tr><td>IApplicationView</td><td>41</td><td><code>0</code></td></tr><tr><td>Memory Log</td><td>39</td><td><code>6</code></td></tr><tr><td>launch_user_n.ps1</td><td>30</td><td><code>9</code></td></tr><tr><td>IVirtualDesktop</td><td>29</td><td><code>4</code></td></tr><tr><td>IntPtr</td><td>27</td><td><code>19</code></td></tr><tr><td>Desktop</td><td>24</td><td><code>10</code></td></tr><tr><td>.GetDesktop</td><td>16</td><td><code>87</code></td></tr><tr><td>Other</td><td>186</td><td><code>21, 22, 26, 14, 29, 38, 39, 42, 89, 43, 44, 45, 46, 47, 48, 90, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 73, 74, 75, 76, 77, 78, 79, 80, 82, 85</code></td></tr>
+      <tr><td>Extraction Pipeline</td><td>4</td><td><code>53</code></td></tr><tr><td>Graph Build</td><td>89</td><td><code>2, 25, 32, 37, 40, 49, 81, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>43</td><td><code>3, 91</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>130</td><td><code>11, 15, 8, 20, 27, 33, 34, 35, 88, 65, 66, 67, 68, 69, 70, 71, 72, 83, 92, 93, 94, 95</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>9</td><td><code>36</code></td></tr><tr><td>Serving API</td><td>98</td><td><code>7, 12, 18, 16, 17</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>167</td><td><code>1, 5, 13, 24, 28, 31, 30, 23, 41, 86</code></td></tr><tr><td>IApplicationView</td><td>41</td><td><code>0</code></td></tr><tr><td>Memory Log</td><td>39</td><td><code>6</code></td></tr><tr><td>launch_user_n.ps1</td><td>30</td><td><code>9</code></td></tr><tr><td>IVirtualDesktop</td><td>29</td><td><code>4</code></td></tr><tr><td>IntPtr</td><td>27</td><td><code>19</code></td></tr><tr><td>Desktop</td><td>24</td><td><code>10</code></td></tr><tr><td>.GetDesktop</td><td>16</td><td><code>87</code></td></tr><tr><td>Other</td><td>187</td><td><code>21, 22, 26, 14, 29, 38, 39, 42, 89, 43, 44, 45, 46, 47, 48, 90, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 73, 74, 75, 76, 77, 78, 79, 80, 82, 85, 96</code></td></tr>
     </table>
   </div>
   <div class="card">
@@ -158,7 +158,7 @@ flowchart LR
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>932 nodes · 1868 edges · 96 communities (54 shown, 20 thin omitted)</li>
+      <li>933 nodes · 1868 edges · 97 communities (54 shown, 20 thin omitted)</li>
       <li>Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 76 edges (avg confidence: 0.91)</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `IApplicationView` - 64 edges</li>
@@ -4342,12 +4342,12 @@ flowchart LR
 
 <!-- ====== 16. Other ====== -->
 <h2 id="other">16. Other</h2>
-<p>Other groups implementation around virtualdesktop11, 24h2cs, tools, server, mostly in tools/VirtualDesktop11-24H2.cs, server/models/schemas.py, team-memory.md. This section covers 186 nodes and 201 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Other groups implementation around virtualdesktop11, 24h2cs, tools, server, mostly in tools/VirtualDesktop11-24H2.cs, server/models/schemas.py, team-memory.md. This section covers 187 nodes and 201 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Other (186 nodes, 201 edges)
+    %% Section: Other (187 nodes, 201 edges)
     subgraph other_tools_VirtualDesktop11_24H2_cs_79ec2928["tools/VirtualDesktop11-24H2.cs"]
         tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61("IApplicationViewCollection<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
         tools_virtualdesktop11_24h2_virtualdesktop_ivirt_062d7295("IVirtualDesktopPinnedApps<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
@@ -4380,7 +4380,7 @@ flowchart LR
     tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iappl_7b4744cf
     tools_virtualdesktop11_24h2_virtualdesktop_ivirt_062d7295 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_ivirt_ada6536d
     tools_virtualdesktop11_24h2_virtualdesktop_ivirt_062d7295 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_ivirt_e9103118
-    %% Omitted for readability: 168 nodes, 0 edges
+    %% Omitted for readability: 169 nodes, 0 edges
     class tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 klass;
     class tools_virtualdesktop11_24h2_virtualdesktop_ivirt_062d7295 klass;
     class tools_virtualdesktop11_24h2_virtualdesktop_iappl_e3512045 function;
@@ -4752,10 +4752,10 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>932</td></tr>
+      <tr><td>Nodes</td><td>933</td></tr>
       <tr><td>Edges</td><td>1868</td></tr>
       <tr><td>Hyperedges</td><td>6</td></tr>
-      <tr><td>Communities</td><td>96</td></tr>
+      <tr><td>Communities</td><td>97</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
@@ -4771,7 +4771,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>Claude-Desktop — Architecture Documentation</p>
-  <p>Generated: 2026-09-04 06:17 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-09-05 05:13 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->

@@ -1794,6 +1794,26 @@ function Invoke-ProfileLaunch {
                 }
                 $script:ConcurrentSignInWarningShown = $true
             }
+
+            if (-not $script:AutoUpdateWarningShown) {
+                $ClaudePolicyKey = "HKLM:\SOFTWARE\Policies\Claude"
+                $AutoUpdateDisabled = $false
+                if (Test-Path $ClaudePolicyKey) {
+                    try {
+                        $prop = Get-ItemProperty -Path $ClaudePolicyKey -Name "disableAutoUpdates" -ErrorAction SilentlyContinue
+                        if ($prop -and $prop.disableAutoUpdates -eq 1) {
+                            $AutoUpdateDisabled = $true
+                        }
+                    }
+                    catch { }
+                }
+
+                if (-not $AutoUpdateDisabled) {
+                    Write-Host "[!] Background auto-update is active in Claude Desktop. When an update is released, Claude/Windows RestartManager will abruptly close all concurrent windows." -ForegroundColor Yellow
+                    Write-Host "    To prevent unexpected window closures, run .\disable-autoupdate.ps1 as Administrator." -ForegroundColor DarkGray
+                }
+                $script:AutoUpdateWarningShown = $true
+            }
         }
         else {
             try {
