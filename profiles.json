@@ -59,16 +59,16 @@
     "nickname": "majprj01",
     "role": "overflow_worker",
     "path": "%USERPROFILE%\\.claude-profiles\\user8",
-    "first_login_time": "2026-09-04 14:25:55",
-    "last_login_date": "2026-09-04",
-    "last_login_time": "14:50:26"
+    "last_login_date": "2026-09-05",
+    "last_login_time": "10:14:09",
+    "first_login_time": "2026-09-05 10:14:09"
   },
   "user9": {
     "path": "%USERPROFILE%\\.claude-profiles\\user9",
     "nickname": "adevtm",
-    "first_login_time": "2026-09-04 14:50:16",
-    "last_login_date": "2026-09-04",
-    "last_login_time": "15:26:43"
+    "last_login_date": "2026-09-05",
+    "last_login_time": "10:14:09",
+    "first_login_time": "2026-09-05 10:14:09"
   },
   "user10": {
     "path": "%USERPROFILE%\\.claude-profiles\\user10",
