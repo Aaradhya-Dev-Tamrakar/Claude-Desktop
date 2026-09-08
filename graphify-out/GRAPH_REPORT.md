@@ -1,16 +1,16 @@
-# Graph Report - Claude-Desktop  (2026-09-05)
+# Graph Report - Claude-Desktop  (2026-09-08)
 
 ## Corpus Check
-- 339 files · ~235,635 words
+- 340 files · ~236,882 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 933 nodes · 1868 edges · 97 communities (54 shown, 20 thin omitted)
+- 934 nodes · 1870 edges · 97 communities (54 shown, 20 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 76 edges (avg confidence: 0.91)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2aadd5c3`
+- Built from commit: `66d3a603`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -157,7 +157,7 @@ Nodes (24): block_task(), claim_task(), create_task(), get_checkpoint(), get_tas
 
 ### Community 9 - "launch_user_n.ps1"
 Cohesion: 0.12
-Nodes (26): Add-NewProfile(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Format-VisibleRight(), Format-VisibleText(), Get-ConcurrentClaudeInstances(), Get-DesktopBatchAllocation(), Get-EnrichedProfileRows() (+18 more)
+Nodes (27): Add-NewProfile(), Close-AllClaudeInstances(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Format-VisibleRight(), Format-VisibleText(), Get-ConcurrentClaudeInstances(), Get-DesktopBatchAllocation() (+19 more)
 
 ### Community 10 - "Desktop"
 Cohesion: 0.16
@@ -354,7 +354,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `ClaudeDesktopProxyAdapter` connect `ClaudeDesktopProxyAdapter` to `BaseWorkerAdapter`, `AsyncClient`, `ClaudeDesktopCDPAdapter`, `config.py`?**
   _High betweenness centrality (0.025) - this node is a cross-community bridge._
 - **Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `ClaudeDesktopProxyAdapter`, `BaseWorkerAdapter`, `._eval_js`?**
-  _High betweenness centrality (0.020) - this node is a cross-community bridge._
+  _High betweenness centrality (0.019) - this node is a cross-community bridge._
 - **Why does `IApplicationView` connect `IApplicationView` to `IVirtualDesktop`, `Desktop`, `VirtualDesktop11-24H2.cs`, `IntPtr`, `IApplicationViewCollection`, `APPLICATION_VIEW_COMPATIBILITY_POLICY`, `Size`, `IVirtualDesktopPinnedApps`?**
   _High betweenness centrality (0.019) - this node is a cross-community bridge._
 - **What connects `memory_entries`, `team_context`, `VirtualDesktop` to the rest of the system?**

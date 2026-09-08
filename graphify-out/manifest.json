@@ -54,9 +54,9 @@
     "semantic_hash": "3e1ba0cf93bc59110ed3f084b159b56f"
   },
   "launch_user_n.ps1": {
-    "mtime": 1788585182.080582,
-    "seen": 1788585203.929635,
-    "ast_hash": "056fa20d0cfe75a6faf0eb28161ecfdf",
+    "mtime": 1788863665.72912,
+    "seen": 1788863708.339278,
+    "ast_hash": "da5d6302874142382996f43155b0fea5",
     "semantic_hash": ""
   },
   "mcp-servers/cloud-orchestrator-mcp/run_server.py": {
@@ -1236,16 +1236,16 @@
     "semantic_hash": "e9091216a526021912560dd4f61bf1a7"
   },
   "profiles.json": {
-    "mtime": 1788584794.692507,
-    "seen": 1788585203.9299314,
-    "ast_hash": "eb1902e34251678cf2d961b2bc631a00",
+    "mtime": 1788849701.807871,
+    "seen": 1788863708.3394926,
+    "ast_hash": "8496b5d0ed337a364b5875dbe5ab0b5b",
     "semantic_hash": ""
   },
   "reset_profiles.ps1": {
-    "mtime": 1788452860.7676556,
-    "seen": 1788453680.7872508,
-    "ast_hash": "b1d9d8dcd0aae22bc55e21081bac4850",
-    "semantic_hash": "b1d9d8dcd0aae22bc55e21081bac4850"
+    "mtime": 1788863683.4242835,
+    "seen": 1788863708.3394933,
+    "ast_hash": "0244e4f7661d69fc85bc46c345b8a18a",
+    "semantic_hash": ""
   },
   "server/api/routes_jobs.py": {
     "mtime": 1788017996.319413,
@@ -2058,33 +2058,39 @@
     "semantic_hash": ""
   },
   "orchestrator-state/tasks/task_2026-09-04_007.json": {
-    "mtime": 1788514503.3436782,
-    "seen": 1788585203.9299254,
-    "ast_hash": "2f5a69f9b6d6a4f8df35c8715354b0e5",
+    "mtime": 1788586444.9921737,
+    "seen": 1788863708.339488,
+    "ast_hash": "e964f9e6c8274a8c8f593cfa9063773b",
     "semantic_hash": ""
   },
   "orchestrator-state/tasks/task_2026-09-04_008.json": {
-    "mtime": 1788584033.0780127,
-    "seen": 1788585203.9299262,
-    "ast_hash": "50069bcc8899fdbe276a5448c6000160",
+    "mtime": 1788586444.9931748,
+    "seen": 1788863708.3394887,
+    "ast_hash": "077f82c1960f186d3b668569fd0ce6ee",
     "semantic_hash": ""
   },
   "orchestrator-state/tasks/task_2026-09-04_009.json": {
-    "mtime": 1788583883.2379072,
-    "seen": 1788585203.9299273,
-    "ast_hash": "1b93cb801569f9f67fbeb9ed8a5459ac",
+    "mtime": 1788586444.9931748,
+    "seen": 1788863708.3394895,
+    "ast_hash": "cebf892716403172d72ad588ee28474e",
     "semantic_hash": ""
   },
   "orchestrator-state/tasks/task_2026-09-04_010.json": {
-    "mtime": 1788584996.196951,
-    "seen": 1788585203.9299283,
-    "ast_hash": "c64eaf8f9558a1b98a939d6e63abc58c",
+    "mtime": 1788586444.9941704,
+    "seen": 1788863708.33949,
+    "ast_hash": "fb2230fb0d504bfcd02e54f618c0df0c",
     "semantic_hash": ""
   },
   "orchestrator-state/tasks/task_2026-09-04_011.json": {
-    "mtime": 1788584008.430644,
-    "seen": 1788585203.929929,
-    "ast_hash": "232fc6620db9cd1497484ea307df3d4d",
+    "mtime": 1788586444.9941704,
+    "seen": 1788863708.339491,
+    "ast_hash": "9fbab65c54e3065482f750937c6abd9f",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/checkpoints/task_2026-09-04_010.json": {
+    "mtime": 1788586373.542413,
+    "seen": 1788863708.3393512,
+    "ast_hash": "6b82cb5086714193f3356b36076734dc",
     "semantic_hash": ""
   }
 }

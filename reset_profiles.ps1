@@ -31,18 +31,9 @@ if (-not $WhatIf) {
 }
 
 Write-ResetBanner -Step "Stopping Claude" -Detail "Closing any active Claude process so locked files can be safely reset."
-# Close any running Claude process so files aren't locked
-$RunningClaude = Get-Process -Name "claude" -ErrorAction SilentlyContinue
-if ($RunningClaude) {
-    if ($WhatIf) {
-        Write-Host "[WhatIf] Would stop $($RunningClaude.Count) running Claude process(es)." -ForegroundColor DarkCyan
-    }
-    else {
-        Write-Host "Closing running Claude process(es)..." -ForegroundColor Yellow
-        $RunningClaude | Stop-Process -Force
-        Start-Sleep -Milliseconds 800
-    }
-}
+# Import Close-AllClaudeInstances from the launcher (TestHook stops after definitions)
+. (Join-Path $ScriptDir "launch_user_n.ps1") -TestHook
+Close-AllClaudeInstances -WhatIf:$WhatIf
 
 Write-ResetBanner -Step "Clearing profile storage" -Detail "Removing user profile directories and cached Claude state."
 # Wipe all profile storage, logs, state, and registry backups

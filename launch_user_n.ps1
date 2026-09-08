@@ -283,6 +283,97 @@ function Get-ConcurrentClaudeInstances {
     })
 }
 
+function Close-AllClaudeInstances {
+    <#
+    .SYNOPSIS
+        Gracefully closes every running Claude Desktop process (isolated AND
+        concurrent instances), then clears the .active_profile state file.
+
+    .DESCRIPTION
+        Two-phase shutdown:
+          1. CloseMainWindow() — sends WM_CLOSE so each instance can flush
+             session data, MCP connections, and Electron state cleanly.
+          2. After a configurable grace period, any survivors are force-killed
+             via Stop-Process -Force (handles hung Electron renderer processes).
+
+        Designed to replace the inline `$RunningClaude | Stop-Process -Force`
+        calls scattered across the launcher and reset_profiles.ps1 so there is
+        one canonical, testable close-all method.
+
+    .PARAMETER GraceMs
+        Milliseconds to wait for graceful WM_CLOSE before force-killing.
+        Default: 3000 (3 seconds).
+
+    .PARAMETER WhatIf
+        Dry-run mode — reports what would happen without touching any process.
+
+    .OUTPUTS
+        [int] Number of Claude processes that were closed (or would be closed
+        in WhatIf mode).
+    #>
+    param(
+        [int]$GraceMs = 3000,
+        [switch]$WhatIf
+    )
+
+    $ProfilesBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
+    $RunningClaude = @(Get-Process -Name "claude" -ErrorAction SilentlyContinue)
+
+    if ($RunningClaude.Count -eq 0) {
+        Write-Host "[i] No running Claude instances found." -ForegroundColor Gray
+        return 0
+    }
+
+    if ($WhatIf) {
+        Write-Host "[WhatIf] Would close $($RunningClaude.Count) Claude process(es)." -ForegroundColor DarkCyan
+        return $RunningClaude.Count
+    }
+
+    Write-Host "[i] Closing $($RunningClaude.Count) Claude instance(s)..." -ForegroundColor Yellow
+
+    # Phase 1: Graceful close via WM_CLOSE
+    $gracefulCount = 0
+    foreach ($proc in $RunningClaude) {
+        try {
+            if ($proc.MainWindowHandle -ne [IntPtr]::Zero) {
+                $null = $proc.CloseMainWindow()
+                $gracefulCount++
+            }
+        }
+        catch { }
+    }
+
+    if ($gracefulCount -gt 0) {
+        Write-Host "    Sent WM_CLOSE to $gracefulCount window(s), waiting ${GraceMs}ms..." -ForegroundColor DarkGray
+        Start-Sleep -Milliseconds $GraceMs
+    }
+
+    # Phase 2: Force-kill any survivors
+    $survivors = @(Get-Process -Name "claude" -ErrorAction SilentlyContinue)
+    if ($survivors.Count -gt 0) {
+        Write-Host "    Force-killing $($survivors.Count) remaining process(es)..." -ForegroundColor DarkYellow
+        $survivors | Stop-Process -Force -ErrorAction SilentlyContinue
+        Start-Sleep -Milliseconds 500
+    }
+
+    # Clear the isolated-mode active profile tracker
+    $StateFile = Join-Path $ProfilesBaseDir ".active_profile"
+    if (Test-Path $StateFile) {
+        Remove-Item $StateFile -Force -ErrorAction SilentlyContinue
+        Write-Host "    Cleared .active_profile state." -ForegroundColor DarkGray
+    }
+
+    $remaining = @(Get-Process -Name "claude" -ErrorAction SilentlyContinue)
+    if ($remaining.Count -eq 0) {
+        Write-Host "[+] All Claude instances closed successfully." -ForegroundColor Green
+    }
+    else {
+        Write-Host "[!] $($remaining.Count) Claude process(es) could not be terminated." -ForegroundColor Red
+    }
+
+    return $RunningClaude.Count
+}
+
 function Merge-McpServers {
     # Pure merge: union of $Shared.mcpServers into $Profile.mcpServers, with
     # $Shared entries taking precedence on key collision. Everything else in
@@ -1841,14 +1932,7 @@ function Invoke-ProfileLaunch {
 
         # Close existing running Claude processes (skipped in Concurrent mode by design)
         if (-not $Concurrent -and $RunningClaude) {
-            if ($WhatIf) {
-                Write-Host "[WhatIf] Would stop $($RunningClaude.Count) running Claude process(es)." -ForegroundColor DarkCyan
-            }
-            else {
-                Write-Host "Closing running Claude process(es) to switch profiles..." -ForegroundColor Yellow
-                $RunningClaude | Stop-Process -Force
-                Start-Sleep -Milliseconds 800
-            }
+            Close-AllClaudeInstances -WhatIf:$WhatIf
         }
 
         if (-not $Concurrent) {
