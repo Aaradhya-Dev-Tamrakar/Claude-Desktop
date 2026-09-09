@@ -104,9 +104,12 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 │   ├── notebooklm-mcp/
 │   │   ├── requirements.txt       # NotebookLM MCP dependencies
 │   │   └── run_server.py          # uvx-shim launcher for the published NotebookLM CLI
-│   └── orchestrator-mcp/
-│       ├── requirements.txt       # Local orchestrator MCP dependencies
-│       └── run_server.py           # Hand-written local coordination server, 21 tools
+│   ├── orchestrator-mcp/
+│   │   ├── requirements.txt       # Local orchestrator MCP dependencies
+│   │   └── run_server.py           # Hand-written local coordination server, 21 tools
+│   └── super-nlm-mcp/
+│       ├── requirements.txt       # Shim — no local deps, delegates to super-nlm repo venv
+│       └── run_server.py          # Launcher shim for Super-NLM multi-account NotebookLM MCP
 │
 ├── orchestrator-state/
 │   ├── SCHEMA.md                  # File contract for tasks/live-status/checkpoints/memory
@@ -147,6 +150,7 @@ The repository keeps operational entry points and their root-relative configurat
 - **`Claude Skills + MCP/`**: Directory housing custom Claude skill definitions (`.skill`), extension bundles (`.mcpb`), and `Cross-Linking Hub.md` (the authoritative mapping of leaf GitHub repositories and NotebookLM notebooks to the central Engineer's Personal Notebook hub).
 - **`mcp-servers/notebooklm-mcp/run_server.py`**: `uvx` launcher for the NotebookLM MCP server, referenced by `team-mcp.json`. Falls back through common per-platform `uvx` install locations when it's missing from `PATH`. Auth is shared across all profiles via `%USERPROFILE%\.notebooklm-mcp-cli\`.
 - **`mcp-servers/orchestrator-mcp/run_server.py`**: Hand-written MCP server coordinating orchestrator/divider/executor roles across profiles via local files in `orchestrator-state/`. Exposes 21 tools across task lifecycles, checkpoints, live status, shared memory, and job metrics.
+- **`mcp-servers/super-nlm-mcp/run_server.py`**: Launcher shim for the Super-NLM multi-account NotebookLM MCP server (`F:\Aaradhya-Dev-Tamrakar\super-nlm`). Exposes 6 tools (`query_notebook`, `list_notebooks`, `list_profiles`, `sync_notebooks`, `cross_query`, `rotation_status`) with round-robin multi-account rotation and intelligent cooldown fallbacks.
 - **`server/mcp_remote.py`**: High-concurrency Hosted Remote MCP Server with **23 unified tools** mounted directly at `/mcp` (SSE / Streamable HTTP), integrating SQLite WAL state, atomic leasing, automated pipeline handoffs, shared memory search, and durable team context.
 - **`team-context.md`**: Static identity/context scaffold. Edit it directly with standing project context and durable preferences — callable directly in chat via orchestrator-mcp's `read_team_context` tool.
 - **`team-memory.md`**: Shared team memory log distributed across profiles via `sync.ps1`. New orchestrator memory entries (`orchestrator-state/memory/*.json`) are automatically appended under date headers by `sync.ps1`.

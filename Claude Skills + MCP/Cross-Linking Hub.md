@@ -19,6 +19,7 @@ Fixed map of Aaradhya's personally maintained repos and notebooks, and how they 
 | `AaradhyaDT/SPARK` | SPARK: Two-Layer Edge AI for Wearable Fall Detection (`2c00f5a4-98dc-4783-96d1-3682fa3cb516`) | Authoritative research notebook; `3b67fc33` serves as proposal/deck reference. Tracker: `dev_logs/SPARK_TRACKER.md`. |
 | `Aaradhya-Dev-Tamrakar/Aaradhya-Dev-Tamrakar.github.io` | Engineer's Personal Notebook (hub itself) | Portfolio/CV/study-hub repo — feeds directly into the hub notebook, not a separate leaf notebook. |
 | `Aaradhya-Dev-Tamrakar/Claude-Desktop` | none | Standalone. No NLM cross-link exists. |
+| `Aaradhya-Dev-Tamrakar/super-nlm` | none (multi-account NLM hub itself) | MCP server wired into `team-mcp.json` as `super-nlm`. Provides rotated multi-account `query_notebook`, `list_notebooks`, `cross_query`, and `rotation_status` tools. Supersedes single-account `notebooklm-mcp` for quota-heavy or parallel-agent workloads. |
 | `Aaradhya-Dev-Tamrakar/FuseAIF2026` | none *(unconfirmed)* | Fellowship-related repo; distinct from SPARK. Do not assume link without confirmation. |
 
 ## Unlinked notebooks
@@ -42,12 +43,14 @@ No linked repos — standalone exam-prep notebooks, feed into the hub notebook f
 
 Before performing ANY web search for a topic covered by a linked notebook:
 1. Check this hub for matching NLM notebook ID
-2. Use `notebooklm-mcp` → `notebook_query` with the notebook ID
+2. Use `super-nlm` → `query_notebook` (rotated multi-account, auto rate-limit fallback) or `notebooklm-mcp` → `notebook_query` (single-account direct) with the notebook ID
 3. Only fall back to web search if NLM returns insufficient results
 
 Cost comparison:
 - Web search round-trip: ~3,000–5,000 tokens (query + results + re-read)
 - NLM notebook_query: ~500–1,000 tokens (pre-curated, citation-linked)
+
+> **Tip**: Prefer `super-nlm` when running parallel agents or heavy workloads — it distributes queries across all authenticated Google accounts to avoid quota exhaustion.
 
 ## Pending
 

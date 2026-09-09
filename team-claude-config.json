@@ -20,6 +20,16 @@
         "{{REPO_ROOT}}\\mcp-servers\\md2pdf-mcp\\run_server.py"
       ],
       "env": {}
+    },
+    "super-nlm": {
+      "command": "F:\\Aaradhya-Dev-Tamrakar\\super-nlm\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "mcp_server"
+      ],
+      "env": {
+        "PYTHONUNBUFFERED": "1"
+      }
     }
   },
   "preferences": {

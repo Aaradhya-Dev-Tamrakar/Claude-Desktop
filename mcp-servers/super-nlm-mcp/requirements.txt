@@ -1,0 +1,6 @@
+# No local dependencies — this is a launcher shim that delegates to the
+# super-nlm repo's own virtual environment.
+#
+# Ensure super-nlm is set up first:
+#   cd F:\Aaradhya-Dev-Tamrakar\super-nlm
+#   uv sync
