@@ -1669,6 +1669,16 @@ function Set-ClaudeWindowsLayout {
             } else {
                 Write-Host "[+] Snapped $($targets.Count) Claude profile window(s) into desktop grid (Slots 1-$($targets.Count))." -ForegroundColor Green
             }
+
+            # Enrich ActiveFleetInstances with discovered window handles for automated focus & prompt injection
+            if ($script:ActiveFleetInstances) {
+                foreach ($t in $targets) {
+                    $matchedInst = $script:ActiveFleetInstances | Where-Object { $_.Account -eq $t.Account }
+                    if ($matchedInst) {
+                        $matchedInst | Add-Member -NotePropertyName "Hwnd" -NotePropertyValue ([int64]$t.Hwnd) -Force
+                    }
+                }
+            }
         }
     }
     catch {
