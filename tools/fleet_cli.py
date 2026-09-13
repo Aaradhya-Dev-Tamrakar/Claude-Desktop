@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 import httpx
 
-from client.adapters.claude_desktop_cdp import ClaudeDesktopCDPAdapter
+from client.adapters.claude_desktop_cdp import ClaudeDesktopCDPAdapter, ClaudeDesktopUIAAdapter
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 FLEET_JSON = REPO_ROOT / "orchestrator-state" / "live-status" / "active_fleet.json"
@@ -38,30 +38,41 @@ def load_fleet_data() -> list[dict[str, Any]]:
 
 async def cmd_status():
     fleet = load_fleet_data()
-    print("\n+-------------------------------------------------------------------------------+")
-    print("|                     CLAUDE DESKTOP FLEET STATUS                               |")
-    print("+----------+--------------+--------------+----------------------+---------------+")
-    print("| Account  | Role         | CDP Port     | Preferred Model      | Status        |")
-    print("+----------+--------------+--------------+----------------------+---------------+")
+    print("\n+----------------------------------------------------------------------------------------------------+")
+    print("|                                   CLAUDE DESKTOP FLEET STATUS                                      |")
+    print("+----------+--------------+--------------+----------------------+------------------+-----------------+")
+    print("| Account  | Role         | Window HWND  | Preferred Model      | Window State     | CDP Status      |")
+    print("+----------+--------------+--------------+----------------------+------------------+-----------------+")
 
-    async with httpx.AsyncClient(timeout=2.0) as client:
+    async with httpx.AsyncClient(timeout=1.5) as client:
         for inst in fleet:
             acc = inst.get("Account", "unknown")
             role = inst.get("Role", "worker")
             port = int(inst.get("CdpPort", 9222))
+            hwnd = inst.get("Hwnd")
             model = inst.get("PreferredModel", "claude-3-5-sonnet")
 
-            status_str = "OFFLINE"
+            win_str = "NOT ATTACHED"
+            if hwnd:
+                try:
+                    import win32gui
+                    if win32gui.IsWindow(hwnd):
+                        win_str = f"VISIBLE ({hwnd})" if win32gui.IsWindowVisible(hwnd) else f"HIDDEN ({hwnd})"
+                except Exception:
+                    win_str = f"HWND: {hwnd}"
+
+            cdp_str = "OFFLINE"
             try:
                 r = await client.get(f"http://127.0.0.1:{port}/json/version")
                 if r.status_code == 200:
-                    status_str = "ONLINE / READY"
+                    cdp_str = "ONLINE / READY"
             except Exception:
-                status_str = "NOT REACHABLE"
+                cdp_str = "GUARDED"
 
-            print(f"| {acc:<8} | {role:<12} | {port:<12} | {model:<20} | {status_str:<13} |")
+            hwnd_col = str(hwnd) if hwnd else "-"
+            print(f"| {acc:<8} | {role:<12} | {hwnd_col:<12} | {model:<20} | {win_str:<16} | {cdp_str:<15} |")
 
-    print("+----------+--------------+--------------+----------------------+---------------+\n")
+    print("+----------+--------------+--------------+----------------------+------------------+-----------------+\n")
 
 async def cmd_broadcast(prompt: str):
     fleet = load_fleet_data()
@@ -70,16 +81,17 @@ async def cmd_broadcast(prompt: str):
 
     async def _send_one(inst: dict[str, Any]):
         acc = inst.get("Account", "unknown")
-        port = int(inst.get("CdpPort", 9222))
-        model = inst.get("PreferredModel", "claude-3-5-sonnet")
-        adapter = ClaudeDesktopCDPAdapter(worker_id=acc, nickname=acc, cdp_port=port, preferred_model=model)
-        
-        healthy = await adapter.check_health()
-        if not healthy:
-            return acc, False, f"CDP port {port} not reachable."
-
-        res = await adapter.execute_task(task_id="broadcast", spec=prompt, stage="interactive", context={})
-        return acc, res.get("success", False), res.get("result_text", res.get("error", ""))
+        hwnd = inst.get("Hwnd")
+        if hwnd:
+            adapter = ClaudeDesktopUIAAdapter(worker_id=acc, nickname=acc, hwnd=hwnd)
+            res = await adapter.send_text(prompt)
+            return acc, res.get("success", False), res.get("summary", "")
+        else:
+            port = int(inst.get("CdpPort", 9222))
+            model = inst.get("PreferredModel", "claude-3-5-sonnet")
+            adapter = ClaudeDesktopCDPAdapter(worker_id=acc, nickname=acc, cdp_port=port, preferred_model=model)
+            res = await adapter.execute_task(task_id="broadcast", spec=prompt, stage="interactive", context={})
+            return acc, res.get("success", False), res.get("result_text", res.get("error", ""))
 
     tasks = [_send_one(inst) for inst in fleet]
     results = await asyncio.gather(*tasks)
@@ -90,10 +102,8 @@ async def cmd_broadcast(prompt: str):
         print(f"│ Profile: {acc:<15} {status_tag:>35} │")
         print(f"├───────────────────────────────────────────────────────────┤")
         lines = out.strip().split("\n")
-        for line in lines[:20]:
+        for line in lines[:10]:
             print(f"  {line}")
-        if len(lines) > 20:
-            print(f"  ... [truncated {len(lines) - 20} lines]")
         print(f"└───────────────────────────────────────────────────────────┘\n")
 
 async def cmd_send(target: str, prompt: str):
@@ -105,21 +115,25 @@ async def cmd_send(target: str, prompt: str):
             break
 
     if not target_inst:
-        # Default to port if numeric
         port = int(target) if target.isdigit() else 9222
         target_inst = {"Account": target, "CdpPort": port, "PreferredModel": "claude-3-5-sonnet"}
 
     acc = target_inst.get("Account", target)
+    hwnd = target_inst.get("Hwnd")
     port = int(target_inst.get("CdpPort", 9222))
     model = target_inst.get("PreferredModel", "claude-3-5-sonnet")
 
-    print(f"[*] Sending prompt to {acc} (Port {port}, Model: {model})...")
-    adapter = ClaudeDesktopCDPAdapter(worker_id=acc, nickname=acc, cdp_port=port, preferred_model=model)
-    res = await adapter.execute_task(task_id="cli_direct", spec=prompt, stage="interactive", context={})
+    if hwnd:
+        print(f"[*] Sending prompt to {acc} via Windows UI Automation (HWND={hwnd})...")
+        adapter = ClaudeDesktopUIAAdapter(worker_id=acc, nickname=acc, hwnd=hwnd, preferred_model=model)
+        res = await adapter.send_text(prompt)
+    else:
+        print(f"[*] Sending prompt to {acc} via CDP (Port {port}, Model: {model})...")
+        adapter = ClaudeDesktopCDPAdapter(worker_id=acc, nickname=acc, cdp_port=port, preferred_model=model)
+        res = await adapter.execute_task(task_id="cli_direct", spec=prompt, stage="interactive", context={})
 
     if res.get("success"):
-        print(f"\n[+] Response from {acc}:\n")
-        print(res.get("result_text", ""))
+        print(f"\n[+] Successfully dispatched prompt to {acc} on desktop.")
     else:
         print(f"\n[!] Execution failed: {res.get('error')}")
 

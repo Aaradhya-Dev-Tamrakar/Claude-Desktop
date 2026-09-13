@@ -427,3 +427,143 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
             await asyncio.sleep(self.poll_interval)
 
         return {"success": False, "error": f"CDP Generation timed out after {self.timeout}s"}
+
+
+class ClaudeDesktopUIAAdapter(BaseWorkerAdapter):
+    """
+    Automates prompt delivery to Claude Desktop on Windows via UI Automation / SendInput.
+    Brings the target profile window (HWND) to the foreground on Desktop 2, pastes the
+    prompt into the input field via Windows clipboard, and presses Enter to submit.
+    """
+
+    def __init__(
+        self,
+        worker_id: str,
+        nickname: str,
+        hwnd: int | None = None,
+        role: str = "worker",
+        preferred_model: str = "claude-3-5-sonnet",
+        thinking_budget: int = 0,
+    ):
+        super().__init__(worker_id, nickname, ["writing", "research", "code", "qa", "seo", "formatting"])
+        self.hwnd = hwnd
+        self.role = role
+        self.preferred_model = preferred_model
+        self.thinking_budget = thinking_budget
+
+    async def check_health(self) -> bool:
+        """Verify the window handle is alive and visible."""
+        if not self.hwnd:
+            return False
+        import win32gui
+        return bool(win32gui.IsWindow(self.hwnd) and win32gui.IsWindowVisible(self.hwnd))
+
+    def _focus_window(self) -> bool:
+        """Bring window to foreground safely handling Windows focus locks."""
+        if not self.hwnd:
+            return False
+        import win32gui, win32con, ctypes
+        user32 = ctypes.windll.user32
+        try:
+            if win32gui.IsIconic(self.hwnd):
+                win32gui.ShowWindow(self.hwnd, win32con.SW_RESTORE)
+
+            current_thread = user32.GetCurrentThreadId()
+            target_thread, _ = win32gui.GetWindowThreadProcessId(self.hwnd)
+            user32.AttachThreadInput(current_thread, target_thread, True)
+
+            win32gui.SetForegroundWindow(self.hwnd)
+            win32gui.BringWindowToTop(self.hwnd)
+
+            user32.AttachThreadInput(current_thread, target_thread, False)
+            import time
+            time.sleep(0.3)
+            return True
+        except Exception:
+            return False
+
+    def _paste_and_enter(self, text: str) -> bool:
+        """Paste text into current focus and send Enter keypress."""
+        import win32clipboard, ctypes, time
+        user32 = ctypes.windll.user32
+
+        for _ in range(5):
+            try:
+                win32clipboard.OpenClipboard()
+                win32clipboard.EmptyClipboard()
+                win32clipboard.SetClipboardText(text, win32clipboard.CF_UNICODETEXT)
+                win32clipboard.CloseClipboard()
+                break
+            except Exception:
+                time.sleep(0.1)
+        else:
+            return False
+
+        time.sleep(0.2)
+
+        VK_CONTROL = 0x11
+        VK_V = 0x56
+        VK_RETURN = 0x0D
+        KEYEVENTF_KEYUP = 0x0002
+
+        # Press Ctrl+V
+        user32.keybd_event(VK_CONTROL, 0, 0, 0)
+        time.sleep(0.05)
+        user32.keybd_event(VK_V, 0, 0, 0)
+        time.sleep(0.05)
+        user32.keybd_event(VK_V, 0, KEYEVENTF_KEYUP, 0)
+        time.sleep(0.05)
+        user32.keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0)
+
+        time.sleep(0.35)
+
+        # Press Enter
+        user32.keybd_event(VK_RETURN, 0, 0, 0)
+        time.sleep(0.05)
+        user32.keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0)
+        time.sleep(0.2)
+
+        return True
+
+    async def execute_task(self, task_id: str, spec: str, stage: str, context: dict[str, Any]) -> dict[str, Any]:
+        """Activate the window and dispatch prompt."""
+        loop = asyncio.get_running_loop()
+
+        def _do_dispatch():
+            if not self._focus_window():
+                return {"success": False, "error": f"Failed to focus window for {self.worker_id} (HWND={self.hwnd})"}
+
+            prompt = (
+                f"You are executing stage '{stage}' for task {task_id}.\n\n"
+                f"TASK SPECIFICATION:\n{spec}\n\n"
+                f"Please generate the complete, high-quality production deliverable directly."
+            )
+            ok = self._paste_and_enter(prompt)
+            if not ok:
+                return {"success": False, "error": "Clipboard paste or Enter submission failed."}
+
+            return {
+                "success": True,
+                "summary": f"Prompt dispatched to {self.worker_id} window on desktop.",
+                "result_text": "Dispatched to window. Model is generating response in UI."
+            }
+
+        return await loop.run_in_executor(None, _do_dispatch)
+
+    async def send_text(self, text: str) -> dict[str, Any]:
+        """Direct prompt injection without task headers."""
+        loop = asyncio.get_running_loop()
+
+        def _do_send():
+            if not self._focus_window():
+                return {"success": False, "error": f"Failed to focus window for {self.worker_id} (HWND={self.hwnd})"}
+            ok = self._paste_and_enter(text)
+            if not ok:
+                return {"success": False, "error": "Clipboard paste or Enter submission failed."}
+            return {
+                "success": True,
+                "summary": f"Prompt sent to {self.worker_id}.",
+                "result_text": "Dispatched to window."
+            }
+
+        return await loop.run_in_executor(None, _do_send)
