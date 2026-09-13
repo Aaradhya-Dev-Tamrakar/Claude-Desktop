@@ -2365,10 +2365,13 @@ function Invoke-ProfileLaunch {
 
             $launchedPid = 0
             try {
+                Initialize-WindowHelperType
                 $argsStr = if ($ProcessArgs.Count -gt 0) { ($ProcessArgs -join " ") } else { "" }
                 $launchedPid = [ClaudeDesktopWindowHelper]::LaunchOnDefaultDesktop($ClaudeExe, $argsStr)
             }
-            catch { }
+            catch {
+                Write-Warning "LaunchOnDefaultDesktop failed: $_"
+            }
 
             if ($launchedPid -eq 0) {
                 if ($ProcessArgs.Count -gt 0) {
