@@ -125,3 +125,38 @@ async def test_cdp_ui_error_banner_handling():
         res = await adapter._wait_for_generation_complete(mock_ws)
         assert res["success"] is False
         assert "Claude UI Error" in res["error"]
+
+@pytest.mark.asyncio
+async def test_cdp_adapter_custom_model_and_thinking_init():
+    adapter = ClaudeDesktopCDPAdapter(
+        worker_id="user6",
+        nickname="QA Reviewer",
+        cdp_port=9227,
+        preferred_model="claude-3-7-sonnet",
+        thinking_budget=16000
+    )
+    assert adapter.preferred_model == "claude-3-7-sonnet"
+    assert adapter.thinking_budget == 16000
+    assert adapter.cdp_port == 9227
+
+@pytest.mark.asyncio
+async def test_cdp_wait_until_ready_success():
+    adapter = ClaudeDesktopCDPAdapter("test_ready", "Test", cdp_port=9222)
+    mock_ws = AsyncMock()
+    with patch.object(adapter, "get_page_ws_url", return_value="ws://127.0.0.1:9222/page/1"), \
+         patch("websockets.connect") as mock_ws_connect, \
+         patch.object(adapter, "_send_cdp_command", return_value={"result": {}}), \
+         patch.object(adapter, "_dismiss_overlays", return_value=None), \
+         patch.object(adapter, "_eval_js", return_value=True):
+        
+        mock_ws_connect.return_value.__aenter__.return_value = mock_ws
+        ready = await adapter.wait_until_ready(timeout=2.0)
+        assert ready is True
+
+@pytest.mark.asyncio
+async def test_cdp_wait_until_ready_timeout():
+    adapter = ClaudeDesktopCDPAdapter("test_ready_to", "Test", cdp_port=9222)
+    with patch.object(adapter, "get_page_ws_url", return_value=None):
+        ready = await adapter.wait_until_ready(timeout=0.1)
+        assert ready is False
+

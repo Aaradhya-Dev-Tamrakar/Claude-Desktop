@@ -20,12 +20,16 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
         nickname: str,
         cdp_port: int = 9222,
         cdp_host: str = "127.0.0.1",
+        preferred_model: str = "claude-3-5-sonnet",
+        thinking_budget: int = 0,
         timeout: float = 180.0,
         poll_interval: float | None = None,
     ):
         super().__init__(worker_id, nickname, ["writing", "research", "code", "qa", "seo", "formatting"])
         self.cdp_port = cdp_port
         self.cdp_host = cdp_host
+        self.preferred_model = preferred_model
+        self.thinking_budget = thinking_budget
         self.timeout = timeout
         self.poll_interval = poll_interval if poll_interval is not None else max(
             0.5, float(os.getenv("CLAUDE_CDP_POLL_INTERVAL_SECONDS", "2"))
@@ -66,6 +70,30 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
         except Exception:
             return None
         return None
+
+    async def wait_until_ready(self, timeout: float = 30.0) -> bool:
+        """Poll until Claude Desktop CDP is reachable and ProseMirror editor element is mounted."""
+        start = asyncio.get_event_loop().time()
+        while (asyncio.get_event_loop().time() - start) < timeout:
+            ws_url = await self.get_page_ws_url()
+            if ws_url:
+                try:
+                    async with websockets.connect(ws_url, max_size=5_000_000, open_timeout=3.0) as ws:
+                        await self._send_cdp_command(ws, "Runtime.enable")
+                        await self._dismiss_overlays(ws)
+                        check_js = """
+                        (() => {
+                            const editor = document.querySelector('.ProseMirror, div[contenteditable="true"], textarea');
+                            return !!editor;
+                        })()
+                        """
+                        is_ready = await self._eval_js(ws, check_js)
+                        if is_ready:
+                            return True
+                except Exception:
+                    pass
+            await asyncio.sleep(1.0)
+        return False
 
     async def _send_cdp_command(
         self,
@@ -140,7 +168,12 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
 
                 # 3. Start a new chat to keep context window clean
                 await self._start_new_chat(ws)
-                await asyncio.sleep(1.0)
+                await asyncio.sleep(0.5)
+
+                # 3b. Dismiss any overlays & ensure target model / thinking mode
+                await self._dismiss_overlays(ws)
+                await self._ensure_model_and_thinking(ws, self.preferred_model, self.thinking_budget)
+                await asyncio.sleep(0.5)
 
                 # 4. Construct prompt
                 prompt = (
@@ -220,6 +253,77 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
         })()
         """
         await self._eval_js(ws, js)
+
+    async def _dismiss_overlays(self, ws: websockets.WebSocketClientProtocol) -> None:
+        """Dismiss non-essential popups (update notes, cookie/terms banners)."""
+        js = """
+        (() => {
+            const btns = document.querySelectorAll('button[aria-label="Close"], button[data-testid="close-button"], div[role="dialog"] button');
+            for (const b of btns) {
+                const txt = (b.innerText || b.textContent || "").toLowerCase();
+                if (txt.includes("close") || txt.includes("got it") || txt.includes("dismiss") || txt.includes("continue")) {
+                    b.click();
+                }
+            }
+            return true;
+        })()
+        """
+        try:
+            await self._eval_js(ws, js)
+        except Exception:
+            pass
+
+    async def _ensure_model_and_thinking(self, ws: websockets.WebSocketClientProtocol, target_model: str, thinking_budget: int = 0) -> None:
+        """Ensure correct model and thinking mode are selected in the UI before prompt dispatch."""
+        if not target_model:
+            return
+
+        model_clean = target_model.lower()
+        if "haiku" in model_clean:
+            model_keyword = "haiku"
+        elif "opus" in model_clean:
+            model_keyword = "opus"
+        else:
+            model_keyword = "sonnet"
+
+        js = f"""
+        (async () => {{
+            const targetKeyword = {json.dumps(model_keyword)};
+            const targetBudget = {thinking_budget};
+
+            // 1. Check current model selector button
+            const modelBtn = document.querySelector('button[aria-label*="model" i], [data-testid="model-selector-dropdown"], button[aria-haspopup="menu"]');
+            if (modelBtn) {{
+                const currentText = (modelBtn.innerText || modelBtn.textContent || "").toLowerCase();
+                if (!currentText.includes(targetKeyword)) {{
+                    modelBtn.click();
+                    await new Promise(r => setTimeout(r, 250));
+                    const options = Array.from(document.querySelectorAll('[role="menuitem"], [role="option"], button'));
+                    const match = options.find(opt => (opt.innerText || opt.textContent || "").toLowerCase().includes(targetKeyword));
+                    if (match) {{
+                        match.click();
+                        await new Promise(r => setTimeout(r, 200));
+                    }}
+                }}
+            }}
+
+            // 2. Extended Thinking configuration if requested
+            if (targetBudget > 0) {{
+                const thinkingToggle = document.querySelector('button[aria-label*="Thinking" i], [data-testid*="thinking" i], button[aria-label*="Extended thinking" i]');
+                if (thinkingToggle) {{
+                    const isPressed = thinkingToggle.getAttribute('aria-pressed') === 'true' || thinkingToggle.classList.contains('active');
+                    if (!isPressed) {{
+                        thinkingToggle.click();
+                    }}
+                }}
+            }}
+            return true;
+        }})()
+        """
+        try:
+            await self._eval_js(ws, js)
+        except Exception:
+            pass
 
     async def _inject_prompt_and_send(self, ws: websockets.WebSocketClientProtocol, prompt: str) -> bool:
         """Inject prompt into ProseMirror / contenteditable and click send safely without innerHTML."""

@@ -21,6 +21,12 @@ param (
     # Port to enable Chrome DevTools Protocol (CDP) for headless/unattended automation.
     # When > 0, passes --remote-debugging-port=<Port> to Claude.exe.
     [int]$RemoteDebuggingPort = 0,
+    # Base port for auto-incrementing CDP ports across concurrent instances (e.g. 9222, 9223, ...)
+    [int]$BaseCdpPort = 9222,
+    # Direct concurrent instances to a dedicated "Claude Fleet" virtual desktop (leaves primary desktop clean)
+    [switch]$FleetDesktop,
+    # Automatically spawn background worker daemons for launched concurrent profiles
+    [switch]$AutoWorkers,
     # Dot-source-and-return-early hook for Pester: stops after function
     # definitions, before any interactive prompt or side-effecting logic.
     # Never set by real launches (launch.bat / manual pwsh invocation).
@@ -1206,6 +1212,47 @@ function Start-LocalOrchestratorServer {
     }
 }
 
+function Export-ActiveFleetState {
+    param(
+        [Parameter(Mandatory = $true)][string]$RepoRoot,
+        [switch]$WhatIf
+    )
+
+    if ($WhatIf -or -not $script:ActiveFleetInstances -or $script:ActiveFleetInstances.Count -eq 0) {
+        return
+    }
+
+    $liveDir = Join-Path $RepoRoot "orchestrator-state\live-status"
+    if (-not (Test-Path $liveDir)) {
+        New-Item -ItemType Directory -Force -Path $liveDir | Out-Null
+    }
+    $targetFile = Join-Path $liveDir "active_fleet.json"
+    $script:ActiveFleetInstances | ConvertTo-Json -Depth 5 | Set-Content -Path $targetFile -Encoding UTF8
+    Write-Host "[+] Exported $($script:ActiveFleetInstances.Count) active fleet instance(s) to '$targetFile'." -ForegroundColor DarkCyan
+}
+
+function Start-FleetWorkerDaemons {
+    param(
+        [Parameter(Mandatory = $true)][string]$RepoRoot,
+        [switch]$WhatIf
+    )
+
+    if ($WhatIf -or -not $script:ActiveFleetInstances -or $script:ActiveFleetInstances.Count -eq 0) {
+        return
+    }
+
+    $VenvPython = Join-Path $RepoRoot ".venv\Scripts\python.exe"
+    $PythonExe = if (Test-Path $VenvPython) { $VenvPython } else { "python" }
+    $supervisorScript = Join-Path $RepoRoot "client\fleet_supervisor.py"
+    $fleetJsonPath = Join-Path $RepoRoot "orchestrator-state\live-status\active_fleet.json"
+
+    if (Test-Path $supervisorScript) {
+        Write-Host "[+] Starting fleet supervisor in background..." -ForegroundColor Cyan
+        Start-Process -FilePath $PythonExe -ArgumentList "`"$supervisorScript`" --fleet-file `"$fleetJsonPath`"" -WorkingDirectory $RepoRoot -WindowStyle Hidden
+        Write-Host "[+] Fleet supervisor daemon started." -ForegroundColor Green
+    }
+}
+
 function Get-DesktopBatchAllocation {
     <#
     .SYNOPSIS
@@ -1446,7 +1493,8 @@ function Set-ClaudeWindowsLayout {
     param(
         [Parameter(Mandatory = $false)][string[]]$Accounts = @(),
         [int]$MaxPerDesktop = 4,
-        [switch]$WhatIf
+        [switch]$WhatIf,
+        [switch]$FleetDesktop
     )
 
     try {
@@ -1539,8 +1587,8 @@ function Set-ClaudeWindowsLayout {
             Start-Sleep -Milliseconds 500
         }
 
-        # 1 user / profile stays normal (no forced snapping)
-        if ($targets.Count -le 1) {
+        # 1 user / profile stays normal (no forced snapping unless FleetDesktop requested)
+        if ($targets.Count -lt 1 -or ($targets.Count -eq 1 -and -not $FleetDesktop)) {
             return
         }
 
@@ -1549,15 +1597,17 @@ function Set-ClaudeWindowsLayout {
         $vdExe = Initialize-VirtualDesktopTool -RepoRoot $PSScriptRoot
 
         $numDesktops = [int][Math]::Ceiling($targets.Count / [double]$MaxPerDesktop)
+        $desktopOffset = if ($FleetDesktop) { 1 } else { 0 }
+        $totalDesktopsRequired = $numDesktops + $desktopOffset
 
-        if ($numDesktops -gt 1 -and $vdExe) {
+        if ($totalDesktopsRequired -gt 1 -and $vdExe) {
             try {
                 $countStr = & $vdExe /Quiet /Count 2>$null
                 $currentDesktopCount = 1
                 if ($countStr -match '(\d+)') {
                     $currentDesktopCount = [int]$Matches[1]
                 }
-                while ($currentDesktopCount -lt $numDesktops) {
+                while ($currentDesktopCount -lt $totalDesktopsRequired) {
                     if ($WhatIf) {
                         Write-Host "[WhatIf] Would create Virtual Desktop $($currentDesktopCount + 1)." -ForegroundColor DarkCyan
                     } else {
@@ -1581,16 +1631,17 @@ function Set-ClaudeWindowsLayout {
                 $alloc = $desktopItems[$k]
                 $target = $targets[$alloc.AccountIndex]
                 $slot = $desktopSlots[$k]
+                $targetDesktopIdx = $d + $desktopOffset
 
                 if ($WhatIf) {
-                    $moveDesc = if ($d -gt 0) { " -> Desktop $($d + 1)" } else { " (Desktop 1)" }
+                    $moveDesc = if ($targetDesktopIdx -gt 0) { " -> Desktop $($targetDesktopIdx + 1)" } else { " (Desktop 1)" }
                     Write-Host "[WhatIf] Profile '$($target.Account)'${moveDesc}: Slot $($slot.Slot) at (X=$($slot.X), Y=$($slot.Y), W=$($slot.Width), H=$($slot.Height))" -ForegroundColor DarkCyan
                 }
                 else {
                     # Move to virtual desktop if index > 0
-                    if ($d -gt 0 -and $vdExe) {
+                    if ($targetDesktopIdx -gt 0 -and $vdExe) {
                         try {
-                            & $vdExe /Quiet "/GetDesktop:$d" "/MoveWindowHandle:$($target.Hwnd)" | Out-Null
+                            & $vdExe /Quiet "/GetDesktop:$targetDesktopIdx" "/MoveWindowHandle:$($target.Hwnd)" | Out-Null
                         }
                         catch { }
                     }
@@ -1604,7 +1655,14 @@ function Set-ClaudeWindowsLayout {
         }
 
         if (-not $WhatIf) {
-            if ($numDesktops -gt 1) {
+            if ($FleetDesktop -and $vdExe) {
+                try {
+                    # Keep operator focused on primary desktop 0
+                    & $vdExe /Quiet /Switch:0 | Out-Null
+                } catch { }
+                Write-Host "[+] Moved $($targets.Count) Claude profile windows to dedicated virtual desktop ($($desktopOffset + 1)). Primary desktop left clean." -ForegroundColor Green
+            }
+            elseif ($numDesktops -gt 1) {
                 Write-Host "[+] Arranged $($targets.Count) profiles across $numDesktops virtual desktops (max $MaxPerDesktop per desktop)." -ForegroundColor Green
             } else {
                 Write-Host "[+] Snapped $($targets.Count) Claude profile window(s) into desktop grid (Slots 1-$($targets.Count))." -ForegroundColor Green
@@ -2168,10 +2226,40 @@ function Invoke-ProfileLaunch {
         Write-Host (Format-CardRow -Label "Executable" -Value $ClaudeExe -BoxWidth $bannerWidth) -ForegroundColor DarkGray
         Write-Host ("╰" + ("─" * $innerBannerWidth) + "╯") -ForegroundColor Cyan
 
+        # Dynamic CDP Port resolution: prefer profile-specific cdp_port, then RemoteDebuggingPort, then BaseCdpPort + offset
+        $AssignedCdpPort = 0
+        if ($ProfileInfo.cdp_port) {
+            $AssignedCdpPort = [int]$ProfileInfo.cdp_port
+        }
+        elseif ($RemoteDebuggingPort -gt 0) {
+            $AssignedCdpPort = $RemoteDebuggingPort
+        }
+        elseif ($Concurrent -and $BaseCdpPort -gt 0) {
+            $accountIdx = [array]::IndexOf($script:AccountKeys, $Account)
+            $AssignedCdpPort = $BaseCdpPort + [Math]::Max(0, $accountIdx)
+        }
+
+        # Track active fleet instance for supervisor
+        if ($Concurrent -and $AssignedCdpPort -gt 0) {
+            if (-not $script:ActiveFleetInstances) {
+                $script:ActiveFleetInstances = [System.Collections.Generic.List[PSCustomObject]]::new()
+            }
+            $script:ActiveFleetInstances.Add([PSCustomObject]@{
+                Account         = $Account
+                Nickname        = $Nickname
+                Role            = if ($ProfileInfo.role) { $ProfileInfo.role } else { "worker" }
+                PreferredModel  = if ($ProfileInfo.preferred_model) { $ProfileInfo.preferred_model } else { "claude-3-5-sonnet" }
+                ThinkingBudget  = if ($ProfileInfo.thinking_budget) { [int]$ProfileInfo.thinking_budget } else { 0 }
+                CdpPort         = $AssignedCdpPort
+                LaunchedAt      = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
+            })
+        }
+
         # Redirect stdout/stderr to per-profile logs to suppress internal Electron/Node.js deprecation warnings (DEP0169)
         $LogsDir = Join-Path $ProfilesBaseDir "Logs\$Account"
         if ($WhatIf) {
-            Write-Host "[WhatIf] Would launch '$ClaudeExe' with logs under '$LogsDir'." -ForegroundColor DarkCyan
+            $cdpDesc = if ($AssignedCdpPort -gt 0) { " [CDP Port: $AssignedCdpPort]" } else { "" }
+            Write-Host "[WhatIf] Would launch '$ClaudeExe'$cdpDesc with logs under '$LogsDir'." -ForegroundColor DarkCyan
             Write-Host "[WhatIf] Dry run complete. No files, registry, or processes were modified." -ForegroundColor Green
         }
         else {
@@ -2184,8 +2272,10 @@ function Invoke-ProfileLaunch {
             if ($Concurrent) {
                 $ProcessArgs += "--user-data-dir=`"$Dir`""
             }
-            if ($RemoteDebuggingPort -gt 0) {
-                $ProcessArgs += "--remote-debugging-port=$RemoteDebuggingPort"
+            if ($AssignedCdpPort -gt 0) {
+                $ProcessArgs += "--remote-debugging-port=$AssignedCdpPort"
+                $ProcessArgs += "--disable-renderer-backgrounding"
+                $ProcessArgs += "--disable-background-timer-throttling"
             }
 
             if ($ProcessArgs.Count -gt 0) {
@@ -2269,7 +2359,11 @@ if ($isInteractive -and -not $Users -and -not $Account) {
     Sync-RepositoryAfterLaunchBatch -Accounts $tuiChoice.Accounts
     Sync-TeamConfigAfterLaunchBatch -AccountCount $tuiChoice.Accounts.Count
     if (($Concurrent -or $Snap) -and -not $NoSnap) {
-        Set-ClaudeWindowsLayout -Accounts $tuiChoice.Accounts -WhatIf:$WhatIf
+        Set-ClaudeWindowsLayout -Accounts $tuiChoice.Accounts -WhatIf:$WhatIf -FleetDesktop:$FleetDesktop
+    }
+    Export-ActiveFleetState -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
+    if ($AutoWorkers) {
+        Start-FleetWorkerDaemons -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
     }
     
     if (-not $WhatIf) {
@@ -2329,7 +2423,11 @@ if ($Users -and $Users.Count -gt 0) {
     Sync-RepositoryAfterLaunchBatch -Accounts $ResolvedAccounts
     Sync-TeamConfigAfterLaunchBatch -AccountCount $ResolvedAccounts.Count
     if (($Concurrent -or $Snap) -and -not $NoSnap) {
-        Set-ClaudeWindowsLayout -Accounts $ResolvedAccounts -WhatIf:$WhatIf
+        Set-ClaudeWindowsLayout -Accounts $ResolvedAccounts -WhatIf:$WhatIf -FleetDesktop:$FleetDesktop
+    }
+    Export-ActiveFleetState -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
+    if ($AutoWorkers) {
+        Start-FleetWorkerDaemons -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
     }
 }
 else {
@@ -2337,7 +2435,11 @@ else {
     $singleAccount = Resolve-SingleAccount -PresetAccount $Account -SkipTableDisplay:$tableAlreadyShown
     Invoke-ProfileLaunch -Account $singleAccount
     if (($Concurrent -or $Snap) -and -not $NoSnap) {
-        Set-ClaudeWindowsLayout -Accounts @($singleAccount) -WhatIf:$WhatIf
+        Set-ClaudeWindowsLayout -Accounts @($singleAccount) -WhatIf:$WhatIf -FleetDesktop:$FleetDesktop
+    }
+    Export-ActiveFleetState -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
+    if ($AutoWorkers) {
+        Start-FleetWorkerDaemons -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
     }
 }
 

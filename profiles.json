@@ -2,14 +2,20 @@
   "user1": {
     "nickname": "adevtmr",
     "role": "orchestrator",
+    "preferred_model": "claude-3-7-sonnet",
+    "thinking_budget": 8000,
+    "cdp_port": 9222,
     "path": "%USERPROFILE%\\.claude-profiles\\user1",
-    "first_login_time": "2026-09-09 13:39:30",
-    "last_login_date": "2026-09-09",
-    "last_login_time": "16:56:18"
+    "last_login_date": "2026-09-11",
+    "last_login_time": "17:52:44",
+    "first_login_time": "2026-09-11 17:52:44"
   },
   "user2": {
     "nickname": "dev83",
     "role": "researcher",
+    "preferred_model": "claude-3-5-haiku",
+    "thinking_budget": 0,
+    "cdp_port": 9223,
     "path": "%USERPROFILE%\\.claude-profiles\\user2",
     "last_login_date": "2026-09-11",
     "last_login_time": "08:08:47",
@@ -18,6 +24,9 @@
   "user3": {
     "nickname": "xavier",
     "role": "writer",
+    "preferred_model": "claude-3-5-sonnet",
+    "thinking_budget": 0,
+    "cdp_port": 9224,
     "path": "%USERPROFILE%\\.claude-profiles\\user3",
     "first_login_time": "2026-09-09 14:10:07",
     "last_login_date": "2026-09-09",
@@ -27,6 +36,9 @@
     "path": "%USERPROFILE%\\.claude-profiles\\user4",
     "nickname": "adtbei79001",
     "role": "writer",
+    "preferred_model": "claude-3-5-sonnet",
+    "thinking_budget": 0,
+    "cdp_port": 9225,
     "last_login_date": "2026-09-08",
     "last_login_time": "12:26:41",
     "first_login_time": "2026-09-08 12:26:41"
@@ -34,6 +46,9 @@
   "user5": {
     "nickname": "games2061",
     "role": "seo_optimizer",
+    "preferred_model": "claude-3-5-haiku",
+    "thinking_budget": 0,
+    "cdp_port": 9226,
     "path": "%USERPROFILE%\\.claude-profiles\\user5",
     "last_login_date": "2026-09-09",
     "last_login_time": "14:08:11",
@@ -42,6 +57,9 @@
   "user6": {
     "nickname": "adt_ieee",
     "role": "qa_reviewer",
+    "preferred_model": "claude-3-7-sonnet",
+    "thinking_budget": 16000,
+    "cdp_port": 9227,
     "path": "%USERPROFILE%\\.claude-profiles\\user6",
     "last_login_date": "2026-09-09",
     "last_login_time": "14:08:11",
@@ -50,6 +68,9 @@
   "user7": {
     "nickname": "adtmr",
     "role": "formatter",
+    "preferred_model": "claude-3-5-haiku",
+    "thinking_budget": 0,
+    "cdp_port": 9228,
     "path": "%USERPROFILE%\\.claude-profiles\\user7",
     "first_login_time": "2026-09-09 14:08:56",
     "last_login_date": "2026-09-09",
@@ -58,6 +79,9 @@
   "user8": {
     "nickname": "majprj01",
     "role": "overflow_worker",
+    "preferred_model": "claude-3-5-sonnet",
+    "thinking_budget": 0,
+    "cdp_port": 9229,
     "path": "%USERPROFILE%\\.claude-profiles\\user8",
     "first_login_time": "2026-09-09 14:09:22",
     "last_login_date": "2026-09-09",
