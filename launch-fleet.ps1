@@ -11,7 +11,7 @@
     .\launch-fleet.ps1 -WhatIf
 #>
 param(
-    [string[]]$Users = @("user2", "user3", "user6"),
+    [string[]]$Users = @("user1", "user2", "user3"),
     [int]$BaseCdpPort = 9222,
     [switch]$WhatIf
 )
