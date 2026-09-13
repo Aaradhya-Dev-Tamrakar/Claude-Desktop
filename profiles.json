@@ -8,7 +8,7 @@
     "path": "%USERPROFILE%\\.claude-profiles\\user1",
     "first_login_time": "2026-09-14 01:06:47",
     "last_login_date": "2026-09-14",
-    "last_login_time": "01:33:36"
+    "last_login_time": "01:44:01"
   },
   "user2": {
     "nickname": "dev83",
@@ -19,7 +19,7 @@
     "path": "%USERPROFILE%\\.claude-profiles\\user2",
     "first_login_time": "2026-09-14 01:06:53",
     "last_login_date": "2026-09-14",
-    "last_login_time": "01:33:38"
+    "last_login_time": "01:44:03"
   },
   "user3": {
     "nickname": "xavier",
@@ -30,7 +30,7 @@
     "path": "%USERPROFILE%\\.claude-profiles\\user3",
     "first_login_time": "2026-09-14 01:06:54",
     "last_login_date": "2026-09-14",
-    "last_login_time": "01:33:39"
+    "last_login_time": "01:44:03"
   },
   "user4": {
     "path": "%USERPROFILE%\\.claude-profiles\\user4",

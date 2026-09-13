@@ -24,6 +24,16 @@ if sys.platform == "win32":
     except Exception:
         pass
 
+def _attach_default_desktop():
+    try:
+        import ctypes
+        user32 = ctypes.windll.user32
+        h_def = user32.OpenDesktopW("Default", 0, False, 0x01FF)
+        if h_def:
+            user32.SetThreadDesktop(h_def)
+    except Exception:
+        pass
+
 def load_fleet_data() -> list[dict[str, Any]]:
     if FLEET_JSON.exists():
         try:
@@ -37,6 +47,7 @@ def load_fleet_data() -> list[dict[str, Any]]:
     ]
 
 async def cmd_status():
+    _attach_default_desktop()
     fleet = load_fleet_data()
     print("\n+----------------------------------------------------------------------------------------------------+")
     print("|                                   CLAUDE DESKTOP FLEET STATUS                                      |")
@@ -75,6 +86,7 @@ async def cmd_status():
     print("+----------+--------------+--------------+----------------------+------------------+-----------------+\n")
 
 async def cmd_broadcast(prompt: str):
+    _attach_default_desktop()
     fleet = load_fleet_data()
     print(f"\n[*] Broadcasting prompt to {len(fleet)} instances:")
     print(f"    Prompt: {prompt[:100]}...\n")
@@ -107,6 +119,7 @@ async def cmd_broadcast(prompt: str):
         print(f"└───────────────────────────────────────────────────────────┘\n")
 
 async def cmd_send(target: str, prompt: str):
+    _attach_default_desktop()
     fleet = load_fleet_data()
     target_inst = None
     for inst in fleet:

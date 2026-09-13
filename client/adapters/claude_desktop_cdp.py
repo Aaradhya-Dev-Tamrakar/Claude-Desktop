@@ -451,39 +451,86 @@ class ClaudeDesktopUIAAdapter(BaseWorkerAdapter):
         self.preferred_model = preferred_model
         self.thinking_budget = thinking_budget
 
+    @staticmethod
+    def _attach_default_desktop():
+        try:
+            import ctypes
+            user32 = ctypes.windll.user32
+            h_def = user32.OpenDesktopW("Default", 0, False, 0x01FF)
+            if h_def:
+                user32.SetThreadDesktop(h_def)
+        except Exception:
+            pass
+
     async def check_health(self) -> bool:
         """Verify the window handle is alive and visible."""
         if not self.hwnd:
             return False
+        self._attach_default_desktop()
         import win32gui
         return bool(win32gui.IsWindow(self.hwnd) and win32gui.IsWindowVisible(self.hwnd))
 
     def _focus_window(self) -> bool:
-        """Bring window to foreground safely handling Windows focus locks."""
+        """Bring window to foreground safely handling Windows focus locks and virtual desktops."""
         if not self.hwnd:
             return False
-        import win32gui, win32con, ctypes
+        self._attach_default_desktop()
+        import win32gui, win32con, win32process, ctypes, subprocess, re, time
         user32 = ctypes.windll.user32
+        kernel32 = ctypes.windll.kernel32
+        dwmapi = ctypes.windll.dwmapi
         try:
+            # If window is cloaked on an inactive virtual desktop, switch to its desktop first
+            DWMWA_CLOAKED = 14
+            cloaked = ctypes.c_uint()
+            dwmapi.DwmGetWindowAttribute(self.hwnd, DWMWA_CLOAKED, ctypes.byref(cloaked), ctypes.sizeof(cloaked))
+            if cloaked.value != 0:
+                vd_exe = Path(__file__).resolve().parent.parent.parent / "tools" / "VirtualDesktop.exe"
+                if vd_exe.exists():
+                    res = subprocess.run([str(vd_exe), f"/GetDesktopFromWindowHandle:{self.hwnd}"], capture_output=True, text=True)
+                    for line in res.stdout.splitlines():
+                        if "desktop number" in line.lower():
+                            m = re.search(r"desktop number (\d+)", line, re.IGNORECASE)
+                            if m:
+                                subprocess.run([str(vd_exe), f"/Switch:{m.group(1)}"], capture_output=True)
+                                time.sleep(0.3)
+                                break
+
             if win32gui.IsIconic(self.hwnd):
                 win32gui.ShowWindow(self.hwnd, win32con.SW_RESTORE)
 
-            current_thread = user32.GetCurrentThreadId()
-            target_thread, _ = win32gui.GetWindowThreadProcessId(self.hwnd)
+            current_thread = kernel32.GetCurrentThreadId()
+            target_thread, _ = win32process.GetWindowThreadProcessId(self.hwnd)
             user32.AttachThreadInput(current_thread, target_thread, True)
 
             win32gui.SetForegroundWindow(self.hwnd)
             win32gui.BringWindowToTop(self.hwnd)
 
             user32.AttachThreadInput(current_thread, target_thread, False)
-            import time
-            time.sleep(0.3)
+            time.sleep(0.2)
+
+            # Click in prompt textarea area to ensure caret focus
+            rect = win32gui.GetWindowRect(self.hwnd)
+            w = rect[2] - rect[0]
+            h = rect[3] - rect[1]
+            if w > 150 and h > 150:
+                cx = rect[0] + w // 2
+                cy = rect[1] + int(h * 0.88)
+                user32.SetCursorPos(cx, cy)
+                MOUSEEVENTF_LEFTDOWN = 0x0002
+                MOUSEEVENTF_LEFTUP = 0x0004
+                user32.mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+                time.sleep(0.05)
+                user32.mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+                time.sleep(0.15)
+
             return True
         except Exception:
             return False
 
     def _paste_and_enter(self, text: str) -> bool:
         """Paste text into current focus and send Enter keypress."""
+        self._attach_default_desktop()
         import win32clipboard, ctypes, time
         user32 = ctypes.windll.user32
 

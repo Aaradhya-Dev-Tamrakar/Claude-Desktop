@@ -1434,6 +1434,76 @@ public class ClaudeDesktopWindowHelper {
     [DllImport("user32.dll", SetLastError = true)]
     public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, out RECT pvParam, uint fWinIni);
 
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    public static extern IntPtr OpenDesktop(string lpszDesktop, uint dwFlags, bool fInherit, uint dwDesiredAccess);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool SetThreadDesktop(IntPtr hDesktop);
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    public struct STARTUPINFO {
+        public int cb;
+        public string lpReserved;
+        public string lpDesktop;
+        public string lpTitle;
+        public int dwX;
+        public int dwY;
+        public int dwXSize;
+        public int dwYSize;
+        public int dwXCountChars;
+        public int dwYCountChars;
+        public int dwFillAttribute;
+        public int dwFlags;
+        public short wShowWindow;
+        public short cbReserved2;
+        public IntPtr lpReserved2;
+        public IntPtr hStdInput;
+        public IntPtr hStdOutput;
+        public IntPtr hStdError;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PROCESS_INFORMATION {
+        public IntPtr hProcess;
+        public IntPtr hThread;
+        public int dwProcessId;
+        public int dwThreadId;
+    }
+
+    [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern bool CreateProcess(
+        string lpApplicationName,
+        string lpCommandLine,
+        IntPtr lpProcessAttributes,
+        IntPtr lpThreadAttributes,
+        bool bInheritHandles,
+        uint dwCreationFlags,
+        IntPtr lpEnvironment,
+        string lpCurrentDirectory,
+        ref STARTUPINFO lpStartupInfo,
+        out PROCESS_INFORMATION lpProcessInformation
+    );
+
+    public static void AttachToDefaultDesktop() {
+        try {
+            IntPtr hDesk = OpenDesktop("Default", 0, false, 0x01FF);
+            if (hDesk != IntPtr.Zero) {
+                SetThreadDesktop(hDesk);
+            }
+        } catch { }
+    }
+
+    public static int LaunchOnDefaultDesktop(string exePath, string args) {
+        AttachToDefaultDesktop();
+        STARTUPINFO si = new STARTUPINFO();
+        si.cb = Marshal.SizeOf(si);
+        si.lpDesktop = @"WinSta0\Default";
+        PROCESS_INFORMATION pi = new PROCESS_INFORMATION();
+        string cmd = string.IsNullOrEmpty(args) ? ("\"" + exePath + "\"") : ("\"" + exePath + "\" " + args);
+        bool success = CreateProcess(null, cmd, IntPtr.Zero, IntPtr.Zero, false, 0, IntPtr.Zero, null, ref si, out pi);
+        return success ? pi.dwProcessId : 0;
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT {
         public int Left;
@@ -1455,6 +1525,7 @@ public class ClaudeDesktopWindowHelper {
     }
 
     public static List<IntPtr> GetProcessWindows(uint processId) {
+        AttachToDefaultDesktop();
         var result = new List<IntPtr>();
         EnumWindows((hWnd, lParam) => {
             if (IsWindowVisible(hWnd)) {
@@ -1479,6 +1550,7 @@ public class ClaudeDesktopWindowHelper {
     }
 
     public static void SnapWindow(IntPtr hWnd, int x, int y, int width, int height) {
+        AttachToDefaultDesktop();
         ShowWindowAsync(hWnd, SW_RESTORE);
         SetWindowPos(hWnd, IntPtr.Zero, x, y, width, height, SWP_NOZORDER | SWP_NOACTIVATE | SWP_SHOWWINDOW);
     }
@@ -2291,11 +2363,20 @@ function Invoke-ProfileLaunch {
                 $ProcessArgs += "--disable-background-timer-throttling"
             }
 
-            if ($ProcessArgs.Count -gt 0) {
-                Start-Process $ClaudeExe -ArgumentList ($ProcessArgs -join " ") -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+            $launchedPid = 0
+            try {
+                $argsStr = if ($ProcessArgs.Count -gt 0) { ($ProcessArgs -join " ") } else { "" }
+                $launchedPid = [ClaudeDesktopWindowHelper]::LaunchOnDefaultDesktop($ClaudeExe, $argsStr)
             }
-            else {
-                Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+            catch { }
+
+            if ($launchedPid -eq 0) {
+                if ($ProcessArgs.Count -gt 0) {
+                    Start-Process $ClaudeExe -ArgumentList ($ProcessArgs -join " ") -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+                }
+                else {
+                    Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+                }
             }
         }
 
