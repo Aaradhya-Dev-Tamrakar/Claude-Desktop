@@ -31,7 +31,7 @@ Write-Host "[1/3] Ensuring tool permission gates are bypassed..." -ForegroundCol
 # 2. Launch concurrent Claude Desktop instances on dedicated virtual desktop with unique CDP ports
 Write-Host "[2/3] Launching Claude Desktop multi-instances on dedicated virtual desktop..." -ForegroundColor Cyan
 & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "launch_user_n.ps1") `
-    -Mode Concurrent -Users $Users -BaseCdpPort $BaseCdpPort -FleetDesktop -AutoWorkers -WhatIf:$WhatIf
+    -Mode Concurrent -Users $Users -BaseCdpPort $BaseCdpPort -FleetDesktop -AutoWorkers -NoPrompt -WhatIf:$WhatIf
 
 if (-not $WhatIf) {
     Write-Host ""

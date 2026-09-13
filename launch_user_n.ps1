@@ -41,7 +41,9 @@ param (
     # profile instances. This is unsafe by design.
     [switch]$ForceIsolated,
     # Skip automatic NotebookLM authentication check/login on launch
-    [switch]$NoNlmLogin
+    [switch]$NoNlmLogin,
+    # Skip the trailing 'Press Enter to close this window' prompt (for automated / scripted runs)
+    [switch]$NoPrompt
 )
 
 try {
@@ -2443,6 +2445,6 @@ else {
     }
 }
 
-if (-not $WhatIf) {
+if (-not $WhatIf -and -not $NoPrompt) {
     Read-Host "Press Enter to close this window"
 }
