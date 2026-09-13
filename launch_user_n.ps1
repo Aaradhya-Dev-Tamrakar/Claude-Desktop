@@ -2275,7 +2275,8 @@ function Invoke-ProfileLaunch {
                 $ProcessArgs += "--user-data-dir=`"$Dir`""
             }
             if ($AssignedCdpPort -gt 0) {
-                $ProcessArgs += "--remote-debugging-port=$AssignedCdpPort"
+                # Note: Claude Desktop 1.52386+ enforces a hard guard against --remote-debugging-port.
+                # Background unthrottling flags are safe and prevent Chromium execution sleep on virtual desktops.
                 $ProcessArgs += "--disable-renderer-backgrounding"
                 $ProcessArgs += "--disable-background-timer-throttling"
             }
