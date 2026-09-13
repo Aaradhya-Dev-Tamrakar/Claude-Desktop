@@ -499,12 +499,25 @@ class ClaudeDesktopUIAAdapter(BaseWorkerAdapter):
             if win32gui.IsIconic(self.hwnd):
                 win32gui.ShowWindow(self.hwnd, win32con.SW_RESTORE)
 
+            # Bypass Windows foreground lock restriction
+            user32.AllowSetForegroundWindow(-1)
+            VK_MENU = 0x12
+            KEYEVENTF_KEYUP = 0x0002
+            user32.keybd_event(VK_MENU, 0, 0, 0)
+            time.sleep(0.02)
+            user32.keybd_event(VK_MENU, 0, KEYEVENTF_KEYUP, 0)
+
             current_thread = kernel32.GetCurrentThreadId()
             target_thread, _ = win32process.GetWindowThreadProcessId(self.hwnd)
             user32.AttachThreadInput(current_thread, target_thread, True)
 
-            win32gui.SetForegroundWindow(self.hwnd)
-            win32gui.BringWindowToTop(self.hwnd)
+            user32.ShowWindow(self.hwnd, 9)  # SW_RESTORE
+            user32.SetForegroundWindow(self.hwnd)
+            try:
+                user32.SwitchToThisWindow(self.hwnd, True)
+            except Exception:
+                pass
+            user32.BringWindowToTop(self.hwnd)
 
             user32.AttachThreadInput(current_thread, target_thread, False)
             time.sleep(0.2)
@@ -525,7 +538,8 @@ class ClaudeDesktopUIAAdapter(BaseWorkerAdapter):
                 time.sleep(0.15)
 
             return True
-        except Exception:
+        except Exception as e:
+            print(f"DEBUG: _focus_window error for HWND {self.hwnd}: {e}")
             return False
 
     def _paste_and_enter(self, text: str) -> bool:

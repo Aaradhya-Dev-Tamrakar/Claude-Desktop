@@ -154,11 +154,11 @@ async def cmd_submit(spec: str):
     print(f"[*] Submitting end-to-end task DAG to Orchestrator: {ORCHESTRATOR_URL}")
     pipeline = ["research", "draft", "qa"]
     payload = {
-        "title": "Autonomous Fleet Task",
-        "sku_id": "custom_adhoc",
-        "pipeline": json.dumps(pipeline),
-        "quality_rules": "No hallucinations, professional structure, clean formatting",
-        "raw_input_data": json.dumps([{"spec": spec}]),
+        "sku": "custom_adhoc",
+        "client": "fleet_cli",
+        "input_uri": spec,
+        "pipeline": pipeline,
+        "quality_rules": ["No hallucinations", "Professional structure", "Clean formatting"],
     }
 
     async with httpx.AsyncClient(timeout=10.0) as client:
