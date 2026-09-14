@@ -32,8 +32,21 @@ VD_EXE = REPO_ROOT / "tools" / "VirtualDesktop.exe"
 LAUNCH_SCRIPT = REPO_ROOT / "launch-fleet.ps1"
 ORCHESTRATOR_URL = os.getenv("ORCHESTRATOR_URL", "http://127.0.0.1:8000/api/v1")
 
-# Win32 desktop attachment helper
-def attach_default_desktop():
+# Win32 desktop attachment & High-DPI awareness helper
+def enable_high_dpi_and_desktop():
+    try:
+        # Per-Monitor High DPI v2 (DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = -4)
+        ctypes.windll.user32.SetProcessDpiAwarenessContext(ctypes.c_void_p(-4))
+    except Exception:
+        try:
+            # Fallback to system DPI aware
+            ctypes.windll.shcore.SetProcessDpiAwareness(1)
+        except Exception:
+            try:
+                ctypes.windll.user32.SetProcessDPIAware()
+            except Exception:
+                pass
+
     try:
         user32 = ctypes.windll.user32
         h_def = user32.OpenDesktopW("Default", 0, False, 0x01FF)
@@ -43,6 +56,20 @@ def attach_default_desktop():
     except Exception:
         pass
     return False
+
+def set_dark_titlebar(hwnd: int):
+    """Enable native Windows 11 dark title bar for the Tkinter window."""
+    try:
+        DWMWA_USE_IMMERSIVE_DARK_MODE = 20
+        value = ctypes.c_int(1)
+        ctypes.windll.dwmapi.DwmSetWindowAttribute(
+            ctypes.c_void_p(hwnd),
+            ctypes.c_uint(DWMWA_USE_IMMERSIVE_DARK_MODE),
+            ctypes.byref(value),
+            ctypes.sizeof(value),
+        )
+    except Exception:
+        pass
 
 def ensure_orchestrator_server():
     try:
@@ -64,35 +91,47 @@ def ensure_orchestrator_server():
         pass
     return False
 
-# UI Colors & Fonts (Modern Dark Palette)
-BG_MAIN = "#121214"
-BG_CARD = "#1c1c21"
-BG_INPUT = "#26262e"
-BORDER_COLOR = "#32323d"
-TEXT_PRIMARY = "#f4f4f5"
-TEXT_MUTED = "#a1a1aa"
-ACCENT_BLUE = "#3b82f6"
+# UI Colors & Fonts (Refined Modern Dark Palette - VS Code / Linear Aesthetic)
+BG_MAIN = "#0d0e11"
+BG_CARD = "#16181d"
+BG_INPUT = "#1f222a"
+BORDER_COLOR = "#2a2d36"
+TEXT_PRIMARY = "#f3f4f6"
+TEXT_SECONDARY = "#d1d5db"
+TEXT_MUTED = "#9ca3af"
+
+ACCENT_BLUE = "#2563eb"
+ACCENT_BLUE_HOVER = "#1d4ed8"
 ACCENT_GREEN = "#10b981"
-ACCENT_PURPLE = "#8b5cf6"
+ACCENT_GREEN_HOVER = "#059669"
+ACCENT_PURPLE = "#a855f7"
 ACCENT_AMBER = "#f59e0b"
 ACCENT_RED = "#ef4444"
 
-FONT_TITLE = ("Segoe UI", 13, "bold")
-FONT_SUBTITLE = ("Segoe UI", 10, "bold")
+# Typography hierarchy
+FONT_TITLE = ("Segoe UI Semibold", 13)
+FONT_SUBTITLE = ("Segoe UI Semibold", 10)
 FONT_BODY = ("Segoe UI", 9)
-FONT_MONO = ("Consolas", 9)
-FONT_BADGE = ("Segoe UI", 8, "bold")
+FONT_BODY_MUTED = ("Segoe UI", 8)
+FONT_MONO = ("Cascadia Code", 9)
+FONT_BADGE = ("Segoe UI Semibold", 8)
 
 
 class FleetControlApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Claude Desktop Fleet Control Center")
-        self.geometry("1020x760")
-        self.minsize(880, 640)
+        self.geometry("1160x820")
+        self.minsize(980, 680)
         self.configure(bg=BG_MAIN)
 
-        attach_default_desktop()
+        # Set native Windows 11 immersive dark title bar
+        self.update_idletasks()
+        try:
+            hwnd = ctypes.windll.user32.GetParent(self.winfo_id())
+            set_dark_titlebar(hwnd or self.winfo_id())
+        except Exception:
+            pass
 
         self._init_styles()
         self._build_ui()
@@ -111,24 +150,43 @@ class FleetControlApp(tk.Tk):
         self.style.configure("Card.TFrame", background=BG_CARD)
         self.style.configure("TFrame", background=BG_MAIN)
 
-        # Treeview styling
+        # Combobox styling
+        self.style.configure(
+            "TCombobox",
+            fieldbackground=BG_INPUT,
+            background=BG_CARD,
+            foreground=TEXT_PRIMARY,
+            arrowcolor=TEXT_MUTED,
+            borderwidth=1,
+            relief="flat",
+        )
+        self.style.map(
+            "TCombobox",
+            fieldbackground=[("readonly", BG_INPUT)],
+            foreground=[("readonly", TEXT_PRIMARY)],
+            selectbackground=[("readonly", BG_INPUT)],
+            selectforeground=[("readonly", TEXT_PRIMARY)],
+        )
+
+        # Treeview styling (clean modern table)
         self.style.configure(
             "Treeview",
             background=BG_CARD,
             foreground=TEXT_PRIMARY,
             fieldbackground=BG_CARD,
-            rowheight=26,
+            rowheight=28,
             font=FONT_BODY,
             borderwidth=0,
         )
         self.style.configure(
             "Treeview.Heading",
             background=BG_INPUT,
-            foreground=TEXT_PRIMARY,
+            foreground=TEXT_SECONDARY,
             font=FONT_SUBTITLE,
             relief="flat",
+            padding=(6, 4),
         )
-        self.style.map("Treeview", background=[("selected", ACCENT_BLUE)])
+        self.style.map("Treeview", background=[("selected", "#1e3a8a")], foreground=[("selected", "#ffffff")])
 
     def _build_ui(self):
         # 1. Header Toolbar
@@ -157,19 +215,20 @@ class FleetControlApp(tk.Tk):
 
         # 2. Main Action Control Bar
         action_bar = tk.Frame(self, bg=BG_MAIN)
-        action_bar.pack(fill="x", padx=12, pady=6)
+        action_bar.pack(fill="x", padx=14, pady=(6, 8))
 
         btn_launch = tk.Button(
             action_bar,
             text="🚀 Launch Fleet (Desktop 2)",
             bg=ACCENT_BLUE,
             fg="#ffffff",
-            activebackground="#2563eb",
+            activebackground=ACCENT_BLUE_HOVER,
             activeforeground="#ffffff",
             font=FONT_SUBTITLE,
             relief="flat",
-            padx=14,
-            pady=6,
+            bd=0,
+            padx=16,
+            pady=7,
             command=self.on_launch_fleet,
             cursor="hand2",
         )
@@ -184,10 +243,11 @@ class FleetControlApp(tk.Tk):
             activeforeground=TEXT_PRIMARY,
             font=FONT_BODY,
             relief="flat",
+            bd=0,
             highlightbackground=BORDER_COLOR,
             highlightthickness=1,
-            padx=12,
-            pady=6,
+            padx=14,
+            pady=7,
             command=self.on_tile_windows,
             cursor="hand2",
         )
@@ -202,10 +262,11 @@ class FleetControlApp(tk.Tk):
             activeforeground=TEXT_PRIMARY,
             font=FONT_BODY,
             relief="flat",
+            bd=0,
             highlightbackground=BORDER_COLOR,
             highlightthickness=1,
-            padx=12,
-            pady=6,
+            padx=14,
+            pady=7,
             command=lambda: self.on_switch_desktop(1),
             cursor="hand2",
         )
@@ -220,10 +281,11 @@ class FleetControlApp(tk.Tk):
             activeforeground=TEXT_PRIMARY,
             font=FONT_BODY,
             relief="flat",
+            bd=0,
             highlightbackground=BORDER_COLOR,
             highlightthickness=1,
-            padx=12,
-            pady=6,
+            padx=14,
+            pady=7,
             command=lambda: self.on_switch_desktop(0),
             cursor="hand2",
         )
@@ -238,10 +300,11 @@ class FleetControlApp(tk.Tk):
             activeforeground=TEXT_PRIMARY,
             font=FONT_BODY,
             relief="flat",
+            bd=0,
             highlightbackground=BORDER_COLOR,
             highlightthickness=1,
-            padx=12,
-            pady=6,
+            padx=14,
+            pady=7,
             command=self.refresh_all_status,
             cursor="hand2",
         )
@@ -249,7 +312,7 @@ class FleetControlApp(tk.Tk):
 
         # 3. Instance Status Cards (user1, user2, user3)
         cards_frame = tk.Frame(self, bg=BG_MAIN)
-        cards_frame.pack(fill="x", padx=12, pady=6)
+        cards_frame.pack(fill="x", padx=14, pady=6)
 
         self.cards = {}
         profiles_meta = [
@@ -264,21 +327,21 @@ class FleetControlApp(tk.Tk):
 
             # Top header of card
             header = tk.Frame(card, bg=BG_CARD)
-            header.pack(fill="x", padx=12, pady=(10, 4))
+            header.pack(fill="x", padx=14, pady=(12, 6))
 
             title_role = tk.Label(header, text=f"{role.upper()} ({acc})", font=FONT_SUBTITLE, bg=BG_CARD, fg=color)
             title_role.pack(side="left")
 
-            status_badge = tk.Label(header, text="OFFLINE", font=FONT_BADGE, bg="#27272a", fg=TEXT_MUTED, padx=6, pady=2)
+            status_badge = tk.Label(header, text="OFFLINE", font=FONT_BADGE, bg="#27272a", fg=TEXT_MUTED, padx=8, pady=3)
             status_badge.pack(side="right")
 
             # Model info
-            lbl_model = tk.Label(card, text=f"Model: {model} ({extra})", font=FONT_BODY, bg=BG_CARD, fg=TEXT_PRIMARY)
-            lbl_model.pack(anchor="w", padx=12, pady=2)
+            lbl_model = tk.Label(card, text=f"Model: {model}  •  {extra}", font=FONT_BODY, bg=BG_CARD, fg=TEXT_PRIMARY)
+            lbl_model.pack(anchor="w", padx=14, pady=2)
 
             # HWND & Window info
             lbl_hwnd = tk.Label(card, text="Window HWND: Not Attached", font=FONT_MONO, bg=BG_CARD, fg=TEXT_MUTED)
-            lbl_hwnd.pack(anchor="w", padx=12, pady=(2, 10))
+            lbl_hwnd.pack(anchor="w", padx=14, pady=(2, 12))
 
             self.cards[acc] = {
                 "frame": card,
@@ -299,12 +362,12 @@ class FleetControlApp(tk.Tk):
             highlightbackground=BORDER_COLOR,
             highlightthickness=1,
         )
-        console_frame.pack(fill="x", padx=12, pady=6)
+        console_frame.pack(fill="x", padx=14, pady=6)
 
         ctrl_row = tk.Frame(console_frame, bg=BG_CARD)
-        ctrl_row.pack(fill="x", padx=12, pady=(8, 4))
+        ctrl_row.pack(fill="x", padx=14, pady=(10, 6))
 
-        tk.Label(ctrl_row, text="Target Instance:", font=FONT_BODY, bg=BG_CARD, fg=TEXT_PRIMARY).pack(side="left", padx=(0, 6))
+        tk.Label(ctrl_row, text="Target Instance:", font=FONT_BODY, bg=BG_CARD, fg=TEXT_PRIMARY).pack(side="left", padx=(0, 8))
 
         self.target_var = tk.StringVar(value="user1 (Orchestrator)")
         target_cb = ttk.Combobox(
@@ -312,28 +375,39 @@ class FleetControlApp(tk.Tk):
             textvariable=self.target_var,
             values=["user1 (Orchestrator)", "user2 (Researcher)", "user3 (Writer)", "⚡ Broadcast All"],
             state="readonly",
-            width=24,
+            width=22,
             font=FONT_BODY,
         )
-        target_cb.pack(side="left", padx=(0, 14))
+        target_cb.pack(side="left", padx=(0, 16))
 
         tk.Label(ctrl_row, text="Quick Templates:", font=FONT_BODY, bg=BG_CARD, fg=TEXT_MUTED).pack(side="left", padx=(0, 6))
 
-        btn_t1 = tk.Button(ctrl_row, text="Coordinate (user1)", font=FONT_BADGE, bg=BG_INPUT, fg=TEXT_PRIMARY, relief="flat", command=self._set_template_orch)
-        btn_t1.pack(side="left", padx=2)
-
-        btn_t2 = tk.Button(ctrl_row, text="Claim Research (user2)", font=FONT_BADGE, bg=BG_INPUT, fg=TEXT_PRIMARY, relief="flat", command=self._set_template_research)
-        btn_t2.pack(side="left", padx=2)
-
-        btn_t3 = tk.Button(ctrl_row, text="Claim Draft (user3)", font=FONT_BADGE, bg=BG_INPUT, fg=TEXT_PRIMARY, relief="flat", command=self._set_template_draft)
-        btn_t3.pack(side="left", padx=2)
-
-        btn_t4 = tk.Button(ctrl_row, text="Status Ping (All)", font=FONT_BADGE, bg=BG_INPUT, fg=TEXT_PRIMARY, relief="flat", command=self._set_template_ping)
-        btn_t4.pack(side="left", padx=2)
+        for name, cmd in [
+            ("Coordinate (user1)", self._set_template_orch),
+            ("Claim Research (user2)", self._set_template_research),
+            ("Claim Draft (user3)", self._set_template_draft),
+            ("Status Ping (All)", self._set_template_ping),
+        ]:
+            b = tk.Button(
+                ctrl_row,
+                text=name,
+                font=FONT_BADGE,
+                bg=BG_INPUT,
+                fg=TEXT_PRIMARY,
+                activebackground=BORDER_COLOR,
+                activeforeground=TEXT_PRIMARY,
+                relief="flat",
+                bd=0,
+                padx=8,
+                pady=4,
+                command=cmd,
+                cursor="hand2",
+            )
+            b.pack(side="left", padx=3)
 
         # Text input & send button
         text_row = tk.Frame(console_frame, bg=BG_CARD)
-        text_row.pack(fill="x", padx=12, pady=(4, 10))
+        text_row.pack(fill="x", padx=14, pady=(4, 12))
 
         self.prompt_text = tk.Text(
             text_row,
@@ -342,10 +416,15 @@ class FleetControlApp(tk.Tk):
             fg=TEXT_PRIMARY,
             insertbackground=TEXT_PRIMARY,
             relief="flat",
+            bd=0,
+            padx=10,
+            pady=8,
             font=FONT_BODY,
             wrap="word",
+            highlightbackground=BORDER_COLOR,
+            highlightthickness=1,
         )
-        self.prompt_text.pack(side="left", fill="both", expand=True, padx=(0, 8))
+        self.prompt_text.pack(side="left", fill="both", expand=True, padx=(0, 10))
         self.prompt_text.insert("1.0", "You are user1, the Fleet Orchestrator. Inspect active tasks using list_tasks and coordinate work.")
 
         btn_send = tk.Button(
@@ -353,11 +432,12 @@ class FleetControlApp(tk.Tk):
             text="🚀 Dispatch &\nHit Enter",
             bg=ACCENT_GREEN,
             fg="#ffffff",
-            activebackground="#059669",
+            activebackground=ACCENT_GREEN_HOVER,
             activeforeground="#ffffff",
             font=FONT_SUBTITLE,
             relief="flat",
-            padx=16,
+            bd=0,
+            padx=18,
             command=self.on_dispatch_prompt,
             cursor="hand2",
         )
@@ -365,9 +445,9 @@ class FleetControlApp(tk.Tk):
 
         # 5. Bottom Split: Live Task Board + Activity Log
         bottom_frame = tk.Frame(self, bg=BG_MAIN)
-        bottom_frame.pack(fill="both", expand=True, padx=12, pady=(4, 12))
+        bottom_frame.pack(fill="both", expand=True, padx=14, pady=(4, 14))
 
-        # Tasks Table Frame (Left 60%)
+        # Tasks Table Frame (Left 58%)
         tasks_frame = tk.LabelFrame(
             bottom_frame,
             text=" Orchestrator Pipeline Tasks ",
@@ -382,7 +462,7 @@ class FleetControlApp(tk.Tk):
 
         # Task Action Toolbar
         task_toolbar = tk.Frame(tasks_frame, bg=BG_CARD)
-        task_toolbar.pack(fill="x", padx=8, pady=(4, 4))
+        task_toolbar.pack(fill="x", padx=10, pady=(6, 6))
 
         btn_create_tasks = tk.Button(
             task_toolbar,
@@ -390,8 +470,14 @@ class FleetControlApp(tk.Tk):
             font=FONT_BADGE,
             bg=BG_INPUT,
             fg=TEXT_PRIMARY,
+            activebackground=BORDER_COLOR,
+            activeforeground=TEXT_PRIMARY,
             relief="flat",
+            bd=0,
+            padx=10,
+            pady=4,
             command=self.on_create_sample_tasks,
+            cursor="hand2",
         )
         btn_create_tasks.pack(side="left", padx=2)
 
@@ -429,13 +515,18 @@ class FleetControlApp(tk.Tk):
         self.log_text = scrolledtext.ScrolledText(
             log_frame,
             bg=BG_INPUT,
-            fg=TEXT_PRIMARY,
+            fg=TEXT_SECONDARY,
             insertbackground=TEXT_PRIMARY,
             relief="flat",
+            bd=0,
+            padx=10,
+            pady=8,
             font=FONT_MONO,
-            width=45,
+            width=46,
+            highlightbackground=BORDER_COLOR,
+            highlightthickness=1,
         )
-        self.log_text.pack(fill="both", expand=True, padx=8, pady=8)
+        self.log_text.pack(fill="both", expand=True, padx=10, pady=(0, 10))
 
         self.log("Fleet Control Center GUI initialized.")
 
@@ -705,6 +796,7 @@ class FleetControlApp(tk.Tk):
 
 
 def main():
+    enable_high_dpi_and_desktop()
     app = FleetControlApp()
     app.mainloop()
 
