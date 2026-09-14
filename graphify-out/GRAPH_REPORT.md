@@ -1,16 +1,16 @@
-# Graph Report - Claude-Desktop  (2026-09-08)
+# Graph Report - Claude-Desktop  (2026-09-14)
 
 ## Corpus Check
-- 340 files · ~236,882 words
+- 349 files · ~271,092 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 934 nodes · 1870 edges · 97 communities (54 shown, 20 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 76 edges (avg confidence: 0.91)
+- 1019 nodes · 2008 edges · 89 communities (48 shown, 16 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 73 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `66d3a603`
+- Built from commit: `c045a119`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -30,39 +30,33 @@
 - routes_memory.py
 - ClaudeDesktopCDPAdapter
 - VirtualDesktop11-24H2.cs
-- ._eval_js
+- FleetControlApp
 - cloud-orchestrator-mcp/run_server.py
 - routes_workers.py
 - routes_jobs.py
-- IntPtr
+- Guid
 - main.py
 - routes_tasks.py
 - IApplicationViewCollection
-- config.py
-- init_db
+- harvest_completed_jobs
+- super-nlm-mcp/run_server.py
 - PipelineEngine
 - SPARK Project
 - Usage
-- AsyncClient
 - IVirtualDesktopPinnedApps
-- GroqAdapter
-- test_cloud_scheduler.py
 - schema.sql
 - Cross-Linking Hub
-- ClaudeDesktopProxyAdapter
 - Handoff Protocol
 - convert_markdown_to_pdf
 - Job & Pipeline Production Schema (v2)
 - QuotaAwareScheduler
 - Server Requirements
 - orchestrator-state schema
-- validate_security_settings
 - sync-mcp.ps1
 - cooldown-reminder.ps1
 - orchestrator.md
 - sync.ps1
 - usage-watchdog.ps1
-- GeminiFreeAdapter
 - _find_uvx
 - Task Entity
 - Worker Role: Formatter & Delivery Packaging
@@ -70,7 +64,6 @@
 - Worker Role: Quality Assurance (QA) & Fact-Checker
 - Worker Role: Researcher / Attribute Extractor
 - Worker Role: Copywriter / Drafting Specialist
-- .execute_task
 - get_db
 - AGENTS.md
 - Cloudflared Service
@@ -85,33 +78,30 @@
 - MD2PDF MCP Requirements
 - notebooklm-mcp-cli
 - Orchestrator MCP Server
-- .GetDesktop
 - FastAPI
-- APPLICATION_VIEW_COMPATIBILITY_POLICY
-- Size
 
 ## God Nodes (most connected - your core abstractions)
 1. `IApplicationView` - 64 edges
 2. `Desktop` - 45 edges
-3. `Memory Log` - 40 edges
-4. `get_db_conn()` - 32 edges
-5. `MD2PDFApp` - 30 edges
-6. `ClaudeDesktopCDPAdapter` - 29 edges
+3. `ClaudeDesktopCDPAdapter` - 40 edges
+4. `Memory Log` - 40 edges
+5. `get_db_conn()` - 32 edges
+6. `MD2PDFApp` - 30 edges
 7. `IVirtualDesktop` - 25 edges
 8. `IVirtualDesktopManagerInternal` - 24 edges
-9. `_row_to_dict()` - 22 edges
-10. `Program` - 19 edges
+9. `FleetControlApp` - 23 edges
+10. `_row_to_dict()` - 22 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `FleetControlApp` --uses--> `ClaudeDesktopUIAAdapter`  [INFERRED]
+  tools/fleet_gui.py → client/adapters/claude_desktop_cdp.py
 - `test_claude_proxy_delegation_to_cdp()` --uses--> `ClaudeDesktopProxyAdapter`  [INFERRED]
   tests/test_claude_cdp_adapter.py → client/adapters/claude_desktop_proxy.py
+- `test_cdp_adapter_custom_model_and_thinking_init()` --uses--> `ClaudeDesktopCDPAdapter`  [INFERRED]
+  tests/test_claude_cdp_adapter.py → client/adapters/claude_desktop_cdp.py
 - `test_cdp_adapter_init()` --uses--> `ClaudeDesktopCDPAdapter`  [INFERRED]
   tests/test_claude_cdp_adapter.py → client/adapters/claude_desktop_cdp.py
 - `test_cdp_cooldown_detection_returns_429()` --uses--> `ClaudeDesktopCDPAdapter`  [INFERRED]
-  tests/test_claude_cdp_adapter.py → client/adapters/claude_desktop_cdp.py
-- `test_cdp_eval_js_exception()` --uses--> `ClaudeDesktopCDPAdapter`  [INFERRED]
-  tests/test_claude_cdp_adapter.py → client/adapters/claude_desktop_cdp.py
-- `test_cdp_execute_task_flow_success()` --uses--> `ClaudeDesktopCDPAdapter`  [INFERRED]
   tests/test_claude_cdp_adapter.py → client/adapters/claude_desktop_cdp.py
 
 ## Import Cycles
@@ -125,7 +115,11 @@
 - **CI Test Suite** — github_workflows_ci_python, github_workflows_ci_powershell [EXTRACTED 1.00]
 - **Worker Pipeline Flow** — worker_prompts_orchestrator, worker_prompts_researcher, worker_prompts_writer, worker_prompts_seo_optimizer, worker_prompts_qa_reviewer, worker_prompts_formatter [EXTRACTED 1.00]
 
-## Communities (97 total, 20 thin omitted)
+## Communities (89 total, 16 thin omitted)
+
+### Community 0 - "IApplicationView"
+Cohesion: 0.05
+Nodes (3): IntPtr, IApplicationView, Size
 
 ### Community 1 - "orchestrator_mcp_test.py"
 Cohesion: 0.04
@@ -140,8 +134,8 @@ Cohesion: 0.23
 Nodes (39): archive_memory(), _checkpoint_path(), claim_task(), create_job(), create_task(), decompose_task(), _ensure_dirs(), get_context_bundle() (+31 more)
 
 ### Community 4 - "IVirtualDesktop"
-Cohesion: 0.10
-Nodes (3): PreserveSig, IVirtualDesktop, IVirtualDesktopManagerInternal
+Cohesion: 0.08
+Nodes (4): PreserveSig, DesktopManager, IVirtualDesktop, IVirtualDesktopManagerInternal
 
 ### Community 5 - "test_remote_mcp.py"
 Cohesion: 0.24
@@ -155,61 +149,65 @@ Nodes (39): 2026-08-05, 2026-08-06, 2026-08-10, 2026-08-11, 2026-08-13, 2026-08-
 Cohesion: 0.14
 Nodes (24): block_task(), claim_task(), create_task(), get_checkpoint(), get_task(), list_tasks(), _now_iso(), Connection (+16 more)
 
+### Community 8 - ".Main"
+Cohesion: 0.18
+Nodes (4): EnumDelegate, StringBuilder, Program, UInt32
+
 ### Community 9 - "launch_user_n.ps1"
-Cohesion: 0.12
-Nodes (27): Add-NewProfile(), Close-AllClaudeInstances(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Format-VisibleRight(), Format-VisibleText(), Get-ConcurrentClaudeInstances(), Get-DesktopBatchAllocation() (+19 more)
+Cohesion: 0.10
+Nodes (29): Add-NewProfile(), Close-AllClaudeInstances(), Ensure-FleetVirtualDesktop(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Format-VisibleRight(), Format-VisibleText(), Get-ConcurrentClaudeInstances() (+21 more)
 
 ### Community 10 - "Desktop"
-Cohesion: 0.16
+Cohesion: 0.15
 Nodes (7): DllImport, Desktop, Count, Current, IsVisible, Left, Right
 
 ### Community 11 - "BaseWorkerAdapter"
-Cohesion: 0.16
-Nodes (11): ABC, BaseWorkerAdapter, Returns True if the backend AI model / profile is online and usable., Abstract interface for worker execution endpoints., OllamaLocalAdapter, Any, Adapter for local Ollama / LM Studio models (e.g. Qwen 2.5, Llama 3.3). $0…, get_adapter() (+3 more)
+Cohesion: 0.06
+Nodes (29): ABC, BaseWorkerAdapter, Any, Executes work specified in `spec`. Returns dictionary: { "summary": "...",…, Returns True if the backend AI model / profile is online and usable., Abstract interface for worker execution endpoints., ClaudeDesktopProxyAdapter, Any (+21 more)
 
 ### Community 12 - "routes_memory.py"
 Cohesion: 0.18
 Nodes (21): put, get_all_context(), get_context_by_key(), list_memory(), _now_iso(), push_memory(), Connection, get (+13 more)
 
 ### Community 13 - "ClaudeDesktopCDPAdapter"
-Cohesion: 0.24
-Nodes (15): ClaudeDesktopCDPAdapter, Adapter automating a locally running Claude Desktop Electron app via Chrome…, Check if Claude Desktop Electron process is exposing CDP port and has an active…, patch, asyncio, test_cdp_adapter_init(), test_cdp_cooldown_detection_returns_429(), test_cdp_eval_js_exception() (+7 more)
+Cohesion: 0.05
+Nodes (54): ClaudeDesktopCDPAdapter, ClaudeDesktopUIAAdapter, Any, Send a JSON-RPC command over WebSocket and await result with timeout., Evaluate a JavaScript expression in the page and return the unwrapped value., Adapter automating a locally running Claude Desktop Electron app via Chrome…, Automate Claude Desktop via CDP: 1. Connect to page 2. Check for rate limit /…, Scan DOM for 5-hour usage limit and cooldown warnings. (+46 more)
 
 ### Community 14 - "VirtualDesktop11-24H2.cs"
-Cohesion: 0.18
-Nodes (8): VirtualDesktop, VDeskTool, APPLICATION_VIEW_CLOAK_TYPE, AVCT_DEFAULT, AVCT_NONE, AVCT_VIRTUAL_DESKTOP, Guids, Rect
+Cohesion: 0.11
+Nodes (14): VirtualDesktop, VDeskTool, APPLICATION_VIEW_CLOAK_TYPE, AVCT_DEFAULT, AVCT_NONE, AVCT_VIRTUAL_DESKTOP, APPLICATION_VIEW_COMPATIBILITY_POLICY, AVCP_HIGH_SCALE_FACTOR (+6 more)
 
-### Community 15 - "._eval_js"
-Cohesion: 0.20
-Nodes (10): Any, Automate Claude Desktop via CDP: 1. Connect to page 2. Check for rate limit /…, Scan DOM for 5-hour usage limit and cooldown warnings., Click new chat or reset conversation., Inject prompt into ProseMirror / contenteditable and click send safely without…, Poll until generation stop button disappears and text settles., Find the WebSocket debugger URL for the active Claude Desktop UI page., Send a JSON-RPC command over WebSocket and await result with timeout. (+2 more)
+### Community 15 - "FleetControlApp"
+Cohesion: 0.11
+Nodes (5): enable_high_dpi_and_desktop(), FleetControlApp, main(), Enable native Windows 11 dark title bar for the Tkinter window., set_dark_titlebar()
 
 ### Community 16 - "cloud-orchestrator-mcp/run_server.py"
 Cohesion: 0.37
 Nodes (17): block_task(), claim_task(), get_job(), get_system_health(), get_task(), get_worker(), list_jobs(), list_tasks() (+9 more)
 
 ### Community 17 - "routes_workers.py"
-Cohesion: 0.24
-Nodes (14): get_worker(), list_workers(), _now_iso(), Connection, get, post, Register or update an AI worker node / profile., List all registered worker nodes. (+6 more)
+Cohesion: 0.23
+Nodes (15): get_worker(), list_workers(), _now_iso(), Connection, get, post, Register or update an AI worker node / profile., List all registered worker nodes. (+7 more)
 
 ### Community 18 - "routes_jobs.py"
 Cohesion: 0.19
 Nodes (18): create_job(), get_job(), get_job_metrics(), list_jobs(), _now_iso(), Connection, get, post (+10 more)
 
-### Community 19 - "IntPtr"
-Cohesion: 0.15
-Nodes (5): Guid, IntPtr, StringBuilder, IVirtualDesktopManager, UInt32
+### Community 19 - "Guid"
+Cohesion: 0.14
+Nodes (4): Guid, MarshalAs, IServiceProvider10, IVirtualDesktopManager
 
 ### Community 20 - "main.py"
-Cohesion: 0.26
-Nodes (12): middleware, Request, log_request(), metrics_text(), record_request(), request_id(), health_check(), liveness_check() (+4 more)
+Cohesion: 0.06
+Nodes (49): middleware, Request, BaseModel, Settings, validate_security_settings(), init_db(), Initialize database tables and indexes from schema.sql with automatic migration…, log_request() (+41 more)
 
 ### Community 21 - "routes_tasks.py"
-Cohesion: 0.34
-Nodes (13): CheckpointResponse, CheckpointSubmit, BaseModel, QAReviewResponse, QAReviewSubmit, TaskBlockRequest, TaskClaimRequest, TaskClaimResponse (+5 more)
+Cohesion: 0.37
+Nodes (12): CheckpointResponse, CheckpointSubmit, BaseModel, QAReviewResponse, QAReviewSubmit, TaskBlockRequest, TaskClaimRequest, TaskClaimResponse (+4 more)
 
-### Community 24 - "init_db"
-Cohesion: 0.15
-Nodes (13): init_db(), Initialize database tables and indexes from schema.sql with automatic migration…, fixture, Path, setup_test_db(), fixture, Path, setup_test_db() (+5 more)
+### Community 23 - "harvest_completed_jobs"
+Cohesion: 0.38
+Nodes (6): harvest_completed_jobs(), AsyncClient, Trigger a Windows desktop toast notification via PowerShell., Check for completed jobs and compile deliverables., run_harvester_loop(), show_windows_toast()
 
 ### Community 25 - "PipelineEngine"
 Cohesion: 0.23
@@ -223,18 +221,6 @@ Nodes (10): BiasAperture, BiasAperture Schema, EX751 Wireless Communications, ga
 Cohesion: 0.15
 Nodes (12): Benchmarking Efficiency, Claude Desktop Multi-Profile & Sync Utilities, Concurrent Mode (Multiple Windows, Multiple Monitors), Features, Files, Launching Claude Desktop Profiles, Repo Structure, Running Autonomous Worker Daemons (v2) (+4 more)
 
-### Community 28 - "AsyncClient"
-Cohesion: 0.22
-Nodes (10): AsyncClient, Test that when multiple workers race to claim the same task simultaneously,…, Test that an active worker can extend its task lease before expiration., End-to-End Test: Intake a 3-item '100_product_descriptions' job through all 5…, test_concurrent_task_leasing_race_safety(), test_e2e_sku_pipeline_execution(), test_lease_renewal_heartbeat(), asyncio (+2 more)
-
-### Community 30 - "GroqAdapter"
-Cohesion: 0.27
-Nodes (5): GroqAdapter, Any, Adapter for Groq-hosted LLMs via the OpenAI-compatible chat completions API., test_groq_adapter_missing_key_returns_error(), test_groq_adapter_uses_env_model_override()
-
-### Community 31 - "test_cloud_scheduler.py"
-Cohesion: 0.20
-Nodes (8): Periodic self-healing supervisor loop: 1. Identifies workers with stale…, run_supervisor_cycle(), fixture, Path, setup_test_db(), test_supervisor_dead_worker_recovery(), Test that tasks with expired leases can be claimed by a new worker or…, test_expired_lease_reclamation_and_recovery()
-
 ### Community 32 - "schema.sql"
 Cohesion: 0.47
 Nodes (9): checkpoints, job_metrics, jobs, memory_entries, qa_reviews, task_attempts, tasks, team_context (+1 more)
@@ -242,10 +228,6 @@ Nodes (9): checkpoints, job_metrics, jobs, memory_entries, qa_reviews, task_atte
 ### Community 33 - "Cross-Linking Hub"
 Cohesion: 0.22
 Nodes (8): Cross-Linking Hub, Application rules, Coursework notebooks (IV/I, exam sequence order), Hub, Leaf nodes, Pending, Query Protocol (Token Savings), Unlinked notebooks
-
-### Community 34 - "ClaudeDesktopProxyAdapter"
-Cohesion: 0.25
-Nodes (5): ClaudeDesktopProxyAdapter, Any, Adapter representing a local Windows Claude Desktop profile session. Interfaces…, Execute task using Anthropic Claude API, CDP bridge, or structured prompt…, Stage-aware local processing engine producing structured deliverables.
 
 ### Community 35 - "Handoff Protocol"
 Cohesion: 0.22
@@ -271,10 +253,6 @@ Nodes (8): Python CI Job, Server Requirements, aiosqlite, fastapi, mcp, pydantic
 Cohesion: 0.25
 Nodes (8): Directory listing as the index, orchestrator-state/checkpoints/<task_id>.json, orchestrator-state/live-status/\<account\>.json, orchestrator-state/memory/\<account\>\_\_\<entry_id\>.json, orchestrator-state/memory/archive/, orchestrator-state schema, orchestrator-state/tasks/<task_id>.json, Token-Efficient Session Bootstrap
 
-### Community 41 - "validate_security_settings"
-Cohesion: 0.70
-Nodes (4): validate_security_settings(), test_development_allows_empty_auth_key(), test_production_accepts_strong_auth_key(), test_production_rejects_missing_auth_key()
-
 ### Community 42 - "sync-mcp.ps1"
 Cohesion: 0.36
 Nodes (5): Format-AsciiBorderRow(), Merge-McpServers(), Sync-ConfigToDir(), Write-JsonConfigSafely(), Write-McpBanner()
@@ -294,10 +272,6 @@ Nodes (4): Sync-MemoryToTeamMemory(), Write-Notice(), Write-Status(), Write-Succ
 ### Community 46 - "usage-watchdog.ps1"
 Cohesion: 0.48
 Nodes (5): Get-ClaudeTrayUsagePercent(), Invoke-AutoCheckpoint(), Invoke-WatchdogPoll(), Set-CheckpointFiredThisCycle(), Test-CheckpointAlreadyFiredThisCycle()
-
-### Community 47 - "GeminiFreeAdapter"
-Cohesion: 0.33
-Nodes (3): GeminiFreeAdapter, Any, Adapter for Google AI Studio Free Tier (Gemini 2.5 / 3.0). Provides free tokens…
 
 ### Community 48 - "_find_uvx"
 Cohesion: 0.50
@@ -331,37 +305,29 @@ Nodes (3): Directives, Token Efficiency, Worker Role: Copywriter / Drafting Spec
 Cohesion: 0.67
 Nodes (3): get_db(), Connection, Dependency for obtaining an async sqlite database connection in FastAPI routes.
 
-### Community 87 - ".GetDesktop"
-Cohesion: 0.17
-Nodes (3): MarshalAs, DesktopManager, IServiceProvider10
-
 ### Community 88 - "FastAPI"
-Cohesion: 0.25
-Nodes (7): FastAPI, HTTPAuthorizationCredentials, Verify that incoming request provides a valid API token via Bearer header or…, verify_api_key(), lifespan(), Background supervisor monitoring heartbeats, dead workers, and auto-scheduling…, run_supervisor_loop()
-
-### Community 89 - "APPLICATION_VIEW_COMPATIBILITY_POLICY"
-Cohesion: 0.25
-Nodes (6): APPLICATION_VIEW_COMPATIBILITY_POLICY, AVCP_HIGH_SCALE_FACTOR, AVCP_NONE, AVCP_SMALL_SCREEN, AVCP_TABLET_SMALL_SCREEN, AVCP_VERY_SMALL_SCREEN
+Cohesion: 0.40
+Nodes (4): FastAPI, HTTPAuthorizationCredentials, Verify that incoming request provides a valid API token via Bearer header or…, verify_api_key()
 
 ## Knowledge Gaps
 - **132 isolated node(s):** `memory_entries`, `team_context`, `VirtualDesktop`, `AVCT_NONE`, `AVCT_DEFAULT` (+127 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 362 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **20 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 395 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `ClaudeDesktopProxyAdapter` connect `ClaudeDesktopProxyAdapter` to `BaseWorkerAdapter`, `AsyncClient`, `ClaudeDesktopCDPAdapter`, `config.py`?**
-  _High betweenness centrality (0.025) - this node is a cross-community bridge._
-- **Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `ClaudeDesktopProxyAdapter`, `BaseWorkerAdapter`, `._eval_js`?**
-  _High betweenness centrality (0.019) - this node is a cross-community bridge._
-- **Why does `IApplicationView` connect `IApplicationView` to `IVirtualDesktop`, `Desktop`, `VirtualDesktop11-24H2.cs`, `IntPtr`, `IApplicationViewCollection`, `APPLICATION_VIEW_COMPATIBILITY_POLICY`, `Size`, `IVirtualDesktopPinnedApps`?**
-  _High betweenness centrality (0.019) - this node is a cross-community bridge._
+- **Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `BaseWorkerAdapter`?**
+  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+- **Why does `ClaudeDesktopProxyAdapter` connect `BaseWorkerAdapter` to `main.py`, `ClaudeDesktopCDPAdapter`?**
+  _High betweenness centrality (0.036) - this node is a cross-community bridge._
+- **Why does `BaseWorkerAdapter` connect `BaseWorkerAdapter` to `ClaudeDesktopCDPAdapter`?**
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+- **Are the 13 inferred relationships involving `ClaudeDesktopCDPAdapter` (e.g. with `ClaudeDesktopProxyAdapter` and `test_cdp_adapter_custom_model_and_thinking_init()`) actually correct?**
+  _`ClaudeDesktopCDPAdapter` has 13 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `memory_entries`, `team_context`, `VirtualDesktop` to the rest of the system?**
   _132 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `IApplicationView` be split into smaller, more focused modules?**
-  _Cohesion score 0.04878048780487805 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05319148936170213 - nodes in this community are weakly interconnected._
 - **Should `orchestrator_mcp_test.py` be split into smaller, more focused modules?**
   _Cohesion score 0.0425531914893617 - nodes in this community are weakly interconnected._
-- **Should `MD2PDFApp` be split into smaller, more focused modules?**
-  _Cohesion score 0.08139534883720931 - nodes in this community are weakly interconnected._

@@ -12,9 +12,9 @@
     "semantic_hash": "2556d3ee83dd12376ce7aad11dc80475"
   },
   "client/adapters/claude_desktop_cdp.py": {
-    "mtime": 1788457376.7654808,
-    "seen": 1788494004.3920283,
-    "ast_hash": "0e93ecb4ed895b3b1e3eb5dca59a9463",
+    "mtime": 1789350885.3288276,
+    "seen": 1789353122.3924084,
+    "ast_hash": "fa158d80928fe9239e2a216b22f9867a",
     "semantic_hash": ""
   },
   "client/adapters/claude_desktop_proxy.py": {
@@ -54,9 +54,9 @@
     "semantic_hash": "3e1ba0cf93bc59110ed3f084b159b56f"
   },
   "launch_user_n.ps1": {
-    "mtime": 1788863665.72912,
-    "seen": 1788863708.339278,
-    "ast_hash": "da5d6302874142382996f43155b0fea5",
+    "mtime": 1789351835.712821,
+    "seen": 1789353122.3924236,
+    "ast_hash": "ff09bfcceef2e8549b22572b3245a6c6",
     "semantic_hash": ""
   },
   "mcp-servers/cloud-orchestrator-mcp/run_server.py": {
@@ -1236,9 +1236,9 @@
     "semantic_hash": "e9091216a526021912560dd4f61bf1a7"
   },
   "profiles.json": {
-    "mtime": 1788849701.807871,
-    "seen": 1788863708.3394926,
-    "ast_hash": "8496b5d0ed337a364b5875dbe5ab0b5b",
+    "mtime": 1789351339.4037464,
+    "seen": 1789353122.3926454,
+    "ast_hash": "2fa0a3b4ecb783f32aa98fdfdb474e7d",
     "semantic_hash": ""
   },
   "reset_profiles.ps1": {
@@ -1344,16 +1344,16 @@
     "semantic_hash": "0e092edbd800afa5229a12ff8bdfffce"
   },
   "team-claude-config.json": {
-    "mtime": 1788454989.9798436,
-    "seen": 1788456032.7874346,
-    "ast_hash": "9ffff035065f6dc94fd5bcbccfc8941b",
-    "semantic_hash": "9ffff035065f6dc94fd5bcbccfc8941b"
+    "mtime": 1788939485.5554907,
+    "seen": 1789353122.3926644,
+    "ast_hash": "d180cddccb69e607fa53823cd64ae30c",
+    "semantic_hash": ""
   },
   "team-mcp.json": {
-    "mtime": 1788454989.984842,
-    "seen": 1788456032.787436,
-    "ast_hash": "f6ac37488a3b0f173c9be37825d9dc42",
-    "semantic_hash": "f6ac37488a3b0f173c9be37825d9dc42"
+    "mtime": 1788939478.1623118,
+    "seen": 1789353122.3926651,
+    "ast_hash": "0e17416ee5e33f213039710eb3666b9a",
+    "semantic_hash": ""
   },
   "tests/launch_user_n.Tests.ps1": {
     "mtime": 1788458828.3989189,
@@ -1368,10 +1368,10 @@
     "semantic_hash": "b43721ea07024d1603b7048ce9b24951"
   },
   "tests/test_claude_cdp_adapter.py": {
-    "mtime": 1788018004.9509206,
-    "seen": 1788329568.4789865,
-    "ast_hash": "ead21aa02ee706c4325ce257fba5b5e7",
-    "semantic_hash": "ead21aa02ee706c4325ce257fba5b5e7"
+    "mtime": 1789326939.4810638,
+    "seen": 1789353122.3926673,
+    "ast_hash": "b9646e03ef9086ebcc00521ad4fde040",
+    "semantic_hash": ""
   },
   "tests/test_cloud_scheduler.py": {
     "mtime": 1788017996.3331335,
@@ -1404,15 +1404,15 @@
     "semantic_hash": "42f7b72da915b17ea0519043f391a3f4"
   },
   "Claude Skills + MCP/Cross-Linking Hub.md": {
-    "mtime": 1788147055.0645294,
-    "seen": 1788329839.701441,
-    "ast_hash": "832644b0ffbc8393108bdb8f5e9fd40c",
-    "semantic_hash": "832644b0ffbc8393108bdb8f5e9fd40c"
+    "mtime": 1788939668.808519,
+    "seen": 1789353122.3926818,
+    "ast_hash": "260d3da4cb21be675677d7d887b38dbe",
+    "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788458146.4627044,
-    "seen": 1788494004.3923502,
-    "ast_hash": "0e108cc8c71eade92e3a7ffc45e86201",
+    "mtime": 1788939783.680468,
+    "seen": 1789353122.39269,
+    "ast_hash": "530616ffc13aff04cd93a282588db556",
     "semantic_hash": ""
   },
   "orchestrator-state/SCHEMA.md": {
@@ -2091,6 +2091,72 @@
     "mtime": 1788586373.542413,
     "seen": 1788863708.3393512,
     "ast_hash": "6b82cb5086714193f3356b36076734dc",
+    "semantic_hash": ""
+  },
+  "client/fleet_supervisor.py": {
+    "mtime": 1789326985.9625144,
+    "seen": 1789353122.392415,
+    "ast_hash": "4819437688eee73c298b55e7bdbbfb5c",
+    "semantic_hash": ""
+  },
+  "client/output_harvester.py": {
+    "mtime": 1789326993.691761,
+    "seen": 1789353122.392416,
+    "ast_hash": "a9e51d4e7856d8a954861b3d718d2cc6",
+    "semantic_hash": ""
+  },
+  "launch-fleet.ps1": {
+    "mtime": 1789351978.33825,
+    "seen": 1789353122.3924217,
+    "ast_hash": "42e1b3e798652971bf7b70f2bee8c3ea",
+    "semantic_hash": ""
+  },
+  "launch-gui.ps1": {
+    "mtime": 1789350672.8563957,
+    "seen": 1789353122.3924224,
+    "ast_hash": "04da517bbfd185b4826f4439b77ff463",
+    "semantic_hash": ""
+  },
+  "mcp-servers/super-nlm-mcp/run_server.py": {
+    "mtime": 1788939510.9839072,
+    "seen": 1789353122.3924296,
+    "ast_hash": "fa0cc14ecc52a6b5a485bc5acf2de52f",
+    "semantic_hash": ""
+  },
+  "orchestrator-state/live-status/active_fleet.json": {
+    "mtime": 1789351357.4255376,
+    "seen": 1789353122.3925085,
+    "ast_hash": "88b8ea574275c5ef6a2c6bb6483ec77d",
+    "semantic_hash": ""
+  },
+  "tests/test_fleet_supervisor.py": {
+    "mtime": 1789327044.5040393,
+    "seen": 1789353122.3926697,
+    "ast_hash": "0b4d3e14ec9f7d761c35767f59fd9011",
+    "semantic_hash": ""
+  },
+  "tools/fleet_cli.py": {
+    "mtime": 1789329820.8019462,
+    "seen": 1789353122.3926756,
+    "ast_hash": "e7e57c091aaa7aef5d6ba7e7f6fc965e",
+    "semantic_hash": ""
+  },
+  "tools/fleet_gui.py": {
+    "mtime": 1789352409.343891,
+    "seen": 1789353122.3926764,
+    "ast_hash": "f7798586682edaae6c7e557c60a9e01a",
+    "semantic_hash": ""
+  },
+  "dummy.txt": {
+    "mtime": 1789328382.4496212,
+    "seen": 1789353122.3926914,
+    "ast_hash": "2f5608b3c44f9be74b14f3b30414ce69",
+    "semantic_hash": ""
+  },
+  "mcp-servers/super-nlm-mcp/requirements.txt": {
+    "mtime": 1788939511.3469813,
+    "seen": 1789353122.392695,
+    "ast_hash": "ca554c6a8340ef725c771fd64b2d23ed",
     "semantic_hash": ""
   }
 }
