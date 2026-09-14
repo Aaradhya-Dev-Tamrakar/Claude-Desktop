@@ -253,9 +253,9 @@ class FleetControlApp(tk.Tk):
 
         self.cards = {}
         profiles_meta = [
-            ("user1", "adevtmr", "Orchestrator", "claude-3-7-sonnet", "Thinking: 8k", ACCENT_PURPLE),
-            ("user2", "dev83", "Researcher", "claude-3-5-haiku", "Fast Analysis", ACCENT_BLUE),
-            ("user3", "xavier", "Writer", "claude-3-5-sonnet", "Copy Specialist", ACCENT_GREEN),
+            ("user1", "adevtmr", "Orchestrator", "Sonnet 5", "Effort: High", ACCENT_PURPLE),
+            ("user2", "dev83", "Researcher", "Haiku 4.5", "Fast Analysis", ACCENT_BLUE),
+            ("user3", "xavier", "Writer", "Sonnet 5", "Effort: Medium / High", ACCENT_GREEN),
         ]
 
         for idx, (acc, nick, role, model, extra, color) in enumerate(profiles_meta):

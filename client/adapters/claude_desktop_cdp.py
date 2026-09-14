@@ -274,21 +274,23 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
             pass
 
     async def _ensure_model_and_thinking(self, ws: websockets.WebSocketClientProtocol, target_model: str, thinking_budget: int = 0) -> None:
-        """Ensure correct model and thinking mode are selected in the UI before prompt dispatch."""
+        """Ensure correct model (Sonnet 5 vs Haiku 4.5) and Effort/Thinking mode are selected in the UI."""
         if not target_model:
             return
 
         model_clean = target_model.lower()
+        # Strictly match available models from user account: "haiku" -> Haiku 4.5, otherwise Sonnet 5
         if "haiku" in model_clean:
-            model_keyword = "haiku"
-        elif "opus" in model_clean:
-            model_keyword = "opus"
+            target_label = "Haiku 4.5"
+            target_keyword = "haiku"
         else:
-            model_keyword = "sonnet"
+            target_label = "Sonnet 5"
+            target_keyword = "sonnet"
 
         js = f"""
         (async () => {{
-            const targetKeyword = {json.dumps(model_keyword)};
+            const targetKeyword = {json.dumps(target_keyword)};
+            const targetLabel = {json.dumps(target_label)};
             const targetBudget = {thinking_budget};
 
             // 1. Check current model selector button
@@ -298,8 +300,13 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
                 if (!currentText.includes(targetKeyword)) {{
                     modelBtn.click();
                     await new Promise(r => setTimeout(r, 250));
-                    const options = Array.from(document.querySelectorAll('[role="menuitem"], [role="option"], button'));
-                    const match = options.find(opt => (opt.innerText || opt.textContent || "").toLowerCase().includes(targetKeyword));
+                    
+                    // Search dropdown menu items for target model label
+                    const items = Array.from(document.querySelectorAll('[role="menuitem"], [role="option"], button, div'));
+                    const match = items.find(el => {{
+                        const txt = (el.innerText || el.textContent || "").trim();
+                        return txt.startsWith(targetLabel) || txt.includes(targetLabel);
+                    }});
                     if (match) {{
                         match.click();
                         await new Promise(r => setTimeout(r, 200));
@@ -307,9 +314,10 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
                 }}
             }}
 
-            // 2. Extended Thinking configuration if requested
+            // 2. Effort / Thinking configuration if requested
             if (targetBudget > 0) {{
-                const thinkingToggle = document.querySelector('button[aria-label*="Thinking" i], [data-testid*="thinking" i], button[aria-label*="Extended thinking" i]');
+                // Try toggle switch for Thinking / Extended Thinking
+                const thinkingToggle = document.querySelector('button[aria-label*="Thinking" i], [data-testid*="thinking" i], button[aria-label*="Extended" i]');
                 if (thinkingToggle) {{
                     const isPressed = thinkingToggle.getAttribute('aria-pressed') === 'true' || thinkingToggle.classList.contains('active');
                     if (!isPressed) {{
