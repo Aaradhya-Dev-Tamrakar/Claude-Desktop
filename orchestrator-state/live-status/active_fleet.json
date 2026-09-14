@@ -6,8 +6,8 @@
     "PreferredModel": "claude-3-7-sonnet",
     "ThinkingBudget": 8000,
     "CdpPort": 9222,
-    "LaunchedAt": "2026-09-14T07:31:12Z",
-    "Hwnd": 205800
+    "LaunchedAt": "2026-09-14T07:47:16Z",
+    "Hwnd": 919690
   },
   {
     "Account": "user2",
@@ -16,8 +16,8 @@
     "PreferredModel": "claude-3-5-haiku",
     "ThinkingBudget": 0,
     "CdpPort": 9223,
-    "LaunchedAt": "2026-09-14T07:31:14Z",
-    "Hwnd": 205756
+    "LaunchedAt": "2026-09-14T07:47:18Z",
+    "Hwnd": 142938
   },
   {
     "Account": "user3",
@@ -26,7 +26,7 @@
     "PreferredModel": "claude-3-5-sonnet",
     "ThinkingBudget": 0,
     "CdpPort": 9224,
-    "LaunchedAt": "2026-09-14T07:31:15Z",
-    "Hwnd": 268432
+    "LaunchedAt": "2026-09-14T07:47:19Z",
+    "Hwnd": 1181016
   }
 ]

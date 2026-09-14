@@ -13,6 +13,8 @@
 param(
     [string[]]$Users = @("user1", "user2", "user3"),
     [int]$BaseCdpPort = 9222,
+    [ValidateSet("Grid", "Focus")]
+    [string]$Layout = "Focus",
     [switch]$WhatIf
 )
 
@@ -29,10 +31,10 @@ Write-Host "[1/3] Ensuring tool permission gates are bypassed..." -ForegroundCol
 & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "bypass-all-profiles.ps1") -WhatIf:$WhatIf
 
 # 2. Launch concurrent Claude Desktop instances on dedicated virtual desktop with unique CDP ports
-Write-Host "[2/3] Launching Claude Desktop multi-instances on dedicated virtual desktop..." -ForegroundColor Cyan
+Write-Host "[2/3] Launching Claude Desktop multi-instances on dedicated virtual desktop (Layout: $Layout)..." -ForegroundColor Cyan
 $usersArg = ($Users -join ',')
 & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "launch_user_n.ps1") `
-    -Mode Concurrent -Users $usersArg -BaseCdpPort $BaseCdpPort -FleetDesktop -AutoWorkers -NoPrompt -WhatIf:$WhatIf
+    -Mode Concurrent -Users $usersArg -BaseCdpPort $BaseCdpPort -Layout $Layout -FleetDesktop -AutoWorkers -NoPrompt -WhatIf:$WhatIf
 
 if (-not $WhatIf) {
     Write-Host ""

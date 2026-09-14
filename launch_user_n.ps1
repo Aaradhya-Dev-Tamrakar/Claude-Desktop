@@ -37,6 +37,9 @@ param (
     [switch]$NoSnap,
     # Explicitly force window snapping / grid arrangement
     [switch]$Snap,
+    # Layout mode for window arrangement: "Grid" (default side-by-side) or "Focus" (PowerToys Focus stacked/cascaded)
+    [ValidateSet("Grid", "Focus")]
+    [string]$Layout = "Grid",
     # Skip the two-step confirmation before isolated mode closes concurrent
     # profile instances. This is unsafe by design.
     [switch]$ForceIsolated,
@@ -1445,6 +1448,53 @@ function Get-WindowGridLayout {
     return $slots
 }
 
+function Get-WindowFocusLayout {
+    <#
+    .SYNOPSIS
+        Calculates PowerToys Focus-style stacked window geometry with comfortable width/height and subtle cascade offsets.
+    #>
+    param(
+        [Parameter(Mandatory = $true)]$Bounds,
+        [Parameter(Mandatory = $true)][int]$Count
+    )
+
+    if ($Count -le 0) {
+        return @()
+    }
+
+    $bX = [int]$Bounds.X
+    $bY = [int]$Bounds.Y
+    $bW = [int]$Bounds.Width
+    $bH = [int]$Bounds.Height
+
+    # Focus sizing: 85% width and 88% height so Claude desktop UI has full room for tabs, projects, and chat input
+    $focusW = [int][Math]::Min($bW, [Math]::Max(850, [Math]::Floor($bW * 0.85)))
+    $focusH = [int][Math]::Min($bH, [Math]::Max(600, [Math]::Floor($bH * 0.88)))
+
+    # Centered base coordinates
+    $baseX = $bX + [int][Math]::Max(0, [Math]::Floor(($bW - $focusW) / 2))
+    $baseY = $bY + [int][Math]::Max(0, [Math]::Floor(($bH - $focusH) / 2))
+
+    $offsetStep = 24
+    $maxOffset = [Math]::Max(0, [int][Math]::Min(($bW - $focusW), ($bH - $focusH)))
+
+    $slots = for ($i = 0; $i -lt $Count; $i++) {
+        $step = ($i * $offsetStep)
+        if ($maxOffset -gt 0) {
+            $step = $step % ($maxOffset + 1)
+        }
+        [PSCustomObject]@{
+            Slot   = ($i + 1)
+            X      = ($baseX + $step)
+            Y      = ($baseY + $step)
+            Width  = $focusW
+            Height = $focusH
+        }
+    }
+
+    return $slots
+}
+
 function Initialize-WindowHelperType {
     if (-not ([System.Management.Automation.PSTypeName]'ClaudeDesktopWindowHelper').Type) {
         $typeDef = @"
@@ -1616,6 +1666,8 @@ function Set-ClaudeWindowsLayout {
     param(
         [Parameter(Mandatory = $false)][string[]]$Accounts = @(),
         [int]$MaxPerDesktop = 4,
+        [ValidateSet("Grid", "Focus")]
+        [string]$Layout = "Grid",
         [switch]$WhatIf,
         [switch]$FleetDesktop
     )
@@ -1751,11 +1803,15 @@ function Set-ClaudeWindowsLayout {
             }
         }
 
-        # Group targets by virtual desktop and apply per-desktop grid arrangement
+        # Group targets by virtual desktop and apply per-desktop window arrangement
         for ($d = 0; $d -lt $numDesktops; $d++) {
             $desktopItems = @($allocations | Where-Object { $_.DesktopIndex -eq $d })
             $countOnThisDesktop = $desktopItems.Count
-            $desktopSlots = Get-WindowGridLayout -Bounds $bounds -Count $countOnThisDesktop
+            $desktopSlots = if ($Layout -eq "Focus") {
+                Get-WindowFocusLayout -Bounds $bounds -Count $countOnThisDesktop
+            } else {
+                Get-WindowGridLayout -Bounds $bounds -Count $countOnThisDesktop
+            }
 
             for ($k = 0; $k -lt $desktopItems.Count; $k++) {
                 $alloc = $desktopItems[$k]
@@ -2515,7 +2571,7 @@ if ($isInteractive -and -not $Users -and -not $Account) {
     Sync-RepositoryAfterLaunchBatch -Accounts $tuiChoice.Accounts
     Sync-TeamConfigAfterLaunchBatch -AccountCount $tuiChoice.Accounts.Count
     if (($Concurrent -or $Snap) -and -not $NoSnap) {
-        Set-ClaudeWindowsLayout -Accounts $tuiChoice.Accounts -WhatIf:$WhatIf -FleetDesktop:$FleetDesktop
+        Set-ClaudeWindowsLayout -Accounts $tuiChoice.Accounts -Layout $Layout -WhatIf:$WhatIf -FleetDesktop:$FleetDesktop
     }
     Export-ActiveFleetState -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
     if ($AutoWorkers) {
@@ -2582,7 +2638,7 @@ if ($Users -and $Users.Count -gt 0) {
     Sync-RepositoryAfterLaunchBatch -Accounts $ResolvedAccounts
     Sync-TeamConfigAfterLaunchBatch -AccountCount $ResolvedAccounts.Count
     if (($Concurrent -or $Snap) -and -not $NoSnap) {
-        Set-ClaudeWindowsLayout -Accounts $ResolvedAccounts -WhatIf:$WhatIf -FleetDesktop:$FleetDesktop
+        Set-ClaudeWindowsLayout -Accounts $ResolvedAccounts -Layout $Layout -WhatIf:$WhatIf -FleetDesktop:$FleetDesktop
     }
     Export-ActiveFleetState -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
     if ($AutoWorkers) {
@@ -2594,7 +2650,7 @@ else {
     $singleAccount = Resolve-SingleAccount -PresetAccount $Account -SkipTableDisplay:$tableAlreadyShown
     Invoke-ProfileLaunch -Account $singleAccount
     if (($Concurrent -or $Snap) -and -not $NoSnap) {
-        Set-ClaudeWindowsLayout -Accounts @($singleAccount) -WhatIf:$WhatIf -FleetDesktop:$FleetDesktop
+        Set-ClaudeWindowsLayout -Accounts @($singleAccount) -Layout $Layout -WhatIf:$WhatIf -FleetDesktop:$FleetDesktop
     }
     Export-ActiveFleetState -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
     if ($AutoWorkers) {

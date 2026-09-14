@@ -28,6 +28,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 FLEET_JSON = REPO_ROOT / "orchestrator-state" / "live-status" / "active_fleet.json"
+PROFILES_JSON = REPO_ROOT / "profiles.json"
 VD_EXE = REPO_ROOT / "tools" / "VirtualDesktop.exe"
 LAUNCH_SCRIPT = REPO_ROOT / "launch-fleet.ps1"
 ORCHESTRATOR_URL = os.getenv("ORCHESTRATOR_URL", "http://127.0.0.1:8000/api/v1")
@@ -227,12 +228,24 @@ class FleetControlApp(tk.Tk):
             font=FONT_SUBTITLE,
             relief="flat",
             bd=0,
-            padx=16,
+            padx=14,
             pady=7,
             command=self.on_launch_fleet,
             cursor="hand2",
         )
-        btn_launch.pack(side="left", padx=(0, 8))
+        btn_launch.pack(side="left", padx=(0, 4))
+
+        tk.Label(action_bar, text="Size:", font=FONT_BODY, bg=BG_MAIN, fg=TEXT_MUTED).pack(side="left", padx=(4, 2))
+        self.fleet_size_var = tk.StringVar(value="3")
+        fleet_size_cb = ttk.Combobox(
+            action_bar,
+            textvariable=self.fleet_size_var,
+            values=["3", "4", "5", "6", "8"],
+            state="readonly",
+            width=3,
+            font=FONT_BODY,
+        )
+        fleet_size_cb.pack(side="left", padx=(0, 8))
 
         btn_tile = tk.Button(
             action_bar,
@@ -252,6 +265,25 @@ class FleetControlApp(tk.Tk):
             cursor="hand2",
         )
         btn_tile.pack(side="left", padx=4)
+
+        btn_focus = tk.Button(
+            action_bar,
+            text="🎯 Focus Layout (PowerToys Stack)",
+            bg=BG_CARD,
+            fg=TEXT_PRIMARY,
+            activebackground=BG_INPUT,
+            activeforeground=TEXT_PRIMARY,
+            font=FONT_BODY,
+            relief="flat",
+            bd=0,
+            highlightbackground=BORDER_COLOR,
+            highlightthickness=1,
+            padx=14,
+            pady=7,
+            command=self.on_focus_layout,
+            cursor="hand2",
+        )
+        btn_focus.pack(side="left", padx=4)
 
         btn_vdesk2 = tk.Button(
             action_bar,
@@ -310,46 +342,11 @@ class FleetControlApp(tk.Tk):
         )
         btn_refresh.pack(side="right")
 
-        # 3. Instance Status Cards (user1, user2, user3)
-        cards_frame = tk.Frame(self, bg=BG_MAIN)
-        cards_frame.pack(fill="x", padx=14, pady=6)
+        # 3. Instance Status Cards Container (Dynamic wrap grid)
+        self.cards_frame = tk.Frame(self, bg=BG_MAIN)
+        self.cards_frame.pack(fill="x", padx=14, pady=6)
 
         self.cards = {}
-        profiles_meta = [
-            ("user1", "adevtmr", "Orchestrator", "Sonnet 5", "Effort: High", ACCENT_PURPLE),
-            ("user2", "dev83", "Researcher", "Haiku 4.5", "Fast Analysis", ACCENT_BLUE),
-            ("user3", "xavier", "Writer", "Sonnet 5", "Effort: Medium / High", ACCENT_GREEN),
-        ]
-
-        for idx, (acc, nick, role, model, extra, color) in enumerate(profiles_meta):
-            card = tk.Frame(cards_frame, bg=BG_CARD, relief="flat", highlightbackground=BORDER_COLOR, highlightthickness=1)
-            card.pack(side="left", fill="both", expand=True, padx=4 if idx == 1 else 0)
-
-            # Top header of card
-            header = tk.Frame(card, bg=BG_CARD)
-            header.pack(fill="x", padx=14, pady=(12, 6))
-
-            title_role = tk.Label(header, text=f"{role.upper()} ({acc})", font=FONT_SUBTITLE, bg=BG_CARD, fg=color)
-            title_role.pack(side="left")
-
-            status_badge = tk.Label(header, text="OFFLINE", font=FONT_BADGE, bg="#27272a", fg=TEXT_MUTED, padx=8, pady=3)
-            status_badge.pack(side="right")
-
-            # Model info
-            lbl_model = tk.Label(card, text=f"Model: {model}  •  {extra}", font=FONT_BODY, bg=BG_CARD, fg=TEXT_PRIMARY)
-            lbl_model.pack(anchor="w", padx=14, pady=2)
-
-            # HWND & Window info
-            lbl_hwnd = tk.Label(card, text="Window HWND: Not Attached", font=FONT_MONO, bg=BG_CARD, fg=TEXT_MUTED)
-            lbl_hwnd.pack(anchor="w", padx=14, pady=(2, 12))
-
-            self.cards[acc] = {
-                "frame": card,
-                "status_badge": status_badge,
-                "lbl_hwnd": lbl_hwnd,
-                "role": role,
-                "model": model,
-            }
 
         # 4. Prompt Injection & Dispatch Console (Path B)
         console_frame = tk.LabelFrame(
@@ -369,16 +366,16 @@ class FleetControlApp(tk.Tk):
 
         tk.Label(ctrl_row, text="Target Instance:", font=FONT_BODY, bg=BG_CARD, fg=TEXT_PRIMARY).pack(side="left", padx=(0, 8))
 
-        self.target_var = tk.StringVar(value="user1 (Orchestrator)")
-        target_cb = ttk.Combobox(
+        self.target_var = tk.StringVar(value="⚡ Broadcast All")
+        self.target_cb = ttk.Combobox(
             ctrl_row,
             textvariable=self.target_var,
-            values=["user1 (Orchestrator)", "user2 (Researcher)", "user3 (Writer)", "⚡ Broadcast All"],
+            values=["⚡ Broadcast All"],
             state="readonly",
-            width=22,
+            width=26,
             font=FONT_BODY,
         )
-        target_cb.pack(side="left", padx=(0, 16))
+        self.target_cb.pack(side="left", padx=(0, 16))
 
         tk.Label(ctrl_row, text="Quick Templates:", font=FONT_BODY, bg=BG_CARD, fg=TEXT_MUTED).pack(side="left", padx=(0, 6))
 
@@ -404,6 +401,18 @@ class FleetControlApp(tk.Tk):
                 cursor="hand2",
             )
             b.pack(side="left", padx=3)
+
+        tk.Label(ctrl_row, text="Model Directive:", font=FONT_BODY, bg=BG_CARD, fg=TEXT_MUTED).pack(side="left", padx=(10, 4))
+        self.model_override_var = tk.StringVar(value="Default (Profile)")
+        model_cb = ttk.Combobox(
+            ctrl_row,
+            textvariable=self.model_override_var,
+            values=["Default (Profile)", "Sonnet 3.7", "Sonnet 3.5", "Haiku 3.5", "Opus 3"],
+            state="readonly",
+            width=16,
+            font=FONT_BODY,
+        )
+        model_cb.pack(side="left", padx=2)
 
         # Text input & send button
         text_row = tk.Frame(console_frame, bg=BG_CARD)
@@ -559,9 +568,16 @@ class FleetControlApp(tk.Tk):
 
     # --- Actions ---
     def on_launch_fleet(self):
+        size_str = self.fleet_size_var.get()
+        try:
+            count = int(size_str)
+        except Exception:
+            count = 3
+        users_to_launch = [f"user{i}" for i in range(1, count + 1)]
+
         def _worker():
-            self.log("Starting fleet launch on Desktop 2...")
-            cmd = ["pwsh", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(LAUNCH_SCRIPT)]
+            self.log(f"Starting fleet launch on Desktop 2 ({', '.join(users_to_launch)})...")
+            cmd = ["pwsh", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(LAUNCH_SCRIPT), "-Users", ",".join(users_to_launch)]
             try:
                 proc = subprocess.Popen(
                     cmd,
@@ -615,6 +631,42 @@ class FleetControlApp(tk.Tk):
 
         threading.Thread(target=_worker, daemon=True).start()
 
+    def on_focus_layout(self):
+        def _worker():
+            attach_default_desktop()
+            user32 = ctypes.windll.user32
+            sw = user32.GetSystemMetrics(0)
+            sh = user32.GetSystemMetrics(1)
+
+            # Focus dimensions: 85% width and 88% height for comfortable reading/typing
+            fw = min(sw, max(850, int(sw * 0.85)))
+            fh = min(sh, max(600, int(sh * 0.88)))
+            base_x = max(0, (sw - fw) // 2)
+            base_y = max(0, (sh - fh) // 2)
+
+            fleet = self._load_fleet_data()
+            hwnds = [inst.get("Hwnd") for inst in fleet if inst.get("Hwnd")]
+            if not hwnds:
+                self.log("[!] No active window handles found in active_fleet.json.")
+                return
+
+            self.log(f"Applying PowerToys Focus layout across {len(hwnds)} windows ({fw}x{fh})...")
+            import win32gui, win32con
+            offset_step = 24
+            max_offset = max(0, min(sw - fw, sh - fh))
+
+            for i, h in enumerate(hwnds):
+                if user32.IsWindow(h):
+                    step = (i * offset_step) % (max_offset + 1) if max_offset > 0 else 0
+                    x = base_x + step
+                    y = base_y + step
+                    win32gui.ShowWindow(h, win32con.SW_RESTORE)
+                    win32gui.SetWindowPos(h, 0, x, y, fw, fh, win32con.SWP_NOZORDER | win32con.SWP_NOACTIVATE | win32con.SWP_SHOWWINDOW)
+                    self.log(f"Snapped HWND {h} to Focus Zone ({x}, {y}, {fw}, {fh})")
+            self.log("[SUCCESS] Windows stacked in PowerToys Focus layout.")
+
+        threading.Thread(target=_worker, daemon=True).start()
+
     def on_switch_desktop(self, desk_num: int):
         def _worker():
             if VD_EXE.exists():
@@ -646,6 +698,11 @@ class FleetControlApp(tk.Tk):
             messagebox.showwarning("Warning", "Prompt cannot be empty.")
             return
 
+        model_choice = self.model_override_var.get()
+        final_prompt = prompt
+        if model_choice and "Default" not in model_choice:
+            final_prompt = f"[System Directive: Use model {model_choice} for this task]\n\n{prompt}"
+
         def _worker():
             from client.adapters.claude_desktop_cdp import ClaudeDesktopUIAAdapter
             fleet = self._load_fleet_data()
@@ -657,7 +714,7 @@ class FleetControlApp(tk.Tk):
                     hwnd = inst.get("Hwnd")
                     if hwnd:
                         adapter = ClaudeDesktopUIAAdapter(worker_id=acc, nickname=acc, hwnd=hwnd)
-                        res = asyncio.run(adapter.send_text(prompt))
+                        res = asyncio.run(adapter.send_text(final_prompt))
                         tag = "[SUCCESS]" if res.get("success") else "[FAILED]"
                         self.log(f"  {tag} Dispatched to {acc} (HWND={hwnd})")
                         time.sleep(0.3)
@@ -672,7 +729,7 @@ class FleetControlApp(tk.Tk):
                 hwnd = target_inst.get("Hwnd")
                 self.log(f"Dispatching prompt to {acc} (HWND={hwnd})...")
                 adapter = ClaudeDesktopUIAAdapter(worker_id=acc, nickname=acc, hwnd=hwnd)
-                res = asyncio.run(adapter.send_text(prompt))
+                res = asyncio.run(adapter.send_text(final_prompt))
                 if res.get("success"):
                     self.log(f"[SUCCESS] Prompt dispatched to {acc} window and Enter submitted.")
                 else:
@@ -721,6 +778,14 @@ class FleetControlApp(tk.Tk):
                 pass
         return []
 
+    def _load_profiles_data(self) -> dict[str, dict]:
+        if PROFILES_JSON.exists():
+            try:
+                return json.loads(PROFILES_JSON.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+        return {}
+
     def refresh_all_status(self):
         threading.Thread(target=self._refresh_worker, daemon=True).start()
 
@@ -746,22 +811,89 @@ class FleetControlApp(tk.Tk):
                 self.server_badge.config(text="● ORCHESTRATOR: OFFLINE", fg=ACCENT_RED)
         self.after(0, _update_server_badge)
 
-        # Update instance cards
-        for acc, card_widgets in self.cards.items():
-            inst = fleet_map.get(acc)
-            hwnd = inst.get("Hwnd") if inst else None
-            is_alive = bool(hwnd and user32.IsWindow(hwnd))
+        profiles = self._load_profiles_data()
 
-            def _update_card(a=acc, alive=is_alive, h=hwnd):
-                widgets = self.cards[a]
-                if alive:
-                    widgets["status_badge"].config(text="● VISIBLE / READY", fg=ACCENT_GREEN, bg="#064e3b")
-                    widgets["lbl_hwnd"].config(text=f"Window HWND: {h} (Desktop 2)", fg=TEXT_PRIMARY)
-                else:
-                    widgets["status_badge"].config(text="OFFLINE", fg=TEXT_MUTED, bg="#27272a")
-                    widgets["lbl_hwnd"].config(text="Window HWND: Not Attached", fg=TEXT_MUTED)
+        # Determine all relevant accounts (active fleet instances + profiles in profiles.json)
+        all_accounts = []
+        for item in fleet:
+            acc = item.get("Account")
+            if acc and acc not in all_accounts:
+                all_accounts.append(acc)
+        for acc in ["user1", "user2", "user3", "user4", "user5", "user6"]:
+            if acc in profiles and acc not in all_accounts:
+                all_accounts.append(acc)
+        if not all_accounts:
+            all_accounts = ["user1", "user2", "user3"]
 
-            self.after(0, _update_card)
+        # Color palette for roles
+        color_palette = [ACCENT_PURPLE, ACCENT_BLUE, ACCENT_GREEN, ACCENT_AMBER, "#06b6d4", "#ec4899", "#8b5cf6"]
+
+        # Rebuild/update cards on main thread
+        def _sync_ui():
+            # Check if card accounts changed
+            existing_accounts = list(self.cards.keys())
+            if existing_accounts != all_accounts:
+                # Clear existing widgets
+                for widget in self.cards_frame.winfo_children():
+                    widget.destroy()
+                self.cards.clear()
+
+                for idx, acc in enumerate(all_accounts):
+                    p_info = profiles.get(acc, {})
+                    nick = p_info.get("nickname", acc)
+                    role = p_info.get("role", "worker")
+                    model = p_info.get("preferred_model", "claude-3-5-sonnet")
+                    extra = f"Budget: {p_info.get('thinking_budget', 0)}" if p_info.get('thinking_budget') else "Fast Analysis"
+                    color = color_palette[idx % len(color_palette)]
+
+                    card = tk.Frame(self.cards_frame, bg=BG_CARD, relief="flat", highlightbackground=BORDER_COLOR, highlightthickness=1)
+                    card.pack(side="left", fill="both", expand=True, padx=3)
+
+                    header = tk.Frame(card, bg=BG_CARD)
+                    header.pack(fill="x", padx=10, pady=(10, 4))
+
+                    title_role = tk.Label(header, text=f"{role.upper()} ({acc})", font=FONT_SUBTITLE, bg=BG_CARD, fg=color)
+                    title_role.pack(side="left")
+
+                    status_badge = tk.Label(header, text="OFFLINE", font=FONT_BADGE, bg="#27272a", fg=TEXT_MUTED, padx=6, pady=2)
+                    status_badge.pack(side="right")
+
+                    lbl_model = tk.Label(card, text=f"{model}", font=FONT_BODY, bg=BG_CARD, fg=TEXT_PRIMARY)
+                    lbl_model.pack(anchor="w", padx=10, pady=1)
+
+                    lbl_hwnd = tk.Label(card, text="HWND: Not Attached", font=FONT_MONO, bg=BG_CARD, fg=TEXT_MUTED)
+                    lbl_hwnd.pack(anchor="w", padx=10, pady=(1, 10))
+
+                    self.cards[acc] = {
+                        "frame": card,
+                        "status_badge": status_badge,
+                        "lbl_hwnd": lbl_hwnd,
+                        "role": role,
+                        "model": model,
+                    }
+
+                # Update target dropdown values
+                cb_vals = [f"{acc} ({profiles.get(acc, {}).get('role', 'worker').capitalize()})" for acc in all_accounts]
+                cb_vals.append("⚡ Broadcast All")
+                self.target_cb.config(values=cb_vals)
+                if self.target_var.get() not in cb_vals:
+                    self.target_var.set("⚡ Broadcast All")
+
+            # Update live state
+            for acc in all_accounts:
+                if acc in self.cards:
+                    inst = fleet_map.get(acc)
+                    hwnd = inst.get("Hwnd") if inst else None
+                    alive = bool(hwnd and user32.IsWindow(hwnd))
+                    widgets = self.cards[acc]
+                    if alive:
+                        widgets["status_badge"].config(text="● VISIBLE / READY", fg=ACCENT_GREEN, bg="#064e3b")
+                        widgets["lbl_hwnd"].config(text=f"HWND: {hwnd} (Desk 2)", fg=TEXT_PRIMARY)
+                    else:
+                        widgets["status_badge"].config(text="OFFLINE", fg=TEXT_MUTED, bg="#27272a")
+                        widgets["lbl_hwnd"].config(text="HWND: Not Attached", fg=TEXT_MUTED)
+
+        self.after(0, _sync_ui)
 
         # Refresh tasks
         self.refresh_tasks()
