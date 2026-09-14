@@ -517,7 +517,7 @@
       "file_type": "code",
       "norm_label": "fleetcontrolapp",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L121"
+      "source_location": "L133"
     },
     {
       "id": "server_models_schemas_workerheartbeat",
@@ -686,19 +686,6 @@
       "norm_label": "md2pdfapp",
       "source_file": "tools/md2pdf_app.py",
       "source_location": "L259"
-    },
-    {
-      "id": "server_core_config_settings",
-      "label": "Settings",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "settings",
-      "source_file": "server/core/config.py",
-      "source_location": "L10"
     },
     {
       "id": "server_models_schemas_checkpointresponse",
@@ -888,7 +875,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": "pipelineengine",
       "source_file": "server/core/pipeline_engine.py",
@@ -982,6 +969,19 @@
       "norm_label": "ivirtualdesktopmanagerinternal",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L162"
+    },
+    {
+      "id": "server_core_config_settings",
+      "label": "Settings",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "settings",
+      "source_file": "server/core/config.py",
+      "source_location": "L10"
     },
     {
       "id": "tools_virtualdesktop11_24h2_vdesktool_program",
@@ -2581,18 +2581,6 @@
       "source_location": "L29"
     },
     {
-      "id": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_init",
-      "label": ".__init__()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": ".__init__()",
-      "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L16"
-    },
-    {
       "id": "client_adapters_gemini_free_adapter_geminifreeadapter_check_health",
       "label": ".check_health()",
       "_callable": true,
@@ -3109,6 +3097,18 @@
       "source_location": "L622"
     },
     {
+      "id": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_init",
+      "label": ".__init__()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "ClaudeDesktopCDPAdapter",
+      "file_type": "code",
+      "norm_label": ".__init__()",
+      "source_file": "client/adapters/claude_desktop_proxy.py",
+      "source_location": "L16"
+    },
+    {
       "id": "client_fleet_supervisor_main",
       "label": "main()",
       "_callable": true,
@@ -3469,6 +3469,18 @@
       "source_location": "L102"
     },
     {
+      "id": "tools_fleet_gui_attach_default_desktop",
+      "label": "attach_default_desktop()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "FleetControlApp",
+      "file_type": "code",
+      "norm_label": "attach_default_desktop()",
+      "source_file": "tools/fleet_gui.py",
+      "source_location": "L37"
+    },
+    {
       "id": "tools_fleet_gui_enable_high_dpi_and_desktop",
       "label": "enable_high_dpi_and_desktop()",
       "_callable": true,
@@ -3478,7 +3490,7 @@
       "file_type": "code",
       "norm_label": "enable_high_dpi_and_desktop()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L37"
+      "source_location": "L51"
     },
     {
       "id": "tools_fleet_gui_ensure_orchestrator_server",
@@ -3490,7 +3502,7 @@
       "file_type": "code",
       "norm_label": "ensure_orchestrator_server()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L75"
+      "source_location": "L87"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_auto_refresh_loop",
@@ -3502,7 +3514,7 @@
       "file_type": "code",
       "norm_label": "._auto_refresh_loop()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L925"
+      "source_location": "L978"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_build_ui",
@@ -3514,7 +3526,7 @@
       "file_type": "code",
       "norm_label": "._build_ui()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L192"
+      "source_location": "L203"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_init",
@@ -3526,7 +3538,7 @@
       "file_type": "code",
       "norm_label": ".__init__()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L122"
+      "source_location": "L134"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_init_styles",
@@ -3538,7 +3550,7 @@
       "file_type": "code",
       "norm_label": "._init_styles()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L144"
+      "source_location": "L155"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_load_fleet_data",
@@ -3550,7 +3562,7 @@
       "file_type": "code",
       "norm_label": "._load_fleet_data()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L773"
+      "source_location": "L822"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_load_profiles_data",
@@ -3562,7 +3574,7 @@
       "file_type": "code",
       "norm_label": "._load_profiles_data()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L781"
+      "source_location": "L830"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_log",
@@ -3574,7 +3586,7 @@
       "file_type": "code",
       "norm_label": ".log()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L543"
+      "source_location": "L554"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_on_create_sample_tasks",
@@ -3586,7 +3598,7 @@
       "file_type": "code",
       "norm_label": ".on_create_sample_tasks()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L740"
+      "source_location": "L789"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_on_dispatch_prompt",
@@ -3598,7 +3610,7 @@
       "file_type": "code",
       "norm_label": ".on_dispatch_prompt()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L694"
+      "source_location": "L736"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_on_focus_layout",
@@ -3610,7 +3622,7 @@
       "file_type": "code",
       "norm_label": ".on_focus_layout()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L634"
+      "source_location": "L667"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_on_launch_fleet",
@@ -3622,7 +3634,7 @@
       "file_type": "code",
       "norm_label": ".on_launch_fleet()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L570"
+      "source_location": "L596"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_on_switch_desktop",
@@ -3634,7 +3646,7 @@
       "file_type": "code",
       "norm_label": ".on_switch_desktop()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L670"
+      "source_location": "L712"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_on_tile_windows",
@@ -3646,7 +3658,7 @@
       "file_type": "code",
       "norm_label": ".on_tile_windows()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L605"
+      "source_location": "L631"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_refresh_all_status",
@@ -3658,7 +3670,7 @@
       "file_type": "code",
       "norm_label": ".refresh_all_status()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L789"
+      "source_location": "L838"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_refresh_tasks",
@@ -3670,7 +3682,7 @@
       "file_type": "code",
       "norm_label": ".refresh_tasks()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L901"
+      "source_location": "L954"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_refresh_worker",
@@ -3682,7 +3694,7 @@
       "file_type": "code",
       "norm_label": "._refresh_worker()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L792"
+      "source_location": "L841"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_set_template_draft",
@@ -3694,7 +3706,7 @@
       "file_type": "code",
       "norm_label": "._set_template_draft()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L559"
+      "source_location": "L585"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_set_template_orch",
@@ -3706,7 +3718,7 @@
       "file_type": "code",
       "norm_label": "._set_template_orch()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L549"
+      "source_location": "L575"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_set_template_ping",
@@ -3718,7 +3730,7 @@
       "file_type": "code",
       "norm_label": "._set_template_ping()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L564"
+      "source_location": "L590"
     },
     {
       "id": "tools_fleet_gui_fleetcontrolapp_set_template_research",
@@ -3730,7 +3742,7 @@
       "file_type": "code",
       "norm_label": "._set_template_research()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L554"
+      "source_location": "L580"
     },
     {
       "id": "tools_fleet_gui_main",
@@ -3742,7 +3754,7 @@
       "file_type": "code",
       "norm_label": "main()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L930"
+      "source_location": "L983"
     },
     {
       "id": "tools_fleet_gui_set_dark_titlebar",
@@ -3754,7 +3766,7 @@
       "file_type": "code",
       "norm_label": "set_dark_titlebar()",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L61"
+      "source_location": "L70"
     },
     {
       "id": "mcp_servers_cloud_orchestrator_mcp_run_server_block_task",
@@ -4717,30 +4729,6 @@
       "source_location": "L180"
     },
     {
-      "id": "server_core_config_validate_security_settings",
-      "label": "validate_security_settings()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "validate_security_settings()",
-      "source_file": "server/core/config.py",
-      "source_location": "L44"
-    },
-    {
-      "id": "server_core_database_init_db",
-      "label": "init_db()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "init_db()",
-      "source_file": "server/core/database.py",
-      "source_location": "L23"
-    },
-    {
       "id": "server_core_observability_log_request",
       "label": "log_request()",
       "_callable": true,
@@ -4789,18 +4777,6 @@
       "source_location": "L15"
     },
     {
-      "id": "server_core_supervisor_run_supervisor_cycle",
-      "label": "run_supervisor_cycle()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "run_supervisor_cycle()",
-      "source_file": "server/core/supervisor.py",
-      "source_location": "L8"
-    },
-    {
       "id": "server_main_health_check",
       "label": "health_check()",
       "_callable": true,
@@ -4811,18 +4787,6 @@
       "norm_label": "health_check()",
       "source_file": "server/main.py",
       "source_location": "L100"
-    },
-    {
-      "id": "server_main_lifespan",
-      "label": "lifespan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "lifespan()",
-      "source_file": "server/main.py",
-      "source_location": "L19"
     },
     {
       "id": "server_main_liveness_check",
@@ -4871,222 +4835,6 @@
       "norm_label": "readiness_check()",
       "source_file": "server/main.py",
       "source_location": "L112"
-    },
-    {
-      "id": "server_main_run_supervisor_loop",
-      "label": "run_supervisor_loop()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "run_supervisor_loop()",
-      "source_file": "server/main.py",
-      "source_location": "L37"
-    },
-    {
-      "id": "tests_test_cloud_scheduler_setup_test_db",
-      "label": "setup_test_db()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "setup_test_db()",
-      "source_file": "tests/test_cloud_scheduler.py",
-      "source_location": "L16"
-    },
-    {
-      "id": "tests_test_cloud_scheduler_test_quota_scheduler_capability_matching",
-      "label": "test_quota_scheduler_capability_matching()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_quota_scheduler_capability_matching()",
-      "source_file": "tests/test_cloud_scheduler.py",
-      "source_location": "L23"
-    },
-    {
-      "id": "tests_test_cloud_scheduler_test_scheduler_cooldown_filtering",
-      "label": "test_scheduler_cooldown_filtering()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_scheduler_cooldown_filtering()",
-      "source_file": "tests/test_cloud_scheduler.py",
-      "source_location": "L49"
-    },
-    {
-      "id": "tests_test_cloud_scheduler_test_supervisor_dead_worker_recovery",
-      "label": "test_supervisor_dead_worker_recovery()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_supervisor_dead_worker_recovery()",
-      "source_file": "tests/test_cloud_scheduler.py",
-      "source_location": "L74"
-    },
-    {
-      "id": "tests_test_e2e_pipeline_setup_test_db",
-      "label": "setup_test_db()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "setup_test_db()",
-      "source_file": "tests/test_e2e_pipeline.py",
-      "source_location": "L22"
-    },
-    {
-      "id": "tests_test_e2e_pipeline_test_concurrent_task_leasing_race_safety",
-      "label": "test_concurrent_task_leasing_race_safety()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_concurrent_task_leasing_race_safety()",
-      "source_file": "tests/test_e2e_pipeline.py",
-      "source_location": "L135"
-    },
-    {
-      "id": "tests_test_e2e_pipeline_test_expired_lease_reclamation_and_recovery",
-      "label": "test_expired_lease_reclamation_and_recovery()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_expired_lease_reclamation_and_recovery()",
-      "source_file": "tests/test_e2e_pipeline.py",
-      "source_location": "L172"
-    },
-    {
-      "id": "tests_test_e2e_pipeline_test_lease_renewal_heartbeat",
-      "label": "test_lease_renewal_heartbeat()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_lease_renewal_heartbeat()",
-      "source_file": "tests/test_e2e_pipeline.py",
-      "source_location": "L231"
-    },
-    {
-      "id": "tests_test_health_setup_test_db",
-      "label": "setup_test_db()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "setup_test_db()",
-      "source_file": "tests/test_health.py",
-      "source_location": "L13"
-    },
-    {
-      "id": "tests_test_health_test_health_endpoints_and_request_correlation",
-      "label": "test_health_endpoints_and_request_correlation()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_health_endpoints_and_request_correlation()",
-      "source_file": "tests/test_health.py",
-      "source_location": "L20"
-    },
-    {
-      "id": "tests_test_health_test_metrics_endpoint_exposes_request_counters",
-      "label": "test_metrics_endpoint_exposes_request_counters()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_metrics_endpoint_exposes_request_counters()",
-      "source_file": "tests/test_health.py",
-      "source_location": "L34"
-    },
-    {
-      "id": "tests_test_pipeline_engine_setup_test_db",
-      "label": "setup_test_db()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "setup_test_db()",
-      "source_file": "tests/test_pipeline_engine.py",
-      "source_location": "L16"
-    },
-    {
-      "id": "tests_test_pipeline_engine_test_pipeline_decomposition_and_waterfall",
-      "label": "test_pipeline_decomposition_and_waterfall()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_pipeline_decomposition_and_waterfall()",
-      "source_file": "tests/test_pipeline_engine.py",
-      "source_location": "L23"
-    },
-    {
-      "id": "tests_test_remote_mcp_setup_test_db",
-      "label": "setup_test_db()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "setup_test_db()",
-      "source_file": "tests/test_remote_mcp.py",
-      "source_location": "L21"
-    },
-    {
-      "id": "tests_test_security_config_test_development_allows_empty_auth_key",
-      "label": "test_development_allows_empty_auth_key()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_development_allows_empty_auth_key()",
-      "source_file": "tests/test_security_config.py",
-      "source_location": "L6"
-    },
-    {
-      "id": "tests_test_security_config_test_production_accepts_strong_auth_key",
-      "label": "test_production_accepts_strong_auth_key()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_production_accepts_strong_auth_key()",
-      "source_file": "tests/test_security_config.py",
-      "source_location": "L21"
-    },
-    {
-      "id": "tests_test_security_config_test_production_rejects_missing_auth_key",
-      "label": "test_production_rejects_missing_auth_key()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_production_rejects_missing_auth_key()",
-      "source_file": "tests/test_security_config.py",
-      "source_location": "L13"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_enumerateownershiptree",
@@ -5358,7 +5106,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": "_now_iso()",
       "source_file": "server/core/pipeline_engine.py",
@@ -5370,7 +5118,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": ".advance_task_to_next_stage()",
       "source_file": "server/core/pipeline_engine.py",
@@ -5382,7 +5130,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": ".check_and_finalize_job()",
       "source_file": "server/core/pipeline_engine.py",
@@ -5394,7 +5142,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": ".decompose_job_into_tasks()",
       "source_file": "server/core/pipeline_engine.py",
@@ -5406,7 +5154,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": ".load_sku_template()",
       "source_file": "server/core/pipeline_engine.py",
@@ -5999,6 +5747,150 @@
       "norm_label": "_write_json()",
       "source_file": "mcp-servers/orchestrator-mcp/run_server.py",
       "source_location": "L120"
+    },
+    {
+      "id": "server_core_supervisor_run_supervisor_cycle",
+      "label": "run_supervisor_cycle()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "code",
+      "norm_label": "run_supervisor_cycle()",
+      "source_file": "server/core/supervisor.py",
+      "source_location": "L8"
+    },
+    {
+      "id": "tests_test_cloud_scheduler_test_quota_scheduler_capability_matching",
+      "label": "test_quota_scheduler_capability_matching()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "code",
+      "norm_label": "test_quota_scheduler_capability_matching()",
+      "source_file": "tests/test_cloud_scheduler.py",
+      "source_location": "L23"
+    },
+    {
+      "id": "tests_test_cloud_scheduler_test_scheduler_cooldown_filtering",
+      "label": "test_scheduler_cooldown_filtering()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "code",
+      "norm_label": "test_scheduler_cooldown_filtering()",
+      "source_file": "tests/test_cloud_scheduler.py",
+      "source_location": "L49"
+    },
+    {
+      "id": "tests_test_cloud_scheduler_test_supervisor_dead_worker_recovery",
+      "label": "test_supervisor_dead_worker_recovery()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "code",
+      "norm_label": "test_supervisor_dead_worker_recovery()",
+      "source_file": "tests/test_cloud_scheduler.py",
+      "source_location": "L74"
+    },
+    {
+      "id": "tests_test_e2e_pipeline_test_concurrent_task_leasing_race_safety",
+      "label": "test_concurrent_task_leasing_race_safety()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "code",
+      "norm_label": "test_concurrent_task_leasing_race_safety()",
+      "source_file": "tests/test_e2e_pipeline.py",
+      "source_location": "L135"
+    },
+    {
+      "id": "tests_test_e2e_pipeline_test_expired_lease_reclamation_and_recovery",
+      "label": "test_expired_lease_reclamation_and_recovery()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "code",
+      "norm_label": "test_expired_lease_reclamation_and_recovery()",
+      "source_file": "tests/test_e2e_pipeline.py",
+      "source_location": "L172"
+    },
+    {
+      "id": "tests_test_e2e_pipeline_test_lease_renewal_heartbeat",
+      "label": "test_lease_renewal_heartbeat()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "code",
+      "norm_label": "test_lease_renewal_heartbeat()",
+      "source_file": "tests/test_e2e_pipeline.py",
+      "source_location": "L231"
+    },
+    {
+      "id": "server_core_database_init_db",
+      "label": "init_db()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "init_db()",
+      "source_file": "server/core/database.py",
+      "source_location": "L23"
+    },
+    {
+      "id": "tests_test_cloud_scheduler_setup_test_db",
+      "label": "setup_test_db()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "setup_test_db()",
+      "source_file": "tests/test_cloud_scheduler.py",
+      "source_location": "L16"
+    },
+    {
+      "id": "tests_test_pipeline_engine_setup_test_db",
+      "label": "setup_test_db()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "setup_test_db()",
+      "source_file": "tests/test_pipeline_engine.py",
+      "source_location": "L16"
+    },
+    {
+      "id": "tests_test_pipeline_engine_test_pipeline_decomposition_and_waterfall",
+      "label": "test_pipeline_decomposition_and_waterfall()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "test_pipeline_decomposition_and_waterfall()",
+      "source_file": "tests/test_pipeline_engine.py",
+      "source_location": "L23"
+    },
+    {
+      "id": "tests_test_remote_mcp_setup_test_db",
+      "label": "setup_test_db()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "setup_test_db()",
+      "source_file": "tests/test_remote_mcp.py",
+      "source_location": "L21"
     },
     {
       "id": "mcp_servers_md2pdf_mcp_run_server_check_deps",
@@ -6757,6 +6649,90 @@
       "source_location": "L189"
     },
     {
+      "id": "server_core_config_validate_security_settings",
+      "label": "validate_security_settings()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "validate_security_settings()",
+      "source_file": "server/core/config.py",
+      "source_location": "L44"
+    },
+    {
+      "id": "tests_test_security_config_test_development_allows_empty_auth_key",
+      "label": "test_development_allows_empty_auth_key()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "test_development_allows_empty_auth_key()",
+      "source_file": "tests/test_security_config.py",
+      "source_location": "L6"
+    },
+    {
+      "id": "tests_test_security_config_test_production_accepts_strong_auth_key",
+      "label": "test_production_accepts_strong_auth_key()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "test_production_accepts_strong_auth_key()",
+      "source_file": "tests/test_security_config.py",
+      "source_location": "L21"
+    },
+    {
+      "id": "tests_test_security_config_test_production_rejects_missing_auth_key",
+      "label": "test_production_rejects_missing_auth_key()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "test_production_rejects_missing_auth_key()",
+      "source_file": "tests/test_security_config.py",
+      "source_location": "L13"
+    },
+    {
+      "id": "tests_test_health_setup_test_db",
+      "label": "setup_test_db()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_health.py",
+      "file_type": "code",
+      "norm_label": "setup_test_db()",
+      "source_file": "tests/test_health.py",
+      "source_location": "L13"
+    },
+    {
+      "id": "tests_test_health_test_health_endpoints_and_request_correlation",
+      "label": "test_health_endpoints_and_request_correlation()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_health.py",
+      "file_type": "code",
+      "norm_label": "test_health_endpoints_and_request_correlation()",
+      "source_file": "tests/test_health.py",
+      "source_location": "L20"
+    },
+    {
+      "id": "tests_test_health_test_metrics_endpoint_exposes_request_counters",
+      "label": "test_metrics_endpoint_exposes_request_counters()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_health.py",
+      "file_type": "code",
+      "norm_label": "test_metrics_endpoint_exposes_request_counters()",
+      "source_file": "tests/test_health.py",
+      "source_location": "L34"
+    },
+    {
       "id": "mcp_servers_notebooklm_mcp_run_server_find_uvx",
       "label": "_find_uvx()",
       "_callable": true,
@@ -7175,6 +7151,30 @@
       "norm_label": "test_released_attempts_are_closed_and_limit_is_enforced()",
       "source_file": "tests/test_remote_mcp.py",
       "source_location": "L177"
+    },
+    {
+      "id": "server_main_lifespan",
+      "label": "lifespan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "lifespan",
+      "file_type": "code",
+      "norm_label": "lifespan()",
+      "source_file": "server/main.py",
+      "source_location": "L19"
+    },
+    {
+      "id": "server_main_run_supervisor_loop",
+      "label": "run_supervisor_loop()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "lifespan",
+      "file_type": "code",
+      "norm_label": "run_supervisor_loop()",
+      "source_file": "server/main.py",
+      "source_location": "L37"
     },
     {
       "id": "server_core_database_get_db",
@@ -7733,6 +7733,18 @@
       "norm_label": ".setname()",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L507"
+    },
+    {
+      "id": "tests_test_e2e_pipeline_setup_test_db",
+      "label": "setup_test_db()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "setup_test_db",
+      "file_type": "code",
+      "norm_label": "setup_test_db()",
+      "source_file": "tests/test_e2e_pipeline.py",
+      "source_location": "L22"
     },
     {
       "id": "server_core_auth_verify_api_key",
@@ -8869,15 +8881,26 @@
       "source_location": "L1"
     },
     {
-      "id": "tools_fleet_gui_rationale_62",
-      "label": "Enable native Windows 11 dark title bar for the Tkinter window.",
+      "id": "tools_fleet_gui_rationale_38",
+      "label": "Attach the calling thread to the interactive 'Default' desktop in WinSta0.",
       "_origin": "ast",
       "community": 15,
       "community_name": "FleetControlApp",
       "file_type": "rationale",
-      "norm_label": "enable native windows 11 dark title bar for the tkinter window.",
+      "norm_label": "attach the calling thread to the interactive 'default' desktop in winsta0.",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L62"
+      "source_location": "L38"
+    },
+    {
+      "id": "tools_fleet_gui_rationale_71",
+      "label": "Enable native Windows 11/10 dark title bar for the Tkinter window.",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "FleetControlApp",
+      "file_type": "rationale",
+      "norm_label": "enable native windows 11/10 dark title bar for the tkinter window.",
+      "source_file": "tools/fleet_gui.py",
+      "source_location": "L71"
     },
     {
       "id": "mcp_servers_cloud_orchestrator_mcp_run_server",
@@ -9199,39 +9222,6 @@
       "source_location": ""
     },
     {
-      "id": "server_core_config",
-      "label": "config.py",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "config.py",
-      "source_file": "server/core/config.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_core_config_py_basemodel",
-      "label": "BaseModel",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "basemodel",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "server_core_database",
-      "label": "database.py",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "database.py",
-      "source_file": "server/core/database.py",
-      "source_location": "L1"
-    },
-    {
       "id": "server_core_observability",
       "label": "observability.py",
       "_origin": "ast",
@@ -9240,28 +9230,6 @@
       "file_type": "code",
       "norm_label": "observability.py",
       "source_file": "server/core/observability.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_core_pipeline_engine",
-      "label": "pipeline_engine.py",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "pipeline_engine.py",
-      "source_file": "server/core/pipeline_engine.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_core_supervisor",
-      "label": "supervisor.py",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "supervisor.py",
-      "source_file": "server/core/supervisor.py",
       "source_location": "L1"
     },
     {
@@ -9285,237 +9253,6 @@
       "norm_label": "get",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "tests_test_cloud_scheduler",
-      "label": "test_cloud_scheduler.py",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_cloud_scheduler.py",
-      "source_file": "tests/test_cloud_scheduler.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_cloud_scheduler_py_fixture",
-      "label": "fixture",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "fixture",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_cloud_scheduler_py_path",
-      "label": "Path",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "path",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_e2e_pipeline",
-      "label": "test_e2e_pipeline.py",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_e2e_pipeline.py",
-      "source_file": "tests/test_e2e_pipeline.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_e2e_pipeline_py_fixture",
-      "label": "fixture",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "fixture",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_e2e_pipeline_py_path",
-      "label": "Path",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "path",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_health",
-      "label": "test_health.py",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_health.py",
-      "source_file": "tests/test_health.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_health_py_asyncio",
-      "label": "asyncio",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "asyncio",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_health_py_fixture",
-      "label": "fixture",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "fixture",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_health_py_path",
-      "label": "Path",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "path",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_pipeline_engine",
-      "label": "test_pipeline_engine.py",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_pipeline_engine.py",
-      "source_file": "tests/test_pipeline_engine.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_pipeline_engine_py_fixture",
-      "label": "fixture",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "fixture",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_pipeline_engine_py_path",
-      "label": "Path",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "path",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_remote_mcp_py_fixture",
-      "label": "fixture",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "fixture",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_security_config",
-      "label": "test_security_config.py",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "code",
-      "norm_label": "test_security_config.py",
-      "source_file": "tests/test_security_config.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "server_core_database_rationale_24",
-      "label": "Initialize database tables and indexes from schema.sql with automatic migration\u2026",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "rationale",
-      "norm_label": "initialize database tables and indexes from schema.sql with automatic migration...",
-      "source_file": "server/core/database.py",
-      "source_location": "L24"
-    },
-    {
-      "id": "server_core_supervisor_rationale_9",
-      "label": "Periodic self-healing supervisor loop: 1. Identifies workers with stale\u2026",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "rationale",
-      "norm_label": "periodic self-healing supervisor loop: 1. identifies workers with stale...",
-      "source_file": "server/core/supervisor.py",
-      "source_location": "L9"
-    },
-    {
-      "id": "server_main_rationale_38",
-      "label": "Background supervisor monitoring heartbeats, dead workers, and auto-scheduling\u2026",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "rationale",
-      "norm_label": "background supervisor monitoring heartbeats, dead workers, and auto-scheduling...",
-      "source_file": "server/main.py",
-      "source_location": "L38"
-    },
-    {
-      "id": "tests_test_e2e_pipeline_rationale_136",
-      "label": "Test that when multiple workers race to claim the same task simultaneously,\u2026",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "rationale",
-      "norm_label": "test that when multiple workers race to claim the same task simultaneously,...",
-      "source_file": "tests/test_e2e_pipeline.py",
-      "source_location": "L136"
-    },
-    {
-      "id": "tests_test_e2e_pipeline_rationale_173",
-      "label": "Test that tasks with expired leases can be claimed by a new worker or\u2026",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "rationale",
-      "norm_label": "test that tasks with expired leases can be claimed by a new worker or...",
-      "source_file": "tests/test_e2e_pipeline.py",
-      "source_location": "L173"
-    },
-    {
-      "id": "tests_test_e2e_pipeline_rationale_232",
-      "label": "Test that an active worker can extend its task lease before expiration.",
-      "_origin": "ast",
-      "community": 20,
-      "community_name": "main.py",
-      "file_type": "rationale",
-      "norm_label": "test that an active worker can extend its task lease before expiration.",
-      "source_file": "tests/test_e2e_pipeline.py",
-      "source_location": "L232"
     },
     {
       "id": "server_api_routes_tasks",
@@ -9617,11 +9354,22 @@
       "source_location": "L1"
     },
     {
+      "id": "server_core_pipeline_engine",
+      "label": "pipeline_engine.py",
+      "_origin": "ast",
+      "community": 25,
+      "community_name": "pipeline_engine.py",
+      "file_type": "code",
+      "norm_label": "pipeline_engine.py",
+      "source_file": "server/core/pipeline_engine.py",
+      "source_location": "L1"
+    },
+    {
       "id": "server_core_pipeline_engine_py_connection",
       "label": "Connection",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "code",
       "norm_label": "connection",
       "source_file": "",
@@ -9632,7 +9380,7 @@
       "label": "Checks whether all tasks for a job have reached terminal state (done/merged).\u2026",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "rationale",
       "norm_label": "checks whether all tasks for a job have reached terminal state (done/merged)....",
       "source_file": "server/core/pipeline_engine.py",
@@ -9643,7 +9391,7 @@
       "label": "Decomposes intake jobs into discrete, pipeline-staged tasks and manages stage\u2026",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "rationale",
       "norm_label": "decomposes intake jobs into discrete, pipeline-staged tasks and manages stage...",
       "source_file": "server/core/pipeline_engine.py",
@@ -9654,7 +9402,7 @@
       "label": "Load SKU definition JSON from sku-templates directory.",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "rationale",
       "norm_label": "load sku definition json from sku-templates directory.",
       "source_file": "server/core/pipeline_engine.py",
@@ -9665,7 +9413,7 @@
       "label": "Takes a job and a list of parsed input items (e.g. from CSV/JSON). Creates\u2026",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "rationale",
       "norm_label": "takes a job and a list of parsed input items (e.g. from csv/json). creates...",
       "source_file": "server/core/pipeline_engine.py",
@@ -9676,7 +9424,7 @@
       "label": "When a task is verified (or passes QA), triggers generation of the next stage\u2026",
       "_origin": "ast",
       "community": 25,
-      "community_name": "PipelineEngine",
+      "community_name": "pipeline_engine.py",
       "file_type": "rationale",
       "norm_label": "when a task is verified (or passes qa), triggers generation of the next stage...",
       "source_file": "server/core/pipeline_engine.py",
@@ -9962,6 +9710,83 @@
       "source_location": "L1"
     },
     {
+      "id": "server_core_supervisor",
+      "label": "supervisor.py",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "code",
+      "norm_label": "supervisor.py",
+      "source_file": "server/core/supervisor.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_cloud_scheduler",
+      "label": "test_cloud_scheduler.py",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "code",
+      "norm_label": "test_cloud_scheduler.py",
+      "source_file": "tests/test_cloud_scheduler.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_e2e_pipeline",
+      "label": "test_e2e_pipeline.py",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "code",
+      "norm_label": "test_e2e_pipeline.py",
+      "source_file": "tests/test_e2e_pipeline.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_core_supervisor_rationale_9",
+      "label": "Periodic self-healing supervisor loop: 1. Identifies workers with stale\u2026",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "rationale",
+      "norm_label": "periodic self-healing supervisor loop: 1. identifies workers with stale...",
+      "source_file": "server/core/supervisor.py",
+      "source_location": "L9"
+    },
+    {
+      "id": "tests_test_e2e_pipeline_rationale_136",
+      "label": "Test that when multiple workers race to claim the same task simultaneously,\u2026",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "rationale",
+      "norm_label": "test that when multiple workers race to claim the same task simultaneously,...",
+      "source_file": "tests/test_e2e_pipeline.py",
+      "source_location": "L136"
+    },
+    {
+      "id": "tests_test_e2e_pipeline_rationale_173",
+      "label": "Test that tasks with expired leases can be claimed by a new worker or\u2026",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "rationale",
+      "norm_label": "test that tasks with expired leases can be claimed by a new worker or...",
+      "source_file": "tests/test_e2e_pipeline.py",
+      "source_location": "L173"
+    },
+    {
+      "id": "tests_test_e2e_pipeline_rationale_232",
+      "label": "Test that an active worker can extend its task lease before expiration.",
+      "_origin": "ast",
+      "community": 31,
+      "community_name": "test_e2e_pipeline.py",
+      "file_type": "rationale",
+      "norm_label": "test that an active worker can extend its task lease before expiration.",
+      "source_file": "tests/test_e2e_pipeline.py",
+      "source_location": "L232"
+    },
+    {
       "id": "server_database_schema",
       "label": "schema.sql",
       "_origin": "ast",
@@ -10169,6 +9994,94 @@
       "node_kind": "heading",
       "norm_label": "unlinked notebooks",
       "source_file": "Claude Skills + MCP/Cross-Linking Hub.md",
+      "source_location": "L24"
+    },
+    {
+      "id": "server_core_database",
+      "label": "database.py",
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "database.py",
+      "source_file": "server/core/database.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_cloud_scheduler_py_fixture",
+      "label": "fixture",
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "fixture",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_cloud_scheduler_py_path",
+      "label": "Path",
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "path",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_pipeline_engine",
+      "label": "test_pipeline_engine.py",
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "test_pipeline_engine.py",
+      "source_file": "tests/test_pipeline_engine.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_pipeline_engine_py_fixture",
+      "label": "fixture",
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "fixture",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_pipeline_engine_py_path",
+      "label": "Path",
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "path",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_remote_mcp_py_fixture",
+      "label": "fixture",
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "code",
+      "norm_label": "fixture",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_core_database_rationale_24",
+      "label": "Initialize database tables and indexes from schema.sql with automatic migration\u2026",
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "database.py",
+      "file_type": "rationale",
+      "norm_label": "initialize database tables and indexes from schema.sql with automatic migration...",
+      "source_file": "server/core/database.py",
       "source_location": "L24"
     },
     {
@@ -10574,6 +10487,39 @@
       "source_location": "L181"
     },
     {
+      "id": "server_core_config",
+      "label": "config.py",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "config.py",
+      "source_file": "server/core/config.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_core_config_py_basemodel",
+      "label": "BaseModel",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "basemodel",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_security_config",
+      "label": "test_security_config.py",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "test_security_config.py",
+      "source_file": "tests/test_security_config.py",
+      "source_location": "L1"
+    },
+    {
       "id": "sync_mcp",
       "label": "sync-mcp.ps1",
       "_origin": "ast",
@@ -10965,6 +10911,50 @@
       "source_location": "L65"
     },
     {
+      "id": "tests_test_health",
+      "label": "test_health.py",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_health.py",
+      "file_type": "code",
+      "norm_label": "test_health.py",
+      "source_file": "tests/test_health.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_health_py_asyncio",
+      "label": "asyncio",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_health.py",
+      "file_type": "code",
+      "norm_label": "asyncio",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_health_py_fixture",
+      "label": "fixture",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_health.py",
+      "file_type": "code",
+      "norm_label": "fixture",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_health_py_path",
+      "label": "Path",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_health.py",
+      "file_type": "code",
+      "norm_label": "path",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "mcp_servers_notebooklm_mcp_run_server",
       "label": "notebooklm-mcp/run_server.py",
       "_origin": "ast",
@@ -11313,6 +11303,17 @@
       "norm_label": "worker role: copywriter / drafting specialist",
       "source_file": "worker-prompts/writer.md",
       "source_location": "L1"
+    },
+    {
+      "id": "server_main_rationale_38",
+      "label": "Background supervisor monitoring heartbeats, dead workers, and auto-scheduling\u2026",
+      "_origin": "ast",
+      "community": 55,
+      "community_name": "lifespan",
+      "file_type": "rationale",
+      "norm_label": "background supervisor monitoring heartbeats, dead workers, and auto-scheduling...",
+      "source_file": "server/main.py",
+      "source_location": "L38"
     },
     {
       "id": "server_core_database_py_connection",
@@ -12117,6 +12118,28 @@
       "norm_label": "launch_user_n.tests.ps1",
       "source_file": "tests/launch_user_n.Tests.ps1",
       "source_location": "L1"
+    },
+    {
+      "id": "tests_test_e2e_pipeline_py_fixture",
+      "label": "fixture",
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "setup_test_db",
+      "file_type": "code",
+      "norm_label": "fixture",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_e2e_pipeline_py_path",
+      "label": "Path",
+      "_origin": "ast",
+      "community": 87,
+      "community_name": "setup_test_db",
+      "file_type": "code",
+      "norm_label": "path",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "fastapi",
@@ -16956,6 +16979,18 @@
       "weight": 1.0
     },
     {
+      "source": "tools_fleet_gui_enable_high_dpi_and_desktop",
+      "target": "tools_fleet_gui_attach_default_desktop",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/fleet_gui.py",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
       "source": "tools_fleet_gui_fleetcontrolapp_auto_refresh_loop",
       "target": "tools_fleet_gui_fleetcontrolapp_refresh_all_status",
       "relation": "calls",
@@ -16964,7 +16999,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L926",
+      "source_location": "L979",
       "weight": 1.0
     },
     {
@@ -16976,7 +17011,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L302",
+      "source_location": "L313",
       "weight": 1.0
     },
     {
@@ -16988,7 +17023,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L540",
+      "source_location": "L551",
       "weight": 1.0
     },
     {
@@ -17000,7 +17035,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L133",
+      "source_location": "L145",
       "weight": 1.0
     },
     {
@@ -17012,7 +17047,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L137",
+      "source_location": "L149",
       "weight": 1.0
     },
     {
@@ -17024,7 +17059,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L138",
+      "source_location": "L150",
       "weight": 1.0
     },
     {
@@ -17036,7 +17071,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L142",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_fleet_gui_fleetcontrolapp_refresh_worker",
+      "target": "tools_fleet_gui_attach_default_desktop",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "tools/fleet_gui.py",
+      "source_location": "L842",
       "weight": 1.0
     },
     {
@@ -17048,7 +17095,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L795",
+      "source_location": "L844",
       "weight": 1.0
     },
     {
@@ -17060,7 +17107,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L814",
+      "source_location": "L863",
       "weight": 1.0
     },
     {
@@ -17072,7 +17119,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L899",
+      "source_location": "L952",
       "weight": 1.0
     },
     {
@@ -17084,7 +17131,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L931",
+      "source_location": "L984",
       "weight": 1.0
     },
     {
@@ -17096,7 +17143,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L932",
+      "source_location": "L985",
       "weight": 1.0
     },
     {
@@ -22736,7 +22783,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L707",
+      "source_location": "L749",
       "weight": 1.0
     },
     {
@@ -25905,6 +25952,17 @@
       "confidence_score": 1.0,
       "source_file": "launch_user_n.ps1",
       "source_location": "L1349",
+      "weight": 1.0
+    },
+    {
+      "source": "launch_user_n_export_activefleetstate",
+      "target": "launch_user_n_write_jsonconfigsafely",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "launch_user_n.ps1",
+      "source_location": "L1239",
       "weight": 1.0
     },
     {
@@ -30612,12 +30670,12 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L121",
+      "source_location": "L133",
       "weight": 1.0
     },
     {
       "source": "tools_fleet_gui",
-      "target": "tools_fleet_gui_enable_high_dpi_and_desktop",
+      "target": "tools_fleet_gui_attach_default_desktop",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -30628,13 +30686,24 @@
     },
     {
       "source": "tools_fleet_gui",
+      "target": "tools_fleet_gui_enable_high_dpi_and_desktop",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/fleet_gui.py",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_fleet_gui",
       "target": "tools_fleet_gui_set_dark_titlebar",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L61",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -30645,7 +30714,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L75",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -30656,7 +30725,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L930",
+      "source_location": "L983",
       "weight": 1.0
     },
     {
@@ -32372,7 +32441,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L122",
+      "source_location": "L134",
       "weight": 1.0
     },
     {
@@ -32383,7 +32452,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L144",
+      "source_location": "L155",
       "weight": 1.0
     },
     {
@@ -32394,7 +32463,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L192",
+      "source_location": "L203",
       "weight": 1.0
     },
     {
@@ -32405,7 +32474,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L543",
+      "source_location": "L554",
       "weight": 1.0
     },
     {
@@ -32416,7 +32485,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L549",
+      "source_location": "L575",
       "weight": 1.0
     },
     {
@@ -32427,7 +32496,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L554",
+      "source_location": "L580",
       "weight": 1.0
     },
     {
@@ -32438,7 +32507,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L559",
+      "source_location": "L585",
       "weight": 1.0
     },
     {
@@ -32449,7 +32518,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L564",
+      "source_location": "L590",
       "weight": 1.0
     },
     {
@@ -32460,7 +32529,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L570",
+      "source_location": "L596",
       "weight": 1.0
     },
     {
@@ -32471,7 +32540,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L605",
+      "source_location": "L631",
       "weight": 1.0
     },
     {
@@ -32482,7 +32551,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L634",
+      "source_location": "L667",
       "weight": 1.0
     },
     {
@@ -32493,7 +32562,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L670",
+      "source_location": "L712",
       "weight": 1.0
     },
     {
@@ -32504,7 +32573,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L694",
+      "source_location": "L736",
       "weight": 1.0
     },
     {
@@ -32515,7 +32584,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L740",
+      "source_location": "L789",
       "weight": 1.0
     },
     {
@@ -32526,7 +32595,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L773",
+      "source_location": "L822",
       "weight": 1.0
     },
     {
@@ -32537,7 +32606,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L781",
+      "source_location": "L830",
       "weight": 1.0
     },
     {
@@ -32548,7 +32617,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L789",
+      "source_location": "L838",
       "weight": 1.0
     },
     {
@@ -32559,7 +32628,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L792",
+      "source_location": "L841",
       "weight": 1.0
     },
     {
@@ -32570,7 +32639,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L901",
+      "source_location": "L954",
       "weight": 1.0
     },
     {
@@ -32581,7 +32650,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L925",
+      "source_location": "L978",
       "weight": 1.0
     },
     {
@@ -35522,14 +35591,25 @@
       "weight": 1.0
     },
     {
-      "source": "tools_fleet_gui_rationale_62",
+      "source": "tools_fleet_gui_rationale_38",
+      "target": "tools_fleet_gui_attach_default_desktop",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tools/fleet_gui.py",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "tools_fleet_gui_rationale_71",
       "target": "tools_fleet_gui_set_dark_titlebar",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L62",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -36368,7 +36448,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "tools/fleet_gui.py",
-      "source_location": "L716",
+      "source_location": "L753",
       "weight": 0.8
     },
     {
@@ -36799,5 +36879,5 @@
       "source_file": "worker-prompts/orchestrator.md"
     }
   ],
-  "built_at_commit": "c045a1198a79698630303e3b1637918f8145d3a7"
+  "built_at_commit": "f994bafee7293e9b2cc75e05ebc52dd23b3fc1ca"
 }

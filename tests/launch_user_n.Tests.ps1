@@ -484,29 +484,29 @@ Describe "Get-WindowGridLayout" {
         }
     }
 
-    Context "3 windows (2x2 quad grid with 3 active slots)" {
-        It "places windows in top-left, top-right, bottom-left" {
+    Context "3 windows (3 vertical columns side-by-side)" {
+        It "places windows in left, middle, and right vertical columns" {
             $bounds = [PSCustomObject]@{ X = 0; Y = 0; Width = 1920; Height = 1040 }
             $slots = Get-WindowGridLayout -Bounds $bounds -Count 3
             $slots.Count | Should -Be 3
-            # Top-Left (Slot 1)
+            # Left (Slot 1)
             $slots[0].Slot | Should -Be 1
             $slots[0].X | Should -Be 0
             $slots[0].Y | Should -Be 0
-            $slots[0].Width | Should -Be 960
-            $slots[0].Height | Should -Be 520
-            # Top-Right (Slot 2)
+            $slots[0].Width | Should -Be 640
+            $slots[0].Height | Should -Be 1040
+            # Middle (Slot 2)
             $slots[1].Slot | Should -Be 2
-            $slots[1].X | Should -Be 960
+            $slots[1].X | Should -Be 640
             $slots[1].Y | Should -Be 0
-            $slots[1].Width | Should -Be 960
-            $slots[1].Height | Should -Be 520
-            # Bottom-Left (Slot 3)
+            $slots[1].Width | Should -Be 640
+            $slots[1].Height | Should -Be 1040
+            # Right (Slot 3)
             $slots[2].Slot | Should -Be 3
-            $slots[2].X | Should -Be 0
-            $slots[2].Y | Should -Be 520
-            $slots[2].Width | Should -Be 960
-            $slots[2].Height | Should -Be 520
+            $slots[2].X | Should -Be 1280
+            $slots[2].Y | Should -Be 0
+            $slots[2].Width | Should -Be 640
+            $slots[2].Height | Should -Be 1040
         }
     }
 

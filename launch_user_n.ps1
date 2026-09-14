@@ -1236,7 +1236,7 @@ function Export-ActiveFleetState {
         New-Item -ItemType Directory -Force -Path $liveDir | Out-Null
     }
     $targetFile = Join-Path $liveDir "active_fleet.json"
-    $script:ActiveFleetInstances | ConvertTo-Json -Depth 5 | Set-Content -Path $targetFile -Encoding UTF8
+    Write-JsonConfigSafely -Path $targetFile -Config $script:ActiveFleetInstances
     Write-Host "[+] Exported $($script:ActiveFleetInstances.Count) active fleet instance(s) to '$targetFile'." -ForegroundColor DarkCyan
 }
 

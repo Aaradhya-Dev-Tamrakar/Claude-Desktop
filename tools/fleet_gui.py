@@ -34,10 +34,27 @@ LAUNCH_SCRIPT = REPO_ROOT / "launch-fleet.ps1"
 ORCHESTRATOR_URL = os.getenv("ORCHESTRATOR_URL", "http://127.0.0.1:8000/api/v1")
 
 # Win32 desktop attachment & High-DPI awareness helper
+def attach_default_desktop() -> bool:
+    """Attach the calling thread to the interactive 'Default' desktop in WinSta0."""
+    try:
+        user32 = ctypes.windll.user32
+        # DESKTOP_ALL_ACCESS = 0x01FF
+        h_def = user32.OpenDesktopW("Default", 0, False, 0x01FF)
+        if h_def:
+            user32.SetThreadDesktop(h_def)
+            user32.CloseDesktop(h_def)
+            return True
+    except Exception:
+        pass
+    return False
+
 def enable_high_dpi_and_desktop():
     try:
         # Per-Monitor High DPI v2 (DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = -4)
-        ctypes.windll.user32.SetProcessDpiAwarenessContext(ctypes.c_void_p(-4))
+        user32 = ctypes.windll.user32
+        user32.SetProcessDpiAwarenessContext.restype = ctypes.c_bool
+        user32.SetProcessDpiAwarenessContext.argtypes = [ctypes.c_void_p]
+        user32.SetProcessDpiAwarenessContext(ctypes.c_void_p(-4))
     except Exception:
         try:
             # Fallback to system DPI aware
@@ -48,29 +65,24 @@ def enable_high_dpi_and_desktop():
             except Exception:
                 pass
 
-    try:
-        user32 = ctypes.windll.user32
-        h_def = user32.OpenDesktopW("Default", 0, False, 0x01FF)
-        if h_def:
-            user32.SetThreadDesktop(h_def)
-            return True
-    except Exception:
-        pass
-    return False
+    return attach_default_desktop()
 
 def set_dark_titlebar(hwnd: int):
-    """Enable native Windows 11 dark title bar for the Tkinter window."""
-    try:
-        DWMWA_USE_IMMERSIVE_DARK_MODE = 20
-        value = ctypes.c_int(1)
-        ctypes.windll.dwmapi.DwmSetWindowAttribute(
-            ctypes.c_void_p(hwnd),
-            ctypes.c_uint(DWMWA_USE_IMMERSIVE_DARK_MODE),
-            ctypes.byref(value),
-            ctypes.sizeof(value),
-        )
-    except Exception:
-        pass
+    """Enable native Windows 11/10 dark title bar for the Tkinter window."""
+    # 20 for Win11 22H2+ / Win10 18985+, 19 for Win10 17763-18985
+    for attr in (20, 19):
+        try:
+            value = ctypes.c_int(1)
+            hr = ctypes.windll.dwmapi.DwmSetWindowAttribute(
+                ctypes.c_void_p(hwnd),
+                ctypes.c_uint(attr),
+                ctypes.byref(value),
+                ctypes.sizeof(value),
+            )
+            if hr == 0:
+                break
+        except Exception:
+            pass
 
 def ensure_orchestrator_server():
     try:
@@ -137,8 +149,7 @@ class FleetControlApp(tk.Tk):
         self._init_styles()
         self._build_ui()
 
-        # Start background polling for status and tasks
-        self.after(500, self.refresh_all_status)
+        # Start background polling for status and tasks (initial run + periodic loop)
         self._auto_refresh_loop()
 
     def _init_styles(self):
@@ -542,8 +553,23 @@ class FleetControlApp(tk.Tk):
     # --- Logging Helper ---
     def log(self, message: str):
         now_str = time.strftime("%H:%M:%S")
-        self.log_text.insert(tk.END, f"[{now_str}] {message}\n")
-        self.log_text.see(tk.END)
+        entry = f"[{now_str}] {message}\n"
+
+        def _do_log():
+            try:
+                # Cap log size to ~1000 lines to avoid unbounded memory growth
+                line_count = int(self.log_text.index("end-1c").split(".")[0])
+                if line_count > 1000:
+                    self.log_text.delete("1.0", "200.0")
+                self.log_text.insert(tk.END, entry)
+                self.log_text.see(tk.END)
+            except Exception:
+                pass
+
+        if threading.current_thread() is threading.main_thread():
+            _do_log()
+        else:
+            self.after(0, _do_log)
 
     # --- Quick Templates ---
     def _set_template_orch(self):
@@ -605,29 +631,36 @@ class FleetControlApp(tk.Tk):
     def on_tile_windows(self):
         def _worker():
             attach_default_desktop()
-            user32 = ctypes.windll.user32
-            sw = user32.GetSystemMetrics(0)
-            sh = user32.GetSystemMetrics(1)
-            col_w = sw // 3
-
             fleet = self._load_fleet_data()
             hwnds = [inst.get("Hwnd") for inst in fleet if inst.get("Hwnd")]
             if not hwnds:
                 self.log("[!] No active window handles found in active_fleet.json.")
                 return
 
+            num_windows = max(1, len(hwnds))
+            col_w = max(300, sw // num_windows)
+
             self.log(f"Tiling {len(hwnds)} windows across {sw}x{sh} on Desktop 2...")
-            import win32gui, win32con
-            for i, h in enumerate(hwnds[:3]):
-                if user32.IsWindow(h):
+            try:
+                import win32gui, win32con
+            except ImportError:
+                self.log("[ERROR] pywin32 (win32gui) is not available in environment.")
+                return
+
+            for i, h in enumerate(hwnds):
+                try:
+                    h_int = int(h)
+                except (TypeError, ValueError):
+                    continue
+                if user32.IsWindow(h_int):
                     x = i * col_w
                     y = 0
                     w = col_w
-                    h_win = sh - 40
-                    win32gui.ShowWindow(h, win32con.SW_RESTORE)
-                    win32gui.SetWindowPos(h, 0, x, y, w, h_win, win32con.SWP_NOZORDER | win32con.SWP_NOACTIVATE | win32con.SWP_SHOWWINDOW)
-                    self.log(f"Snapped HWND {h} to ({x}, {y}, {w}, {h_win})")
-            self.log("[SUCCESS] Windows snapped into 3-column layout.")
+                    h_win = max(400, sh - 40)
+                    win32gui.ShowWindow(h_int, win32con.SW_RESTORE)
+                    win32gui.SetWindowPos(h_int, 0, x, y, w, h_win, win32con.SWP_NOZORDER | win32con.SWP_NOACTIVATE | win32con.SWP_SHOWWINDOW)
+                    self.log(f"Snapped HWND {h_int} to ({x}, {y}, {w}, {h_win})")
+            self.log(f"[SUCCESS] Windows snapped into {len(hwnds)}-column layout.")
 
         threading.Thread(target=_worker, daemon=True).start()
 
@@ -651,18 +684,27 @@ class FleetControlApp(tk.Tk):
                 return
 
             self.log(f"Applying PowerToys Focus layout across {len(hwnds)} windows ({fw}x{fh})...")
-            import win32gui, win32con
+            try:
+                import win32gui, win32con
+            except ImportError:
+                self.log("[ERROR] pywin32 (win32gui) is not available in environment.")
+                return
+
             offset_step = 24
             max_offset = max(0, min(sw - fw, sh - fh))
 
             for i, h in enumerate(hwnds):
-                if user32.IsWindow(h):
+                try:
+                    h_int = int(h)
+                except (TypeError, ValueError):
+                    continue
+                if user32.IsWindow(h_int):
                     step = (i * offset_step) % (max_offset + 1) if max_offset > 0 else 0
                     x = base_x + step
                     y = base_y + step
-                    win32gui.ShowWindow(h, win32con.SW_RESTORE)
-                    win32gui.SetWindowPos(h, 0, x, y, fw, fh, win32con.SWP_NOZORDER | win32con.SWP_NOACTIVATE | win32con.SWP_SHOWWINDOW)
-                    self.log(f"Snapped HWND {h} to Focus Zone ({x}, {y}, {fw}, {fh})")
+                    win32gui.ShowWindow(h_int, win32con.SW_RESTORE)
+                    win32gui.SetWindowPos(h_int, 0, x, y, fw, fh, win32con.SWP_NOZORDER | win32con.SWP_NOACTIVATE | win32con.SWP_SHOWWINDOW)
+                    self.log(f"Snapped HWND {h_int} to Focus Zone ({x}, {y}, {fw}, {fh})")
             self.log("[SUCCESS] Windows stacked in PowerToys Focus layout.")
 
         threading.Thread(target=_worker, daemon=True).start()
@@ -707,20 +749,28 @@ class FleetControlApp(tk.Tk):
             from client.adapters.claude_desktop_cdp import ClaudeDesktopUIAAdapter
             fleet = self._load_fleet_data()
 
+            def _dispatch_to_adapter(acc: str, hwnd: int) -> dict:
+                adapter = ClaudeDesktopUIAAdapter(worker_id=acc, nickname=acc, hwnd=hwnd)
+                if not adapter._focus_window():
+                    return {"success": False, "error": f"Failed to focus window for {acc} (HWND={hwnd})"}
+                if not adapter._paste_and_enter(final_prompt):
+                    return {"success": False, "error": "Clipboard paste or Enter submission failed."}
+                return {"success": True}
+
             if "Broadcast" in target_str:
                 self.log(f"Broadcasting prompt to all {len(fleet)} instances...")
                 for inst in fleet:
                     acc = inst.get("Account")
                     hwnd = inst.get("Hwnd")
                     if hwnd:
-                        adapter = ClaudeDesktopUIAAdapter(worker_id=acc, nickname=acc, hwnd=hwnd)
-                        res = asyncio.run(adapter.send_text(final_prompt))
+                        res = _dispatch_to_adapter(acc, hwnd)
                         tag = "[SUCCESS]" if res.get("success") else "[FAILED]"
                         self.log(f"  {tag} Dispatched to {acc} (HWND={hwnd})")
                         time.sleep(0.3)
                 self.log("[SUCCESS] Broadcast completed.")
             else:
-                acc = target_str.split()[0]
+                m = re.match(r"^([a-zA-Z0-9_-]+)", target_str.strip())
+                acc = m.group(1) if m else target_str.split()[0]
                 target_inst = next((i for i in fleet if i.get("Account") == acc), None)
                 if not target_inst or not target_inst.get("Hwnd"):
                     self.log(f"[!] Instance {acc} has no valid window HWND.")
@@ -728,8 +778,7 @@ class FleetControlApp(tk.Tk):
 
                 hwnd = target_inst.get("Hwnd")
                 self.log(f"Dispatching prompt to {acc} (HWND={hwnd})...")
-                adapter = ClaudeDesktopUIAAdapter(worker_id=acc, nickname=acc, hwnd=hwnd)
-                res = asyncio.run(adapter.send_text(final_prompt))
+                res = _dispatch_to_adapter(acc, hwnd)
                 if res.get("success"):
                     self.log(f"[SUCCESS] Prompt dispatched to {acc} window and Enter submitted.")
                 else:
@@ -881,10 +930,14 @@ class FleetControlApp(tk.Tk):
 
             # Update live state
             for acc in all_accounts:
-                if acc in self.cards:
                     inst = fleet_map.get(acc)
                     hwnd = inst.get("Hwnd") if inst else None
-                    alive = bool(hwnd and user32.IsWindow(hwnd))
+                    alive = False
+                    if hwnd:
+                        try:
+                            alive = bool(user32.IsWindow(int(hwnd)))
+                        except Exception:
+                            alive = False
                     widgets = self.cards[acc]
                     if alive:
                         widgets["status_badge"].config(text="● VISIBLE / READY", fg=ACCENT_GREEN, bg="#064e3b")

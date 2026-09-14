@@ -29,12 +29,19 @@ Write-Host "============================================================" -Foreg
 # 1. Ensure permission gates are bypassed so tool execution does not block on modal prompts
 Write-Host "[1/3] Ensuring tool permission gates are bypassed..." -ForegroundColor Cyan
 & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "bypass-all-profiles.ps1") -WhatIf:$WhatIf
+if ($LASTEXITCODE -ne 0) {
+    Write-Warning "Permission bypass script exited with code $LASTEXITCODE. Proceeding with caution..."
+}
 
 # 2. Launch concurrent Claude Desktop instances on dedicated virtual desktop with unique CDP ports
 Write-Host "[2/3] Launching Claude Desktop multi-instances on dedicated virtual desktop (Layout: $Layout)..." -ForegroundColor Cyan
 $usersArg = ($Users -join ',')
 & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "launch_user_n.ps1") `
     -Mode Concurrent -Users $usersArg -BaseCdpPort $BaseCdpPort -Layout $Layout -FleetDesktop -AutoWorkers -NoPrompt -WhatIf:$WhatIf
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "Fleet launcher exited with error code $LASTEXITCODE."
+    exit $LASTEXITCODE
+}
 
 if (-not $WhatIf) {
     Write-Host ""

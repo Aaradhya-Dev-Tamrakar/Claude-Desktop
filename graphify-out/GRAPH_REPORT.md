@@ -1,16 +1,16 @@
 # Graph Report - Claude-Desktop  (2026-09-14)
 
 ## Corpus Check
-- 349 files · ~271,092 words
+- 349 files · ~271,296 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1019 nodes · 2008 edges · 89 communities (48 shown, 16 thin omitted)
+- 1021 nodes · 2013 edges · 95 communities (54 shown, 16 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 73 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c045a119`
+- Built from commit: `f994bafe`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -40,23 +40,27 @@
 - IApplicationViewCollection
 - harvest_completed_jobs
 - super-nlm-mcp/run_server.py
-- PipelineEngine
+- pipeline_engine.py
 - SPARK Project
 - Usage
 - IVirtualDesktopPinnedApps
+- test_e2e_pipeline.py
 - schema.sql
 - Cross-Linking Hub
+- database.py
 - Handoff Protocol
 - convert_markdown_to_pdf
 - Job & Pipeline Production Schema (v2)
 - QuotaAwareScheduler
 - Server Requirements
 - orchestrator-state schema
+- config.py
 - sync-mcp.ps1
 - cooldown-reminder.ps1
 - orchestrator.md
 - sync.ps1
 - usage-watchdog.ps1
+- test_health.py
 - _find_uvx
 - Task Entity
 - Worker Role: Formatter & Delivery Packaging
@@ -64,6 +68,7 @@
 - Worker Role: Quality Assurance (QA) & Fact-Checker
 - Worker Role: Researcher / Attribute Extractor
 - Worker Role: Copywriter / Drafting Specialist
+- lifespan
 - get_db
 - AGENTS.md
 - Cloudflared Service
@@ -78,6 +83,7 @@
 - MD2PDF MCP Requirements
 - notebooklm-mcp-cli
 - Orchestrator MCP Server
+- setup_test_db
 - FastAPI
 
 ## God Nodes (most connected - your core abstractions)
@@ -115,7 +121,7 @@
 - **CI Test Suite** — github_workflows_ci_python, github_workflows_ci_powershell [EXTRACTED 1.00]
 - **Worker Pipeline Flow** — worker_prompts_orchestrator, worker_prompts_researcher, worker_prompts_writer, worker_prompts_seo_optimizer, worker_prompts_qa_reviewer, worker_prompts_formatter [EXTRACTED 1.00]
 
-## Communities (89 total, 16 thin omitted)
+## Communities (95 total, 16 thin omitted)
 
 ### Community 0 - "IApplicationView"
 Cohesion: 0.05
@@ -155,7 +161,7 @@ Nodes (4): EnumDelegate, StringBuilder, Program, UInt32
 
 ### Community 9 - "launch_user_n.ps1"
 Cohesion: 0.10
-Nodes (29): Add-NewProfile(), Close-AllClaudeInstances(), Ensure-FleetVirtualDesktop(), Expand-TeamMcpPlaceholders(), Format-CardRow(), Format-VisibleRight(), Format-VisibleText(), Get-ConcurrentClaudeInstances() (+21 more)
+Nodes (30): Add-NewProfile(), Close-AllClaudeInstances(), Ensure-FleetVirtualDesktop(), Expand-TeamMcpPlaceholders(), Export-ActiveFleetState(), Format-CardRow(), Format-VisibleRight(), Format-VisibleText() (+22 more)
 
 ### Community 10 - "Desktop"
 Cohesion: 0.15
@@ -178,8 +184,8 @@ Cohesion: 0.11
 Nodes (14): VirtualDesktop, VDeskTool, APPLICATION_VIEW_CLOAK_TYPE, AVCT_DEFAULT, AVCT_NONE, AVCT_VIRTUAL_DESKTOP, APPLICATION_VIEW_COMPATIBILITY_POLICY, AVCP_HIGH_SCALE_FACTOR (+6 more)
 
 ### Community 15 - "FleetControlApp"
-Cohesion: 0.11
-Nodes (5): enable_high_dpi_and_desktop(), FleetControlApp, main(), Enable native Windows 11 dark title bar for the Tkinter window., set_dark_titlebar()
+Cohesion: 0.10
+Nodes (7): attach_default_desktop(), enable_high_dpi_and_desktop(), FleetControlApp, main(), Attach the calling thread to the interactive 'Default' desktop in WinSta0., Enable native Windows 11/10 dark title bar for the Tkinter window., set_dark_titlebar()
 
 ### Community 16 - "cloud-orchestrator-mcp/run_server.py"
 Cohesion: 0.37
@@ -198,8 +204,8 @@ Cohesion: 0.14
 Nodes (4): Guid, MarshalAs, IServiceProvider10, IVirtualDesktopManager
 
 ### Community 20 - "main.py"
-Cohesion: 0.06
-Nodes (49): middleware, Request, BaseModel, Settings, validate_security_settings(), init_db(), Initialize database tables and indexes from schema.sql with automatic migration…, log_request() (+41 more)
+Cohesion: 0.26
+Nodes (12): middleware, Request, log_request(), metrics_text(), record_request(), request_id(), health_check(), liveness_check() (+4 more)
 
 ### Community 21 - "routes_tasks.py"
 Cohesion: 0.37
@@ -209,8 +215,8 @@ Nodes (12): CheckpointResponse, CheckpointSubmit, BaseModel, QAReviewResponse, Q
 Cohesion: 0.38
 Nodes (6): harvest_completed_jobs(), AsyncClient, Trigger a Windows desktop toast notification via PowerShell., Check for completed jobs and compile deliverables., run_harvester_loop(), show_windows_toast()
 
-### Community 25 - "PipelineEngine"
-Cohesion: 0.23
+### Community 25 - "pipeline_engine.py"
+Cohesion: 0.22
 Nodes (8): _now_iso(), PipelineEngine, Connection, Checks whether all tasks for a job have reached terminal state (done/merged).…, Decomposes intake jobs into discrete, pipeline-staged tasks and manages stage…, Load SKU definition JSON from sku-templates directory., Takes a job and a list of parsed input items (e.g. from CSV/JSON). Creates…, When a task is verified (or passes QA), triggers generation of the next stage…
 
 ### Community 26 - "SPARK Project"
@@ -221,6 +227,10 @@ Nodes (10): BiasAperture, BiasAperture Schema, EX751 Wireless Communications, ga
 Cohesion: 0.15
 Nodes (12): Benchmarking Efficiency, Claude Desktop Multi-Profile & Sync Utilities, Concurrent Mode (Multiple Windows, Multiple Monitors), Features, Files, Launching Claude Desktop Profiles, Repo Structure, Running Autonomous Worker Daemons (v2) (+4 more)
 
+### Community 31 - "test_e2e_pipeline.py"
+Cohesion: 0.19
+Nodes (9): Periodic self-healing supervisor loop: 1. Identifies workers with stale…, run_supervisor_cycle(), test_supervisor_dead_worker_recovery(), Test that when multiple workers race to claim the same task simultaneously,…, Test that tasks with expired leases can be claimed by a new worker or…, Test that an active worker can extend its task lease before expiration., test_concurrent_task_leasing_race_safety(), test_expired_lease_reclamation_and_recovery() (+1 more)
+
 ### Community 32 - "schema.sql"
 Cohesion: 0.47
 Nodes (9): checkpoints, job_metrics, jobs, memory_entries, qa_reviews, task_attempts, tasks, team_context (+1 more)
@@ -228,6 +238,10 @@ Nodes (9): checkpoints, job_metrics, jobs, memory_entries, qa_reviews, task_atte
 ### Community 33 - "Cross-Linking Hub"
 Cohesion: 0.22
 Nodes (8): Cross-Linking Hub, Application rules, Coursework notebooks (IV/I, exam sequence order), Hub, Leaf nodes, Pending, Query Protocol (Token Savings), Unlinked notebooks
+
+### Community 34 - "database.py"
+Cohesion: 0.18
+Nodes (10): init_db(), Initialize database tables and indexes from schema.sql with automatic migration…, fixture, Path, setup_test_db(), fixture, Path, setup_test_db() (+2 more)
 
 ### Community 35 - "Handoff Protocol"
 Cohesion: 0.22
@@ -253,6 +267,10 @@ Nodes (8): Python CI Job, Server Requirements, aiosqlite, fastapi, mcp, pydantic
 Cohesion: 0.25
 Nodes (8): Directory listing as the index, orchestrator-state/checkpoints/<task_id>.json, orchestrator-state/live-status/\<account\>.json, orchestrator-state/memory/\<account\>\_\_\<entry_id\>.json, orchestrator-state/memory/archive/, orchestrator-state schema, orchestrator-state/tasks/<task_id>.json, Token-Efficient Session Bootstrap
 
+### Community 41 - "config.py"
+Cohesion: 0.39
+Nodes (6): BaseModel, Settings, validate_security_settings(), test_development_allows_empty_auth_key(), test_production_accepts_strong_auth_key(), test_production_rejects_missing_auth_key()
+
 ### Community 42 - "sync-mcp.ps1"
 Cohesion: 0.36
 Nodes (5): Format-AsciiBorderRow(), Merge-McpServers(), Sync-ConfigToDir(), Write-JsonConfigSafely(), Write-McpBanner()
@@ -272,6 +290,10 @@ Nodes (4): Sync-MemoryToTeamMemory(), Write-Notice(), Write-Status(), Write-Succ
 ### Community 46 - "usage-watchdog.ps1"
 Cohesion: 0.48
 Nodes (5): Get-ClaudeTrayUsagePercent(), Invoke-AutoCheckpoint(), Invoke-WatchdogPoll(), Set-CheckpointFiredThisCycle(), Test-CheckpointAlreadyFiredThisCycle()
+
+### Community 47 - "test_health.py"
+Cohesion: 0.33
+Nodes (6): asyncio, fixture, Path, setup_test_db(), test_health_endpoints_and_request_correlation(), test_metrics_endpoint_exposes_request_counters()
 
 ### Community 48 - "_find_uvx"
 Cohesion: 0.50
@@ -301,9 +323,17 @@ Nodes (4): Research Protocol, Responsibilities, Strict Rules, Worker Role: Resea
 Cohesion: 0.50
 Nodes (3): Directives, Token Efficiency, Worker Role: Copywriter / Drafting Specialist
 
+### Community 55 - "lifespan"
+Cohesion: 0.67
+Nodes (3): lifespan(), Background supervisor monitoring heartbeats, dead workers, and auto-scheduling…, run_supervisor_loop()
+
 ### Community 57 - "get_db"
 Cohesion: 0.67
 Nodes (3): get_db(), Connection, Dependency for obtaining an async sqlite database connection in FastAPI routes.
+
+### Community 87 - "setup_test_db"
+Cohesion: 0.67
+Nodes (3): fixture, Path, setup_test_db()
 
 ### Community 88 - "FastAPI"
 Cohesion: 0.40
@@ -319,7 +349,7 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `BaseWorkerAdapter`?**
   _High betweenness centrality (0.045) - this node is a cross-community bridge._
-- **Why does `ClaudeDesktopProxyAdapter` connect `BaseWorkerAdapter` to `main.py`, `ClaudeDesktopCDPAdapter`?**
+- **Why does `ClaudeDesktopProxyAdapter` connect `BaseWorkerAdapter` to `ClaudeDesktopCDPAdapter`, `test_e2e_pipeline.py`?**
   _High betweenness centrality (0.036) - this node is a cross-community bridge._
 - **Why does `BaseWorkerAdapter` connect `BaseWorkerAdapter` to `ClaudeDesktopCDPAdapter`?**
   _High betweenness centrality (0.029) - this node is a cross-community bridge._
