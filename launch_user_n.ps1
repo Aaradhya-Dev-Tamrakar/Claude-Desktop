@@ -51,6 +51,10 @@ try {
     $OutputEncoding = [System.Text.Encoding]::UTF8
 } catch { }
 
+if ($Mode -eq "Concurrent") {
+    $Concurrent = $true
+}
+
 function Get-VisibleTextWidth {
     param([string]$Text)
 
@@ -1332,6 +1336,50 @@ function Initialize-VirtualDesktopTool {
     return $null
 }
 
+function Ensure-FleetVirtualDesktop {
+    param(
+        [Parameter(Mandatory = $true)][string]$RepoRoot,
+        [int]$TargetDesktopIndex = 1,
+        [switch]$WhatIf
+    )
+
+    $vdExe = Initialize-VirtualDesktopTool -RepoRoot $RepoRoot
+    if (-not $vdExe) {
+        return $null
+    }
+
+    try {
+        $countStr = (& $vdExe /Count 2>$null | Out-String)
+        $currentDesktopCount = 1
+        if ($countStr -match 'Count of desktops:\s*(\d+)') {
+            $currentDesktopCount = [int]$Matches[1]
+        }
+        elseif ($countStr -match '(\d+)') {
+            $currentDesktopCount = [int]$Matches[1]
+        }
+
+        $minDesktopsNeeded = $TargetDesktopIndex + 1
+        while ($currentDesktopCount -lt $minDesktopsNeeded) {
+            if ($WhatIf) {
+                Write-Host "[WhatIf] Would create Virtual Desktop $($currentDesktopCount + 1)." -ForegroundColor DarkCyan
+            } else {
+                & $vdExe /Quiet /New | Out-Null
+            }
+            $currentDesktopCount++
+        }
+
+        if (-not $WhatIf) {
+            # Switch to target desktop so newly spawned windows initialize on it
+            & $vdExe /Quiet "/Switch:$TargetDesktopIndex" | Out-Null
+        }
+        return $vdExe
+    }
+    catch {
+        Write-Warning "Failed to ensure fleet virtual desktop ($_)."
+        return $null
+    }
+}
+
 function Get-WindowGridLayout {
     <#
     .SYNOPSIS
@@ -1341,7 +1389,8 @@ function Get-WindowGridLayout {
         Layout logic (per desktop with max 4 windows):
           - Count <= 1: 1 col, 1 row (full work area)
           - Count == 2: 2 cols, 1 row (left 50%, right 50%)
-          - Count == 3..4: 2 cols, 2 rows (quad grid: top-left, top-right, bottom-left, bottom-right)
+          - Count == 3: 3 cols, 1 row (3 vertical columns side-by-side)
+          - Count == 4: 2 cols, 2 rows (quad grid: top-left, top-right, bottom-left, bottom-right)
           - Count > 4: 2 cols, Ceil(N/2) rows
     #>
     param(
@@ -1368,8 +1417,8 @@ function Get-WindowGridLayout {
         })
     }
 
-    $cols = 2
-    $rows = if ($Count -eq 2) { 1 } elseif ($Count -le 4) { 2 } else { [int][Math]::Ceiling($Count / 2.0) }
+    $cols = if ($Count -eq 3) { 3 } else { 2 }
+    $rows = if ($Count -eq 2 -or $Count -eq 3) { 1 } elseif ($Count -le 4) { 2 } else { [int][Math]::Ceiling($Count / 2.0) }
 
     $baseColW = [int][Math]::Floor($bW / $cols)
     $baseRowH = [int][Math]::Floor($bH / $rows)
@@ -1606,8 +1655,8 @@ function Set-ClaudeWindowsLayout {
 
         $targets = [System.Collections.Generic.List[PSCustomObject]]::new()
 
-        # Wait up to ~3.5s for launched windows to be created and visible
-        $maxAttempts = 7
+        # Wait up to ~10s for launched windows to be created and visible
+        $maxAttempts = 20
         for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
             $targets.Clear()
             $runningProcs = @(Get-CimInstance Win32_Process -Filter "Name = 'claude.exe'" -ErrorAction SilentlyContinue)
@@ -1655,7 +1704,8 @@ function Set-ClaudeWindowsLayout {
                 }
             }
 
-            if ($allRequestedFound -and $targets.Count -ge 2) {
+            $minExpected = if ($Accounts.Count -gt 0) { $Accounts.Count } else { 2 }
+            if ($allRequestedFound -and $targets.Count -ge $minExpected) {
                 break
             }
             Start-Sleep -Milliseconds 500
@@ -2456,6 +2506,9 @@ if ($isInteractive -and -not $Users -and -not $Account) {
     $Concurrent = ($tuiChoice.Mode -eq "Concurrent")
     $script:DeferRepoSync = $Concurrent -and $tuiChoice.Accounts.Count -gt 1
     $script:DeferTeamSync = $script:DeferRepoSync
+    if ($FleetDesktop) {
+        Ensure-FleetVirtualDesktop -RepoRoot $PSScriptRoot -TargetDesktopIndex 1 -WhatIf:$WhatIf | Out-Null
+    }
     foreach ($acc in $tuiChoice.Accounts) {
         Invoke-ProfileLaunch -Account $acc
     }
@@ -2519,6 +2572,9 @@ if ($Users -and $Users.Count -gt 0) {
         else {
             Resolve-SingleAccount -PresetAccount $u
         }
+    }
+    if ($FleetDesktop) {
+        Ensure-FleetVirtualDesktop -RepoRoot $PSScriptRoot -TargetDesktopIndex 1 -WhatIf:$WhatIf | Out-Null
     }
     foreach ($resolvedAccount in $ResolvedAccounts) {
         Invoke-ProfileLaunch -Account $resolvedAccount
