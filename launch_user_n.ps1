@@ -1676,11 +1676,17 @@ function Set-ClaudeWindowsLayout {
 
         if ($totalDesktopsRequired -gt 1 -and $vdExe) {
             try {
-                $countStr = & $vdExe /Quiet /Count 2>$null
+                # VirtualDesktop.exe without /Quiet prints "Count of desktops: N" to stdout.
+                # In /Quiet mode stdout is silenced. So run without /Quiet to capture desktop count.
+                $countStr = (& $vdExe /Count 2>$null | Out-String)
                 $currentDesktopCount = 1
-                if ($countStr -match '(\d+)') {
+                if ($countStr -match 'Count of desktops:\s*(\d+)') {
                     $currentDesktopCount = [int]$Matches[1]
                 }
+                elseif ($countStr -match '(\d+)') {
+                    $currentDesktopCount = [int]$Matches[1]
+                }
+
                 while ($currentDesktopCount -lt $totalDesktopsRequired) {
                     if ($WhatIf) {
                         Write-Host "[WhatIf] Would create Virtual Desktop $($currentDesktopCount + 1)." -ForegroundColor DarkCyan

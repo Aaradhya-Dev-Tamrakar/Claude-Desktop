@@ -527,6 +527,19 @@ class FleetControlApp(tk.Tk):
     def on_switch_desktop(self, desk_num: int):
         def _worker():
             if VD_EXE.exists():
+                # Check current desktop count first
+                out = subprocess.run([str(VD_EXE), "/Count"], capture_output=True, text=True).stdout
+                m = re.search(r"(\d+)", out)
+                current_count = int(m.group(1)) if m else 1
+
+                # If switching to desktop index desk_num (e.g. 1 for Desktop 2), ensure it exists
+                target_req = desk_num + 1
+                if current_count < target_req:
+                    self.log(f"Desktop {target_req} does not exist yet. Creating Desktop {target_req}...")
+                    while current_count < target_req:
+                        subprocess.run([str(VD_EXE), "/Quiet", "/New"], capture_output=True)
+                        current_count += 1
+
                 self.log(f"Switching to Desktop {desk_num + 1}...")
                 subprocess.run([str(VD_EXE), f"/Switch:{desk_num}"], capture_output=True)
                 self.log(f"Switched to Desktop {desk_num + 1}.")
