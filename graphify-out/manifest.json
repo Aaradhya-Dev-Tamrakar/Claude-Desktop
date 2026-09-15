@@ -1236,9 +1236,9 @@
     "semantic_hash": "e9091216a526021912560dd4f61bf1a7"
   },
   "profiles.json": {
-    "mtime": 1789353618.112734,
-    "seen": 1789394430.4297106,
-    "ast_hash": "db737d845a8d401f65b731b7e5301006",
+    "mtime": 1789465510.635574,
+    "seen": 1789492684.573487,
+    "ast_hash": "20cf7085a86133a81d1dbbf7ebec4739",
     "semantic_hash": ""
   },
   "reset_profiles.ps1": {
@@ -2157,6 +2157,48 @@
     "mtime": 1788939511.3469813,
     "seen": 1789353122.392695,
     "ast_hash": "ca554c6a8340ef725c771fd64b2d23ed",
+    "semantic_hash": ""
+  },
+  "Claude Skills + MCP/chat-archiver/save_chat.py": {
+    "mtime": 1789458964.8189273,
+    "seen": 1789492684.5728343,
+    "ast_hash": "6ddee6011b9a2b7aaae9178866edd0fd",
+    "semantic_hash": ""
+  },
+  "drive-manifest.json": {
+    "mtime": 1789492430.7502937,
+    "seen": 1789492684.5728922,
+    "ast_hash": "e7656bec826bb3fd8c51b32afbf8dab2",
+    "semantic_hash": ""
+  },
+  "scripts/sync_drive.py": {
+    "mtime": 1789491861.8676367,
+    "seen": 1789492684.573491,
+    "ast_hash": "37d853bb9b5a480c30571fa9ccafc01b",
+    "semantic_hash": ""
+  },
+  ".github/workflows/sync-drive.yml": {
+    "mtime": 1789491870.691436,
+    "seen": 1789492684.5735877,
+    "ast_hash": "72d3527fcc490b6f270665a39eccb2c3",
+    "semantic_hash": ""
+  },
+  "2026-09-15_ANALYSE-REPO_CONVERSATION.md": {
+    "mtime": 1789458895.8105655,
+    "seen": 1789492684.5735896,
+    "ast_hash": "352a202b36e4b6129fe8cefbeada4a35",
+    "semantic_hash": ""
+  },
+  "Claude Skills + MCP/chat-archiver.skill": {
+    "mtime": 1789458964.8209271,
+    "seen": 1789492684.573603,
+    "ast_hash": "39883e6ed1297449e8423666650261e9",
+    "semantic_hash": ""
+  },
+  "Claude Skills + MCP/chat-archiver/SKILL.md": {
+    "mtime": 1789458674.6467223,
+    "seen": 1789492684.5736046,
+    "ast_hash": "60d89a568acbacc7cc8c705f932ff5ec",
     "semantic_hash": ""
   }
 }

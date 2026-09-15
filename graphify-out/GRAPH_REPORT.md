@@ -1,16 +1,16 @@
-# Graph Report - Claude-Desktop  (2026-09-14)
+# Graph Report - Claude-Desktop  (2026-09-15)
 
 ## Corpus Check
-- 349 files · ~271,296 words
+- 355 files · ~284,132 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1021 nodes · 2013 edges · 95 communities (54 shown, 16 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 73 edges (avg confidence: 0.92)
+- 1199 nodes · 2203 edges · 119 communities (74 shown, 19 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 73 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f994bafe`
+- Built from commit: `c22ddb10`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -28,7 +28,7 @@
 - Desktop
 - BaseWorkerAdapter
 - routes_memory.py
-- ClaudeDesktopCDPAdapter
+- ._eval_js
 - VirtualDesktop11-24H2.cs
 - FleetControlApp
 - cloud-orchestrator-mcp/run_server.py
@@ -47,7 +47,7 @@
 - test_e2e_pipeline.py
 - schema.sql
 - Cross-Linking Hub
-- database.py
+- test_pipeline_engine.py
 - Handoff Protocol
 - convert_markdown_to_pdf
 - Job & Pipeline Production Schema (v2)
@@ -60,7 +60,7 @@
 - orchestrator.md
 - sync.ps1
 - usage-watchdog.ps1
-- test_health.py
+- init_db
 - _find_uvx
 - Task Entity
 - Worker Role: Formatter & Delivery Packaging
@@ -83,8 +83,31 @@
 - MD2PDF MCP Requirements
 - notebooklm-mcp-cli
 - Orchestrator MCP Server
-- setup_test_db
+- 2026-09-15_ANALYSE-REPO_CONVERSATION.md
 - FastAPI
+- ClaudeDesktopUIAAdapter
+- ClaudeDesktopCDPAdapter
+- sync_manifest
+- Turn 4
+- 24. What I would change first
+- run_worker_loop
+- 32. My P0 fixes
+- save_chat.py
+- ClaudeDesktopProxyAdapter
+- GroqAdapter
+- Turn 1
+- Turn 2
+- Execution Protocol
+- What I'd change given your stated objective
+- Bottom line
+- 1. The biggest bug: your scheduler and workers disagree about who owns task acquisition
+- 23. The biggest conceptual weakness
+- 31. Then simplify the orchestration architecture to this
+- Your "bad architecture" starts looking like useful experimentation
+- setup_test_db
+- 10. Your tests give a false sense of security here
+- 4. The security model is weaker than I originally thought
+- The most interesting experiment you could run
 
 ## God Nodes (most connected - your core abstractions)
 1. `IApplicationView` - 64 edges
@@ -121,7 +144,7 @@
 - **CI Test Suite** — github_workflows_ci_python, github_workflows_ci_powershell [EXTRACTED 1.00]
 - **Worker Pipeline Flow** — worker_prompts_orchestrator, worker_prompts_researcher, worker_prompts_writer, worker_prompts_seo_optimizer, worker_prompts_qa_reviewer, worker_prompts_formatter [EXTRACTED 1.00]
 
-## Communities (95 total, 16 thin omitted)
+## Communities (119 total, 19 thin omitted)
 
 ### Community 0 - "IApplicationView"
 Cohesion: 0.05
@@ -144,7 +167,7 @@ Cohesion: 0.08
 Nodes (4): PreserveSig, DesktopManager, IVirtualDesktop, IVirtualDesktopManagerInternal
 
 ### Community 5 - "test_remote_mcp.py"
-Cohesion: 0.24
+Cohesion: 0.23
 Nodes (38): Row, get_db_conn(), Obtain a direct async sqlite database connection., block_task(), claim_task(), create_task(), get_job(), get_job_metrics() (+30 more)
 
 ### Community 6 - "Memory Log"
@@ -168,16 +191,16 @@ Cohesion: 0.15
 Nodes (7): DllImport, Desktop, Count, Current, IsVisible, Left, Right
 
 ### Community 11 - "BaseWorkerAdapter"
-Cohesion: 0.06
-Nodes (29): ABC, BaseWorkerAdapter, Any, Executes work specified in `spec`. Returns dictionary: { "summary": "...",…, Returns True if the backend AI model / profile is online and usable., Abstract interface for worker execution endpoints., ClaudeDesktopProxyAdapter, Any (+21 more)
+Cohesion: 0.10
+Nodes (17): ABC, BaseWorkerAdapter, Any, Executes work specified in `spec`. Returns dictionary: { "summary": "...",…, Returns True if the backend AI model / profile is online and usable., Abstract interface for worker execution endpoints., GeminiFreeAdapter, Any (+9 more)
 
 ### Community 12 - "routes_memory.py"
 Cohesion: 0.18
 Nodes (21): put, get_all_context(), get_context_by_key(), list_memory(), _now_iso(), push_memory(), Connection, get (+13 more)
 
-### Community 13 - "ClaudeDesktopCDPAdapter"
-Cohesion: 0.05
-Nodes (54): ClaudeDesktopCDPAdapter, ClaudeDesktopUIAAdapter, Any, Send a JSON-RPC command over WebSocket and await result with timeout., Evaluate a JavaScript expression in the page and return the unwrapped value., Adapter automating a locally running Claude Desktop Electron app via Chrome…, Automate Claude Desktop via CDP: 1. Connect to page 2. Check for rate limit /…, Scan DOM for 5-hour usage limit and cooldown warnings. (+46 more)
+### Community 13 - "._eval_js"
+Cohesion: 0.16
+Nodes (13): Any, Send a JSON-RPC command over WebSocket and await result with timeout., Evaluate a JavaScript expression in the page and return the unwrapped value., Automate Claude Desktop via CDP: 1. Connect to page 2. Check for rate limit /…, Scan DOM for 5-hour usage limit and cooldown warnings., Click new chat or reset conversation., Dismiss non-essential popups (update notes, cookie/terms banners)., Ensure correct model (Sonnet 5 vs Haiku 4.5) and Effort/Thinking mode are… (+5 more)
 
 ### Community 14 - "VirtualDesktop11-24H2.cs"
 Cohesion: 0.11
@@ -205,7 +228,7 @@ Nodes (4): Guid, MarshalAs, IServiceProvider10, IVirtualDesktopManager
 
 ### Community 20 - "main.py"
 Cohesion: 0.26
-Nodes (12): middleware, Request, log_request(), metrics_text(), record_request(), request_id(), health_check(), liveness_check() (+4 more)
+Nodes (12): middleware, log_request(), metrics_text(), record_request(), request_id(), health_check(), liveness_check(), metrics() (+4 more)
 
 ### Community 21 - "routes_tasks.py"
 Cohesion: 0.37
@@ -228,8 +251,8 @@ Cohesion: 0.15
 Nodes (12): Benchmarking Efficiency, Claude Desktop Multi-Profile & Sync Utilities, Concurrent Mode (Multiple Windows, Multiple Monitors), Features, Files, Launching Claude Desktop Profiles, Repo Structure, Running Autonomous Worker Daemons (v2) (+4 more)
 
 ### Community 31 - "test_e2e_pipeline.py"
-Cohesion: 0.19
-Nodes (9): Periodic self-healing supervisor loop: 1. Identifies workers with stale…, run_supervisor_cycle(), test_supervisor_dead_worker_recovery(), Test that when multiple workers race to claim the same task simultaneously,…, Test that tasks with expired leases can be claimed by a new worker or…, Test that an active worker can extend its task lease before expiration., test_concurrent_task_leasing_race_safety(), test_expired_lease_reclamation_and_recovery() (+1 more)
+Cohesion: 0.16
+Nodes (11): Periodic self-healing supervisor loop: 1. Identifies workers with stale…, run_supervisor_cycle(), test_supervisor_dead_worker_recovery(), Test that when multiple workers race to claim the same task simultaneously,…, Test that tasks with expired leases can be claimed by a new worker or…, Test that an active worker can extend its task lease before expiration., End-to-End Test: Intake a 3-item '100_product_descriptions' job through all 5…, test_concurrent_task_leasing_race_safety() (+3 more)
 
 ### Community 32 - "schema.sql"
 Cohesion: 0.47
@@ -239,9 +262,9 @@ Nodes (9): checkpoints, job_metrics, jobs, memory_entries, qa_reviews, task_atte
 Cohesion: 0.22
 Nodes (8): Cross-Linking Hub, Application rules, Coursework notebooks (IV/I, exam sequence order), Hub, Leaf nodes, Pending, Query Protocol (Token Savings), Unlinked notebooks
 
-### Community 34 - "database.py"
-Cohesion: 0.18
-Nodes (10): init_db(), Initialize database tables and indexes from schema.sql with automatic migration…, fixture, Path, setup_test_db(), fixture, Path, setup_test_db() (+2 more)
+### Community 34 - "test_pipeline_engine.py"
+Cohesion: 0.40
+Nodes (3): fixture, Path, setup_test_db()
 
 ### Community 35 - "Handoff Protocol"
 Cohesion: 0.22
@@ -291,9 +314,9 @@ Nodes (4): Sync-MemoryToTeamMemory(), Write-Notice(), Write-Status(), Write-Succ
 Cohesion: 0.48
 Nodes (5): Get-ClaudeTrayUsagePercent(), Invoke-AutoCheckpoint(), Invoke-WatchdogPoll(), Set-CheckpointFiredThisCycle(), Test-CheckpointAlreadyFiredThisCycle()
 
-### Community 47 - "test_health.py"
-Cohesion: 0.33
-Nodes (6): asyncio, fixture, Path, setup_test_db(), test_health_endpoints_and_request_correlation(), test_metrics_endpoint_exposes_request_counters()
+### Community 47 - "init_db"
+Cohesion: 0.16
+Nodes (13): init_db(), Initialize database tables and indexes from schema.sql with automatic migration…, fixture, Path, setup_test_db(), asyncio, fixture, Path (+5 more)
 
 ### Community 48 - "_find_uvx"
 Cohesion: 0.50
@@ -331,32 +354,112 @@ Nodes (3): lifespan(), Background supervisor monitoring heartbeats, dead workers
 Cohesion: 0.67
 Nodes (3): get_db(), Connection, Dependency for obtaining an async sqlite database connection in FastAPI routes.
 
-### Community 87 - "setup_test_db"
-Cohesion: 0.67
-Nodes (3): fixture, Path, setup_test_db()
+### Community 87 - "2026-09-15_ANALYSE-REPO_CONVERSATION.md"
+Cohesion: 0.03
+Nodes (64): 10. `INSERT OR REPLACE` is dangerous in your pipeline engine, 11. The profile system has become a real subsystem, 11. Your pipeline isn't really a general DAG engine yet, 12. QA is not yet actually controlling workflow quality, 12. There is also a portability problem, 13. `profiles.json` should probably not be treated as source configuration, 13. The `qa_hold` job status isn't connected tightly enough to the workflow, 14. Metrics are currently more aspirational than operational (+56 more)
 
 ### Community 88 - "FastAPI"
 Cohesion: 0.40
 Nodes (4): FastAPI, HTTPAuthorizationCredentials, Verify that incoming request provides a valid API token via Bearer header or…, verify_api_key()
 
+### Community 89 - "ClaudeDesktopUIAAdapter"
+Cohesion: 0.14
+Nodes (15): ClaudeDesktopUIAAdapter, Automates prompt delivery to Claude Desktop on Windows via UI Automation /…, Verify the window handle is alive and visible., Bring window to foreground safely handling Windows focus locks and virtual…, Paste text into current focus and send Enter keypress., Activate the window and dispatch prompt., Direct prompt injection without task headers., _attach_default_desktop() (+7 more)
+
+### Community 90 - "ClaudeDesktopCDPAdapter"
+Cohesion: 0.24
+Nodes (18): ClaudeDesktopCDPAdapter, Adapter automating a locally running Claude Desktop Electron app via Chrome…, Check if Claude Desktop Electron process is exposing CDP port and has an active…, patch, asyncio, test_cdp_adapter_custom_model_and_thinking_init(), test_cdp_adapter_init(), test_cdp_cooldown_detection_returns_429() (+10 more)
+
+### Community 97 - "sync_manifest"
+Cohesion: 0.16
+Nodes (19): create_drive_file(), find_drive_file_by_name(), get_oauth_credentials(), main(), obtain_access_token(), Path, Request, Exchanges refresh token for a fresh Google OAuth2 access token with retry. (+11 more)
+
+### Community 98 - "Turn 4"
+Cohesion: 0.18
+Nodes (11): A transcript exporter, And there's a very compelling research question hiding here, Assistant, It also fits the zero-cost constraint extremely well, My revised conclusion, One thing I would specifically watch in your new implementation, The really interesting possibility, Turn 4 (+3 more)
+
+### Community 99 - "24. What I would change first"
+Cohesion: 0.20
+Nodes (10): 24. What I would change first, P0 — Fix security, P0 — Protect identity, P1 — Make state authoritative, P1 — Remove workstation-specific paths, P1 — Replace count-based IDs, P1 — Split the 2,400-line PowerShell launcher, P2 — Add resilience tests (+2 more)
+
+### Community 100 - "run_worker_loop"
+Cohesion: 0.31
+Nodes (8): main(), AsyncClient, Event, Individual worker loop attached to a specific Claude Desktop CDP instance., run_worker_loop(), asyncio, test_role_capabilities_mapping(), test_worker_loop_registration_and_exit_on_stop()
+
+### Community 101 - "32. My P0 fixes"
+Cohesion: 0.22
+Nodes (9): 32. My P0 fixes, P0.1 — Pick worker-pull or coordinator-push, P0.2 — Apply authentication globally, P0.3 — Separate authentication from worker identity, P0.4 — Remove automatic worker creation, P0.5 — Require claim tokens for completion, P0.6 — Make QA a real state gate, P0.7 — Kill `INSERT OR REPLACE` for lifecycle entities (+1 more)
+
+### Community 102 - "save_chat.py"
+Cohesion: 0.36
+Nodes (8): clean_text(), format_markdown(), main(), parse_chatgpt_share(), Normalize text and remove citation markers / artifacts., Determines the dedicated subfolder for chat histories. - If user explicitly…, resolve_target_directory(), slugify()
+
+### Community 103 - "ClaudeDesktopProxyAdapter"
+Cohesion: 0.25
+Nodes (5): ClaudeDesktopProxyAdapter, Any, Adapter representing a local Windows Claude Desktop profile session. Interfaces…, Execute task using Anthropic Claude API, CDP bridge, or structured prompt…, Stage-aware local processing engine producing structured deliverables.
+
+### Community 104 - "GroqAdapter"
+Cohesion: 0.28
+Nodes (5): GroqAdapter, Any, Adapter for Groq-hosted LLMs via the OpenAI-compatible chat completions API., test_groq_adapter_missing_key_returns_error(), test_groq_adapter_uses_env_model_override()
+
+### Community 105 - "Turn 1"
+Cohesion: 0.25
+Nodes (8): Analyse repo, Assistant, Assistant, Assistant, Assistant, Overall assessment, Turn 1, User
+
+### Community 106 - "Turn 2"
+Cohesion: 0.29
+Nodes (7): Assistant, Assistant, Assistant, Final verdict, My revised verdict, Turn 2, User
+
+### Community 107 - "Execution Protocol"
+Cohesion: 0.29
+Nodes (6): 1. Save to Current Working Directory / Repo, 2. Save to a Specific Folder (e.g. `docs/chat_history` or custom path), 3. Save to Brainstorm Knowledge Base, 4. Custom Filename / Output Path, Chat Archiver Skill, Execution Protocol
+
+### Community 108 - "What I'd change given your stated objective"
+Cohesion: 0.33
+Nodes (6): 1. Fix the worker assignment protocol, 2. Build quota-aware scheduling properly, 3. Build context management, 4. Build provider fallback, 5. Add evaluation, What I'd change given your stated objective
+
+### Community 109 - "Bottom line"
+Cohesion: 0.40
+Nodes (5): Assistant, Bottom line, Reframing the project, Turn 3, User
+
+### Community 110 - "1. The biggest bug: your scheduler and workers disagree about who owns task acquisition"
+Cohesion: 0.50
+Nodes (4): 1. The biggest bug: your scheduler and workers disagree about who owns task acquisition, Model A — worker-pull, Model B — coordinator-push, You need to choose one ownership model
+
+### Community 111 - "23. The biggest conceptual weakness"
+Cohesion: 0.50
+Nodes (4): 23. The biggest conceptual weakness, Product A, Product B, Product C
+
+### Community 112 - "31. Then simplify the orchestration architecture to this"
+Cohesion: 0.67
+Nodes (3): 31. Then simplify the orchestration architecture to this, The scheduler should assign work., The worker should receive assigned work.
+
+### Community 113 - "Your "bad architecture" starts looking like useful experimentation"
+Cohesion: 0.67
+Nodes (3): Mode 1 — Git-coordinated AI, Mode 2 — centralized live coordinator, Your "bad architecture" starts looking like useful experimentation
+
+### Community 114 - "setup_test_db"
+Cohesion: 0.67
+Nodes (3): fixture, Path, setup_test_db()
+
 ## Knowledge Gaps
-- **132 isolated node(s):** `memory_entries`, `team_context`, `VirtualDesktop`, `AVCT_NONE`, `AVCT_DEFAULT` (+127 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 395 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **257 isolated node(s):** `memory_entries`, `team_context`, `VirtualDesktop`, `AVCT_NONE`, `AVCT_DEFAULT` (+252 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 533 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **19 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `BaseWorkerAdapter`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
-- **Why does `ClaudeDesktopProxyAdapter` connect `BaseWorkerAdapter` to `ClaudeDesktopCDPAdapter`, `test_e2e_pipeline.py`?**
-  _High betweenness centrality (0.036) - this node is a cross-community bridge._
-- **Why does `BaseWorkerAdapter` connect `BaseWorkerAdapter` to `ClaudeDesktopCDPAdapter`?**
-  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+- **Why does `ClaudeDesktopProxyAdapter` connect `ClaudeDesktopProxyAdapter` to `ClaudeDesktopCDPAdapter`, `BaseWorkerAdapter`, `test_e2e_pipeline.py`?**
+  _High betweenness centrality (0.026) - this node is a cross-community bridge._
+- **Why does `ClaudeDesktopCDPAdapter` connect `ClaudeDesktopCDPAdapter` to `run_worker_loop`, `ClaudeDesktopProxyAdapter`, `BaseWorkerAdapter`, `._eval_js`, `ClaudeDesktopUIAAdapter`?**
+  _High betweenness centrality (0.025) - this node is a cross-community bridge._
+- **Why does `ClaudeDesktopUIAAdapter` connect `ClaudeDesktopUIAAdapter` to `BaseWorkerAdapter`, `FleetControlApp`?**
+  _High betweenness centrality (0.024) - this node is a cross-community bridge._
 - **Are the 13 inferred relationships involving `ClaudeDesktopCDPAdapter` (e.g. with `ClaudeDesktopProxyAdapter` and `test_cdp_adapter_custom_model_and_thinking_init()`) actually correct?**
   _`ClaudeDesktopCDPAdapter` has 13 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `memory_entries`, `team_context`, `VirtualDesktop` to the rest of the system?**
-  _132 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _257 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `IApplicationView` be split into smaller, more focused modules?**
   _Cohesion score 0.05319148936170213 - nodes in this community are weakly interconnected._
 - **Should `orchestrator_mcp_test.py` be split into smaller, more focused modules?**
