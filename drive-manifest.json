@@ -1,0 +1,25 @@
+{
+  "folder_id": "1o_YWIhBbIGyE0v9bjwbjDrBmWv170bh2",
+  "folder_url": "https://drive.google.com/drive/folders/1o_YWIhBbIGyE0v9bjwbjDrBmWv170bh2",
+  "notebook_id": "95a79d26-2f87-42cd-8cb9-8361a1e56059",
+  "files": {
+    "README.md": {
+      "drive_file_id": "",
+      "drive_file_name": "claude-desktop_README.md",
+      "description": "Claude Desktop Orchestrator — Multi-Profile Launcher & MCP Server Hub",
+      "sha256": ""
+    },
+    "team-context.md": {
+      "drive_file_id": "",
+      "drive_file_name": "claude-desktop_team-context.md",
+      "description": "Team Context — Shared Project Context & Conventions",
+      "sha256": ""
+    },
+    "team-memory.md": {
+      "drive_file_id": "",
+      "drive_file_name": "claude-desktop_team-memory.md",
+      "description": "Team Memory — Accumulated Knowledge & Decision Log",
+      "sha256": ""
+    }
+  }
+}
