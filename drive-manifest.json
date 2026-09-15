@@ -4,22 +4,22 @@
   "notebook_id": "95a79d26-2f87-42cd-8cb9-8361a1e56059",
   "files": {
     "README.md": {
-      "drive_file_id": "",
+      "drive_file_id": "1TSctdISQL5LuFzXw9EB9OhSA3kC61N2fZ-8gd9ptljk",
       "drive_file_name": "claude-desktop_README.md",
-      "description": "Claude Desktop Orchestrator — Multi-Profile Launcher & MCP Server Hub",
-      "sha256": ""
+      "description": "Claude Desktop Orchestrator \u2014 Multi-Profile Launcher & MCP Server Hub",
+      "sha256": "78ef734d86817064"
     },
     "team-context.md": {
-      "drive_file_id": "",
+      "drive_file_id": "16zHwFP9aV5_qO1L9Ljr_GDTPflZngNXZIsEL6fLnzpY",
       "drive_file_name": "claude-desktop_team-context.md",
-      "description": "Team Context — Shared Project Context & Conventions",
-      "sha256": ""
+      "description": "Team Context \u2014 Shared Project Context & Conventions",
+      "sha256": "0d738f0040533b29"
     },
     "team-memory.md": {
-      "drive_file_id": "",
+      "drive_file_id": "15seSPbTAwPcOFuAqXFtt_txCdX8j--WM1vLUwDxLhtQ",
       "drive_file_name": "claude-desktop_team-memory.md",
-      "description": "Team Memory — Accumulated Knowledge & Decision Log",
-      "sha256": ""
+      "description": "Team Memory \u2014 Accumulated Knowledge & Decision Log",
+      "sha256": "94a98de1881eb520"
     }
   }
 }
