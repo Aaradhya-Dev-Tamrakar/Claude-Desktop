@@ -28,9 +28,9 @@
     "thinking_budget": 0,
     "cdp_port": 9224,
     "path": "%USERPROFILE%\\.claude-profiles\\user3",
-    "first_login_time": "2026-09-14 07:07:22",
-    "last_login_date": "2026-09-14",
-    "last_login_time": "07:47:19"
+    "last_login_date": "2026-09-16",
+    "last_login_time": "15:34:09",
+    "first_login_time": "2026-09-16 15:34:09"
   },
   "user4": {
     "path": "%USERPROFILE%\\.claude-profiles\\user4",
