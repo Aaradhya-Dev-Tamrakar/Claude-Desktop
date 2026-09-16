@@ -182,6 +182,32 @@ function Format-CardRow([string]$Label, [string]$Value, [int]$BoxWidth = 98) {
     return "│$firstLine│`n│$secondLine│"
 }
 
+function Wait-WindowClosePrompt {
+    param(
+        [string]$Message = "Press Enter to close this window",
+        [switch]$NoPrompt
+    )
+    if ($NoPrompt) { return }
+
+    Write-Host ""
+    Write-Host "$Message" -ForegroundColor Cyan
+    try {
+        if ([Environment]::UserInteractive -and -not [Console]::IsInputRedirected) {
+            while ([Console]::KeyAvailable) {
+                [void][Console]::ReadKey($true)
+            }
+            [void][Console]::ReadKey($true)
+            return
+        }
+    }
+    catch { }
+
+    try {
+        [void](Read-Host)
+    }
+    catch { }
+}
+
 if ($GCalReminder) {
     Write-Warning "GCalReminder: Google Calendar integration is currently paused. This switch has no effect until re-enabled in cooldown-reminder.ps1."
 }
@@ -194,7 +220,7 @@ if ($GCalReminder) {
 if ($Mode -eq "Concurrent") { $Concurrent = $true }
 elseif ($Mode -eq "Isolated" -and $Concurrent) {
     Write-Host "Conflicting flags: -Mode Isolated with -Concurrent." -ForegroundColor Red
-    Read-Host "Press Enter to close this window"
+    Wait-WindowClosePrompt -NoPrompt:$NoPrompt
     exit 1
 }
 
@@ -202,12 +228,12 @@ if ($Users -and $Users.Count -gt 0) {
     $Users = @($Users | ForEach-Object { $_ -split '[, ]+' } | Where-Object { $_ })
     if ($Mode -eq "Isolated") {
         Write-Host "-Users requires Concurrent mode (Isolated is single-profile only)." -ForegroundColor Red
-        Read-Host "Press Enter to close this window"
+        Wait-WindowClosePrompt -NoPrompt:$NoPrompt
         exit 1
     }
     if ($Account) {
         Write-Host "-Users and -Account are mutually exclusive." -ForegroundColor Red
-        Read-Host "Press Enter to close this window"
+        Wait-WindowClosePrompt -NoPrompt:$NoPrompt
         exit 1
     }
     $Concurrent = $true
@@ -217,7 +243,7 @@ $ConfigFile = Join-Path $PSScriptRoot "profiles.json"
 
 if (-not (Test-Path $ConfigFile)) {
     Write-Host "profiles.json file is missing!" -ForegroundColor Red
-    Read-Host "Press Enter to close this window"
+    Wait-WindowClosePrompt -NoPrompt:$NoPrompt
     exit 1
 }
 
@@ -277,7 +303,7 @@ function Get-ValidatedProfilePath {
         Write-Host "    Base    : $($Check.BaseFull)" -ForegroundColor Gray
         Write-Host "    Resolved: $($Check.ExpandedFull)" -ForegroundColor Gray
         Write-Host "    Refusing to use this path. Fix 'path' for '$ProfileName' in profiles.json." -ForegroundColor Red
-        Read-Host "Press Enter to close this window"
+        Wait-WindowClosePrompt -NoPrompt:$NoPrompt
         exit 1
     }
 
@@ -655,7 +681,7 @@ function Add-NewProfile {
 
     if ([string]::IsNullOrWhiteSpace($Name)) {
         Write-Host "Profile name cannot be empty." -ForegroundColor Red
-        Read-Host "Press Enter to close this window"
+        Wait-WindowClosePrompt -NoPrompt:$NoPrompt
         exit 1
     }
 
@@ -1569,6 +1595,10 @@ public class ClaudeDesktopWindowHelper {
         public int dwThreadId;
     }
 
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool CloseHandle(IntPtr hObject);
+
     [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     public static extern bool CreateProcess(
         string lpApplicationName,
@@ -1582,6 +1612,10 @@ public class ClaudeDesktopWindowHelper {
         ref STARTUPINFO lpStartupInfo,
         out PROCESS_INFORMATION lpProcessInformation
     );
+
+    public const uint DETACHED_PROCESS = 0x00000008;
+    public const uint CREATE_NEW_PROCESS_GROUP = 0x00000200;
+    public const uint CREATE_BREAKAWAY_FROM_JOB = 0x01000000;
 
     public static void AttachToDefaultDesktop() {
         try {
@@ -1599,8 +1633,15 @@ public class ClaudeDesktopWindowHelper {
         si.lpDesktop = @"WinSta0\Default";
         PROCESS_INFORMATION pi = new PROCESS_INFORMATION();
         string cmd = string.IsNullOrEmpty(args) ? ("\"" + exePath + "\"") : ("\"" + exePath + "\" " + args);
-        bool success = CreateProcess(null, cmd, IntPtr.Zero, IntPtr.Zero, false, 0, IntPtr.Zero, null, ref si, out pi);
-        return success ? pi.dwProcessId : 0;
+        uint creationFlags = DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP | CREATE_BREAKAWAY_FROM_JOB;
+        bool success = CreateProcess(null, cmd, IntPtr.Zero, IntPtr.Zero, false, creationFlags, IntPtr.Zero, null, ref si, out pi);
+        if (success) {
+            int pid = pi.dwProcessId;
+            if (pi.hProcess != IntPtr.Zero) CloseHandle(pi.hProcess);
+            if (pi.hThread != IntPtr.Zero) CloseHandle(pi.hThread);
+            return pid;
+        }
+        return 0;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -1962,7 +2003,7 @@ function Resolve-SingleAccount {
                 }
                 else {
                     Write-Host "Invalid selection '$selection'" -ForegroundColor Red
-                    Read-Host "Press Enter to exit..."
+                    Wait-WindowClosePrompt -NoPrompt:$NoPrompt
                     exit 1
                 }
             }
@@ -1977,7 +2018,7 @@ function Resolve-SingleAccount {
             $script:AccountKeys = @($script:Profiles.psobject.properties.Name)
         }
         else {
-            Read-Host "Press Enter to close this window"
+            Wait-WindowClosePrompt -NoPrompt:$NoPrompt
             exit 1
         }
     }
@@ -2579,7 +2620,7 @@ if ($isInteractive -and -not $Users -and -not $Account) {
     }
     
     if (-not $WhatIf) {
-        Read-Host "Press Enter to close this window"
+        Wait-WindowClosePrompt -NoPrompt:$NoPrompt
     }
     exit 0
 }
@@ -2621,7 +2662,7 @@ if ($Users -and $Users.Count -gt 0) {
             }
             else {
                 Write-Host "Invalid profile number '$u' (have $($script:AccountKeys.Count) profile(s))." -ForegroundColor Red
-                Read-Host "Press Enter to close this window"
+                Wait-WindowClosePrompt -NoPrompt:$NoPrompt
                 exit 1
             }
         }
@@ -2658,6 +2699,6 @@ else {
     }
 }
 
-if (-not $WhatIf -and -not $NoPrompt) {
-    Read-Host "Press Enter to close this window"
+if (-not $WhatIf) {
+    Wait-WindowClosePrompt -NoPrompt:$NoPrompt
 }

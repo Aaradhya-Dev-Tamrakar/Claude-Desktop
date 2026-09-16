@@ -668,5 +668,6 @@ Describe "TestHook contract" {
         Get-Command Get-WindowGridLayout -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Initialize-WindowHelperType -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Set-ClaudeWindowsLayout -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Wait-WindowClosePrompt -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
     }
 }

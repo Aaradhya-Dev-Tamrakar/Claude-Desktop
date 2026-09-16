@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>Claude-Desktop — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 1199 nodes, 2203 edges, 119 communities. Commit: c22ddb1</p>
+<p class="subtitle">Generated from graphify knowledge graph: 1205 nodes, 2224 edges, 113 communities. Commit: 35daf9f</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -90,19 +90,19 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 flowchart LR
     EXTRACT_PIPELINE_5F350230("Extraction Pipeline<br/><small>4 nodes</small>")
     class EXTRACT_PIPELINE_5F350230 module;
-    BUILD_GRAPH_321CBB04("Graph Build<br/><small>90 nodes</small>")
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>89 nodes</small>")
     class BUILD_GRAPH_321CBB04 module;
     ANALYSIS_CLUSTERING_C79796DA("Analysis &amp; Clustering<br/><small>43 nodes</small>")
     class ANALYSIS_CLUSTERING_C79796DA module;
-    CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>195 nodes</small>")
+    CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>177 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
     INGEST_CACHE_UPDATE_FF457338("Ingestion &amp; Updates<br/><small>29 nodes</small>")
     class INGEST_CACHE_UPDATE_FF457338 module;
-    SERVE_API_35EC8E86("Serving API<br/><small>104 nodes</small>")
+    SERVE_API_35EC8E86("Serving API<br/><small>105 nodes</small>")
     class SERVE_API_35EC8E86 module;
     SECURITY_GLOBAL_5B9C6A04("Security &amp; Global Graph<br/><small>141 nodes</small>")
     class SECURITY_GLOBAL_5B9C6A04 module;
-    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>176 nodes</small>")
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>196 nodes</small>")
     class TESTS_FIXTURES_B84B1DCC module;
     IAPPLICATIONVIEW_77350340("IApplicationView<br/><small>48 nodes</small>")
     class IAPPLICATIONVIEW_77350340 module;
@@ -110,22 +110,22 @@ flowchart LR
     class IVIRTUALDESKTOP_F98EF257 module;
     MEMORY_LOG_AE26FF57("Memory Log<br/><small>39 nodes</small>")
     class MEMORY_LOG_AE26FF57 module;
-    LAUNCH_USER_N_PS1_C5CD768B("launch_user_n.ps1<br/><small>35 nodes</small>")
+    LAUNCH_USER_N_PS1_C5CD768B("launch_user_n.ps1<br/><small>36 nodes</small>")
     class LAUNCH_USER_N_PS1_C5CD768B module;
     FLEETCONTROLAPP_BA5C692D("FleetControlApp<br/><small>29 nodes</small>")
     class FLEETCONTROLAPP_BA5C692D module;
     DESKTOP_3B5A9F79("Desktop<br/><small>25 nodes</small>")
     class DESKTOP_3B5A9F79 module;
-    OTHER_D0941E68("Other<br/><small>201 nodes</small>")
+    OTHER_D0941E68("Other<br/><small>204 nodes</small>")
     class OTHER_D0941E68 module;
     SERVE_API_35EC8E86 -->|uses x32| OTHER_D0941E68
-    TESTS_FIXTURES_B84B1DCC -->|method x26| CLI_SKILLS_9964CBB8
-    CLI_SKILLS_9964CBB8 -->|calls x24| TESTS_FIXTURES_B84B1DCC
+    TESTS_FIXTURES_B84B1DCC -->|method x23| CLI_SKILLS_9964CBB8
     OTHER_D0941E68 -->|contains x23| SERVE_API_35EC8E86
     OTHER_D0941E68 -->|references x18| IAPPLICATIONVIEW_77350340
     CLI_SKILLS_9964CBB8 -->|calls x17| DESKTOP_3B5A9F79
     CLI_SKILLS_9964CBB8 -->|calls x15| IVIRTUALDESKTOP_F98EF257
     DESKTOP_3B5A9F79 -->|method x12| IVIRTUALDESKTOP_F98EF257
+    CLI_SKILLS_9964CBB8 -->|calls x12| TESTS_FIXTURES_B84B1DCC
     IVIRTUALDESKTOP_F98EF257 -->|references x12| OTHER_D0941E68
     CLI_SKILLS_9964CBB8 -->|references x12| IAPPLICATIONVIEW_77350340
     DESKTOP_3B5A9F79 -->|references x11| IAPPLICATIONVIEW_77350340
@@ -146,19 +146,19 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Extraction Pipeline</td><td>4</td><td><code>53</code></td></tr><tr><td>Graph Build</td><td>90</td><td><code>2, 25, 32, 37, 40, 49, 81, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>43</td><td><code>3, 91</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>195</td><td><code>11, 8, 13, 89, 20, 27, 102, 103, 33, 35, 107, 55, 118, 65, 66, 67, 68, 69, 70, 71, 72, 83, 92, 93, 94, 95</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>29</td><td><code>97, 36</code></td></tr><tr><td>Serving API</td><td>104</td><td><code>7, 12, 18, 16, 17, 88</code></td></tr><tr><td>Security &amp; Global Graph</td><td>141</td><td><code>87, 98, 99, 101, 105, 106, 108, 109, 110, 111, 112, 113, 115, 116, 117</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>176</td><td><code>1, 5, 90, 31, 47, 100, 104, 41, 34, 114, 86</code></td></tr><tr><td>IApplicationView</td><td>48</td><td><code>0</code></td></tr><tr><td>IVirtualDesktop</td><td>40</td><td><code>4</code></td></tr><tr><td>Memory Log</td><td>39</td><td><code>6</code></td></tr><tr><td>launch_user_n.ps1</td><td>35</td><td><code>9</code></td></tr><tr><td>FleetControlApp</td><td>29</td><td><code>15</code></td></tr><tr><td>Desktop</td><td>25</td><td><code>10</code></td></tr><tr><td>Other</td><td>201</td><td><code>14, 19, 21, 22, 26, 29, 38, 39, 42, 23, 43, 44, 45, 46, 48, 50, 51, 52, 54, 24, 56, 57, 58, 59, 60, 61, 62, 28, 30, 63, 64, 73, 74, 75, 76, 77, 78, 79, 80, 82, 85, 96</code></td></tr>
+      <tr><td>Extraction Pipeline</td><td>4</td><td><code>53</code></td></tr><tr><td>Graph Build</td><td>89</td><td><code>2, 25, 32, 37, 40, 49, 81, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>43</td><td><code>3, 91</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>177</td><td><code>11, 8, 13, 89, 27, 103, 102, 33, 35, 107, 118, 65, 66, 67, 68, 69, 70, 71, 72, 83, 92, 93, 94, 95</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>29</td><td><code>97, 36</code></td></tr><tr><td>Serving API</td><td>105</td><td><code>7, 12, 16, 18, 17, 88</code></td></tr><tr><td>Security &amp; Global Graph</td><td>141</td><td><code>87, 98, 99, 101, 105, 106, 108, 109, 110, 111, 112, 113, 115, 116, 117</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>196</td><td><code>5, 1, 90, 100, 104, 86</code></td></tr><tr><td>IApplicationView</td><td>48</td><td><code>0</code></td></tr><tr><td>IVirtualDesktop</td><td>40</td><td><code>4</code></td></tr><tr><td>Memory Log</td><td>39</td><td><code>6</code></td></tr><tr><td>launch_user_n.ps1</td><td>36</td><td><code>9</code></td></tr><tr><td>FleetControlApp</td><td>29</td><td><code>15</code></td></tr><tr><td>Desktop</td><td>25</td><td><code>10</code></td></tr><tr><td>Other</td><td>204</td><td><code>14, 19, 21, 22, 26, 29, 38, 39, 42, 23, 43, 44, 45, 46, 48, 50, 51, 52, 54, 20, 24, 56, 57, 58, 59, 60, 61, 62, 28, 30, 63, 64, 73, 74, 75, 76, 77, 78, 79, 80, 82, 85, 96</code></td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Core Flow</h4>
-    <div class="arrow-chain">Analysis &amp; Clustering -&gt; Extraction Pipeline -&gt; Graph Build -&gt; Tests &amp; Fixtures -&gt; CLI &amp; Skill Installers -&gt; Desktop -&gt; IVirtualDesktop</div>
+    <div class="arrow-chain">Analysis &amp; Clustering -&gt; Extraction Pipeline -&gt; Graph Build -&gt; CLI &amp; Skill Installers -&gt; Desktop -&gt; IVirtualDesktop -&gt; Other</div>
   </div>
 </div>
 <div class="grid">
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>1199 nodes · 2203 edges · 119 communities (74 shown, 19 thin omitted)</li>
+      <li>1205 nodes · 2224 edges · 113 communities (67 shown, 20 thin omitted)</li>
       <li>Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 73 edges (avg confidence: 0.92)</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `IApplicationView` - 64 edges</li>
@@ -259,12 +259,12 @@ flowchart LR
 
 <!-- ====== 3. Graph Build ====== -->
 <h2 id="build-graph">3. Graph Build</h2>
-<p>Graph Build groups implementation around md2pdf, apppy, tools, state, mostly in tools/md2pdf_app.py, orchestrator-state/JOB_SCHEMA.md, server/core/pipeline_engine.py. This section covers 90 nodes and 133 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Graph Build groups implementation around md2pdf, apppy, tools, state, mostly in tools/md2pdf_app.py, orchestrator-state/JOB_SCHEMA.md, server/core/pipeline_engine.py. This section covers 89 nodes and 131 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Graph Build (90 nodes, 133 edges)
+    %% Section: Graph Build (89 nodes, 131 edges)
     subgraph build_graph_tools_md2pdf_app_py_b98085e4["tools/md2pdf_app.py"]
         tools_md2pdf_app_md2pdfapp_7c40f5db("MD2PDFApp<br/><small>tools/md2pdf_app.py</small>")
         tools_md2pdf_app_md2pdfapp_convert_single_66602fc0("convert_single()<br/><small>tools/md2pdf_app.py</small>")
@@ -307,7 +307,7 @@ flowchart LR
     tools_md2pdf_app_md2pdfapp_init_e0526334 -->|calls| tools_md2pdf_app_config_load_dc7e3ac0
     tools_md2pdf_app_md2pdfapp_init_e0526334 -->|calls| tools_md2pdf_app_md2pdfapp_build_ui_fc526c8e
     tools_md2pdf_app_md2pdfapp_init_e0526334 -->|calls| tools_md2pdf_app_md2pdfapp_apply_deps_warning_315c7497
-    %% Omitted for readability: 72 nodes, 0 edges
+    %% Omitted for readability: 71 nodes, 0 edges
     class tools_md2pdf_app_md2pdfapp_7c40f5db klass;
     class tools_md2pdf_app_md2pdfapp_convert_single_66602fc0 function;
     class tools_md2pdf_app_md2pdfapp_init_e0526334 function;
@@ -596,7 +596,7 @@ flowchart LR
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>tools/md2pdf_app.py</code></td><td>42 nodes</td></tr>
 <tr><td><code>orchestrator-state/JOB_SCHEMA.md</code></td><td>13 nodes</td></tr>
-<tr><td><code>server/core/pipeline_engine.py</code></td><td>12 nodes</td></tr>
+<tr><td><code>server/core/pipeline_engine.py</code></td><td>11 nodes</td></tr>
 <tr><td><code>server/database/schema.sql</code></td><td>10 nodes</td></tr>
 <tr><td><code>orchestrator-state/SCHEMA.md</code></td><td>8 nodes</td></tr>
 <tr><td><code>profiles.json</code></td><td>1 nodes</td></tr>
@@ -605,7 +605,7 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: method x35, calls x35, contains x34, references x21. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: method x35, calls x35, contains x32, references x21. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -960,12 +960,12 @@ flowchart LR
 
 <!-- ====== 5. CLI & Skill Installers ====== -->
 <h2 id="cli-skills">5. CLI &amp; Skill Installers</h2>
-<p>CLI &amp; Skill Installers groups implementation around claude, client, adapters, desktop, mostly in client/adapters/claude_desktop_cdp.py, tools/VirtualDesktop11-24H2.cs, README.md. This section covers 195 nodes and 293 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>CLI &amp; Skill Installers groups implementation around claude, client, adapters, desktop, mostly in client/adapters/claude_desktop_cdp.py, tools/VirtualDesktop11-24H2.cs, README.md. This section covers 177 nodes and 264 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: CLI &amp; Skill Installers (195 nodes, 293 edges)
+    %% Section: CLI &amp; Skill Installers (177 nodes, 264 edges)
     subgraph cli_skills_client_adapters_claude_desktop_proxy_b804bc11["client/adapters/claude_desktop_proxy.py"]
         client_adapters_claude_desktop_proxy_claudedeskt_73403d88("ClaudeDesktopProxyAdapter<br/><small>client/adapters/claude_desktop_proxy.py</small>")
         client_adapters_claude_desktop_proxy_claudedeskt_d74c5f61("__init__()<br/><small>client/adapters/claude_desktop_proxy.py</small>")
@@ -973,59 +973,61 @@ flowchart LR
         client_adapters_claude_desktop_proxy_claudedeskt_183fd5ee("execute_task()<br/><small>client/adapters/claude_desktop_proxy.py</small>")
         client_adapters_claude_desktop_proxy_claudedeskt_0c075e3e("_execute_local_profile_stage()<br/><small>client/adapters/claude_desktop_proxy.py</small>")
     end
-    subgraph cli_skills_client_adapters_base_adapter_py_508b9d26["client/adapters/base_adapter.py"]
-        client_adapters_base_adapter_baseworkeradapter_d28b45a8("BaseWorkerAdapter<br/><small>client/adapters/base_adapter.py</small>")
-        client_adapters_base_adapter_baseworkeradapter_e_56b097a8("execute_task()<br/><small>client/adapters/base_adapter.py</small>")
-        client_adapters_base_adapter_baseworkeradapter_c_bfec0fc1("check_health()<br/><small>client/adapters/base_adapter.py</small>")
-        client_adapters_base_adapter_baseworkeradapter_i_447b0f50("__init__()<br/><small>client/adapters/base_adapter.py</small>")
-    end
     subgraph cli_skills_client_adapters_gemini_free_adapter_p_ae038220["client/adapters/gemini_free_adapter.py"]
         client_adapters_gemini_free_adapter_geminifreead_7f50e35e("GeminiFreeAdapter<br/><small>client/adapters/gemini_free_adapter.py</small>")
         client_adapters_gemini_free_adapter_geminifreead_021bb687("__init__()<br/><small>client/adapters/gemini_free_adapter.py</small>")
         client_adapters_gemini_free_adapter_geminifreead_35a54f84("check_health()<br/><small>client/adapters/gemini_free_adapter.py</small>")
+        client_adapters_gemini_free_adapter_geminifreead_f3406b33("execute_task()<br/><small>client/adapters/gemini_free_adapter.py</small>")
+    end
+    subgraph cli_skills_client_adapters_base_adapter_py_508b9d26["client/adapters/base_adapter.py"]
+        client_adapters_base_adapter_baseworkeradapter_d28b45a8("BaseWorkerAdapter<br/><small>client/adapters/base_adapter.py</small>")
+        client_adapters_base_adapter_baseworkeradapter_c_bfec0fc1("check_health()<br/><small>client/adapters/base_adapter.py</small>")
+        client_adapters_base_adapter_baseworkeradapter_i_447b0f50("__init__()<br/><small>client/adapters/base_adapter.py</small>")
     end
     subgraph cli_skills_tools_VirtualDesktop11_24H2_cs_1a5333dc["tools/VirtualDesktop11-24H2.cs"]
         tools_virtualdesktop11_24h2_vdesktool_program_2cc47af2("Program<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
         tools_virtualdesktop11_24h2_vdesktool_program_ma_c9bf3c6a("Main()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
         tools_virtualdesktop11_24h2_vdesktool_program_en_c1a52433("EnumWindowsProcToSwap()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
     end
-    client_adapters_claude_desktop_cdp_claudedesktop_50aeb769("execute_task()<br/><small>client/adapters/claude_desktop_cdp.py</small>")
+    subgraph cli_skills_client_adapters_claude_desktop_cdp_py_d2bceea9["client/adapters/claude_desktop_cdp.py"]
+        client_adapters_claude_desktop_cdp_claudedesktop_50aeb769("execute_task()<br/><small>client/adapters/claude_desktop_cdp.py</small>")
+        client_adapters_claude_desktop_cdp_claudedesktop_2fd73fc6("ClaudeDesktopUIAAdapter<br/><small>client/adapters/claude_desktop_cdp.py</small>")
+    end
     client_worker_daemon_272f3044("worker_daemon.py")
-    server_main_a6c2e85e("main.py")
     client_adapters_claude_desktop_proxy_claudedeskt_73403d88 -->|method| client_adapters_claude_desktop_proxy_claudedeskt_d74c5f61
     client_adapters_claude_desktop_proxy_claudedeskt_73403d88 -->|method| client_adapters_claude_desktop_proxy_claudedeskt_fa0aa283
     client_adapters_claude_desktop_proxy_claudedeskt_73403d88 -->|method| client_adapters_claude_desktop_proxy_claudedeskt_183fd5ee
     client_adapters_claude_desktop_proxy_claudedeskt_73403d88 -->|method| client_adapters_claude_desktop_proxy_claudedeskt_0c075e3e
-    client_adapters_base_adapter_baseworkeradapter_d28b45a8 -->|method| client_adapters_base_adapter_baseworkeradapter_e_56b097a8
     client_adapters_base_adapter_baseworkeradapter_d28b45a8 -->|method| client_adapters_base_adapter_baseworkeradapter_c_bfec0fc1
     client_adapters_base_adapter_baseworkeradapter_d28b45a8 -->|method| client_adapters_base_adapter_baseworkeradapter_i_447b0f50
     client_adapters_gemini_free_adapter_geminifreead_7f50e35e -->|method| client_adapters_gemini_free_adapter_geminifreead_021bb687
     client_adapters_gemini_free_adapter_geminifreead_7f50e35e -->|method| client_adapters_gemini_free_adapter_geminifreead_35a54f84
+    client_adapters_gemini_free_adapter_geminifreead_7f50e35e -->|method| client_adapters_gemini_free_adapter_geminifreead_f3406b33
     tools_virtualdesktop11_24h2_vdesktool_program_2cc47af2 -->|method| tools_virtualdesktop11_24h2_vdesktool_program_en_c1a52433
     tools_virtualdesktop11_24h2_vdesktool_program_2cc47af2 -->|method| tools_virtualdesktop11_24h2_vdesktool_program_ma_c9bf3c6a
     client_adapters_claude_desktop_proxy_claudedeskt_183fd5ee -->|calls| client_adapters_claude_desktop_proxy_claudedeskt_0c075e3e
     client_worker_daemon_272f3044 -->|imports| client_adapters_claude_desktop_proxy_claudedeskt_73403d88
     client_worker_daemon_272f3044 -->|imports| client_adapters_base_adapter_baseworkeradapter_d28b45a8
     client_worker_daemon_272f3044 -->|imports| client_adapters_gemini_free_adapter_geminifreead_7f50e35e
-    %% Omitted for readability: 177 nodes, 0 edges
+    %% Omitted for readability: 159 nodes, 0 edges
     class client_adapters_claude_desktop_proxy_claudedeskt_73403d88 klass;
     class client_adapters_claude_desktop_proxy_claudedeskt_d74c5f61 function;
     class client_adapters_claude_desktop_proxy_claudedeskt_fa0aa283 function;
     class client_adapters_claude_desktop_proxy_claudedeskt_183fd5ee function;
     class client_adapters_claude_desktop_proxy_claudedeskt_0c075e3e function;
-    class client_adapters_base_adapter_baseworkeradapter_d28b45a8 klass;
-    class client_adapters_base_adapter_baseworkeradapter_e_56b097a8 function;
-    class client_adapters_base_adapter_baseworkeradapter_c_bfec0fc1 function;
-    class client_adapters_base_adapter_baseworkeradapter_i_447b0f50 function;
     class client_adapters_gemini_free_adapter_geminifreead_7f50e35e klass;
     class client_adapters_gemini_free_adapter_geminifreead_021bb687 function;
     class client_adapters_gemini_free_adapter_geminifreead_35a54f84 function;
+    class client_adapters_gemini_free_adapter_geminifreead_f3406b33 function;
+    class client_adapters_base_adapter_baseworkeradapter_d28b45a8 klass;
+    class client_adapters_base_adapter_baseworkeradapter_c_bfec0fc1 function;
+    class client_adapters_base_adapter_baseworkeradapter_i_447b0f50 function;
     class tools_virtualdesktop11_24h2_vdesktool_program_2cc47af2 klass;
     class tools_virtualdesktop11_24h2_vdesktool_program_ma_c9bf3c6a function;
     class tools_virtualdesktop11_24h2_vdesktool_program_en_c1a52433 function;
     class client_adapters_claude_desktop_cdp_claudedesktop_50aeb769 function;
+    class client_adapters_claude_desktop_cdp_claudedesktop_2fd73fc6 klass;
     class client_worker_daemon_272f3044 module;
-    class server_main_a6c2e85e module;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1081,14 +1083,6 @@ flowchart LR
 </tr>
 <tr>
   <td>5</td>
-  <td><code>.execute_task()</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>BaseWorkerAdapter</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.execute_task() node in client/adapters/base_adapter.py.</td>
-</tr>
-<tr>
-  <td>6</td>
   <td><code>.__init__()</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>BaseWorkerAdapter</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small></td>
@@ -1096,7 +1090,7 @@ flowchart LR
   <td>.__init__() node in client/adapters/base_adapter.py.</td>
 </tr>
 <tr>
-  <td>7</td>
+  <td>6</td>
   <td><code>.check_health()</code><br><small style="color:var(--muted)">client/adapters/gemini_free_adapter.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>GeminiFreeAdapter</code><br><small style="color:var(--muted)">client/adapters/gemini_free_adapter.py</small></td>
@@ -1104,7 +1098,7 @@ flowchart LR
   <td>.check_health() node in client/adapters/gemini_free_adapter.py.</td>
 </tr>
 <tr>
-  <td>8</td>
+  <td>7</td>
   <td><code>.execute_task()</code><br><small style="color:var(--muted)">client/adapters/gemini_free_adapter.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>GeminiFreeAdapter</code><br><small style="color:var(--muted)">client/adapters/gemini_free_adapter.py</small></td>
@@ -1112,7 +1106,7 @@ flowchart LR
   <td>.execute_task() node in client/adapters/gemini_free_adapter.py.</td>
 </tr>
 <tr>
-  <td>9</td>
+  <td>8</td>
   <td><code>.__init__()</code><br><small style="color:var(--muted)">client/adapters/gemini_free_adapter.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>GeminiFreeAdapter</code><br><small style="color:var(--muted)">client/adapters/gemini_free_adapter.py</small></td>
@@ -1120,7 +1114,7 @@ flowchart LR
   <td>.__init__() node in client/adapters/gemini_free_adapter.py.</td>
 </tr>
 <tr>
-  <td>10</td>
+  <td>9</td>
   <td><code>.check_health()</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>OllamaLocalAdapter</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
@@ -1128,7 +1122,7 @@ flowchart LR
   <td>.check_health() node in client/adapters/ollama_local_adapter.py.</td>
 </tr>
 <tr>
-  <td>11</td>
+  <td>10</td>
   <td><code>.execute_task()</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>OllamaLocalAdapter</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
@@ -1136,7 +1130,7 @@ flowchart LR
   <td>.execute_task() node in client/adapters/ollama_local_adapter.py.</td>
 </tr>
 <tr>
-  <td>12</td>
+  <td>11</td>
   <td><code>.__init__()</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>OllamaLocalAdapter</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
@@ -1144,7 +1138,7 @@ flowchart LR
   <td>.__init__() node in client/adapters/ollama_local_adapter.py.</td>
 </tr>
 <tr>
-  <td>13</td>
+  <td>12</td>
   <td><code>get_adapter()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>main_loop()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
@@ -1152,7 +1146,7 @@ flowchart LR
   <td>get_adapter() node in client/worker_daemon.py.</td>
 </tr>
 <tr>
-  <td>14</td>
+  <td>13</td>
   <td><code>main_loop()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
@@ -1160,7 +1154,7 @@ flowchart LR
   <td>main_loop() node in client/worker_daemon.py.</td>
 </tr>
 <tr>
-  <td>15</td>
+  <td>14</td>
   <td><code>renew_task_lease_periodically()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>main_loop()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
@@ -1168,7 +1162,7 @@ flowchart LR
   <td>renew_task_lease_periodically() node in client/worker_daemon.py.</td>
 </tr>
 <tr>
-  <td>16</td>
+  <td>15</td>
   <td><code>ABC</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>base_adapter.py</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small></td>
@@ -1176,7 +1170,7 @@ flowchart LR
   <td>ABC node in project.</td>
 </tr>
 <tr>
-  <td>17</td>
+  <td>16</td>
   <td><code>base_adapter.py</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td><code>claude_desktop_cdp.py</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>claude_desktop_proxy.py</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_proxy.py</small><br><code>gemini_free_adapter.py</code><br><small style="color:var(--muted)">client/adapters/gemini_free_adapter.py</small><br>+3 more</td>
@@ -1184,15 +1178,7 @@ flowchart LR
   <td>Module file in client/adapters/base_adapter.py.</td>
 </tr>
 <tr>
-  <td>18</td>
-  <td><code>Any</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Any node in project.</td>
-</tr>
-<tr>
-  <td>19</td>
+  <td>17</td>
   <td><code>claude_desktop_cdp.py</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td><code>claude_desktop_proxy.py</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_proxy.py</small><br><code>fleet_cli.py</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>fleet_supervisor.py</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small><br>+2 more</td>
@@ -1200,7 +1186,7 @@ flowchart LR
   <td>Module file in client/adapters/claude_desktop_cdp.py.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>18</td>
   <td><code>claude_desktop_proxy.py</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_proxy.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td><code>test_claude_cdp_adapter.py</code><br><small style="color:var(--muted)">tests/test_claude_cdp_adapter.py</small><br><code>test_e2e_pipeline.py</code><br><small style="color:var(--muted)">tests/test_e2e_pipeline.py</small><br><code>worker_daemon.py</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
@@ -1208,7 +1194,7 @@ flowchart LR
   <td>Module file in client/adapters/claude_desktop_proxy.py.</td>
 </tr>
 <tr>
-  <td>21</td>
+  <td>19</td>
   <td><code>gemini_free_adapter.py</code><br><small style="color:var(--muted)">client/adapters/gemini_free_adapter.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td><code>worker_daemon.py</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
@@ -1216,7 +1202,7 @@ flowchart LR
   <td>Module file in client/adapters/gemini_free_adapter.py.</td>
 </tr>
 <tr>
-  <td>22</td>
+  <td>20</td>
   <td><code>Any</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -1224,7 +1210,7 @@ flowchart LR
   <td>Any node in project.</td>
 </tr>
 <tr>
-  <td>23</td>
+  <td>21</td>
   <td><code>groq_adapter.py</code><br><small style="color:var(--muted)">client/adapters/groq_adapter.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td><code>test_groq_adapter.py</code><br><small style="color:var(--muted)">tests/test_groq_adapter.py</small><br><code>worker_daemon.py</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
@@ -1232,7 +1218,7 @@ flowchart LR
   <td>Module file in client/adapters/groq_adapter.py.</td>
 </tr>
 <tr>
-  <td>24</td>
+  <td>22</td>
   <td><code>ollama_local_adapter.py</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td><code>worker_daemon.py</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
@@ -1240,7 +1226,7 @@ flowchart LR
   <td>Module file in client/adapters/ollama_local_adapter.py.</td>
 </tr>
 <tr>
-  <td>25</td>
+  <td>23</td>
   <td><code>Any</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -1248,7 +1234,7 @@ flowchart LR
   <td>Any node in project.</td>
 </tr>
 <tr>
-  <td>26</td>
+  <td>24</td>
   <td><code>worker_daemon.py</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
   <td>External entry / no inbound edge</td>
@@ -1256,7 +1242,7 @@ flowchart LR
   <td>Module file in client/worker_daemon.py.</td>
 </tr>
 <tr>
-  <td>27</td>
+  <td>25</td>
   <td><code>AsyncClient</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-cmd">Entry</span></td>
   <td>External entry / no inbound edge</td>
@@ -1264,7 +1250,7 @@ flowchart LR
   <td>AsyncClient node in project.</td>
 </tr>
 <tr>
-  <td>28</td>
+  <td>26</td>
   <td><code>Event</code><br><small style="color:var(--muted)"></small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
@@ -1272,20 +1258,36 @@ flowchart LR
   <td>Event node in project.</td>
 </tr>
 <tr>
-  <td>29</td>
-  <td><code>Executes work specified in `spec`. Returns dictionary: { &quot;summary&quot;: &quot;...&quot;,…</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Design note for Executes work specified in `spec`. Returns dictionary: { &quot;summary&quot;: &quot;...&quot;,….</td>
-</tr>
-<tr>
-  <td>30</td>
+  <td>27</td>
   <td><code>Returns True if the backend AI model / profile is online and usable.</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small></td>
   <td><span class="tag tag-func">Concept</span></td>
   <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
   <td>Design note for Returns True if the backend AI model / profile is online and usable..</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>Abstract interface for worker execution endpoints.</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Design note for Abstract interface for worker execution endpoints..</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>Adapter for Google AI Studio Free Tier (Gemini 2.5 / 3.0). Provides free tokens…</code><br><small style="color:var(--muted)">client/adapters/gemini_free_adapter.py</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Design note for Adapter for Google AI Studio Free Tier (Gemini 2.5 / 3.0). Provides free tokens….</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>Adapter for local Ollama / LM Studio models (e.g. Qwen 2.5, Llama 3.3). $0…</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
+  <td><span class="tag tag-func">Concept</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Design note for Adapter for local Ollama / LM Studio models (e.g. Qwen 2.5, Llama 3.3). $0….</td>
 </tr>
 </table>
 
@@ -1297,16 +1299,16 @@ flowchart LR
       <tr><td><code>client/adapters/claude_desktop_cdp.py</code></td><td>38 nodes</td></tr>
 <tr><td><code>tools/VirtualDesktop11-24H2.cs</code></td><td>24 nodes</td></tr>
 <tr><td><code>README.md</code></td><td>13 nodes</td></tr>
-<tr><td><code>server/main.py</code></td><td>10 nodes</td></tr>
 <tr><td><code>Claude Skills + MCP/Cross-Linking Hub.md</code></td><td>9 nodes</td></tr>
 <tr><td><code>Claude Skills + MCP/chat-archiver/save_chat.py</code></td><td>9 nodes</td></tr>
 <tr><td><code>client/adapters/claude_desktop_proxy.py</code></td><td>9 nodes</td></tr>
-<tr><td><code>client/adapters/base_adapter.py</code></td><td>8 nodes</td></tr>
+<tr><td><code>tools/fleet_cli.py</code></td><td>8 nodes</td></tr>
+<tr><td><code>Claude Skills + MCP/chat-archiver/SKILL.md</code></td><td>7 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: calls x96, contains x64, method x37, references x32. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x92, contains x53, method x36, explains x27. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -1652,12 +1654,12 @@ flowchart LR
 
 <!-- ====== 7. Serving API ====== -->
 <h2 id="serve-api">7. Serving API</h2>
-<p>Serving API groups implementation around server, routes, api, mcp, mostly in server/api/routes_tasks.py, mcp-servers/cloud-orchestrator-mcp/run_server.py, server/api/routes_memory.py. This section covers 104 nodes and 203 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Serving API groups implementation around server, routes, api, mcp, mostly in server/api/routes_tasks.py, mcp-servers/cloud-orchestrator-mcp/run_server.py, server/api/routes_memory.py. This section covers 105 nodes and 207 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Serving API (104 nodes, 203 edges)
+    %% Section: Serving API (105 nodes, 207 edges)
     subgraph serve_api_mcp_servers_cloud_orchestrator_mcp_run_2bf032b4["mcp-servers/cloud-orchestrator-mcp/run_server.py"]
         mcp_servers_cloud_orchestrator_mcp_run_server_bl_fb5b74ab("block_task()<br/><small>mcp-servers/cloud-orchestrator-mcp/run_server.py</small>")
         mcp_servers_cloud_orchestrator_mcp_run_server_re_aecb7cc2("_request_json()<br/><small>mcp-servers/cloud-orchestrator-mcp/run_server.py</small>")
@@ -1692,7 +1694,7 @@ flowchart LR
     mcp_servers_cloud_orchestrator_mcp_run_server_ge_fa3d6fcc -->|calls| mcp_servers_cloud_orchestrator_mcp_run_server_re_81c383e0
     mcp_servers_cloud_orchestrator_mcp_run_server_ge_25df9d9b -->|calls| mcp_servers_cloud_orchestrator_mcp_run_server_re_aecb7cc2
     mcp_servers_cloud_orchestrator_mcp_run_server_ge_b4dc17e1 -->|calls| mcp_servers_cloud_orchestrator_mcp_run_server_re_aecb7cc2
-    %% Omitted for readability: 86 nodes, 0 edges
+    %% Omitted for readability: 87 nodes, 0 edges
     class mcp_servers_cloud_orchestrator_mcp_run_server_bl_fb5b74ab function;
     class mcp_servers_cloud_orchestrator_mcp_run_server_re_aecb7cc2 function;
     class mcp_servers_cloud_orchestrator_mcp_run_server_cl_a9a0f063 function;
@@ -1980,7 +1982,7 @@ flowchart LR
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>server/api/routes_tasks.py</code></td><td>21 nodes</td></tr>
-<tr><td><code>mcp-servers/cloud-orchestrator-mcp/run_server.py</code></td><td>16 nodes</td></tr>
+<tr><td><code>mcp-servers/cloud-orchestrator-mcp/run_server.py</code></td><td>17 nodes</td></tr>
 <tr><td><code>server/api/routes_memory.py</code></td><td>14 nodes</td></tr>
 <tr><td><code>server/api/routes_jobs.py</code></td><td>12 nodes</td></tr>
 <tr><td><code>server/models/schemas.py</code></td><td>11 nodes</td></tr>
@@ -1990,7 +1992,7 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: references x77, contains x34, calls x33, explains x26. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: references x79, contains x35, calls x34, explains x26. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -2337,12 +2339,12 @@ flowchart LR
 
 <!-- ====== 9. Tests & Fixtures ====== -->
 <h2 id="tests-fixtures">9. Tests &amp; Fixtures</h2>
-<p>Tests &amp; Fixtures groups implementation around test, tests, mcp, orchestrator, mostly in tests/orchestrator_mcp_test.py, server/mcp_remote.py, tests/test_claude_cdp_adapter.py. This section covers 176 nodes and 388 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Tests &amp; Fixtures groups implementation around test, tests, mcp, server, mostly in tests/orchestrator_mcp_test.py, server/mcp_remote.py, tests/test_claude_cdp_adapter.py. This section covers 196 nodes and 446 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Tests &amp; Fixtures (176 nodes, 388 edges)
+    %% Section: Tests &amp; Fixtures (196 nodes, 446 edges)
     subgraph tests_fixtures_tests_orchestrator_mcp_test_py_d8584627["tests/orchestrator_mcp_test.py"]
         tests_orchestrator_mcp_test_testteammemory_8bc01040("TestTeamMemory<br/><small>tests/orchestrator_mcp_test.py</small>")
         tests_orchestrator_mcp_test_testblockedunblock_7bcc7460("TestBlockedUnblock<br/><small>tests/orchestrator_mcp_test.py</small>")
@@ -2360,10 +2362,10 @@ flowchart LR
     end
     subgraph tests_fixtures_tests_test_remote_mcp_py_1c69ebea["tests/test_remote_mcp.py"]
         tests_test_remote_mcp_8def63aa("test_remote_mcp.py")
+        tests_test_remote_mcp_test_mcp_mutations_require_f34d4c70("current claim token()<br/><small>tests/test_remote_mcp.py</small>")
         tests_test_remote_mcp_test_mcp_task_lifecycle_571aa6e4("test_mcp_task_lifecycle()<br/><small>tests/test_remote_mcp.py</small>")
-        tests_test_remote_mcp_test_mcp_jobs_and_qa_revie_cb701cdc("and qa review()<br/><small>tests/test_remote_mcp.py</small>")
     end
-    tests_test_cloud_scheduler_b248569d("test_cloud_scheduler.py")
+    server_main_a6c2e85e("main.py")
     tests_test_e2e_pipeline_efe0a27a("test_e2e_pipeline.py")
     tests_orchestrator_mcp_test_testblockedunblock_7bcc7460 -->|method| tests_orchestrator_mcp_test_testblockedunblock_t_0cdd155f
     tests_orchestrator_mcp_test_testblockedunblock_7bcc7460 -->|method| tests_orchestrator_mcp_test_testblockedunblock_t_70ed95c8
@@ -2373,7 +2375,9 @@ flowchart LR
     tests_orchestrator_mcp_test_testclaimrace_ddc6c63f -->|method| tests_orchestrator_mcp_test_testclaimrace_test_n_4fdc5710
     tests_orchestrator_mcp_test_testcodetasklifecycl_29c6ab68 -->|method| tests_orchestrator_mcp_test_testcodetasklifecycl_e89e6a73
     tests_orchestrator_mcp_test_testcodetasklifecycl_29c6ab68 -->|method| tests_orchestrator_mcp_test_testcodetasklifecycl_de383d66
-    %% Omitted for readability: 158 nodes, 0 edges
+    tests_test_e2e_pipeline_efe0a27a -->|imports| server_main_a6c2e85e
+    tests_test_remote_mcp_8def63aa -->|imports| server_main_a6c2e85e
+    %% Omitted for readability: 178 nodes, 0 edges
     class tests_orchestrator_mcp_test_testteammemory_8bc01040 test;
     class tests_orchestrator_mcp_test_testblockedunblock_7bcc7460 test;
     class tests_orchestrator_mcp_test_testblockedunblock_t_0cdd155f test;
@@ -2388,9 +2392,9 @@ flowchart LR
     class tests_orchestrator_mcp_test_testcodetasklifecycl_de383d66 test;
     class tests_orchestrator_mcp_test_testcontextbundleand_a7c79771 test;
     class tests_test_remote_mcp_8def63aa test;
+    class tests_test_remote_mcp_test_mcp_mutations_require_f34d4c70 test;
     class tests_test_remote_mcp_test_mcp_task_lifecycle_571aa6e4 test;
-    class tests_test_remote_mcp_test_mcp_jobs_and_qa_revie_cb701cdc test;
-    class tests_test_cloud_scheduler_b248569d test;
+    class server_main_a6c2e85e module;
     class tests_test_e2e_pipeline_efe0a27a test;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
@@ -2415,243 +2419,243 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>TestBlockedUnblock</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>Settings</code><br><small style="color:var(--muted)">server/core/config.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>test_mark_blocked_preserves_ownership()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_only_owner_can_unblock()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_unblock_non_blocked_task_raises()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td>No direct outbound edge</td>
+  <td>Settings node in server/core/config.py.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>TestClaimRace</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>test_double_claim_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_non_owner_cannot_release()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_release_then_reclaim_succeeds()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>validate_security_settings()</code><br><small style="color:var(--muted)">server/core/config.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>empty auth key()</code><br><small style="color:var(--muted)">tests/test_security_config.py</small><br><code>lifespan()</code><br><small style="color:var(--muted)">server/main.py</small><br><code>main.py</code><br><small style="color:var(--muted)">server/main.py</small><br>+3 more</td>
+  <td>No direct outbound edge</td>
+  <td>validate_security_settings() node in server/core/config.py.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>TestCodeTaskLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>test_clean_merge()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_conflict_aborts_cleanly()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>block_task()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>claim_task()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>create_task()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br>+26 more</td>
+  <td>No direct outbound edge</td>
+  <td>get_db_conn() node in server/core/database.py.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>TestContextBundleAndArchiving</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>test_archive_memory()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_get_context_bundle()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>init_db()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>lifespan()</code><br><small style="color:var(--muted)">server/main.py</small><br><code>main.py</code><br><small style="color:var(--muted)">server/main.py</small><br><code>setup_test_db()</code><br><small style="color:var(--muted)">tests/test_e2e_pipeline.py</small><br>+9 more</td>
+  <td>No direct outbound edge</td>
+  <td>init_db() node in server/core/database.py.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>TestInputValidation</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>test_code_task_requires_branch_name_on_claim()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_invalid_account_name_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_invalid_task_id_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br>+1 more</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>log_request()</code><br><small style="color:var(--muted)">server/core/observability.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>main.py</code><br><small style="color:var(--muted)">server/main.py</small><br><code>observe_http_requests()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>log_request() node in server/core/observability.py.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>TestJobProductionLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>test_create_and_list_jobs()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_submit_qa_review_lifecycle()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>metrics_text()</code><br><small style="color:var(--muted)">server/core/observability.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>main.py</code><br><small style="color:var(--muted)">server/main.py</small><br><code>metrics()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>metrics_text() node in server/core/observability.py.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>TestLiveStatus</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>test_independent_files_per_account()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_overwrite_is_last_write_wins()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>record_request()</code><br><small style="color:var(--muted)">server/core/observability.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>main.py</code><br><small style="color:var(--muted)">server/main.py</small><br><code>observe_http_requests()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>record_request() node in server/core/observability.py.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>TestTeamContext</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>test_read_team_context_missing()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_read_team_context_present()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>request_id()</code><br><small style="color:var(--muted)">server/core/observability.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>main.py</code><br><small style="color:var(--muted)">server/main.py</small><br><code>observe_http_requests()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>request_id() node in server/core/observability.py.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>TestTeamMemory</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>test_empty_text_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_invalid_account_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_limit_and_search_and_project_filter()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br>+4 more</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>run_supervisor_cycle()</code><br><small style="color:var(--muted)">server/core/supervisor.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>dead worker recovery()</code><br><small style="color:var(--muted)">tests/test_cloud_scheduler.py</small><br><code>main.py</code><br><small style="color:var(--muted)">server/main.py</small><br><code>reclamation and recovery()</code><br><small style="color:var(--muted)">tests/test_e2e_pipeline.py</small><br>+3 more</td>
+  <td>No direct outbound edge</td>
+  <td>run_supervisor_cycle() node in server/core/supervisor.py.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>TestTextTaskLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>health_check()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>test_create_decompose_claim_checkpoint_merge()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td>No direct outbound edge</td>
+  <td>health_check() node in server/main.py.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>TestToolRegistration</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>lifespan()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>test_all_expected_tools_are_registered()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>init_db()</code><br><small style="color:var(--muted)">server/core/database.py</small><br><code>run_supervisor_loop()</code><br><small style="color:var(--muted)">server/main.py</small><br><code>validate_security_settings()</code><br><small style="color:var(--muted)">server/core/config.py</small></td>
+  <td>lifespan() node in server/main.py.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>_load_run_server()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>repo()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><code>liveness_check()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
   <td>No direct outbound edge</td>
-  <td>_load_run_server() node in tests/orchestrator_mcp_test.py.</td>
+  <td>liveness_check() node in server/main.py.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>repo()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
+  <td><code>metrics()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>_load_run_server()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>repo() node in tests/orchestrator_mcp_test.py.</td>
+  <td><code>metrics_text()</code><br><small style="color:var(--muted)">server/core/observability.py</small></td>
+  <td>metrics() node in server/main.py.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>.test_mark_blocked_preserves_ownership()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestBlockedUnblock</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>observe_http_requests()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>log_request()</code><br><small style="color:var(--muted)">server/core/observability.py</small><br><code>record_request()</code><br><small style="color:var(--muted)">server/core/observability.py</small><br><code>request_id()</code><br><small style="color:var(--muted)">server/core/observability.py</small></td>
+  <td>observe_http_requests() node in server/main.py.</td>
 </tr>
 <tr>
   <td>15</td>
-  <td><code>.test_only_owner_can_unblock()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestBlockedUnblock</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>readiness_check()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>readiness_check() node in server/main.py.</td>
 </tr>
 <tr>
   <td>16</td>
-  <td><code>.test_unblock_non_blocked_task_raises()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestBlockedUnblock</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>run_supervisor_loop()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>lifespan()</code><br><small style="color:var(--muted)">server/main.py</small></td>
+  <td><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small><br><code>run_supervisor_cycle()</code><br><small style="color:var(--muted)">server/core/supervisor.py</small></td>
+  <td>run_supervisor_loop() node in server/main.py.</td>
 </tr>
 <tr>
   <td>17</td>
-  <td><code>.test_double_claim_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestClaimRace</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>block_task()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>current claim token()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_mcp_task_lifecycle()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>_now_iso()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>_row_to_dict()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>block_task() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>18</td>
-  <td><code>.test_non_owner_cannot_release()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestClaimRace</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>claim_task()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>current claim token()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_mcp_task_lifecycle()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>_row_to_dict()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>claim_task() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>19</td>
-  <td><code>.test_release_then_reclaim_succeeds()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestClaimRace</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>create_task()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>and qa review()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>current claim token()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_mcp_task_lifecycle()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br>+1 more</td>
+  <td><code>_now_iso()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>_row_to_dict()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>create_task() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>20</td>
-  <td><code>.test_clean_merge()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestCodeTaskLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>get_job()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>_row_to_dict()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>get_job() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>21</td>
-  <td><code>.test_conflict_aborts_cleanly()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestCodeTaskLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>get_job_metrics()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>and qa review()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>_row_to_dict()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>get_job_metrics() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>22</td>
-  <td><code>.test_archive_memory()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestContextBundleAndArchiving</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>get_system_health()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>health and fleet()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>get_system_health() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>.test_get_context_bundle()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestContextBundleAndArchiving</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>get_task()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>current claim token()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_mcp_task_lifecycle()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>_row_to_dict()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>get_task() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>.test_code_task_requires_branch_name_on_claim()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestInputValidation</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>get_worker()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>_row_to_dict()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>get_worker() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>.test_invalid_account_name_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestInputValidation</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>list_jobs()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>and qa review()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>_row_to_dict()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>list_jobs() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>.test_invalid_task_id_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestInputValidation</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>list_tasks()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>_row_to_dict()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>list_tasks() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>.test_unknown_parent_id_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestInputValidation</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>list_workers()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>health and fleet()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>_row_to_dict()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>list_workers() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>.test_create_and_list_jobs()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestJobProductionLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><code>_now_iso()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>block_task()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>create_task()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>push_memory()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br>+7 more</td>
   <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td>_now_iso() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>.test_submit_qa_review_lifecycle()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestJobProductionLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>push_memory()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>memory and context()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>_now_iso()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>push_memory() node in server/mcp_remote.py.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>.test_independent_files_per_account()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td><code>TestLiveStatus</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>read_team_context()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>memory and context()</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small><br><code>test_remote_mcp.py</code><br><small style="color:var(--muted)">tests/test_remote_mcp.py</small></td>
+  <td><code>_now_iso()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>_row_to_dict()</code><br><small style="color:var(--muted)">server/mcp_remote.py</small><br><code>get_db_conn()</code><br><small style="color:var(--muted)">server/core/database.py</small></td>
+  <td>read_team_context() node in server/mcp_remote.py.</td>
 </tr>
 </table>
 
@@ -2663,16 +2667,16 @@ flowchart LR
       <tr><td><code>tests/orchestrator_mcp_test.py</code></td><td>46 nodes</td></tr>
 <tr><td><code>server/mcp_remote.py</code></td><td>26 nodes</td></tr>
 <tr><td><code>tests/test_claude_cdp_adapter.py</code></td><td>14 nodes</td></tr>
-<tr><td><code>tests/test_e2e_pipeline.py</code></td><td>10 nodes</td></tr>
-<tr><td><code>tests/test_remote_mcp.py</code></td><td>9 nodes</td></tr>
+<tr><td><code>tests/test_e2e_pipeline.py</code></td><td>11 nodes</td></tr>
+<tr><td><code>tests/test_remote_mcp.py</code></td><td>10 nodes</td></tr>
+<tr><td><code>server/main.py</code></td><td>9 nodes</td></tr>
 <tr><td><code>client/adapters/claude_desktop_cdp.py</code></td><td>5 nodes</td></tr>
 <tr><td><code>client/adapters/groq_adapter.py</code></td><td>5 nodes</td></tr>
-<tr><td><code>server/core/database.py</code></td><td>5 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: calls x96, contains x87, references x86, imports x39. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x114, contains x100, references x93, imports x47. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -3705,18 +3709,20 @@ flowchart LR
 
 <!-- ====== 13. launch_user_n.ps1 ====== -->
 <h2 id="launch-user-n-ps1">13. launch_user_n.ps1</h2>
-<p>launch_user_n.ps1 groups implementation around launch, user, nps1, get, mostly in launch_user_n.ps1. This section covers 35 nodes and 62 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>launch_user_n.ps1 groups implementation around launch, user, nps1, get, mostly in launch_user_n.ps1. This section covers 36 nodes and 66 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: launch_user_n.ps1 (35 nodes, 62 edges)
+    %% Section: launch_user_n.ps1 (36 nodes, 66 edges)
     launch_user_n_invoke_profilelaunch_afc9fe87("Invoke-ProfileLaunch()<br/><small>launch_user_n.ps1</small>")
     launch_user_n_set_claudewindowslayout_18f7c4c1("Set-ClaudeWindowsLayout()<br/><small>launch_user_n.ps1</small>")
-    launch_user_n_show_profiletable_4411d6a3("Show-ProfileTable()<br/><small>launch_user_n.ps1</small>")
     launch_user_n_resolve_singleaccount_1c0aa699("Resolve-SingleAccount()<br/><small>launch_user_n.ps1</small>")
+    launch_user_n_show_profiletable_4411d6a3("Show-ProfileTable()<br/><small>launch_user_n.ps1</small>")
     launch_user_n_select_profileinteractive_45bf0f53("Select-ProfileInteractive()<br/><small>launch_user_n.ps1</small>")
     launch_user_n_sync_teammcpconfig_3d1eeeea("Sync-TeamMcpConfig()<br/><small>launch_user_n.ps1</small>")
+    launch_user_n_add_newprofile_13111096("Add-NewProfile()<br/><small>launch_user_n.ps1</small>")
+    launch_user_n_wait_windowcloseprompt_51c41ce6("Wait-WindowClosePrompt()<br/><small>launch_user_n.ps1</small>")
     launch_user_n_ensure_fleetvirtualdesktop_f13c2cdd("Ensure-FleetVirtualDesktop()<br/><small>launch_user_n.ps1</small>")
     launch_user_n_initialize_virtualdesktoptool_f6eba102("Initialize-VirtualDesktopTool()<br/><small>launch_user_n.ps1</small>")
     launch_user_n_export_activefleetstate_e90d3155("Export-ActiveFleetState()<br/><small>launch_user_n.ps1</small>")
@@ -3727,28 +3733,31 @@ flowchart LR
     launch_user_n_get_validatedprofilepath_7a9d1cc7("Get-ValidatedProfilePath()<br/><small>launch_user_n.ps1</small>")
     launch_user_n_test_profilepathwithinbase_a011ab88("Test-ProfilePathWithinBase()<br/><small>launch_user_n.ps1</small>")
     launch_user_n_get_concurrentclaudeinstances_b0e1dac7("Get-ConcurrentClaudeInstances()<br/><small>launch_user_n.ps1</small>")
-    launch_user_n_close_allclaudeinstances_2ebdd5d8("Close-AllClaudeInstances()<br/><small>launch_user_n.ps1</small>")
-    launch_user_n_start_localorchestratorserver_e68c306c("Start-LocalOrchestratorServer()<br/><small>launch_user_n.ps1</small>")
+    launch_user_n_add_newprofile_13111096 -->|calls| launch_user_n_wait_windowcloseprompt_51c41ce6
     launch_user_n_ensure_fleetvirtualdesktop_f13c2cdd -->|calls| launch_user_n_initialize_virtualdesktoptool_f6eba102
     launch_user_n_export_activefleetstate_e90d3155 -->|calls| launch_user_n_write_jsonconfigsafely_b62571a0
     launch_user_n_format_visibleright_acc432f1 -->|calls| launch_user_n_get_visibletextwidth_c40f7f2e
     launch_user_n_format_visibletext_3156d16e -->|calls| launch_user_n_get_visibletextwidth_c40f7f2e
     launch_user_n_get_validatedprofilepath_7a9d1cc7 -->|calls| launch_user_n_test_profilepathwithinbase_a011ab88
+    launch_user_n_get_validatedprofilepath_7a9d1cc7 -->|calls| launch_user_n_wait_windowcloseprompt_51c41ce6
     launch_user_n_invoke_profilelaunch_afc9fe87 -->|calls| launch_user_n_get_validatedprofilepath_7a9d1cc7
     launch_user_n_invoke_profilelaunch_afc9fe87 -->|calls| launch_user_n_get_concurrentclaudeinstances_b0e1dac7
-    launch_user_n_invoke_profilelaunch_afc9fe87 -->|calls| launch_user_n_close_allclaudeinstances_2ebdd5d8
-    launch_user_n_invoke_profilelaunch_afc9fe87 -->|calls| launch_user_n_start_localorchestratorserver_e68c306c
     launch_user_n_invoke_profilelaunch_afc9fe87 -->|calls| launch_user_n_sync_teammcpconfig_3d1eeeea
     launch_user_n_resolve_singleaccount_1c0aa699 -->|calls| launch_user_n_show_profiletable_4411d6a3
+    launch_user_n_resolve_singleaccount_1c0aa699 -->|calls| launch_user_n_add_newprofile_13111096
+    launch_user_n_resolve_singleaccount_1c0aa699 -->|calls| launch_user_n_wait_windowcloseprompt_51c41ce6
+    launch_user_n_select_profileinteractive_45bf0f53 -->|calls| launch_user_n_add_newprofile_13111096
     launch_user_n_set_claudewindowslayout_18f7c4c1 -->|calls| launch_user_n_initialize_virtualdesktoptool_f6eba102
     launch_user_n_sync_teammcpconfig_3d1eeeea -->|calls| launch_user_n_write_jsonconfigsafely_b62571a0
-    %% Omitted for readability: 17 nodes, 0 edges
+    %% Omitted for readability: 18 nodes, 0 edges
     class launch_user_n_invoke_profilelaunch_afc9fe87 function;
     class launch_user_n_set_claudewindowslayout_18f7c4c1 function;
-    class launch_user_n_show_profiletable_4411d6a3 function;
     class launch_user_n_resolve_singleaccount_1c0aa699 function;
+    class launch_user_n_show_profiletable_4411d6a3 function;
     class launch_user_n_select_profileinteractive_45bf0f53 function;
     class launch_user_n_sync_teammcpconfig_3d1eeeea function;
+    class launch_user_n_add_newprofile_13111096 function;
+    class launch_user_n_wait_windowcloseprompt_51c41ce6 function;
     class launch_user_n_ensure_fleetvirtualdesktop_f13c2cdd function;
     class launch_user_n_initialize_virtualdesktoptool_f6eba102 function;
     class launch_user_n_export_activefleetstate_e90d3155 function;
@@ -3759,8 +3768,6 @@ flowchart LR
     class launch_user_n_get_validatedprofilepath_7a9d1cc7 function;
     class launch_user_n_test_profilepathwithinbase_a011ab88 function;
     class launch_user_n_get_concurrentclaudeinstances_b0e1dac7 function;
-    class launch_user_n_close_allclaudeinstances_2ebdd5d8 function;
-    class launch_user_n_start_localorchestratorserver_e68c306c function;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -3795,7 +3802,7 @@ flowchart LR
   <td><code>Add-NewProfile()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>Resolve-SingleAccount()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small><br><code>Select-ProfileInteractive()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small></td>
-  <td>No direct outbound edge</td>
+  <td><code>Wait-WindowClosePrompt()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small></td>
   <td>Add-NewProfile() node in launch_user_n.ps1.</td>
 </tr>
 <tr>
@@ -3883,7 +3890,7 @@ flowchart LR
   <td><code>Get-ValidatedProfilePath()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>Invoke-ProfileLaunch()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small></td>
-  <td><code>Test-ProfilePathWithinBase()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small></td>
+  <td><code>Test-ProfilePathWithinBase()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small><br><code>Wait-WindowClosePrompt()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small></td>
   <td>Get-ValidatedProfilePath() node in launch_user_n.ps1.</td>
 </tr>
 <tr>
@@ -3971,7 +3978,7 @@ flowchart LR
   <td><code>Resolve-SingleAccount()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td>External entry / no inbound edge</td>
-  <td><code>Add-NewProfile()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small><br><code>Show-ProfileTable()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small></td>
+  <td><code>Add-NewProfile()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small><br><code>Show-ProfileTable()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small><br><code>Wait-WindowClosePrompt()</code><br><small style="color:var(--muted)">launch_user_n.ps1</small></td>
   <td>Resolve-SingleAccount() node in launch_user_n.ps1.</td>
 </tr>
 <tr>
@@ -4029,12 +4036,12 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>launch_user_n.ps1</code></td><td>35 nodes</td></tr>
+      <tr><td><code>launch_user_n.ps1</code></td><td>36 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x34, calls x28. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x35, calls x31. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -4684,12 +4691,12 @@ flowchart LR
 
 <!-- ====== 16. Other ====== -->
 <h2 id="other">16. Other</h2>
-<p>Other groups implementation around virtualdesktop11, 24h2cs, tools, server, mostly in tools/VirtualDesktop11-24H2.cs, server/models/schemas.py, team-memory.md. This section covers 201 nodes and 218 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Other groups implementation around virtualdesktop11, 24h2cs, tools, server, mostly in tools/VirtualDesktop11-24H2.cs, server/models/schemas.py, team-memory.md. This section covers 204 nodes and 220 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Other (201 nodes, 218 edges)
+    %% Section: Other (204 nodes, 220 edges)
     subgraph other_tools_VirtualDesktop11_24H2_cs_79ec2928["tools/VirtualDesktop11-24H2.cs"]
         tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61("IApplicationViewCollection<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
         tools_virtualdesktop11_24h2_virtualdesktop_ivirt_062d7295("IVirtualDesktopPinnedApps<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
@@ -4720,7 +4727,7 @@ flowchart LR
     tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iappl_cfa8a5c3
     tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iappl_3e080985
     tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iappl_370d188d
-    %% Omitted for readability: 183 nodes, 0 edges
+    %% Omitted for readability: 186 nodes, 0 edges
     class tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 klass;
     class tools_virtualdesktop11_24h2_virtualdesktop_ivirt_062d7295 klass;
     class tools_virtualdesktop11_24h2_virtualdesktop_iserv_d4f97091 klass;
@@ -5019,7 +5026,7 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x75, references x41, calls x34, method x22. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x75, references x42, calls x34, method x22. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -5092,17 +5099,17 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>1199</td></tr>
-      <tr><td>Edges</td><td>2203</td></tr>
+      <tr><td>Nodes</td><td>1205</td></tr>
+      <tr><td>Edges</td><td>2224</td></tr>
       <tr><td>Hyperedges</td><td>6</td></tr>
-      <tr><td>Communities</td><td>119</td></tr>
+      <tr><td>Communities</td><td>113</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>2130</td></tr>
+      <tr><td>EXTRACTED</td><td>2151</td></tr>
       <tr><td>INFERRED</td><td>73</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
@@ -5111,7 +5118,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>Claude-Desktop — Architecture Documentation</p>
-  <p>Generated: 2026-09-15 17:18 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-09-16 10:28 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->
