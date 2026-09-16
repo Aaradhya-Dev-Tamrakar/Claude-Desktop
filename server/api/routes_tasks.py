@@ -213,12 +213,9 @@ async def renew_task_lease(task_id: str, req: TaskLeaseRenewRequest, db: aiosqli
     query = """
         UPDATE tasks 
         SET lease_expires_at = ?, updated_at = ?
-        WHERE id = ? AND status = 'claimed' AND owner_worker_id = ?
+        WHERE id = ? AND status = 'claimed' AND owner_worker_id = ? AND claim_token = ?
     """
-    params = [lease_exp_iso, now_iso, task_id, req.worker_id]
-    if req.claim_token:
-        query += " AND claim_token = ?"
-        params.append(req.claim_token)
+    params = [lease_exp_iso, now_iso, task_id, req.worker_id, req.claim_token]
 
     cursor = await db.execute(query, tuple(params))
     if cursor.rowcount == 0:
@@ -245,6 +242,8 @@ async def release_task(task_id: str, req: TaskReleaseRequest, db: aiosqlite.Conn
     
     if task["owner_worker_id"] != req.worker_id:
         raise HTTPException(status_code=403, detail=f"Task is owned by '{task['owner_worker_id']}', not '{req.worker_id}'")
+    if task["claim_token"] != req.claim_token:
+        raise HTTPException(status_code=403, detail=f"Invalid or expired claim token for task '{task_id}'")
 
     await db.execute(
         """
@@ -272,6 +271,8 @@ async def block_task(task_id: str, req: TaskBlockRequest, db: aiosqlite.Connecti
         raise HTTPException(status_code=404, detail=f"Task '{task_id}' not found")
     if task["owner_worker_id"] != req.worker_id:
         raise HTTPException(status_code=403, detail=f"Task is owned by '{task['owner_worker_id']}', not '{req.worker_id}'")
+    if task["claim_token"] != req.claim_token:
+        raise HTTPException(status_code=403, detail=f"Invalid or expired claim token for task '{task_id}'")
 
     await db.execute(
         "UPDATE tasks SET status = 'blocked', blocked_reason = ?, updated_at = ? WHERE id = ?",
@@ -302,6 +303,8 @@ async def submit_checkpoint(task_id: str, cp: CheckpointSubmit, db: aiosqlite.Co
         raise HTTPException(status_code=409, detail=f"Task '{task_id}' is already completed")
     if task["owner_worker_id"] != cp.submitted_by:
         raise HTTPException(status_code=403, detail=f"Task is owned by '{task['owner_worker_id']}', not '{cp.submitted_by}'")
+    if task["claim_token"] != cp.claim_token:
+        raise HTTPException(status_code=403, detail=f"Invalid or expired claim token for task '{task_id}'")
 
     # Insert or replace checkpoint
     await db.execute(

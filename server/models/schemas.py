@@ -79,15 +79,16 @@ class TaskClaimResponse(BaseModel):
 
 class TaskLeaseRenewRequest(BaseModel):
     worker_id: str
-    claim_token: str | None = None
+    claim_token: str
     lease_seconds: int = 300
 
 class TaskReleaseRequest(BaseModel):
     worker_id: str
-    claim_token: str | None = None
+    claim_token: str
 
 class TaskBlockRequest(BaseModel):
     worker_id: str
+    claim_token: str
     reason: str
 
 
@@ -131,7 +132,7 @@ class CheckpointSubmit(BaseModel):
     branch_name: str | None = None
     commit_sha: str | None = None
     submitted_by: str
-    claim_token: str | None = None
+    claim_token: str
 
 
 class CheckpointResponse(BaseModel):
