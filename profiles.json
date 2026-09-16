@@ -6,9 +6,9 @@
     "thinking_budget": 8000,
     "cdp_port": 9222,
     "path": "%USERPROFILE%\\.claude-profiles\\user1",
+    "first_login_time": "2026-09-16 15:26:59",
     "last_login_date": "2026-09-16",
-    "last_login_time": "15:26:59",
-    "first_login_time": "2026-09-16 15:26:59"
+    "last_login_time": "16:01:00"
   },
   "user2": {
     "nickname": "dev83",
