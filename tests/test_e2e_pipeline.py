@@ -264,3 +264,77 @@ async def test_lease_renewal_heartbeat():
         assert renew.status_code == 200
         new_exp = renew.json()["lease_expires_at"]
         assert new_exp > orig_exp
+
+async def test_stale_claim_token_cannot_mutate_reclaimed_task():
+    """A worker that lost an expired lease cannot release or complete its replacement claim."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://testserver/api/v1") as client:
+        for worker_id in ("old_worker", "new_worker"):
+            await client.post("/workers/register", json={
+                "id": worker_id, "provider": "gemini_free", "node_id": worker_id,
+                "nickname": worker_id, "capabilities": ["writing"],
+            })
+        await client.post("/tasks", json={
+            "id": "task_stale_token", "stage": "draft", "stage_order": 1,
+            "kind": "text", "spec": "stale token test",
+        })
+        first = await client.post("/tasks/task_stale_token/claim", json={
+            "worker_id": "old_worker", "lease_seconds": 60,
+        })
+        old_token = first.json()["claim_token"]
+        async with aiosqlite.connect(str(settings.DATABASE_PATH)) as db:
+            await db.execute(
+                "UPDATE tasks SET lease_expires_at = '2020-01-01T00:00:00Z' "
+                "WHERE id = 'task_stale_token'"
+            )
+            await db.commit()
+
+        second = await client.post("/tasks/task_stale_token/claim", json={
+            "worker_id": "new_worker", "lease_seconds": 60,
+        })
+        new_token = second.json()["claim_token"]
+        assert new_token != old_token
+
+        release = await client.post("/tasks/task_stale_token/release", json={
+            "worker_id": "old_worker", "claim_token": old_token,
+        })
+        assert release.status_code == 403
+        checkpoint = await client.post("/tasks/task_stale_token/checkpoint", json={
+            "task_id": "task_stale_token", "kind": "text", "summary": "late",
+            "result_text": "late result", "submitted_by": "old_worker",
+            "claim_token": old_token,
+        })
+        assert checkpoint.status_code == 403
+        current = await client.get("/tasks/task_stale_token")
+        assert current.json()["owner_worker_id"] == "new_worker"
+
+async def test_checkpoint_replay_is_idempotent_but_other_worker_is_rejected():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://testserver/api/v1") as client:
+        await client.post("/workers/register", json={
+            "id": "checkpoint_worker", "provider": "gemini_free", "node_id": "node",
+            "nickname": "checkpoint", "capabilities": ["writing"],
+        })
+        await client.post("/workers/register", json={
+            "id": "other_worker", "provider": "gemini_free", "node_id": "node2",
+            "nickname": "other", "capabilities": ["writing"],
+        })
+        await client.post("/tasks", json={
+            "id": "task_checkpoint_replay", "stage": "draft", "stage_order": 1,
+            "kind": "text", "spec": "replay test",
+        })
+        claim = await client.post("/tasks/task_checkpoint_replay/claim", json={
+            "worker_id": "checkpoint_worker", "lease_seconds": 60,
+        })
+        payload = {
+            "task_id": "task_checkpoint_replay", "kind": "text",
+            "summary": "done", "result_text": "result",
+            "submitted_by": "checkpoint_worker",
+            "claim_token": claim.json()["claim_token"],
+        }
+        first = await client.post("/tasks/task_checkpoint_replay/checkpoint", json=payload)
+        replay = await client.post("/tasks/task_checkpoint_replay/checkpoint", json=payload)
+        assert first.status_code == replay.status_code == 201
+        assert replay.json()["result_text"] == first.json()["result_text"]
+        payload["submitted_by"] = "other_worker"
+        assert (await client.post("/tasks/task_checkpoint_replay/checkpoint", json=payload)).status_code == 409
