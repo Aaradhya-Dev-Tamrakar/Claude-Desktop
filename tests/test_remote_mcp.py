@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import inspect
 import pytest
 import pytest_asyncio
 import aiosqlite
@@ -50,7 +51,7 @@ async def test_mcp_task_lifecycle():
     assert renew["success"] is True
 
     # 5. Block & Unblock
-    b = await block_task(task_id=task_id, worker_id="worker_alpha", reason="Waiting for API access")
+    b = await block_task(task_id=task_id, worker_id="worker_alpha", claim_token=claim["claim_token"], reason="Waiting for API access")
     assert b["success"] is True
     assert b["task"]["status"] == "blocked"
 
@@ -59,14 +60,61 @@ async def test_mcp_task_lifecycle():
     assert ub["task"]["status"] == "pending"
 
     # Re-claim and submit checkpoint
-    await claim_task(task_id=task_id, worker_id="worker_alpha", lease_seconds=120)
-    cp = await submit_checkpoint(task_id=task_id, submitted_by="worker_alpha", summary="Completed research", result_text="Latency is 12ms")
+    reclaimed = await claim_task(task_id=task_id, worker_id="worker_alpha", lease_seconds=120)
+    cp = await submit_checkpoint(
+        task_id=task_id,
+        submitted_by="worker_alpha",
+        summary="Completed research",
+        claim_token=reclaimed["claim_token"],
+        result_text="Latency is 12ms",
+    )
     assert cp["success"] is True
     assert cp["checkpoint"]["summary"] == "Completed research"
 
     # Verify task state
     fetched = await get_task(task_id=task_id)
     assert fetched["status"] == "done"
+
+
+@pytest.mark.asyncio
+async def test_mcp_mutations_require_current_claim_token():
+    await register_worker(worker_id="token_owner", nickname="Owner", capabilities=["research"])
+    await register_worker(worker_id="other_worker", nickname="Other", capabilities=["research"])
+    task = await create_task(spec="Token security", stage="research", kind="text")
+    first_claim = await claim_task(task_id=task["id"], worker_id="token_owner")
+    token = first_claim["claim_token"]
+
+    # Every claim-bound mutation rejects both a wrong token and a wrong worker.
+    assert "error" in await renew_task_lease(task["id"], "token_owner", "wrong-token")
+    assert "error" in await renew_task_lease(task["id"], "other_worker", token)
+    assert "error" in await release_task(task["id"], "token_owner", "wrong-token")
+    assert "error" in await release_task(task["id"], "other_worker", token)
+    assert "error" in await block_task(task["id"], "token_owner", "wrong-token", "blocked")
+    assert "error" in await block_task(task["id"], "other_worker", token, "blocked")
+    assert "error" in await submit_checkpoint(
+        task["id"], "token_owner", "done", "wrong-token", result_text="result"
+    )
+    assert "error" in await submit_checkpoint(
+        task["id"], "other_worker", "done", token, result_text="result"
+    )
+
+    # Tokens are required at the Python/MCP function boundary, not only by SQL.
+    with pytest.raises(TypeError):
+        await release_task(task["id"], "token_owner")
+    with pytest.raises(TypeError):
+        await block_task(task["id"], "token_owner", "blocked")
+    with pytest.raises(TypeError):
+        await submit_checkpoint(task["id"], "token_owner", "done")
+    for name in ("renew_task_lease", "release_task", "block_task", "submit_checkpoint"):
+        assert inspect.signature(globals()[name]).parameters["claim_token"].default is inspect.Parameter.empty
+
+    # Releasing rotates the lifecycle: the old token cannot mutate the re-claim.
+    released = await release_task(task["id"], "token_owner", token)
+    assert released["success"] is True
+    second_claim = await claim_task(task_id=task["id"], worker_id="token_owner")
+    assert second_claim["claim_token"] != token
+    assert "error" in await release_task(task["id"], "token_owner", token)
+    assert (await get_task(task["id"]))["status"] == "claimed"
 
 @pytest.mark.asyncio
 async def test_mcp_memory_and_context():

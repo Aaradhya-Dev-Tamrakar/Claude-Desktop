@@ -166,13 +166,27 @@ def claim_task(task_id: str, worker_id: str, lease_seconds: int = 300, branch_na
 
 
 @srv.tool(
+    name="renew_task_lease",
+    description="Renew a claimed task lease using its current claim token.",
+)
+def renew_task_lease(task_id: str, worker_id: str, claim_token: str, lease_seconds: int = 300) -> dict[str, Any]:
+    return _request_json(
+        "POST",
+        f"/tasks/{task_id}/renew-lease",
+        json_body={
+            "worker_id": worker_id,
+            "claim_token": claim_token,
+            "lease_seconds": lease_seconds,
+        },
+    )
+
+
+@srv.tool(
     name="release_task",
     description="Release a task back to the pending queue.",
 )
-def release_task(task_id: str, worker_id: str, claim_token: str | None = None) -> dict[str, Any]:
-    payload = {"worker_id": worker_id}
-    if claim_token is not None:
-        payload["claim_token"] = claim_token
+def release_task(task_id: str, worker_id: str, claim_token: str) -> dict[str, Any]:
+    payload = {"worker_id": worker_id, "claim_token": claim_token}
     return _request_json("POST", f"/tasks/{task_id}/release", json_body=payload)
 
 
@@ -180,8 +194,12 @@ def release_task(task_id: str, worker_id: str, claim_token: str | None = None) -
     name="block_task",
     description="Mark a task as blocked with a reason.",
 )
-def block_task(task_id: str, worker_id: str, reason: str) -> dict[str, Any]:
-    return _request_json("POST", f"/tasks/{task_id}/block", json_body={"worker_id": worker_id, "reason": reason})
+def block_task(task_id: str, worker_id: str, claim_token: str, reason: str) -> dict[str, Any]:
+    return _request_json(
+        "POST",
+        f"/tasks/{task_id}/block",
+        json_body={"worker_id": worker_id, "claim_token": claim_token, "reason": reason},
+    )
 
 
 @srv.tool(
@@ -208,18 +226,19 @@ def submit_task_checkpoint(
     task_id: str,
     submitted_by: str,
     summary: str,
+    claim_token: str,
     result_text: str | None = None,
     job_id: str | None = None,
     kind: str = "text",
     branch_name: str | None = None,
     commit_sha: str | None = None,
-    claim_token: str | None = None,
 ) -> dict[str, Any]:
     payload = {
         "task_id": task_id,
         "submitted_by": submitted_by,
         "summary": summary,
         "kind": kind,
+        "claim_token": claim_token,
     }
     if result_text is not None:
         payload["result_text"] = result_text
@@ -229,9 +248,6 @@ def submit_task_checkpoint(
         payload["branch_name"] = branch_name
     if commit_sha is not None:
         payload["commit_sha"] = commit_sha
-    if claim_token is not None:
-        payload["claim_token"] = claim_token
-
     return _request_json("POST", f"/tasks/{task_id}/checkpoint", json_body=payload)
 
 

@@ -186,7 +186,7 @@ async def claim_task(
 async def renew_task_lease(
     task_id: str,
     worker_id: str,
-    claim_token: str | None = None,
+    claim_token: str,
     lease_seconds: int = 300,
 ) -> dict[str, Any]:
     db = await get_db_conn()
@@ -196,13 +196,13 @@ async def renew_task_lease(
         lease_sec = max(10, min(lease_seconds, 3600))
         lease_exp_iso = (now + timedelta(seconds=lease_sec)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-        query = "UPDATE tasks SET lease_expires_at = ?, updated_at = ? WHERE id = ? AND status = 'claimed' AND owner_worker_id = ?"
-        params = [lease_exp_iso, now_iso, task_id, worker_id]
-        if claim_token:
-            query += " AND claim_token = ?"
-            params.append(claim_token)
-
-        cursor = await db.execute(query, tuple(params))
+        cursor = await db.execute(
+            """
+            UPDATE tasks SET lease_expires_at = ?, updated_at = ?
+            WHERE id = ? AND status = 'claimed' AND owner_worker_id = ? AND claim_token = ?
+            """,
+            (lease_exp_iso, now_iso, task_id, worker_id, claim_token),
+        )
         if cursor.rowcount == 0:
             return {"error": f"Cannot renew lease for '{task_id}': invalid owner or claim token"}
 
@@ -226,7 +226,7 @@ async def renew_task_lease(
 async def release_task(
     task_id: str,
     worker_id: str,
-    claim_token: str | None = None,
+    claim_token: str,
 ) -> dict[str, Any]:
     db = await get_db_conn()
     try:
@@ -237,6 +237,8 @@ async def release_task(
             return {"error": f"Task '{task_id}' not found"}
         if task["owner_worker_id"] != worker_id:
             return {"error": f"Task owned by '{task['owner_worker_id']}', not '{worker_id}'"}
+        if task["claim_token"] != claim_token:
+            return {"error": f"Invalid or expired claim token for task '{task_id}'"}
 
         await db.execute(
             """
@@ -261,6 +263,7 @@ async def release_task(
 async def block_task(
     task_id: str,
     worker_id: str,
+    claim_token: str,
     reason: str,
 ) -> dict[str, Any]:
     db = await get_db_conn()
@@ -272,6 +275,8 @@ async def block_task(
             return {"error": f"Task '{task_id}' not found"}
         if task["owner_worker_id"] != worker_id:
             return {"error": f"Task owned by '{task['owner_worker_id']}', not '{worker_id}'"}
+        if task["claim_token"] != claim_token:
+            return {"error": f"Invalid or expired claim token for task '{task_id}'"}
 
         await db.execute(
             "UPDATE tasks SET status = 'blocked', blocked_reason = ?, updated_at = ? WHERE id = ?",
@@ -317,6 +322,7 @@ async def submit_checkpoint(
     task_id: str,
     submitted_by: str,
     summary: str,
+    claim_token: str,
     result_text: str | None = None,
     kind: str = "text",
     branch_name: str | None = None,
@@ -329,6 +335,10 @@ async def submit_checkpoint(
         task = await cursor.fetchone()
         if not task:
             return {"error": f"Task '{task_id}' not found"}
+        if task["owner_worker_id"] != submitted_by:
+            return {"error": f"Task owned by '{task['owner_worker_id']}', not '{submitted_by}'"}
+        if task["claim_token"] != claim_token:
+            return {"error": f"Invalid or expired claim token for task '{task_id}'"}
 
         # Ensure worker exists to satisfy foreign key constraint
         await db.execute(
