@@ -15,6 +15,7 @@ param(
     [int]$BaseCdpPort = 9222,
     [ValidateSet("Grid", "Focus")]
     [string]$Layout = "Focus",
+    [string]$FleetFile = "",
     [switch]$WhatIf
 )
 
@@ -26,6 +27,26 @@ Write-Host "  Profiles: $($Users -join ', ')" -ForegroundColor Gray
 Write-Host "  Dedicated Virtual Desktop: Active (Leaves primary desktop clean)" -ForegroundColor Gray
 Write-Host "============================================================" -ForegroundColor Cyan
 
+$targetUsers = $Users
+if ($FleetFile -and (Test-Path $FleetFile)) {
+    try {
+        $fleetRaw = Get-Content -Raw $FleetFile | ConvertFrom-Json
+        $cdpUsers = @()
+        foreach ($entry in $fleetRaw) {
+            $provider = if ($entry.Provider) { $entry.Provider } else { "claude_desktop_cdp" }
+            if ($provider -eq "claude_desktop_cdp" -and $entry.Account) {
+                $cdpUsers += $entry.Account
+            }
+        }
+        if ($cdpUsers.Count -gt 0) {
+            $targetUsers = $cdpUsers
+        }
+        Write-Host "  Loaded Fleet Topology from $FleetFile (CDP workers: $($cdpUsers.Count), Total: $($fleetRaw.Count))" -ForegroundColor Cyan
+    } catch {
+        Write-Warning "Failed to parse FleetFile '$FleetFile': $_. Falling back to default users."
+    }
+}
+
 # 1. Ensure permission gates are bypassed so tool execution does not block on modal prompts
 Write-Host "[1/3] Ensuring tool permission gates are bypassed..." -ForegroundColor Cyan
 & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "bypass-all-profiles.ps1") -WhatIf:$WhatIf
@@ -35,7 +56,7 @@ if ($LASTEXITCODE -ne 0) {
 
 # 2. Launch concurrent Claude Desktop instances on dedicated virtual desktop with unique CDP ports
 Write-Host "[2/3] Launching Claude Desktop multi-instances on dedicated virtual desktop (Layout: $Layout)..." -ForegroundColor Cyan
-$usersArg = ($Users -join ',')
+$usersArg = ($targetUsers -join ',')
 & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "launch_user_n.ps1") `
     -Mode Concurrent -Users $usersArg -BaseCdpPort $BaseCdpPort -Layout $Layout -FleetDesktop -AutoWorkers -NoPrompt -WhatIf:$WhatIf
 if ($LASTEXITCODE -ne 0) {
