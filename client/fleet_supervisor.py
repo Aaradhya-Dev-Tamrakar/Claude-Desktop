@@ -12,6 +12,17 @@ import httpx
 from client.adapters.base_adapter import BaseWorkerAdapter
 from client.adapters.claude_desktop_cdp import ClaudeDesktopCDPAdapter
 from client.adapters.copilot_headless import CopilotHeadlessAdapter
+from client.adapters.winpilot_bridge import WinPilotBridge
+
+_SHARED_WINPILOT_BRIDGE: WinPilotBridge | None = None
+
+
+def get_winpilot_bridge() -> WinPilotBridge:
+    """Return shared WinPilotBridge singleton to coordinate physical desktop input."""
+    global _SHARED_WINPILOT_BRIDGE
+    if _SHARED_WINPILOT_BRIDGE is None:
+        _SHARED_WINPILOT_BRIDGE = WinPilotBridge()
+    return _SHARED_WINPILOT_BRIDGE
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 ORCHESTRATOR_URL = os.getenv("ORCHESTRATOR_URL", "http://127.0.0.1:8000/api/v1")
@@ -51,12 +62,17 @@ def create_adapter(inst: dict[str, Any]) -> BaseWorkerAdapter:
 
     if provider == "claude_desktop_cdp":
         cdp_port = int(inst.get("CdpPort", 9222))
+        use_winpilot = inst.get("UseWinPilot", True)
+        window_title = inst.get("WindowTitle", f"Claude - {nickname}" if nickname != worker_id else "Claude")
+        bridge = get_winpilot_bridge() if use_winpilot else None
         return ClaudeDesktopCDPAdapter(
             worker_id=worker_id,
             nickname=nickname,
             cdp_port=cdp_port,
             preferred_model=model,
             thinking_budget=budget,
+            winpilot_bridge=bridge,
+            window_title=window_title,
         )
 
     if provider == "copilot_headless":

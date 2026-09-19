@@ -159,4 +159,82 @@ async def test_cdp_wait_until_ready_timeout():
     with patch.object(adapter, "get_page_ws_url", return_value=None):
         ready = await adapter.wait_until_ready(timeout=0.1)
         assert ready is False
+@pytest.mark.asyncio
+async def test_cdp_execute_task_via_winpilot_bridge():
+    """Verify that when winpilot_bridge is present, batch_setup_and_inject is called."""
+    mock_bridge = AsyncMock()
+    mock_bridge.batch_setup_and_inject.return_value = {
+        "success": True,
+        "cooldown": False,
+        "worker_id": "user1",
+        "task_id": "task_wp_1",
+    }
 
+    adapter = ClaudeDesktopCDPAdapter(
+        worker_id="user1",
+        nickname="Claude Lead",
+        cdp_port=9222,
+        preferred_model="claude-3-7-sonnet",
+        thinking_budget=10000,
+        winpilot_bridge=mock_bridge,
+        window_title="Claude - Claude Lead",
+    )
+
+    mock_ws = AsyncMock()
+    with patch.object(adapter, "get_page_ws_url", return_value="ws://127.0.0.1:9222/page/1"), \
+         patch("websockets.connect") as mock_ws_connect, \
+         patch.object(adapter, "_send_cdp_command", return_value={"result": {}}), \
+         patch.object(adapter, "_check_cooldown_banner", return_value=False), \
+         patch.object(adapter, "_start_new_chat", return_value=None), \
+         patch.object(adapter, "_dismiss_overlays", return_value=None), \
+         patch.object(adapter, "_ensure_model_and_thinking", return_value=None), \
+         patch.object(adapter, "_wait_for_generation_complete", return_value={"success": True, "result_text": "Response via WinPilot injection"}):
+
+        mock_ws_connect.return_value.__aenter__.return_value = mock_ws
+
+        res = await adapter.execute_task("task_wp_1", "Write outline", "draft", {})
+        assert res["success"] is True
+        assert res["result_text"] == "Response via WinPilot injection"
+
+        mock_bridge.batch_setup_and_inject.assert_called_once()
+        call_kwargs = mock_bridge.batch_setup_and_inject.call_args[1]
+        assert call_kwargs["worker_id"] == "user1"
+        assert call_kwargs["task_id"] == "task_wp_1"
+        assert call_kwargs["target_window"] == "Claude - Claude Lead"
+        assert call_kwargs["model"] == "sonnet"
+        assert call_kwargs["effort"] == "high"
+        assert call_kwargs["toggle_thinking"] is True
+
+
+@pytest.mark.asyncio
+async def test_cdp_execute_task_winpilot_cooldown():
+    """Verify that if WinPilot detects cooldown, execute_task returns RATE_LIMIT_429."""
+    mock_bridge = AsyncMock()
+    mock_bridge.batch_setup_and_inject.return_value = {
+        "success": False,
+        "cooldown": True,
+        "reset_time": "18:00",
+    }
+
+    adapter = ClaudeDesktopCDPAdapter(
+        worker_id="user1",
+        nickname="Claude Lead",
+        cdp_port=9222,
+        winpilot_bridge=mock_bridge,
+    )
+
+    mock_ws = AsyncMock()
+    with patch.object(adapter, "get_page_ws_url", return_value="ws://127.0.0.1:9222/page/1"), \
+         patch("websockets.connect") as mock_ws_connect, \
+         patch.object(adapter, "_send_cdp_command", return_value={"result": {}}), \
+         patch.object(adapter, "_check_cooldown_banner", return_value=False), \
+         patch.object(adapter, "_start_new_chat", return_value=None), \
+         patch.object(adapter, "_dismiss_overlays", return_value=None), \
+         patch.object(adapter, "_ensure_model_and_thinking", return_value=None):
+
+        mock_ws_connect.return_value.__aenter__.return_value = mock_ws
+
+        res = await adapter.execute_task("task_wp_cd", "Write outline", "draft", {})
+        assert res["success"] is False
+        assert res["error"] == "RATE_LIMIT_429"
+        assert "18:00" in res["summary"]

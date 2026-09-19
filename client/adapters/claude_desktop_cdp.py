@@ -24,6 +24,8 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
         thinking_budget: int = 0,
         timeout: float = 180.0,
         poll_interval: float | None = None,
+        winpilot_bridge: Any | None = None,
+        window_title: str = "Claude",
     ):
         super().__init__(worker_id, nickname, ["writing", "research", "code", "qa", "seo", "formatting"])
         self.cdp_port = cdp_port
@@ -34,6 +36,8 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
         self.poll_interval = poll_interval if poll_interval is not None else max(
             0.5, float(os.getenv("CLAUDE_CDP_POLL_INTERVAL_SECONDS", "2"))
         )
+        self.winpilot_bridge = winpilot_bridge
+        self.window_title = window_title
         self._msg_id = 0
 
     @property
@@ -182,15 +186,59 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
                     f"Please generate the complete, high-quality production deliverable directly."
                 )
 
-                # 5. Inject prompt into editor and click send (XSS-safe textContent injection)
-                injected = await self._inject_prompt_and_send(ws, prompt)
-                if not injected:
-                    return {
-                        "success": False,
-                        "error": "Failed to inject prompt into Claude Desktop editor element",
-                        "summary": "",
-                        "result_text": ""
-                    }
+                # 5. Inject prompt: prefer WinPilotBridge for serial OS-level dispatch, fallback to CDP DOM
+                if self.winpilot_bridge is not None:
+                    # Model effort mapping from thinking budget
+                    effort_level = None
+                    toggle_thinking = False
+                    if self.thinking_budget > 0:
+                        toggle_thinking = True
+                        if self.thinking_budget <= 4000:
+                            effort_level = "low"
+                        elif self.thinking_budget <= 8000:
+                            effort_level = "medium"
+                        elif self.thinking_budget <= 16000:
+                            effort_level = "high"
+                        else:
+                            effort_level = "max"
+
+                    model_name = "haiku" if "haiku" in self.preferred_model.lower() else "sonnet"
+                    wp_res = await self.winpilot_bridge.batch_setup_and_inject(
+                        worker_id=self.worker_id,
+                        task_id=task_id,
+                        target_window=self.window_title,
+                        prompt=prompt,
+                        model=model_name,
+                        effort=effort_level,
+                        toggle_thinking=toggle_thinking,
+                    )
+                    if wp_res.get("cooldown"):
+                        return {
+                            "success": False,
+                            "error": "RATE_LIMIT_429",
+                            "summary": f"Detected cooldown via WinPilot until {wp_res.get('reset_time')}",
+                            "result_text": "",
+                        }
+                    if not wp_res.get("success"):
+                        # If WinPilot failed, fallback to CDP DOM injection
+                        injected = await self._inject_prompt_and_send(ws, prompt)
+                        if not injected:
+                            return {
+                                "success": False,
+                                "error": f"Failed prompt injection via both WinPilot ({wp_res.get('error')}) and CDP DOM",
+                                "summary": "",
+                                "result_text": "",
+                            }
+                else:
+                    # Pure CDP DOM injection path
+                    injected = await self._inject_prompt_and_send(ws, prompt)
+                    if not injected:
+                        return {
+                            "success": False,
+                            "error": "Failed to inject prompt into Claude Desktop editor element",
+                            "summary": "",
+                            "result_text": "",
+                        }
 
                 # 6. Wait for response generation to complete
                 generation_res = await self._wait_for_generation_complete(ws)
