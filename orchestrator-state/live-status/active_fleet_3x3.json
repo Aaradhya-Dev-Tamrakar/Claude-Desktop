@@ -1,0 +1,53 @@
+[
+  {
+    "Account": "user1",
+    "Nickname": "claude-lead",
+    "Role": "orchestrator",
+    "Provider": "claude_desktop_cdp",
+    "CdpPort": 9222,
+    "PreferredModel": "claude-3-7-sonnet",
+    "ThinkingBudget": 10000
+  },
+  {
+    "Account": "user2",
+    "Nickname": "claude-reviewer",
+    "Role": "qa_reviewer",
+    "Provider": "claude_desktop_cdp",
+    "CdpPort": 9223,
+    "PreferredModel": "claude-3-7-sonnet",
+    "ThinkingBudget": 5000
+  },
+  {
+    "Account": "user3",
+    "Nickname": "claude-writer",
+    "Role": "writer",
+    "Provider": "claude_desktop_cdp",
+    "CdpPort": 9224,
+    "PreferredModel": "claude-3-5-haiku",
+    "ThinkingBudget": 0
+  },
+  {
+    "Account": "copilot-1",
+    "Nickname": "copilot-researcher",
+    "Role": "researcher",
+    "Provider": "copilot_headless",
+    "EnvToken": "COPILOT_TOKEN_1",
+    "PreferredModel": "auto"
+  },
+  {
+    "Account": "copilot-2",
+    "Nickname": "copilot-formatter",
+    "Role": "formatter",
+    "Provider": "copilot_headless",
+    "EnvToken": "COPILOT_TOKEN_2",
+    "PreferredModel": "auto"
+  },
+  {
+    "Account": "copilot-3",
+    "Nickname": "copilot-overflow",
+    "Role": "overflow_worker",
+    "Provider": "copilot_headless",
+    "EnvToken": "COPILOT_TOKEN_3",
+    "PreferredModel": "auto"
+  }
+]

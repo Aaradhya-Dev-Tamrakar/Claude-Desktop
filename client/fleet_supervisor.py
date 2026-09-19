@@ -9,7 +9,9 @@ from pathlib import Path
 from typing import Any
 import httpx
 
+from client.adapters.base_adapter import BaseWorkerAdapter
 from client.adapters.claude_desktop_cdp import ClaudeDesktopCDPAdapter
+from client.adapters.copilot_headless import CopilotHeadlessAdapter
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 ORCHESTRATOR_URL = os.getenv("ORCHESTRATOR_URL", "http://127.0.0.1:8000/api/v1")
@@ -27,41 +29,85 @@ ROLE_CAPABILITIES: dict[str, list[str]] = {
     "overflow_worker": ["writing", "research", "formatting"],
 }
 
+# ── Provider-based adapter factory ──────────────────────────────────
+_PROVIDER_REGISTRY: dict[str, type] = {
+    "claude_desktop_cdp": ClaudeDesktopCDPAdapter,
+    "copilot_headless": CopilotHeadlessAdapter,
+}
+
+
+def create_adapter(inst: dict[str, Any]) -> BaseWorkerAdapter:
+    """Instantiate the correct adapter from a fleet-entry dict.
+
+    Supported providers:
+      - claude_desktop_cdp  → ClaudeDesktopCDPAdapter (CDP/WebSocket)
+      - copilot_headless    → CopilotHeadlessAdapter  (REST API, zero-GUI)
+    """
+    provider = inst.get("Provider", "claude_desktop_cdp")
+    worker_id = inst.get("Account", "unknown")
+    nickname = inst.get("Nickname", worker_id)
+    model = inst.get("PreferredModel", "claude-3-5-sonnet")
+    budget = int(inst.get("ThinkingBudget", 0))
+
+    if provider == "claude_desktop_cdp":
+        cdp_port = int(inst.get("CdpPort", 9222))
+        return ClaudeDesktopCDPAdapter(
+            worker_id=worker_id,
+            nickname=nickname,
+            cdp_port=cdp_port,
+            preferred_model=model,
+            thinking_budget=budget,
+        )
+
+    if provider == "copilot_headless":
+        env_token = inst.get("EnvToken", "GITHUB_TOKEN")
+        return CopilotHeadlessAdapter(
+            worker_id=worker_id,
+            nickname=nickname,
+            github_token=os.getenv(env_token, ""),
+            model=model,
+        )
+
+    raise ValueError(f"Unknown provider '{provider}' for worker '{worker_id}'")
+
+
+# ── Generic worker loop ─────────────────────────────────────────────
 async def run_worker_loop(
     worker_id: str,
     nickname: str,
     role: str,
-    cdp_port: int,
-    preferred_model: str,
-    thinking_budget: int,
+    provider: str,
+    adapter: BaseWorkerAdapter,
     client: httpx.AsyncClient,
     stop_event: asyncio.Event,
 ) -> None:
-    """Individual worker loop attached to a specific Claude Desktop CDP instance."""
+    """Worker loop that drives any BaseWorkerAdapter through the orchestrator task lifecycle."""
     capabilities = ROLE_CAPABILITIES.get(role, ["writing", "research", "code", "qa", "formatting"])
-    adapter = ClaudeDesktopCDPAdapter(
-        worker_id=worker_id,
-        nickname=nickname,
-        cdp_port=cdp_port,
-        preferred_model=preferred_model,
-        thinking_budget=thinking_budget,
-    )
 
-    print(f"[*] [{worker_id}] Probing Claude Desktop CDP readiness on port {cdp_port}...")
-    is_ready = await adapter.wait_until_ready(timeout=25.0)
-    if not is_ready:
-        print(f"[!] [{worker_id}] Warning: CDP port {cdp_port} did not report ready. Retrying in background...")
+    # Provider-specific readiness probe
+    if provider == "claude_desktop_cdp" and hasattr(adapter, "wait_until_ready"):
+        cdp_port = getattr(adapter, "cdp_port", "?")
+        print(f"[*] [{worker_id}] Probing Claude Desktop CDP readiness on port {cdp_port}...")
+        is_ready = await adapter.wait_until_ready(timeout=25.0)
+        if not is_ready:
+            print(f"[!] [{worker_id}] Warning: CDP port {cdp_port} did not report ready. Retrying in background...")
+        else:
+            print(f"[+] [{worker_id}] CDP on port {cdp_port} is READY.")
+    elif provider == "copilot_headless":
+        health = await adapter.check_health()
+        tag = "READY" if health.get("ok") else "DEGRADED"
+        print(f"[+] [{worker_id}] Copilot Headless adapter {tag}.")
     else:
-        print(f"[+] [{worker_id}] CDP on port {cdp_port} is READY (Model: {preferred_model}).")
+        print(f"[*] [{worker_id}] Provider '{provider}' — skipping readiness probe.")
 
     # 1. Register worker with FastAPI orchestrator
     reg_payload = {
         "id": worker_id,
-        "provider": "claude_desktop_cdp",
+        "provider": provider,
         "node_id": NODE_ID,
         "nickname": f"{nickname} ({role})",
         "capabilities": capabilities,
-        "quota_limit_per_window": 50,
+        "quota_limit_per_window": 50 if provider == "claude_desktop_cdp" else 10,
         "cooldown_window_minutes": 300,
     }
     try:
@@ -179,7 +225,7 @@ async def run_worker_loop(
             reconnect_delay = min(30.0, reconnect_delay * 2)
 
 async def main():
-    parser = argparse.ArgumentParser(description="Autonomous Claude Desktop Fleet Supervisor")
+    parser = argparse.ArgumentParser(description="Autonomous Multi-Provider Fleet Supervisor")
     parser.add_argument(
         "--fleet-file",
         type=str,
@@ -199,15 +245,19 @@ async def main():
         print(f"[!] Failed to parse fleet metadata: {e}")
         sys.exit(1)
 
+    # Normalise: accept a single dict or a list of dicts
+    if isinstance(fleet_data, dict):
+        fleet_data = [fleet_data]
     if not isinstance(fleet_data, list) or len(fleet_data) == 0:
         print("[!] Fleet metadata contains no active instances.")
         sys.exit(1)
 
-    print(f"============================================================")
-    print(f"  CLAUDE DESKTOP AUTONOMOUS FLEET SUPERVISOR")
-    print(f"  Managing {len(fleet_data)} instances across isolated CDP ports")
+    providers_used = sorted({inst.get("Provider", "claude_desktop_cdp") for inst in fleet_data})
+    print("============================================================")
+    print("  AUTONOMOUS MULTI-PROVIDER FLEET SUPERVISOR")
+    print(f"  Managing {len(fleet_data)} workers  |  Providers: {', '.join(providers_used)}")
     print(f"  Connecting to Orchestrator: {ORCHESTRATOR_URL}")
-    print(f"============================================================")
+    print("============================================================")
 
     stop_event = asyncio.Event()
     async with httpx.AsyncClient(timeout=30.0) as client:
@@ -216,23 +266,30 @@ async def main():
             worker_id = inst.get("Account", "unknown")
             nickname = inst.get("Nickname", worker_id)
             role = inst.get("Role", "writer")
-            cdp_port = int(inst.get("CdpPort", 9222))
-            model = inst.get("PreferredModel", "claude-3-5-sonnet")
-            budget = int(inst.get("ThinkingBudget", 0))
+            provider = inst.get("Provider", "claude_desktop_cdp")
+
+            try:
+                adapter = create_adapter(inst)
+            except ValueError as e:
+                print(f"[!] Skipping worker '{worker_id}': {e}")
+                continue
 
             t = asyncio.create_task(
                 run_worker_loop(
                     worker_id=worker_id,
                     nickname=nickname,
                     role=role,
-                    cdp_port=cdp_port,
-                    preferred_model=model,
-                    thinking_budget=budget,
+                    provider=provider,
+                    adapter=adapter,
                     client=client,
                     stop_event=stop_event,
                 )
             )
             tasks.append(t)
+
+        if not tasks:
+            print("[!] No workers could be initialised. Exiting.")
+            sys.exit(1)
 
         try:
             await asyncio.gather(*tasks)
@@ -245,3 +302,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
