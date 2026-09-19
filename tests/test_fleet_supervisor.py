@@ -92,3 +92,37 @@ def test_create_adapter_unknown_provider():
     with pytest.raises(ValueError, match="Unknown provider"):
         create_adapter({"Account": "x", "Provider": "magic_unicorn"})
 
+@pytest.mark.asyncio
+async def test_fleet_lease_renewal_periodically():
+    """Verify fleet supervisor issues periodic lease renewals until stopped."""
+    from client.fleet_supervisor import renew_task_lease_periodically
+
+    mock_client = AsyncMock()
+    mock_resp = MagicMock()
+    mock_resp.status_code = 200
+    mock_client.post.return_value = mock_resp
+
+    stop_event = asyncio.Event()
+
+    with patch("client.fleet_supervisor.LEASE_RENEWAL_SECONDS", 0.05):
+        renewal_task = asyncio.create_task(
+            renew_task_lease_periodically(
+                client=mock_client,
+                worker_id="fleet_worker_01",
+                task_id="task_fleet_1",
+                claim_token="tk1",
+                stop_event=stop_event,
+            )
+        )
+
+        await asyncio.sleep(0.12)
+        stop_event.set()
+        await asyncio.wait_for(renewal_task, timeout=1.0)
+
+    assert mock_client.post.call_count >= 1
+    call_args = mock_client.post.call_args[0]
+    call_kwargs = mock_client.post.call_args[1]
+    assert "tasks/task_fleet_1/renew-lease" in call_args[0]
+    assert call_kwargs["json"]["worker_id"] == "fleet_worker_01"
+    assert call_kwargs["json"]["claim_token"] == "tk1"
+

@@ -110,7 +110,7 @@ async def list_tasks(
             owner_worker_id=r["owner_worker_id"],
             claimed_at=r["claimed_at"],
             lease_expires_at=r["lease_expires_at"] if "lease_expires_at" in r.keys() else None,
-            claim_token=r["claim_token"] if "claim_token" in r.keys() else None,
+            claim_token=None,
             completed_at=r["completed_at"],
             blocked_reason=r["blocked_reason"],
             created_at=r["created_at"],
@@ -140,7 +140,7 @@ async def get_task(task_id: str, db: aiosqlite.Connection = Depends(get_db)):
         owner_worker_id=r["owner_worker_id"],
         claimed_at=r["claimed_at"],
         lease_expires_at=r["lease_expires_at"] if "lease_expires_at" in r.keys() else None,
-        claim_token=r["claim_token"] if "claim_token" in r.keys() else None,
+        claim_token=None,
         completed_at=r["completed_at"],
         blocked_reason=r["blocked_reason"],
         created_at=r["created_at"],
@@ -270,7 +270,7 @@ async def renew_task_lease(task_id: str, req: TaskLeaseRenewRequest, db: aiosqli
     task_resp = await get_task(task_id, db)
     return TaskClaimResponse(
         task=task_resp,
-        claim_token=task_resp.claim_token or "",
+        claim_token=req.claim_token,
         lease_expires_at=lease_exp_iso
     )
 

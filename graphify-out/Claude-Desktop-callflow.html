@@ -60,7 +60,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 <div class="container">
 
 <h1>Claude-Desktop — Complete Call Flow &amp; Architecture Documentation</h1>
-<p class="subtitle">Generated from graphify knowledge graph: 1326 nodes, 2461 edges, 121 communities. Commit: 659b30d</p>
+<p class="subtitle">Generated from graphify knowledge graph: 1325 nodes, 2461 edges, 120 communities. Commit: 6616aba</p>
 
 <div class="nav">
     <a href="#overview">Architecture Overview</a>
@@ -76,8 +76,8 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
     <a href="#ivirtualdesktop">IVirtualDesktop</a>
     <a href="#memory-log">Memory Log</a>
     <a href="#launch-user-n-ps1">launch_user_n.ps1</a>
-    <a href="#fleetcontrolapp">FleetControlApp</a>
     <a href="#desktop">Desktop</a>
+    <a href="#virtualdesktop11-24h2-cs">VirtualDesktop11-24H2.cs</a>
     <a href="#other">Other</a>
 </div>
 
@@ -90,11 +90,11 @@ hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
 flowchart LR
     EXTRACT_PIPELINE_5F350230("Extraction Pipeline<br/><small>4 nodes</small>")
     class EXTRACT_PIPELINE_5F350230 module;
-    BUILD_GRAPH_321CBB04("Graph Build<br/><small>89 nodes</small>")
+    BUILD_GRAPH_321CBB04("Graph Build<br/><small>80 nodes</small>")
     class BUILD_GRAPH_321CBB04 module;
     ANALYSIS_CLUSTERING_C79796DA("Analysis &amp; Clustering<br/><small>43 nodes</small>")
     class ANALYSIS_CLUSTERING_C79796DA module;
-    CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>222 nodes</small>")
+    CLI_SKILLS_9964CBB8("CLI &amp; Skill Installers<br/><small>251 nodes</small>")
     class CLI_SKILLS_9964CBB8 module;
     INGEST_CACHE_UPDATE_FF457338("Ingestion &amp; Updates<br/><small>29 nodes</small>")
     class INGEST_CACHE_UPDATE_FF457338 module;
@@ -102,7 +102,7 @@ flowchart LR
     class SERVE_API_35EC8E86 module;
     SECURITY_GLOBAL_5B9C6A04("Security &amp; Global Graph<br/><small>141 nodes</small>")
     class SECURITY_GLOBAL_5B9C6A04 module;
-    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>241 nodes</small>")
+    TESTS_FIXTURES_B84B1DCC("Tests &amp; Fixtures<br/><small>271 nodes</small>")
     class TESTS_FIXTURES_B84B1DCC module;
     IAPPLICATIONVIEW_77350340("IApplicationView<br/><small>48 nodes</small>")
     class IAPPLICATIONVIEW_77350340 module;
@@ -112,24 +112,24 @@ flowchart LR
     class MEMORY_LOG_AE26FF57 module;
     LAUNCH_USER_N_PS1_C5CD768B("launch_user_n.ps1<br/><small>36 nodes</small>")
     class LAUNCH_USER_N_PS1_C5CD768B module;
-    FLEETCONTROLAPP_BA5C692D("FleetControlApp<br/><small>29 nodes</small>")
-    class FLEETCONTROLAPP_BA5C692D module;
     DESKTOP_3B5A9F79("Desktop<br/><small>25 nodes</small>")
     class DESKTOP_3B5A9F79 module;
-    OTHER_D0941E68("Other<br/><small>229 nodes</small>")
+    VIRTUALDESKTOP11_24H2_CS_39767A1A("VirtualDesktop11-24H2.cs<br/><small>19 nodes</small>")
+    class VIRTUALDESKTOP11_24H2_CS_39767A1A module;
+    OTHER_D0941E68("Other<br/><small>188 nodes</small>")
     class OTHER_D0941E68 module;
     SERVE_API_35EC8E86 -->|uses x41| OTHER_D0941E68
-    TESTS_FIXTURES_B84B1DCC -->|imports x26| CLI_SKILLS_9964CBB8
-    OTHER_D0941E68 -->|references x18| IAPPLICATIONVIEW_77350340
+    CLI_SKILLS_9964CBB8 -->|calls x39| TESTS_FIXTURES_B84B1DCC
+    TESTS_FIXTURES_B84B1DCC -->|method x38| CLI_SKILLS_9964CBB8
     CLI_SKILLS_9964CBB8 -->|calls x17| DESKTOP_3B5A9F79
-    OTHER_D0941E68 -->|imports x16| CLI_SKILLS_9964CBB8
+    OTHER_D0941E68 -->|references x16| IAPPLICATIONVIEW_77350340
     CLI_SKILLS_9964CBB8 -->|calls x15| IVIRTUALDESKTOP_F98EF257
     DESKTOP_3B5A9F79 -->|method x12| IVIRTUALDESKTOP_F98EF257
     IVIRTUALDESKTOP_F98EF257 -->|references x12| OTHER_D0941E68
     CLI_SKILLS_9964CBB8 -->|references x12| IAPPLICATIONVIEW_77350340
     DESKTOP_3B5A9F79 -->|references x11| IAPPLICATIONVIEW_77350340
     DESKTOP_3B5A9F79 -->|method x10| OTHER_D0941E68
-    CLI_SKILLS_9964CBB8 -->|calls x10| OTHER_D0941E68
+    OTHER_D0941E68 -->|contains x10| SERVE_API_35EC8E86
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -146,20 +146,20 @@ flowchart LR
     <h4>Architecture Layers</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
-      <tr><td>Extraction Pipeline</td><td>4</td><td><code>53</code></td></tr><tr><td>Graph Build</td><td>89</td><td><code>2, 25, 32, 37, 40, 49, 81, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>43</td><td><code>3, 91</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>222</td><td><code>90, 8, 100, 31, 27, 88, 103, 102, 33, 35, 107, 119, 118, 65, 66, 67, 68, 69, 70, 71, 72, 83, 92, 93, 94, 95</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>29</td><td><code>97, 36</code></td></tr><tr><td>Serving API</td><td>111</td><td><code>7, 17, 12, 16, 18</code></td></tr><tr><td>Security &amp; Global Graph</td><td>141</td><td><code>87, 98, 99, 101, 105, 106, 108, 109, 110, 111, 112, 113, 115, 116, 117</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>241</td><td><code>13, 1, 5, 20, 34, 47, 104, 41, 55, 57, 89, 86</code></td></tr><tr><td>IApplicationView</td><td>48</td><td><code>0</code></td></tr><tr><td>IVirtualDesktop</td><td>40</td><td><code>4</code></td></tr><tr><td>Memory Log</td><td>39</td><td><code>6</code></td></tr><tr><td>launch_user_n.ps1</td><td>36</td><td><code>9</code></td></tr><tr><td>FleetControlApp</td><td>29</td><td><code>15</code></td></tr><tr><td>Desktop</td><td>25</td><td><code>10</code></td></tr><tr><td>Other</td><td>229</td><td><code>14, 11, 19, 21, 22, 38, 26, 29, 39, 42, 23, 43, 44, 45, 46, 114, 48, 50, 51, 52, 54, 120, 24, 56, 58, 59, 60, 61, 62, 28, 30, 63, 64, 73, 74, 75, 76, 77, 78, 79, 80, 82, 85, 96</code></td></tr>
+      <tr><td>Extraction Pipeline</td><td>4</td><td><code>53</code></td></tr><tr><td>Graph Build</td><td>80</td><td><code>2, 25, 37, 40, 49, 81, 84</code></td></tr><tr><td>Analysis &amp; Clustering</td><td>43</td><td><code>3, 91</code></td></tr><tr><td>CLI &amp; Skill Installers</td><td>251</td><td><code>15, 11, 8, 90, 100, 31, 27, 102, 103, 33, 35, 107, 119, 118, 65, 66, 67, 68, 69, 70, 71, 72, 83, 92, 93, 94, 95</code></td></tr><tr><td>Ingestion &amp; Updates</td><td>29</td><td><code>97, 36</code></td></tr><tr><td>Serving API</td><td>111</td><td><code>7, 17, 12, 16, 18</code></td></tr><tr><td>Security &amp; Global Graph</td><td>141</td><td><code>87, 98, 99, 101, 105, 106, 108, 109, 110, 111, 112, 113, 115, 116, 117</code></td></tr><tr><td>Tests &amp; Fixtures</td><td>271</td><td><code>1, 5, 13, 32, 57, 20, 34, 47, 104, 41, 55, 89, 88, 86</code></td></tr><tr><td>IApplicationView</td><td>48</td><td><code>0</code></td></tr><tr><td>IVirtualDesktop</td><td>40</td><td><code>4</code></td></tr><tr><td>Memory Log</td><td>39</td><td><code>6</code></td></tr><tr><td>launch_user_n.ps1</td><td>36</td><td><code>9</code></td></tr><tr><td>Desktop</td><td>25</td><td><code>10</code></td></tr><tr><td>VirtualDesktop11-24H2.cs</td><td>19</td><td><code>14</code></td></tr><tr><td>Other</td><td>188</td><td><code>19, 21, 22, 38, 26, 29, 39, 42, 23, 43, 44, 45, 46, 48, 50, 51, 52, 54, 120, 24, 56, 58, 59, 60, 61, 62, 28, 30, 63, 64, 73, 74, 75, 76, 77, 78, 79, 80, 82, 85, 96</code></td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Core Flow</h4>
-    <div class="arrow-chain">Analysis &amp; Clustering -&gt; Extraction Pipeline -&gt; Graph Build -&gt; CLI &amp; Skill Installers -&gt; Desktop -&gt; IVirtualDesktop -&gt; Other</div>
+    <div class="arrow-chain">Analysis &amp; Clustering -&gt; Extraction Pipeline -&gt; Graph Build -&gt; Tests &amp; Fixtures -&gt; CLI &amp; Skill Installers -&gt; Desktop -&gt; IVirtualDesktop</div>
   </div>
 </div>
 <div class="grid">
   <div class="card">
     <h4>Graph Report Highlights</h4>
     <ul>
-      <li>1326 nodes · 2461 edges · 121 communities (74 shown, 21 thin omitted)</li>
-      <li>Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 97 edges (avg confidence: 0.92)</li>
+      <li>1325 nodes · 2461 edges · 120 communities (73 shown, 21 thin omitted)</li>
+      <li>Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 98 edges (avg confidence: 0.92)</li>
       <li>Token cost: 0 input · 0 output</li>
       <li>1. `IApplicationView` - 64 edges</li>
       <li>2. `Desktop` - 45 edges</li>
@@ -259,12 +259,12 @@ flowchart LR
 
 <!-- ====== 3. Graph Build ====== -->
 <h2 id="build-graph">3. Graph Build</h2>
-<p>Graph Build groups implementation around md2pdf, apppy, tools, state, mostly in tools/md2pdf_app.py, orchestrator-state/JOB_SCHEMA.md, server/core/pipeline_engine.py. This section covers 89 nodes and 131 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Graph Build groups implementation around md2pdf, apppy, tools, state, mostly in tools/md2pdf_app.py, orchestrator-state/JOB_SCHEMA.md, server/core/pipeline_engine.py. This section covers 80 nodes and 112 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Graph Build (89 nodes, 131 edges)
+    %% Section: Graph Build (80 nodes, 112 edges)
     subgraph build_graph_tools_md2pdf_app_py_b98085e4["tools/md2pdf_app.py"]
         tools_md2pdf_app_md2pdfapp_7c40f5db("MD2PDFApp<br/><small>tools/md2pdf_app.py</small>")
         tools_md2pdf_app_md2pdfapp_convert_single_66602fc0("convert_single()<br/><small>tools/md2pdf_app.py</small>")
@@ -307,7 +307,7 @@ flowchart LR
     tools_md2pdf_app_md2pdfapp_init_e0526334 -->|calls| tools_md2pdf_app_config_load_dc7e3ac0
     tools_md2pdf_app_md2pdfapp_init_e0526334 -->|calls| tools_md2pdf_app_md2pdfapp_build_ui_fc526c8e
     tools_md2pdf_app_md2pdfapp_init_e0526334 -->|calls| tools_md2pdf_app_md2pdfapp_apply_deps_warning_315c7497
-    %% Omitted for readability: 71 nodes, 0 edges
+    %% Omitted for readability: 62 nodes, 0 edges
     class tools_md2pdf_app_md2pdfapp_7c40f5db klass;
     class tools_md2pdf_app_md2pdfapp_convert_single_66602fc0 function;
     class tools_md2pdf_app_md2pdfapp_init_e0526334 function;
@@ -596,8 +596,7 @@ flowchart LR
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>tools/md2pdf_app.py</code></td><td>42 nodes</td></tr>
 <tr><td><code>orchestrator-state/JOB_SCHEMA.md</code></td><td>13 nodes</td></tr>
-<tr><td><code>server/core/pipeline_engine.py</code></td><td>11 nodes</td></tr>
-<tr><td><code>server/database/schema.sql</code></td><td>10 nodes</td></tr>
+<tr><td><code>server/core/pipeline_engine.py</code></td><td>12 nodes</td></tr>
 <tr><td><code>orchestrator-state/SCHEMA.md</code></td><td>8 nodes</td></tr>
 <tr><td><code>profiles.json</code></td><td>1 nodes</td></tr>
 <tr><td><code>team-mcp.json</code></td><td>1 nodes</td></tr>
@@ -605,7 +604,7 @@ flowchart LR
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: method x35, calls x35, contains x32, references x21. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: method x35, calls x35, contains x25, references x9. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -960,12 +959,12 @@ flowchart LR
 
 <!-- ====== 5. CLI & Skill Installers ====== -->
 <h2 id="cli-skills">5. CLI &amp; Skill Installers</h2>
-<p>CLI &amp; Skill Installers groups implementation around claude, client, adapters, desktop, mostly in client/adapters/claude_desktop_cdp.py, tools/VirtualDesktop11-24H2.cs, tests/test_claude_cdp_adapter.py. This section covers 222 nodes and 377 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>CLI &amp; Skill Installers groups implementation around claude, client, adapters, desktop, mostly in client/adapters/claude_desktop_cdp.py, tools/fleet_gui.py, tools/VirtualDesktop11-24H2.cs. This section covers 251 nodes and 387 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: CLI &amp; Skill Installers (222 nodes, 377 edges)
+    %% Section: CLI &amp; Skill Installers (251 nodes, 387 edges)
     subgraph cli_skills_client_adapters_copilot_headless_py_9bb1bf03["client/adapters/copilot_headless.py"]
         client_adapters_copilot_headless_copilotheadless_25046b06("CopilotHeadlessAdapter<br/><small>client/adapters/copilot_headless.py</small>")
         client_adapters_copilot_headless_copilotheadless_d757c129("execute_task()<br/><small>client/adapters/copilot_headless.py</small>")
@@ -984,14 +983,12 @@ flowchart LR
     subgraph cli_skills_tools_VirtualDesktop11_24H2_cs_1a5333dc["tools/VirtualDesktop11-24H2.cs"]
         tools_virtualdesktop11_24h2_vdesktool_program_2cc47af2("Program<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
         tools_virtualdesktop11_24h2_vdesktool_program_ma_c9bf3c6a("Main()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
-        tools_virtualdesktop11_24h2_vdesktool_program_en_c1a52433("EnumWindowsProcToSwap()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
     end
-    subgraph cli_skills_server_main_py_a30601d6["server/main.py"]
-        server_main_a6c2e85e("main.py")
-        server_main_mcpauthmiddleware_8e675cb4("MCPAuthMiddleware<br/><small>server/main.py</small>")
-    end
+    client_adapters_base_adapter_baseworkeradapter_d28b45a8("BaseWorkerAdapter<br/><small>client/adapters/base_adapter.py</small>")
     client_adapters_claude_desktop_cdp_claudedesktop_50aeb769("execute_task()<br/><small>client/adapters/claude_desktop_cdp.py</small>")
-    tests_test_claude_cdp_adapter_aafc272a("test_claude_cdp_adapter.py")
+    client_worker_daemon_272f3044("worker_daemon.py")
+    tests_test_invariants_wsr_002_4546951e("test_invariants_wsr_002.py")
+    tools_fleet_gui_fleetcontrolapp_1e10b7cc("FleetControlApp<br/><small>tools/fleet_gui.py</small>")
     client_adapters_copilot_headless_copilotheadless_25046b06 -->|method| client_adapters_copilot_headless_copilotheadless_d757c129
     client_adapters_copilot_headless_copilotheadless_25046b06 -->|method| client_adapters_copilot_headless_copilotheadless_38912597
     client_adapters_copilot_headless_copilotheadless_25046b06 -->|method| client_adapters_copilot_headless_copilotheadless_6cba8018
@@ -1001,13 +998,15 @@ flowchart LR
     client_adapters_claude_desktop_proxy_claudedeskt_73403d88 -->|method| client_adapters_claude_desktop_proxy_claudedeskt_d74c5f61
     client_adapters_claude_desktop_proxy_claudedeskt_73403d88 -->|method| client_adapters_claude_desktop_proxy_claudedeskt_fa0aa283
     client_adapters_claude_desktop_proxy_claudedeskt_73403d88 -->|method| client_adapters_claude_desktop_proxy_claudedeskt_183fd5ee
-    tools_virtualdesktop11_24h2_vdesktool_program_2cc47af2 -->|method| tools_virtualdesktop11_24h2_vdesktool_program_en_c1a52433
     tools_virtualdesktop11_24h2_vdesktool_program_2cc47af2 -->|method| tools_virtualdesktop11_24h2_vdesktool_program_ma_c9bf3c6a
     client_adapters_copilot_headless_copilotheadless_b3ed866b -->|calls| client_adapters_copilot_headless_copilotheadless_67faea5b
     client_adapters_copilot_headless_copilotheadless_d757c129 -->|calls| client_adapters_copilot_headless_copilotheadless_67faea5b
     client_adapters_claude_desktop_proxy_claudedeskt_183fd5ee -->|calls| client_adapters_claude_desktop_proxy_claudedeskt_0c075e3e
-    tests_test_claude_cdp_adapter_aafc272a -->|imports| client_adapters_claude_desktop_proxy_claudedeskt_73403d88
-    %% Omitted for readability: 204 nodes, 0 edges
+    client_worker_daemon_272f3044 -->|imports| client_adapters_claude_desktop_proxy_claudedeskt_73403d88
+    client_worker_daemon_272f3044 -->|imports| client_adapters_base_adapter_baseworkeradapter_d28b45a8
+    tests_test_invariants_wsr_002_4546951e -->|imports| client_adapters_claude_desktop_proxy_claudedeskt_73403d88
+    tests_test_invariants_wsr_002_4546951e -->|imports| client_worker_daemon_272f3044
+    %% Omitted for readability: 233 nodes, 0 edges
     class client_adapters_copilot_headless_copilotheadless_25046b06 klass;
     class client_adapters_copilot_headless_copilotheadless_d757c129 function;
     class client_adapters_copilot_headless_copilotheadless_38912597 function;
@@ -1021,11 +1020,11 @@ flowchart LR
     class client_adapters_claude_desktop_proxy_claudedeskt_183fd5ee function;
     class tools_virtualdesktop11_24h2_vdesktool_program_2cc47af2 klass;
     class tools_virtualdesktop11_24h2_vdesktool_program_ma_c9bf3c6a function;
-    class tools_virtualdesktop11_24h2_vdesktool_program_en_c1a52433 function;
-    class server_main_a6c2e85e module;
-    class server_main_mcpauthmiddleware_8e675cb4 klass;
+    class client_adapters_base_adapter_baseworkeradapter_d28b45a8 klass;
     class client_adapters_claude_desktop_cdp_claudedesktop_50aeb769 function;
-    class tests_test_claude_cdp_adapter_aafc272a test;
+    class client_worker_daemon_272f3044 module;
+    class tests_test_invariants_wsr_002_4546951e test;
+    class tools_fleet_gui_fleetcontrolapp_1e10b7cc klass;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -1049,14 +1048,6 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_proxy.py</small><br><code>and thinking init()</code><br><small style="color:var(--muted)">tests/test_claude_cdp_adapter.py</small><br><code>claude_desktop_proxy.py</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_proxy.py</small><br>+22 more</td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>_check_cooldown_banner()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>_dismiss_overlays()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br>+11 more</td>
-  <td>ClaudeDesktopCDPAdapter node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>2</td>
   <td><code>ClaudeDesktopUIAAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
   <td><code>cmd_broadcast()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>cmd_send()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>fleet_cli.py</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br>+2 more</td>
@@ -1064,119 +1055,15 @@ flowchart LR
   <td>ClaudeDesktopUIAAdapter node in client/adapters/claude_desktop_cdp.py.</td>
 </tr>
 <tr>
+  <td>2</td>
+  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>main()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><code>__init__()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>_auto_refresh_loop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>_build_ui()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br>+18 more</td>
+  <td>FleetControlApp node in tools/fleet_gui.py.</td>
+</tr>
+<tr>
   <td>3</td>
-  <td><code>._check_cooldown_banner()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>_wait_for_generation_complete()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>execute_task()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><code>_eval_js()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>._check_cooldown_banner() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>.check_health()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.check_health() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>._dismiss_overlays()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>execute_task()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>wait_until_ready()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><code>_eval_js()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>._dismiss_overlays() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>._ensure_model_and_thinking()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>execute_task()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><code>_eval_js()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>._ensure_model_and_thinking() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>._eval_js()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>_check_cooldown_banner()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>_dismiss_overlays()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>_ensure_model_and_thinking()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br>+5 more</td>
-  <td><code>_send_cdp_command()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>._eval_js() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>.execute_task()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><code>_check_cooldown_banner()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>_dismiss_overlays()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>_ensure_model_and_thinking()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br>+5 more</td>
-  <td>.execute_task() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>.get_page_ws_url()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>execute_task()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>wait_until_ready()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Organizes documentation pages, navigation, or content lookup.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>.http_url()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.http_url() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>.__init__()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>.__init__() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>._inject_prompt_and_send()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>execute_task()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><code>_eval_js()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>Builds structured prompts for model calls.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>._send_cdp_command()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-cmd">Entry</span></td>
-  <td><code>_eval_js()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>execute_task()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br>+1 more</td>
-  <td>No direct outbound edge</td>
-  <td>._send_cdp_command() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>._start_new_chat()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>execute_task()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><code>_eval_js()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>Supports retrieval-augmented Q&amp;A or streaming chat.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>._wait_for_generation_complete()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>execute_task()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><code>_check_cooldown_banner()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>_eval_js()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>._wait_for_generation_complete() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>.wait_until_ready()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><code>_dismiss_overlays()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>_eval_js()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>_send_cdp_command()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br>+1 more</td>
-  <td>.wait_until_ready() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>17</td>
   <td><code>._attach_default_desktop()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>_focus_window()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>_paste_and_enter()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>check_health()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br>+1 more</td>
@@ -1184,7 +1071,7 @@ flowchart LR
   <td>._attach_default_desktop() node in client/adapters/claude_desktop_cdp.py.</td>
 </tr>
 <tr>
-  <td>18</td>
+  <td>4</td>
   <td><code>.check_health()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>ClaudeDesktopUIAAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
@@ -1192,7 +1079,7 @@ flowchart LR
   <td>.check_health() node in client/adapters/claude_desktop_cdp.py.</td>
 </tr>
 <tr>
-  <td>19</td>
+  <td>5</td>
   <td><code>.execute_task()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>ClaudeDesktopUIAAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
@@ -1200,7 +1087,7 @@ flowchart LR
   <td>.execute_task() node in client/adapters/claude_desktop_cdp.py.</td>
 </tr>
 <tr>
-  <td>20</td>
+  <td>6</td>
   <td><code>._focus_window()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>ClaudeDesktopUIAAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
@@ -1208,15 +1095,7 @@ flowchart LR
   <td>._focus_window() node in client/adapters/claude_desktop_cdp.py.</td>
 </tr>
 <tr>
-  <td>21</td>
-  <td><code>.__init__()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>ClaudeDesktopUIAAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.__init__() node in client/adapters/claude_desktop_cdp.py.</td>
-</tr>
-<tr>
-  <td>22</td>
+  <td>7</td>
   <td><code>._paste_and_enter()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>ClaudeDesktopUIAAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
@@ -1224,7 +1103,7 @@ flowchart LR
   <td>._paste_and_enter() node in client/adapters/claude_desktop_cdp.py.</td>
 </tr>
 <tr>
-  <td>23</td>
+  <td>8</td>
   <td><code>.send_text()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
   <td><code>ClaudeDesktopUIAAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
@@ -1232,60 +1111,180 @@ flowchart LR
   <td>.send_text() node in client/adapters/claude_desktop_cdp.py.</td>
 </tr>
 <tr>
-  <td>24</td>
-  <td><code>.__init__()</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_proxy.py</small></td>
+  <td>9</td>
+  <td><code>_attach_default_desktop()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
   <td><span class="tag tag-func">Function</span></td>
-  <td><code>ClaudeDesktopProxyAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_proxy.py</small></td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>.__init__() node in client/adapters/claude_desktop_proxy.py.</td>
+  <td><code>cmd_broadcast()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>cmd_send()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>cmd_status()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>_attach_default_desktop() node in tools/fleet_cli.py.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>cmd_broadcast()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>main()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td><code>_attach_default_desktop()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>ClaudeDesktopUIAAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br>+1 more</td>
+  <td>cmd_broadcast() node in tools/fleet_cli.py.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>cmd_send()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>main()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td><code>_attach_default_desktop()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>ClaudeDesktopUIAAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br>+1 more</td>
+  <td>cmd_send() node in tools/fleet_cli.py.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>cmd_status()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>main()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td><code>_attach_default_desktop()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>load_fleet_data()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td>cmd_status() node in tools/fleet_cli.py.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>cmd_submit()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>main()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>cmd_submit() node in tools/fleet_cli.py.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>load_fleet_data()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>cmd_broadcast()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>cmd_send()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>cmd_status()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>load_fleet_data() node in tools/fleet_cli.py.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>main()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>cmd_broadcast()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>cmd_send()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br><code>cmd_status()</code><br><small style="color:var(--muted)">tools/fleet_cli.py</small><br>+1 more</td>
+  <td>main() node in tools/fleet_cli.py.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>attach_default_desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>_refresh_worker()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>dpi and desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>attach_default_desktop() node in tools/fleet_gui.py.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>enable_high_dpi_and_desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>main()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><code>attach_default_desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>enable_high_dpi_and_desktop() node in tools/fleet_gui.py.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>ensure_orchestrator_server()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>ensure_orchestrator_server() node in tools/fleet_gui.py.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>._auto_refresh_loop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>__init__()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><code>refresh_all_status()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>._auto_refresh_loop() node in tools/fleet_gui.py.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>._build_ui()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>__init__()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><code>log()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>on_switch_desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>._build_ui() node in tools/fleet_gui.py.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>.__init__()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><code>_auto_refresh_loop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>_build_ui()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>_init_styles()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br>+1 more</td>
+  <td>.__init__() node in tools/fleet_gui.py.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>._init_styles()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>__init__()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>._init_styles() node in tools/fleet_gui.py.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>._load_fleet_data()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>_refresh_worker()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>._load_fleet_data() node in tools/fleet_gui.py.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>._load_profiles_data()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>_refresh_worker()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>._load_profiles_data() node in tools/fleet_gui.py.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>test_cdp_adapter_custom_model_and_thinking_init()</code><br><small style="color:var(--muted)">tests/test_claude_cdp_adapter.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>.log()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>_build_ui()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.log() node in tools/fleet_gui.py.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>test_cdp_adapter_init()</code><br><small style="color:var(--muted)">tests/test_claude_cdp_adapter.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>.on_create_sample_tasks()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.on_create_sample_tasks() node in tools/fleet_gui.py.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>test_cdp_cooldown_detection_returns_429()</code><br><small style="color:var(--muted)">tests/test_claude_cdp_adapter.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>patch</code></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>.on_dispatch_prompt()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>Builds structured prompts for model calls.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>test_cdp_eval_js_exception()</code><br><small style="color:var(--muted)">tests/test_claude_cdp_adapter.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>.on_focus_layout()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.on_focus_layout() node in tools/fleet_gui.py.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>test_cdp_execute_task_flow_success()</code><br><small style="color:var(--muted)">tests/test_claude_cdp_adapter.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>patch</code></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>.on_launch_fleet()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.on_launch_fleet() node in tools/fleet_gui.py.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>test_cdp_execute_task_unreachable()</code><br><small style="color:var(--muted)">tests/test_claude_cdp_adapter.py</small></td>
-  <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>Verifies imports, entry points, or version behavior.</td>
+  <td><code>.on_switch_desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>_build_ui()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>.on_switch_desktop() node in tools/fleet_gui.py.</td>
 </tr>
 </table>
 
@@ -1294,19 +1293,19 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>client/adapters/claude_desktop_cdp.py</code></td><td>43 nodes</td></tr>
+      <tr><td><code>client/adapters/claude_desktop_cdp.py</code></td><td>38 nodes</td></tr>
+<tr><td><code>tools/fleet_gui.py</code></td><td>29 nodes</td></tr>
 <tr><td><code>tools/VirtualDesktop11-24H2.cs</code></td><td>24 nodes</td></tr>
-<tr><td><code>tests/test_claude_cdp_adapter.py</code></td><td>18 nodes</td></tr>
+<tr><td><code>server/main.py</code></td><td>14 nodes</td></tr>
 <tr><td><code>README.md</code></td><td>13 nodes</td></tr>
 <tr><td><code>client/adapters/copilot_headless.py</code></td><td>13 nodes</td></tr>
-<tr><td><code>server/main.py</code></td><td>11 nodes</td></tr>
 <tr><td><code>Claude Skills + MCP/Cross-Linking Hub.md</code></td><td>9 nodes</td></tr>
 <tr><td><code>Claude Skills + MCP/chat-archiver/save_chat.py</code></td><td>9 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: calls x107, contains x80, method x51, references x49. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x113, contains x78, method x63, references x39. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -2337,12 +2336,12 @@ flowchart LR
 
 <!-- ====== 9. Tests & Fixtures ====== -->
 <h2 id="tests-fixtures">9. Tests &amp; Fixtures</h2>
-<p>Tests &amp; Fixtures groups implementation around test, tests, mcp, orchestrator, mostly in tests/orchestrator_mcp_test.py, server/mcp_remote.py, client/adapters/winpilot_bridge.py. This section covers 241 nodes and 492 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<p>Tests &amp; Fixtures groups implementation around test, tests, mcp, orchestrator, mostly in tests/orchestrator_mcp_test.py, server/mcp_remote.py, client/adapters/winpilot_bridge.py. This section covers 271 nodes and 552 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Tests &amp; Fixtures (241 nodes, 492 edges)
+    %% Section: Tests &amp; Fixtures (271 nodes, 552 edges)
     subgraph tests_fixtures_tests_orchestrator_mcp_test_py_d8584627["tests/orchestrator_mcp_test.py"]
         tests_orchestrator_mcp_test_testteammemory_8bc01040("TestTeamMemory<br/><small>tests/orchestrator_mcp_test.py</small>")
         tests_orchestrator_mcp_test_testblockedunblock_7bcc7460("TestBlockedUnblock<br/><small>tests/orchestrator_mcp_test.py</small>")
@@ -2364,7 +2363,7 @@ flowchart LR
         tests_test_remote_mcp_test_mcp_task_lifecycle_571aa6e4("test_mcp_task_lifecycle()<br/><small>tests/test_remote_mcp.py</small>")
     end
     client_adapters_winpilot_bridge_winpilotbridge_b_e10f600d("batch_setup_and_inject()<br/><small>client/adapters/winpilot_bridge.py</small>")
-    tests_test_e2e_pipeline_efe0a27a("test_e2e_pipeline.py")
+    tests_test_cloud_scheduler_b248569d("test_cloud_scheduler.py")
     tests_orchestrator_mcp_test_testblockedunblock_7bcc7460 -->|method| tests_orchestrator_mcp_test_testblockedunblock_t_0cdd155f
     tests_orchestrator_mcp_test_testblockedunblock_7bcc7460 -->|method| tests_orchestrator_mcp_test_testblockedunblock_t_70ed95c8
     tests_orchestrator_mcp_test_testblockedunblock_7bcc7460 -->|method| tests_orchestrator_mcp_test_testblockedunblock_t_cf45723e
@@ -2373,7 +2372,7 @@ flowchart LR
     tests_orchestrator_mcp_test_testclaimrace_ddc6c63f -->|method| tests_orchestrator_mcp_test_testclaimrace_test_n_4fdc5710
     tests_orchestrator_mcp_test_testcodetasklifecycl_29c6ab68 -->|method| tests_orchestrator_mcp_test_testcodetasklifecycl_e89e6a73
     tests_orchestrator_mcp_test_testcodetasklifecycl_29c6ab68 -->|method| tests_orchestrator_mcp_test_testcodetasklifecycl_de383d66
-    %% Omitted for readability: 223 nodes, 0 edges
+    %% Omitted for readability: 253 nodes, 0 edges
     class tests_orchestrator_mcp_test_testteammemory_8bc01040 test;
     class tests_orchestrator_mcp_test_testblockedunblock_7bcc7460 test;
     class tests_orchestrator_mcp_test_testblockedunblock_t_0cdd155f test;
@@ -2391,7 +2390,7 @@ flowchart LR
     class tests_test_remote_mcp_test_mcp_mutations_require_f34d4c70 test;
     class tests_test_remote_mcp_test_mcp_task_lifecycle_571aa6e4 test;
     class client_adapters_winpilot_bridge_winpilotbridge_b_e10f600d function;
-    class tests_test_e2e_pipeline_efe0a27a test;
+    class tests_test_cloud_scheduler_b248569d test;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -2415,243 +2414,243 @@ flowchart LR
 </tr>
 <tr>
   <td>1</td>
-  <td><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>bridge detect cooldown()</code><br><small style="color:var(--muted)">tests/test_winpilot_bridge.py</small><br><code>fleet_supervisor.py</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small><br><code>get_winpilot_bridge()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small><br>+5 more</td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>_run_cmd()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>batch_setup_and_inject()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br>+7 more</td>
-  <td>WinPilotBridge node in client/adapters/winpilot_bridge.py.</td>
+  <td><code>TestBlockedUnblock</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_mark_blocked_preserves_ownership()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_only_owner_can_unblock()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_unblock_non_blocked_task_raises()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>2</td>
-  <td><code>.batch_setup_and_inject()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><code>detect_cooldown()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>focus_window()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>send_prompt()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br>+3 more</td>
-  <td>.batch_setup_and_inject() node in client/adapters/winpilot_bridge.py.</td>
+  <td><code>TestClaimRace</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_double_claim_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_non_owner_cannot_release()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_release_then_reclaim_succeeds()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>3</td>
-  <td><code>.detect_cooldown()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>batch_setup_and_inject()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><code>_run_cmd()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td>.detect_cooldown() node in client/adapters/winpilot_bridge.py.</td>
+  <td><code>TestCodeTaskLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_clean_merge()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_conflict_aborts_cleanly()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>4</td>
-  <td><code>.focus_window()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>batch_setup_and_inject()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><code>_run_cmd()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td>.focus_window() node in client/adapters/winpilot_bridge.py.</td>
+  <td><code>TestContextBundleAndArchiving</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_archive_memory()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_get_context_bundle()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>5</td>
-  <td><code>.get_clipboard_history()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-cmd">Entry</span></td>
-  <td><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.get_clipboard_history() node in client/adapters/winpilot_bridge.py.</td>
+  <td><code>TestInputValidation</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_code_task_requires_branch_name_on_claim()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_invalid_account_name_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_invalid_task_id_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br>+1 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>6</td>
-  <td><code>.__init__()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><code>Path</code></td>
-  <td>.__init__() node in client/adapters/winpilot_bridge.py.</td>
+  <td><code>TestJobProductionLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_create_and_list_jobs()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_submit_qa_review_lifecycle()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>7</td>
-  <td><code>._run_cmd()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>detect_cooldown()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>focus_window()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>send_prompt()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br>+4 more</td>
-  <td>No direct outbound edge</td>
-  <td>._run_cmd() node in client/adapters/winpilot_bridge.py.</td>
+  <td><code>TestLiveStatus</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_independent_files_per_account()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_overwrite_is_last_write_wins()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>8</td>
-  <td><code>.send_prompt()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>batch_setup_and_inject()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><code>_run_cmd()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td>Builds structured prompts for model calls.</td>
+  <td><code>TestTeamContext</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_read_team_context_missing()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_read_team_context_present()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>9</td>
-  <td><code>.set_effort()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>batch_setup_and_inject()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><code>_run_cmd()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td>.set_effort() node in client/adapters/winpilot_bridge.py.</td>
+  <td><code>TestTeamMemory</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_empty_text_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_invalid_account_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br><code>test_limit_and_search_and_project_filter()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small><br>+4 more</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>10</td>
-  <td><code>.set_model()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>batch_setup_and_inject()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><code>_run_cmd()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td>.set_model() node in client/adapters/winpilot_bridge.py.</td>
+  <td><code>TestTextTaskLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_create_decompose_claim_checkpoint_merge()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>11</td>
-  <td><code>.toggle_thinking()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>batch_setup_and_inject()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small><br><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><code>_run_cmd()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td>.toggle_thinking() node in client/adapters/winpilot_bridge.py.</td>
+  <td><code>TestToolRegistration</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>test_all_expected_tools_are_registered()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>12</td>
-  <td><code>create_adapter()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>adapter copilot headless()</code><br><small style="color:var(--muted)">tests/test_fleet_supervisor.py</small><br><code>adapter unknown provider()</code><br><small style="color:var(--muted)">tests/test_fleet_supervisor.py</small><br><code>main()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small><br>+2 more</td>
-  <td><code>BaseWorkerAdapter</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small><br><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>CopilotHeadlessAdapter</code><br><small style="color:var(--muted)">client/adapters/copilot_headless.py</small><br>+1 more</td>
-  <td>create_adapter() node in client/fleet_supervisor.py.</td>
+  <td><code>_load_run_server()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>repo()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>_load_run_server() node in tests/orchestrator_mcp_test.py.</td>
 </tr>
 <tr>
   <td>13</td>
-  <td><code>get_system_telemetry()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>run_worker_loop()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>get_system_telemetry() node in client/fleet_supervisor.py.</td>
+  <td><code>repo()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>_load_run_server()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>repo() node in tests/orchestrator_mcp_test.py.</td>
 </tr>
 <tr>
   <td>14</td>
-  <td><code>get_winpilot_bridge()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>create_adapter()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
-  <td><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td>get_winpilot_bridge() node in client/fleet_supervisor.py.</td>
+  <td><code>.test_mark_blocked_preserves_ownership()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestBlockedUnblock</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>15</td>
-  <td><code>main()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>create_adapter()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small><br><code>run_worker_loop()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
-  <td>main() node in client/fleet_supervisor.py.</td>
+  <td><code>.test_only_owner_can_unblock()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestBlockedUnblock</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>16</td>
-  <td><code>run_worker_loop()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>exit on stop()</code><br><small style="color:var(--muted)">tests/test_fleet_supervisor.py</small><br><code>main()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small><br><code>test_fleet_supervisor.py</code><br><small style="color:var(--muted)">tests/test_fleet_supervisor.py</small></td>
-  <td><code>BaseWorkerAdapter</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small><br><code>get_system_telemetry()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
-  <td>run_worker_loop() node in client/fleet_supervisor.py.</td>
+  <td><code>.test_unblock_non_blocked_task_raises()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestBlockedUnblock</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>17</td>
-  <td><code>test_create_adapter_cdp()</code><br><small style="color:var(--muted)">tests/test_fleet_supervisor.py</small></td>
+  <td><code>.test_double_claim_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>create_adapter()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
+  <td><code>TestClaimRace</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>18</td>
-  <td><code>test_create_adapter_copilot_headless()</code><br><small style="color:var(--muted)">tests/test_fleet_supervisor.py</small></td>
+  <td><code>.test_non_owner_cannot_release()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>create_adapter()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
+  <td><code>TestClaimRace</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>19</td>
-  <td><code>test_create_adapter_unknown_provider()</code><br><small style="color:var(--muted)">tests/test_fleet_supervisor.py</small></td>
+  <td><code>.test_release_then_reclaim_succeeds()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>create_adapter()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
+  <td><code>TestClaimRace</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>20</td>
-  <td><code>test_role_capabilities_mapping()</code><br><small style="color:var(--muted)">tests/test_fleet_supervisor.py</small></td>
+  <td><code>.test_clean_merge()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>TestCodeTaskLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td>No direct outbound edge</td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>21</td>
-  <td><code>test_worker_loop_registration_and_exit_on_stop()</code><br><small style="color:var(--muted)">tests/test_fleet_supervisor.py</small></td>
+  <td><code>.test_conflict_aborts_cleanly()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>run_worker_loop()</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
+  <td><code>TestCodeTaskLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>22</td>
-  <td><code>test_winpilot_bridge_batch_setup_and_inject()</code><br><small style="color:var(--muted)">tests/test_winpilot_bridge.py</small></td>
+  <td><code>.test_archive_memory()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
+  <td><code>TestContextBundleAndArchiving</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>test_winpilot_bridge_detect_cooldown()</code><br><small style="color:var(--muted)">tests/test_winpilot_bridge.py</small></td>
+  <td><code>.test_get_context_bundle()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
+  <td><code>TestContextBundleAndArchiving</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>test_winpilot_bridge_focus()</code><br><small style="color:var(--muted)">tests/test_winpilot_bridge.py</small></td>
+  <td><code>.test_code_task_requires_branch_name_on_claim()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
+  <td><code>TestInputValidation</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>test_winpilot_bridge_initialization()</code><br><small style="color:var(--muted)">tests/test_winpilot_bridge.py</small></td>
+  <td><code>.test_invalid_account_name_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
+  <td><code>TestInputValidation</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>test_winpilot_bridge_set_model_and_effort()</code><br><small style="color:var(--muted)">tests/test_winpilot_bridge.py</small></td>
+  <td><code>.test_invalid_task_id_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td><span class="tag tag-func">Test</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>WinPilotBridge</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
+  <td><code>TestInputValidation</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
   <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>winpilot_bridge.py</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>fleet_supervisor.py</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small><br><code>test_winpilot_bridge.py</code><br><small style="color:var(--muted)">tests/test_winpilot_bridge.py</small></td>
+  <td><code>.test_unknown_parent_id_rejected()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestInputValidation</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td>No direct outbound edge</td>
-  <td>Module file in client/adapters/winpilot_bridge.py.</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>Any</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>.test_create_and_list_jobs()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestJobProductionLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td>No direct outbound edge</td>
-  <td>Any node in project.</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>Path</code><br><small style="color:var(--muted)"></small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">client/adapters/winpilot_bridge.py</small></td>
+  <td><code>.test_submit_qa_review_lifecycle()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestJobProductionLifecycle</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
   <td>No direct outbound edge</td>
-  <td>Path node in project.</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>fleet_supervisor.py</code><br><small style="color:var(--muted)">client/fleet_supervisor.py</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>test_fleet_supervisor.py</code><br><small style="color:var(--muted)">tests/test_fleet_supervisor.py</small></td>
-  <td><code>base_adapter.py</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small><br><code>BaseWorkerAdapter</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small><br><code>claude_desktop_cdp.py</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br>+5 more</td>
-  <td>Module file in client/fleet_supervisor.py.</td>
+  <td><code>.test_independent_files_per_account()</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td><span class="tag tag-func">Test</span></td>
+  <td><code>TestLiveStatus</code><br><small style="color:var(--muted)">tests/orchestrator_mcp_test.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>Verifies imports, entry points, or version behavior.</td>
 </tr>
 </table>
 
@@ -2661,18 +2660,18 @@ flowchart LR
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
       <tr><td><code>tests/orchestrator_mcp_test.py</code></td><td>46 nodes</td></tr>
-<tr><td><code>server/mcp_remote.py</code></td><td>27 nodes</td></tr>
+<tr><td><code>server/mcp_remote.py</code></td><td>29 nodes</td></tr>
 <tr><td><code>client/adapters/winpilot_bridge.py</code></td><td>23 nodes</td></tr>
-<tr><td><code>tests/test_invariants_wsr_002.py</code></td><td>14 nodes</td></tr>
-<tr><td><code>tests/test_e2e_pipeline.py</code></td><td>11 nodes</td></tr>
-<tr><td><code>client/fleet_supervisor.py</code></td><td>10 nodes</td></tr>
-<tr><td><code>tests/test_remote_mcp.py</code></td><td>10 nodes</td></tr>
-<tr><td><code>tests/test_cloud_scheduler.py</code></td><td>9 nodes</td></tr>
+<tr><td><code>tests/test_claude_cdp_adapter.py</code></td><td>18 nodes</td></tr>
+<tr><td><code>tests/test_invariants_wsr_002.py</code></td><td>17 nodes</td></tr>
+<tr><td><code>tests/test_e2e_pipeline.py</code></td><td>13 nodes</td></tr>
+<tr><td><code>client/fleet_supervisor.py</code></td><td>11 nodes</td></tr>
+<tr><td><code>tests/test_fleet_supervisor.py</code></td><td>11 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: calls x124, contains x105, references x99, imports x43. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: calls x134, references x120, contains x116, explains x47. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -4042,344 +4041,8 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 14. FleetControlApp ====== -->
-<h2 id="fleetcontrolapp">14. FleetControlApp</h2>
-<p>FleetControlApp groups implementation around fleet, guipy, tools, set, mostly in tools/fleet_gui.py. This section covers 29 nodes and 42 internal edges; the diagram shows only representative relationships to stay readable.</p>
-
-<div class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
-flowchart LR
-    %% Section: FleetControlApp (29 nodes, 42 edges)
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc("FleetControlApp<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_init_4df5dce5("__init__()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_refresh_worker_652bd7fc("_refresh_worker()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_main_84294d74("main()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_build_ui_5f10055e("_build_ui()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_enable_high_dpi_and_desktop_ad869298("dpi and desktop()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_init_styles_7ae34005("_init_styles()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_log_014bad36("log()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_set_template_orc_523f7e1f("_set_template_orch()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_set_template_res_c109df0c("_set_template_research()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_set_template_dra_4a7ed2a0("_set_template_draft()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_set_template_pin_480371e5("_set_template_ping()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_on_launch_fleet_67f62d7c("on_launch_fleet()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_on_tile_windows_dac7a8a0("on_tile_windows()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_on_focus_layout_6235714f("on_focus_layout()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_on_switch_deskto_a48d13e0("on_switch_desktop()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_on_dispatch_prom_7f59728c("on_dispatch_prompt()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_on_create_sample_9f39dc52("on_create_sample_tasks()<br/><small>tools/fleet_gui.py</small>")
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_init_4df5dce5
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_init_styles_7ae34005
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_build_ui_5f10055e
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_log_014bad36
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_set_template_orc_523f7e1f
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_set_template_res_c109df0c
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_set_template_dra_4a7ed2a0
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_set_template_pin_480371e5
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_on_launch_fleet_67f62d7c
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_on_tile_windows_dac7a8a0
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_on_focus_layout_6235714f
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_on_switch_deskto_a48d13e0
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_on_dispatch_prom_7f59728c
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_on_create_sample_9f39dc52
-    tools_fleet_gui_fleetcontrolapp_1e10b7cc -->|method| tools_fleet_gui_fleetcontrolapp_refresh_worker_652bd7fc
-    tools_fleet_gui_fleetcontrolapp_build_ui_5f10055e -->|calls| tools_fleet_gui_fleetcontrolapp_on_switch_deskto_a48d13e0
-    tools_fleet_gui_fleetcontrolapp_build_ui_5f10055e -->|calls| tools_fleet_gui_fleetcontrolapp_log_014bad36
-    tools_fleet_gui_fleetcontrolapp_init_4df5dce5 -->|calls| tools_fleet_gui_fleetcontrolapp_init_styles_7ae34005
-    tools_fleet_gui_fleetcontrolapp_init_4df5dce5 -->|calls| tools_fleet_gui_fleetcontrolapp_build_ui_5f10055e
-    tools_fleet_gui_main_84294d74 -->|calls| tools_fleet_gui_enable_high_dpi_and_desktop_ad869298
-    tools_fleet_gui_main_84294d74 -->|calls| tools_fleet_gui_fleetcontrolapp_1e10b7cc
-    %% Omitted for readability: 11 nodes, 0 edges
-    class tools_fleet_gui_fleetcontrolapp_1e10b7cc klass;
-    class tools_fleet_gui_fleetcontrolapp_init_4df5dce5 function;
-    class tools_fleet_gui_fleetcontrolapp_refresh_worker_652bd7fc function;
-    class tools_fleet_gui_main_84294d74 function;
-    class tools_fleet_gui_fleetcontrolapp_build_ui_5f10055e function;
-    class tools_fleet_gui_enable_high_dpi_and_desktop_ad869298 function;
-    class tools_fleet_gui_fleetcontrolapp_init_styles_7ae34005 function;
-    class tools_fleet_gui_fleetcontrolapp_log_014bad36 function;
-    class tools_fleet_gui_fleetcontrolapp_set_template_orc_523f7e1f function;
-    class tools_fleet_gui_fleetcontrolapp_set_template_res_c109df0c function;
-    class tools_fleet_gui_fleetcontrolapp_set_template_dra_4a7ed2a0 function;
-    class tools_fleet_gui_fleetcontrolapp_set_template_pin_480371e5 function;
-    class tools_fleet_gui_fleetcontrolapp_on_launch_fleet_67f62d7c function;
-    class tools_fleet_gui_fleetcontrolapp_on_tile_windows_dac7a8a0 function;
-    class tools_fleet_gui_fleetcontrolapp_on_focus_layout_6235714f function;
-    class tools_fleet_gui_fleetcontrolapp_on_switch_deskto_a48d13e0 function;
-    class tools_fleet_gui_fleetcontrolapp_on_dispatch_prom_7f59728c function;
-    class tools_fleet_gui_fleetcontrolapp_on_create_sample_9f39dc52 function;
-    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
-    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
-    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
-    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
-    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
-    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
-    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
-    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
-    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
-</div>
-
-<h3>Call Details</h3>
-<table class="call-table">
-<tr>
-  <th style="width:5%">#</th>
-  <th style="width:28%">Node</th>
-  <th style="width:10%">Type</th>
-  <th style="width:17%">Caller</th>
-  <th style="width:20%">Callees</th>
-  <th style="width:20%">Description</th>
-</tr>
-<tr>
-  <td>1</td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-class">Class</span></td>
-  <td><code>main()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>_auto_refresh_loop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>_build_ui()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br>+18 more</td>
-  <td>FleetControlApp node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>2</td>
-  <td><code>attach_default_desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>_refresh_worker()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>dpi and desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>attach_default_desktop() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>3</td>
-  <td><code>enable_high_dpi_and_desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>main()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><code>attach_default_desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>enable_high_dpi_and_desktop() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>4</td>
-  <td><code>ensure_orchestrator_server()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>ensure_orchestrator_server() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>5</td>
-  <td><code>._auto_refresh_loop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><code>refresh_all_status()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>._auto_refresh_loop() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>6</td>
-  <td><code>._build_ui()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><code>log()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>on_switch_desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>._build_ui() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>7</td>
-  <td><code>.__init__()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><code>_auto_refresh_loop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>_build_ui()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>_init_styles()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br>+1 more</td>
-  <td>.__init__() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>8</td>
-  <td><code>._init_styles()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>._init_styles() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>9</td>
-  <td><code>._load_fleet_data()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>_refresh_worker()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>._load_fleet_data() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>10</td>
-  <td><code>._load_profiles_data()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>_refresh_worker()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>._load_profiles_data() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>11</td>
-  <td><code>.log()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>_build_ui()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.log() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>12</td>
-  <td><code>.on_create_sample_tasks()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.on_create_sample_tasks() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>13</td>
-  <td><code>.on_dispatch_prompt()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>Builds structured prompts for model calls.</td>
-</tr>
-<tr>
-  <td>14</td>
-  <td><code>.on_focus_layout()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.on_focus_layout() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>15</td>
-  <td><code>.on_launch_fleet()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.on_launch_fleet() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>16</td>
-  <td><code>.on_switch_desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>_build_ui()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.on_switch_desktop() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>17</td>
-  <td><code>.on_tile_windows()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.on_tile_windows() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>18</td>
-  <td><code>.refresh_all_status()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>_auto_refresh_loop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.refresh_all_status() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>19</td>
-  <td><code>.refresh_tasks()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>_refresh_worker()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>.refresh_tasks() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>20</td>
-  <td><code>._refresh_worker()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><code>_load_fleet_data()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>_load_profiles_data()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>attach_default_desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br>+1 more</td>
-  <td>._refresh_worker() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>21</td>
-  <td><code>._set_template_draft()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>._set_template_draft() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>22</td>
-  <td><code>._set_template_orch()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>._set_template_orch() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>23</td>
-  <td><code>._set_template_ping()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>._set_template_ping() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>24</td>
-  <td><code>._set_template_research()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>._set_template_research() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>25</td>
-  <td><code>main()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>dpi and desktop()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small><br><code>FleetControlApp</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>main() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>26</td>
-  <td><code>set_dark_titlebar()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td>No direct outbound edge</td>
-  <td>set_dark_titlebar() node in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>27</td>
-  <td><code>fleet_gui.py</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>ClaudeDesktopUIAAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small></td>
-  <td>Module file in tools/fleet_gui.py.</td>
-</tr>
-<tr>
-  <td>28</td>
-  <td><code>Attach the calling thread to the interactive &#x27;Default&#x27; desktop in WinSta0.</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Design note for Attach the calling thread to the interactive &#x27;Default&#x27; desktop in WinSta0..</td>
-</tr>
-<tr>
-  <td>29</td>
-  <td><code>Enable native Windows 11/10 dark title bar for the Tkinter window.</code><br><small style="color:var(--muted)">tools/fleet_gui.py</small></td>
-  <td><span class="tag tag-func">Concept</span></td>
-  <td>External entry / no inbound edge</td>
-  <td>No direct outbound edge</td>
-  <td>Design note for Enable native Windows 11/10 dark title bar for the Tkinter window..</td>
-</tr>
-</table>
-
-<div class="grid">
-  <div class="card">
-    <h4>Key Files</h4>
-    <table style="width:100%;font-size:0.85rem;">
-      <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>tools/fleet_gui.py</code></td><td>29 nodes</td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: method x20, calls x14, contains x6, explains x2. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
-  </div>
-</div>
-<hr>
-
-<!-- ====== 15. Desktop ====== -->
-<h2 id="desktop">15. Desktop</h2>
+<!-- ====== 14. Desktop ====== -->
+<h2 id="desktop">14. Desktop</h2>
 <p>Desktop groups implementation around tools, virtualdesktop11, 24h2cs, desktop, mostly in tools/VirtualDesktop11-24H2.cs. This section covers 25 nodes and 46 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
@@ -4685,67 +4348,68 @@ flowchart LR
 </div>
 <hr>
 
-<!-- ====== 16. Other ====== -->
-<h2 id="other">16. Other</h2>
-<p>Other groups implementation around virtualdesktop11, 24h2cs, tools, server, mostly in tools/VirtualDesktop11-24H2.cs, server/models/schemas.py, server/core/scheduler.py. This section covers 229 nodes and 244 internal edges; the diagram shows only representative relationships to stay readable.</p>
+<!-- ====== 15. VirtualDesktop11-24H2.cs ====== -->
+<h2 id="virtualdesktop11-24h2-cs">15. VirtualDesktop11-24H2.cs</h2>
+<p>VirtualDesktop11-24H2.cs groups implementation around virtualdesktop11, 24h2cs, tools, avcp, mostly in tools/VirtualDesktop11-24H2.cs. This section covers 19 nodes and 18 internal edges; the diagram shows only representative relationships to stay readable.</p>
 
 <div class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
 flowchart LR
-    %% Section: Other (229 nodes, 244 edges)
-    subgraph other_tools_VirtualDesktop11_24H2_cs_79ec2928["tools/VirtualDesktop11-24H2.cs"]
-        tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61("IApplicationViewCollection<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
-        tools_virtualdesktop11_24h2_virtualdesktop_ivirt_062d7295("IVirtualDesktopPinnedApps<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
-        tools_virtualdesktop11_24h2_virtualdesktop_iserv_d4f97091("IServiceProvider10<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
-        tools_virtualdesktop11_24h2_virtualdesktop_iserv_355e977c("QueryService()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
-        tools_virtualdesktop11_24h2_virtualdesktop_ivirt_1905d882("IVirtualDesktopManager<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
-        tools_virtualdesktop11_24h2_virtualdesktop_ivirt_ee1a25dd("IsWindowOnCurrentVirtualDesktop()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
-    end
-    subgraph other_client_adapters_gemini_free_adapter_py_bc83cdc9["client/adapters/gemini_free_adapter.py"]
-        client_adapters_gemini_free_adapter_geminifreead_7f50e35e("GeminiFreeAdapter<br/><small>client/adapters/gemini_free_adapter.py</small>")
-        client_adapters_gemini_free_adapter_geminifreead_021bb687("__init__()<br/><small>client/adapters/gemini_free_adapter.py</small>")
-        client_adapters_gemini_free_adapter_geminifreead_35a54f84("check_health()<br/><small>client/adapters/gemini_free_adapter.py</small>")
-        client_adapters_gemini_free_adapter_geminifreead_f3406b33("execute_task()<br/><small>client/adapters/gemini_free_adapter.py</small>")
-    end
-    subgraph other_client_adapters_ollama_local_adapter_py_918d3c79["client/adapters/ollama_local_adapter.py"]
-        client_adapters_ollama_local_adapter_ollamalocal_479f5c26("OllamaLocalAdapter<br/><small>client/adapters/ollama_local_adapter.py</small>")
-        client_adapters_ollama_local_adapter_ollamalocal_94d78a1d("__init__()<br/><small>client/adapters/ollama_local_adapter.py</small>")
-        client_adapters_ollama_local_adapter_ollamalocal_4e93a082("check_health()<br/><small>client/adapters/ollama_local_adapter.py</small>")
-        client_adapters_ollama_local_adapter_ollamalocal_ade02002("execute_task()<br/><small>client/adapters/ollama_local_adapter.py</small>")
-    end
-    client_worker_daemon_272f3044("worker_daemon.py")
-    server_core_scheduler_quotaawarescheduler_a62d501c("QuotaAwareScheduler<br/><small>server/core/scheduler.py</small>")
-    usage_watchdog_invoke_watchdogpoll_12386086("Invoke-WatchdogPoll()<br/><small>usage-watchdog.ps1</small>")
-    worker_prompts_orchestrator_5dac4e9e("orchestrator.md")
-    client_adapters_ollama_local_adapter_ollamalocal_479f5c26 -->|method| client_adapters_ollama_local_adapter_ollamalocal_94d78a1d
-    client_adapters_ollama_local_adapter_ollamalocal_479f5c26 -->|method| client_adapters_ollama_local_adapter_ollamalocal_4e93a082
-    client_adapters_ollama_local_adapter_ollamalocal_479f5c26 -->|method| client_adapters_ollama_local_adapter_ollamalocal_ade02002
-    client_adapters_gemini_free_adapter_geminifreead_7f50e35e -->|method| client_adapters_gemini_free_adapter_geminifreead_021bb687
-    client_adapters_gemini_free_adapter_geminifreead_7f50e35e -->|method| client_adapters_gemini_free_adapter_geminifreead_35a54f84
-    client_adapters_gemini_free_adapter_geminifreead_7f50e35e -->|method| client_adapters_gemini_free_adapter_geminifreead_f3406b33
-    tools_virtualdesktop11_24h2_virtualdesktop_iserv_d4f97091 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iserv_355e977c
-    tools_virtualdesktop11_24h2_virtualdesktop_ivirt_1905d882 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_ivirt_ee1a25dd
-    client_worker_daemon_272f3044 -->|imports| client_adapters_ollama_local_adapter_ollamalocal_479f5c26
-    client_worker_daemon_272f3044 -->|imports| client_adapters_gemini_free_adapter_geminifreead_7f50e35e
-    %% Omitted for readability: 211 nodes, 0 edges
-    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 klass;
-    class tools_virtualdesktop11_24h2_virtualdesktop_ivirt_062d7295 klass;
-    class tools_virtualdesktop11_24h2_virtualdesktop_iserv_d4f97091 klass;
-    class tools_virtualdesktop11_24h2_virtualdesktop_iserv_355e977c function;
-    class tools_virtualdesktop11_24h2_virtualdesktop_ivirt_1905d882 klass;
-    class tools_virtualdesktop11_24h2_virtualdesktop_ivirt_ee1a25dd function;
-    class client_adapters_gemini_free_adapter_geminifreead_7f50e35e klass;
-    class client_adapters_gemini_free_adapter_geminifreead_021bb687 function;
-    class client_adapters_gemini_free_adapter_geminifreead_35a54f84 function;
-    class client_adapters_gemini_free_adapter_geminifreead_f3406b33 function;
-    class client_adapters_ollama_local_adapter_ollamalocal_479f5c26 klass;
-    class client_adapters_ollama_local_adapter_ollamalocal_94d78a1d function;
-    class client_adapters_ollama_local_adapter_ollamalocal_4e93a082 function;
-    class client_adapters_ollama_local_adapter_ollamalocal_ade02002 function;
-    class client_worker_daemon_272f3044 module;
-    class server_core_scheduler_quotaawarescheduler_a62d501c klass;
-    class usage_watchdog_invoke_watchdogpoll_12386086 function;
-    class worker_prompts_orchestrator_5dac4e9e concept;
+    %% Section: VirtualDesktop11-24H2.cs (19 nodes, 18 edges)
+    tools_virtualdesktop11_24h2_9ebe280f("VirtualDesktop11-24H2.cs")
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_0f45948e("VIEW COMPATIBILITY POLICY<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_e1e57c32("APPLICATION_VIEW_CLOAK_TYPE<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_5fcf0036("GetCompatibilityPolicyType()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_44daeecc("GetExtendedFramePosition()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_510bf4e7("SetCloak()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_cc231f83("AVCT_NONE<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_4898ad73("AVCT_DEFAULT<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_2c41254c("AVCT_VIRTUAL_DESKTOP<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_b27cbc3b("AVCP_NONE<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_b44fab59("AVCP_SMALL_SCREEN<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_319f99cf("AVCP_TABLET_SMALL_SCREEN<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_4919e35b("AVCP_VERY_SMALL_SCREEN<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_435a8618("AVCP_HIGH_SCALE_FACTOR<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_rect_9c6f9cba("Rect<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_99531c9e("SetCompatibilityPolicyType()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    csharp_namespace_736c16d950f7f787_fb2e2729("VirtualDesktop<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_guids_2a581aa2("Guids<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_e1e57c32 -->|case of| tools_virtualdesktop11_24h2_virtualdesktop_appli_cc231f83
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_e1e57c32 -->|case of| tools_virtualdesktop11_24h2_virtualdesktop_appli_4898ad73
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_e1e57c32 -->|case of| tools_virtualdesktop11_24h2_virtualdesktop_appli_2c41254c
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_0f45948e -->|case of| tools_virtualdesktop11_24h2_virtualdesktop_appli_b27cbc3b
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_0f45948e -->|case of| tools_virtualdesktop11_24h2_virtualdesktop_appli_b44fab59
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_0f45948e -->|case of| tools_virtualdesktop11_24h2_virtualdesktop_appli_319f99cf
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_0f45948e -->|case of| tools_virtualdesktop11_24h2_virtualdesktop_appli_4919e35b
+    tools_virtualdesktop11_24h2_virtualdesktop_appli_0f45948e -->|case of| tools_virtualdesktop11_24h2_virtualdesktop_appli_435a8618
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_5fcf0036 -->|references| tools_virtualdesktop11_24h2_virtualdesktop_appli_0f45948e
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_44daeecc -->|references| tools_virtualdesktop11_24h2_virtualdesktop_rect_9c6f9cba
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_510bf4e7 -->|references| tools_virtualdesktop11_24h2_virtualdesktop_appli_e1e57c32
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_99531c9e -->|references| tools_virtualdesktop11_24h2_virtualdesktop_appli_0f45948e
+    tools_virtualdesktop11_24h2_9ebe280f -->|contains| csharp_namespace_736c16d950f7f787_fb2e2729
+    tools_virtualdesktop11_24h2_9ebe280f -->|contains| tools_virtualdesktop11_24h2_virtualdesktop_guids_2a581aa2
+    tools_virtualdesktop11_24h2_9ebe280f -->|contains| tools_virtualdesktop11_24h2_virtualdesktop_rect_9c6f9cba
+    tools_virtualdesktop11_24h2_9ebe280f -->|contains| tools_virtualdesktop11_24h2_virtualdesktop_appli_e1e57c32
+    tools_virtualdesktop11_24h2_9ebe280f -->|contains| tools_virtualdesktop11_24h2_virtualdesktop_appli_0f45948e
+    %% Omitted for readability: 1 nodes, 0 edges
+    class tools_virtualdesktop11_24h2_9ebe280f klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_appli_0f45948e klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_appli_e1e57c32 klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_5fcf0036 function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_44daeecc function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_510bf4e7 function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_appli_cc231f83 klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_appli_4898ad73 klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_appli_2c41254c klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_appli_b27cbc3b klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_appli_b44fab59 klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_appli_319f99cf klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_appli_4919e35b klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_appli_435a8618 klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_rect_9c6f9cba klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_99531c9e function;
+    class csharp_namespace_736c16d950f7f787_fb2e2729 module;
+    class tools_virtualdesktop11_24h2_virtualdesktop_guids_2a581aa2 klass;
     classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
     classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
     classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
@@ -4919,93 +4583,340 @@ flowchart LR
   <td>No direct outbound edge</td>
   <td>AVCP_VERY_SMALL_SCREEN node in tools/VirtualDesktop11-24H2.cs.</td>
 </tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>tools/VirtualDesktop11-24H2.cs</code></td><td>19 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: case of x8, contains x6, references x4. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<!-- ====== 16. Other ====== -->
+<h2 id="other">16. Other</h2>
+<p>Other groups implementation around server, mcp, tools, virtualdesktop11, mostly in tools/VirtualDesktop11-24H2.cs, server/models/schemas.py, server/core/scheduler.py. This section covers 188 nodes and 193 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Other (188 nodes, 193 edges)
+    subgraph other_tools_VirtualDesktop11_24H2_cs_79ec2928["tools/VirtualDesktop11-24H2.cs"]
+        tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61("IApplicationViewCollection<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_ivirt_062d7295("IVirtualDesktopPinnedApps<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_deskt_4625fcd3("PinApplication()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_iserv_d4f97091("IServiceProvider10<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_iserv_355e977c("QueryService()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_ivirt_1905d882("IVirtualDesktopManager<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_ivirt_ee1a25dd("IsWindowOnCurrentVirtualDesktop()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_ivirt_103c7ecd("GetWindowDesktopId()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_ivirt_77151cae("MoveWindowToDesktop()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_iappl_e3512045("GetViews()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_iappl_e0699b67("GetViewsByZOrder()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_iappl_3f1bf75c("GetViewsByAppUserModelId()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_iappl_cfa8a5c3("GetViewForApplication()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_iappl_3e080985("GetViewForAppUserModelId()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+        tools_virtualdesktop11_24h2_virtualdesktop_iappl_370d188d("GetViewInFocus()<br/><small>tools/VirtualDesktop11-24H2.cs</small>")
+    end
+    server_core_scheduler_quotaawarescheduler_a62d501c("QuotaAwareScheduler<br/><small>server/core/scheduler.py</small>")
+    usage_watchdog_invoke_watchdogpoll_12386086("Invoke-WatchdogPoll()<br/><small>usage-watchdog.ps1</small>")
+    worker_prompts_orchestrator_5dac4e9e("orchestrator.md")
+    tools_virtualdesktop11_24h2_virtualdesktop_iserv_d4f97091 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iserv_355e977c
+    tools_virtualdesktop11_24h2_virtualdesktop_ivirt_1905d882 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_ivirt_ee1a25dd
+    tools_virtualdesktop11_24h2_virtualdesktop_ivirt_1905d882 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_ivirt_103c7ecd
+    tools_virtualdesktop11_24h2_virtualdesktop_ivirt_1905d882 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_ivirt_77151cae
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iappl_e3512045
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iappl_e0699b67
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iappl_3f1bf75c
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iappl_cfa8a5c3
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iappl_3e080985
+    tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 -->|method| tools_virtualdesktop11_24h2_virtualdesktop_iappl_370d188d
+    %% Omitted for readability: 170 nodes, 0 edges
+    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_5461fd61 klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_ivirt_062d7295 klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_deskt_4625fcd3 function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iserv_d4f97091 klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iserv_355e977c function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_ivirt_1905d882 klass;
+    class tools_virtualdesktop11_24h2_virtualdesktop_ivirt_ee1a25dd function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_ivirt_103c7ecd function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_ivirt_77151cae function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_e3512045 function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_e0699b67 function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_3f1bf75c function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_cfa8a5c3 function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_3e080985 function;
+    class tools_virtualdesktop11_24h2_virtualdesktop_iappl_370d188d function;
+    class server_core_scheduler_quotaawarescheduler_a62d501c klass;
+    class usage_watchdog_invoke_watchdogpoll_12386086 function;
+    class worker_prompts_orchestrator_5dac4e9e concept;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>IServiceProvider10</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>QueryService()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>IServiceProvider10 node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>IVirtualDesktopManager</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>GetWindowDesktopId()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>IsWindowOnCurrentVirtualDesktop()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>MoveWindowToDesktop()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>IVirtualDesktopManager node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>.DesktopWallpaperFromIndex()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Desktop</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>Main()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><code>GetDesktop()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>GetWallpaperPath()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>.DesktopWallpaperFromIndex() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>.HasWindow()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Desktop</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>Main()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><code>GetId()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>GetWindowDesktopId()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>.HasWindow() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>.GetPosition()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>IApplicationView</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>No direct outbound edge</td>
+  <td>.GetPosition() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>.GetVirtualDesktopId()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>IApplicationView</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>No direct outbound edge</td>
+  <td>.GetVirtualDesktopId() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>.SetVirtualDesktopId()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>IApplicationView</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>No direct outbound edge</td>
+  <td>.SetVirtualDesktopId() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>.QueryService()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>IServiceProvider10</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>No direct outbound edge</td>
+  <td>.QueryService() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>.GetId()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>GetDesktopIndex()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>HasWindow()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>IVirtualDesktop</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>.GetId() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>.GetWallpaperPath()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>DesktopWallpaperFromIndex()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>IVirtualDesktop</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>No direct outbound edge</td>
+  <td>.GetWallpaperPath() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>.GetWindowDesktopId()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>FromWindow()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>HasWindow()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>IVirtualDesktopManager</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>No direct outbound edge</td>
+  <td>.GetWindowDesktopId() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>.IsWindowOnCurrentVirtualDesktop()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>IVirtualDesktopManager</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>No direct outbound edge</td>
+  <td>.IsWindowOnCurrentVirtualDesktop() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>.MoveWindowToDesktop()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>IVirtualDesktopManager</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>MoveWindow()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>No direct outbound edge</td>
+  <td>.MoveWindowToDesktop() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>.FindDesktop()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>FromWindow()</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small><br><code>IVirtualDesktopManagerInternal</code><br><small style="color:var(--muted)">tools/VirtualDesktop11-24H2.cs</small></td>
+  <td>No direct outbound edge</td>
+  <td>.FindDesktop() node in tools/VirtualDesktop11-24H2.cs.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>Guid</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Guid node in project.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>MarshalAs</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>MarshalAs node in project.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>CheckpointResponse</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>get_checkpoint()</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br><code>routes_tasks.py</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br><code>submit_checkpoint()</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>CheckpointResponse node in server/models/schemas.py.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>CheckpointSubmit</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>routes_tasks.py</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br><code>submit_checkpoint()</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>CheckpointSubmit node in server/models/schemas.py.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>ContextUpsert</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>routes_memory.py</code><br><small style="color:var(--muted)">server/api/routes_memory.py</small><br><code>upsert_context()</code><br><small style="color:var(--muted)">server/api/routes_memory.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>ContextUpsert node in server/models/schemas.py.</td>
+</tr>
 <tr>
   <td>20</td>
-  <td><code>OllamaLocalAdapter</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
+  <td><code>MemoryCreate</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td><code>get_adapter()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small><br><code>worker_daemon.py</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
-  <td><code>__init__()</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small><br><code>check_health()</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small><br><code>execute_task()</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
-  <td>OllamaLocalAdapter node in client/adapters/ollama_local_adapter.py.</td>
+  <td><code>push_memory()</code><br><small style="color:var(--muted)">server/api/routes_memory.py</small><br><code>routes_memory.py</code><br><small style="color:var(--muted)">server/api/routes_memory.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>MemoryCreate node in server/models/schemas.py.</td>
 </tr>
 <tr>
   <td>21</td>
-  <td><code>.check_health()</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>OllamaLocalAdapter</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
+  <td><code>QAReviewResponse</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>routes_tasks.py</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br><code>submit_qa_review()</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small></td>
   <td>No direct outbound edge</td>
-  <td>.check_health() node in client/adapters/ollama_local_adapter.py.</td>
+  <td>QAReviewResponse node in server/models/schemas.py.</td>
 </tr>
 <tr>
   <td>22</td>
-  <td><code>.execute_task()</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>OllamaLocalAdapter</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
+  <td><code>QAReviewSubmit</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>routes_tasks.py</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br><code>submit_qa_review()</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small></td>
   <td>No direct outbound edge</td>
-  <td>.execute_task() node in client/adapters/ollama_local_adapter.py.</td>
+  <td>QAReviewSubmit node in server/models/schemas.py.</td>
 </tr>
 <tr>
   <td>23</td>
-  <td><code>.__init__()</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>OllamaLocalAdapter</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
+  <td><code>TaskAcquireRequest</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>acquire_task()</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br><code>routes_tasks.py</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small></td>
   <td>No direct outbound edge</td>
-  <td>.__init__() node in client/adapters/ollama_local_adapter.py.</td>
+  <td>TaskAcquireRequest node in server/models/schemas.py.</td>
 </tr>
 <tr>
   <td>24</td>
-  <td><code>get_adapter()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>main_loop()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
-  <td><code>BaseWorkerAdapter</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small><br><code>ClaudeDesktopCDPAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br><code>ClaudeDesktopProxyAdapter</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_proxy.py</small><br>+3 more</td>
-  <td>get_adapter() node in client/worker_daemon.py.</td>
+  <td><code>TaskBlockRequest</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>block_task()</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br><code>routes_tasks.py</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>TaskBlockRequest node in server/models/schemas.py.</td>
 </tr>
 <tr>
   <td>25</td>
-  <td><code>get_system_telemetry()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>c truthful telemetry()</code><br><small style="color:var(--muted)">tests/test_invariants_wsr_002.py</small><br><code>main_loop()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small><br><code>test_invariants_wsr_002.py</code><br><small style="color:var(--muted)">tests/test_invariants_wsr_002.py</small></td>
+  <td><code>TaskClaimRequest</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>claim_task()</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br><code>routes_tasks.py</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small></td>
   <td>No direct outbound edge</td>
-  <td>get_system_telemetry() node in client/worker_daemon.py.</td>
+  <td>TaskClaimRequest node in server/models/schemas.py.</td>
 </tr>
 <tr>
   <td>26</td>
-  <td><code>main_loop()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td>External entry / no inbound edge</td>
-  <td><code>get_adapter()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small><br><code>get_system_telemetry()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small><br><code>task lease periodically()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
-  <td>main_loop() node in client/worker_daemon.py.</td>
+  <td><code>TaskCreate</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>create_task()</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br><code>routes_tasks.py</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>TaskCreate node in server/models/schemas.py.</td>
 </tr>
 <tr>
   <td>27</td>
-  <td><code>renew_task_lease_periodically()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
-  <td><span class="tag tag-func">Function</span></td>
-  <td><code>main_loop()</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
+  <td><code>TaskLeaseRenewRequest</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>renew_task_lease()</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br><code>routes_tasks.py</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small></td>
   <td>No direct outbound edge</td>
-  <td>renew_task_lease_periodically() node in client/worker_daemon.py.</td>
+  <td>TaskLeaseRenewRequest node in server/models/schemas.py.</td>
 </tr>
 <tr>
   <td>28</td>
-  <td><code>ollama_local_adapter.py</code><br><small style="color:var(--muted)">client/adapters/ollama_local_adapter.py</small></td>
-  <td><span class="tag tag-class">Module</span></td>
-  <td><code>worker_daemon.py</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
-  <td><code>base_adapter.py</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small><br><code>BaseWorkerAdapter</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small></td>
-  <td>Module file in client/adapters/ollama_local_adapter.py.</td>
+  <td><code>TaskReleaseRequest</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td><code>release_task()</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br><code>routes_tasks.py</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small></td>
+  <td>No direct outbound edge</td>
+  <td>TaskReleaseRequest node in server/models/schemas.py.</td>
 </tr>
 <tr>
   <td>29</td>
-  <td><code>Any</code><br><small style="color:var(--muted)"></small></td>
+  <td><code>WorkerRegister</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
   <td><span class="tag tag-class">Class</span></td>
-  <td>External entry / no inbound edge</td>
+  <td><code>register_worker()</code><br><small style="color:var(--muted)">server/api/routes_workers.py</small><br><code>routes_workers.py</code><br><small style="color:var(--muted)">server/api/routes_workers.py</small></td>
   <td>No direct outbound edge</td>
-  <td>Any node in project.</td>
+  <td>WorkerRegister node in server/models/schemas.py.</td>
 </tr>
 <tr>
   <td>30</td>
-  <td><code>worker_daemon.py</code><br><small style="color:var(--muted)">client/worker_daemon.py</small></td>
+  <td><code>schemas.py</code><br><small style="color:var(--muted)">server/models/schemas.py</small></td>
   <td><span class="tag tag-class">Module</span></td>
-  <td><code>test_invariants_wsr_002.py</code><br><small style="color:var(--muted)">tests/test_invariants_wsr_002.py</small></td>
-  <td><code>base_adapter.py</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small><br><code>BaseWorkerAdapter</code><br><small style="color:var(--muted)">client/adapters/base_adapter.py</small><br><code>claude_desktop_cdp.py</code><br><small style="color:var(--muted)">client/adapters/claude_desktop_cdp.py</small><br>+9 more</td>
-  <td>Module file in client/worker_daemon.py.</td>
+  <td><code>routes_jobs.py</code><br><small style="color:var(--muted)">server/api/routes_jobs.py</small><br><code>routes_memory.py</code><br><small style="color:var(--muted)">server/api/routes_memory.py</small><br><code>routes_tasks.py</code><br><small style="color:var(--muted)">server/api/routes_tasks.py</small><br>+1 more</td>
+  <td>No direct outbound edge</td>
+  <td>Module file in server/models/schemas.py.</td>
 </tr>
 </table>
 
@@ -5014,19 +4925,19 @@ flowchart LR
     <h4>Key Files</h4>
     <table style="width:100%;font-size:0.85rem;">
       <tr><th>File</th><th>Coverage</th></tr>
-      <tr><td><code>tools/VirtualDesktop11-24H2.cs</code></td><td>58 nodes</td></tr>
+      <tr><td><code>tools/VirtualDesktop11-24H2.cs</code></td><td>39 nodes</td></tr>
 <tr><td><code>server/models/schemas.py</code></td><td>14 nodes</td></tr>
 <tr><td><code>server/core/scheduler.py</code></td><td>13 nodes</td></tr>
 <tr><td><code>team-memory.md</code></td><td>11 nodes</td></tr>
 <tr><td><code>sync-mcp.ps1</code></td><td>8 nodes</td></tr>
-<tr><td><code>client/worker_daemon.py</code></td><td>7 nodes</td></tr>
 <tr><td><code>cooldown-reminder.ps1</code></td><td>7 nodes</td></tr>
 <tr><td><code>server/requirements.txt</code></td><td>7 nodes</td></tr>
+<tr><td><code>sync.ps1</code></td><td>7 nodes</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Design Notes</h4>
-    <p>This section comes from graphify community clustering. Relationship summary: contains x82, references x48, calls x41, method x30. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x66, references x38, calls x36, method x24. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
   </div>
 </div>
 <hr>
@@ -5099,18 +5010,18 @@ flowchart LR
   <div class="card">
     <h4>Graph</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>Nodes</td><td>1326</td></tr>
+      <tr><td>Nodes</td><td>1325</td></tr>
       <tr><td>Edges</td><td>2461</td></tr>
       <tr><td>Hyperedges</td><td>6</td></tr>
-      <tr><td>Communities</td><td>121</td></tr>
+      <tr><td>Communities</td><td>120</td></tr>
       <tr><td>Documented Sections</td><td>15</td></tr>
     </table>
   </div>
   <div class="card">
     <h4>Edge Confidence</h4>
     <table style="width:100%;font-size:0.85rem;">
-      <tr><td>EXTRACTED</td><td>2364</td></tr>
-      <tr><td>INFERRED</td><td>97</td></tr>
+      <tr><td>EXTRACTED</td><td>2363</td></tr>
+      <tr><td>INFERRED</td><td>98</td></tr>
       <tr><td>AMBIGUOUS</td><td>0</td></tr>
     </table>
   </div>
@@ -5118,7 +5029,7 @@ flowchart LR
 
 <div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
   <p>Claude-Desktop — Architecture Documentation</p>
-  <p>Generated: 2026-09-19 17:46 UTC · graphify callflow-html</p>
+  <p>Generated: 2026-09-19 18:10 UTC · graphify callflow-html</p>
 </div>
 
 </div><!-- .container -->

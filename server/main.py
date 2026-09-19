@@ -71,11 +71,7 @@ class MCPAuthMiddleware:
                 if auth_header.lower().startswith("bearer "):
                     bearer_token = auth_header[7:].strip()
 
-                query_string = scope.get("query_string", b"").decode("utf-8", errors="ignore")
-                query_params = dict(qp.split("=", 1) for qp in query_string.split("&") if "=" in qp)
-                query_token = query_params.get("api_key") or query_params.get("token", "")
-
-                provided_token = x_api_key or bearer_token or query_token
+                provided_token = x_api_key or bearer_token
                 if not provided_token or provided_token != expected_key:
                     response_body = b'{"detail": "Invalid or missing authentication credentials"}'
                     await send({

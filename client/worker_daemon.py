@@ -151,31 +151,31 @@ async def main_loop():
                         )
                         try:
                             exec_res = await adapter.execute_task(task_id, task_info.get("spec", ""), stage, {})
+
+                            if exec_res.get("success"):
+                                # Submit checkpoint
+                                cp_payload = {
+                                    "task_id": task_id,
+                                    "kind": "text",
+                                    "summary": exec_res.get("summary", ""),
+                                    "result_text": exec_res.get("result_text", ""),
+                                    "submitted_by": WORKER_ID,
+                                    "claim_token": claim_token,
+                                }
+                                checkpoint_r = await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/checkpoint", json=cp_payload)
+                                checkpoint_r.raise_for_status()
+                                print(f"[+] Task {task_id} completed and checkpoint submitted!")
+                            elif exec_res.get("error") == "RATE_LIMIT_429":
+                                print(f"[!] Rate limit 429 encountered! Triggering cooldown...")
+                                await client.post(f"{ORCHESTRATOR_URL}/workers/{WORKER_ID}/heartbeat", json={"trigger_cooldown": True})
+                                await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID, "claim_token": claim_token})
+                            else:
+                                print(f"[!] Task execution failed: {exec_res.get('error')}")
+                                await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID, "claim_token": claim_token})
                         finally:
                             lease_stop.set()
                             await lease_task
                             active_task_id = None
-
-                        if exec_res.get("success"):
-                            # Submit checkpoint
-                            cp_payload = {
-                                "task_id": task_id,
-                                "kind": "text",
-                                "summary": exec_res.get("summary", ""),
-                                "result_text": exec_res.get("result_text", ""),
-                                "submitted_by": WORKER_ID,
-                                "claim_token": claim_token,
-                            }
-                            checkpoint_r = await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/checkpoint", json=cp_payload)
-                            checkpoint_r.raise_for_status()
-                            print(f"[+] Task {task_id} completed and checkpoint submitted!")
-                        elif exec_res.get("error") == "RATE_LIMIT_429":
-                            print(f"[!] Rate limit 429 encountered! Triggering cooldown...")
-                            await client.post(f"{ORCHESTRATOR_URL}/workers/{WORKER_ID}/heartbeat", json={"trigger_cooldown": True})
-                            await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID, "claim_token": claim_token})
-                        else:
-                            print(f"[!] Task execution failed: {exec_res.get('error')}")
-                            await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID, "claim_token": claim_token})
 
                 reconnect_delay = 1
                 await asyncio.sleep(POLL_INTERVAL_SECONDS)

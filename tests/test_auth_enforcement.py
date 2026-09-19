@@ -65,3 +65,11 @@ async def test_auth_enforced_when_api_key_configured(monkeypatch):
         # Valid X-API-Key header MUST succeed
         valid_header = await client.get("/api/v1/tasks", headers={"X-API-Key": dummy_auth_val})
         assert valid_header.status_code == 200
+
+        # Query-string auth MUST be rejected on MCP endpoint (G-3 hardening)
+        query_auth_mcp = await client.post(f"/mcp/messages/?api_key={dummy_auth_val}")
+        assert query_auth_mcp.status_code == 401, "Query string credentials must be rejected to prevent log leakage"
+
+        # Valid MCP header auth passes through the middleware into the SSE app (returning 400 Bad Request instead of 401)
+        valid_mcp = await client.post("/mcp/messages/", headers={"X-API-Key": dummy_auth_val})
+        assert valid_mcp.status_code != 401, f"Expected authenticated MCP call to pass middleware, got {valid_mcp.status_code}"

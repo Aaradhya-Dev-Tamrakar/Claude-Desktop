@@ -29,6 +29,31 @@ ORCHESTRATOR_URL = os.getenv("ORCHESTRATOR_URL", "http://127.0.0.1:8000/api/v1")
 NODE_ID = os.getenv("NODE_ID", "local-fleet-node")
 POLL_INTERVAL_SECONDS = max(1.0, float(os.getenv("WORKER_POLL_INTERVAL_SECONDS", "5")))
 LEASE_SECONDS = max(30, int(os.getenv("LEASE_SECONDS", "300")))
+LEASE_RENEWAL_SECONDS = max(10, int(os.getenv("LEASE_RENEWAL_SECONDS", str(LEASE_SECONDS // 3))))
+
+async def renew_task_lease_periodically(
+    client: httpx.AsyncClient,
+    worker_id: str,
+    task_id: str,
+    claim_token: str,
+    stop_event: asyncio.Event,
+) -> None:
+    while not stop_event.is_set():
+        try:
+            await asyncio.wait_for(stop_event.wait(), timeout=LEASE_RENEWAL_SECONDS)
+            break
+        except asyncio.TimeoutError:
+            response = await client.post(
+                f"{ORCHESTRATOR_URL}/tasks/{task_id}/renew-lease",
+                json={
+                    "worker_id": worker_id,
+                    "claim_token": claim_token,
+                    "lease_seconds": LEASE_SECONDS,
+                },
+            )
+            if response.status_code != 200:
+                print(f"[!] [{worker_id}] Lease renewal failed for {task_id}: HTTP {response.status_code}")
+                break
 
 ROLE_CAPABILITIES: dict[str, list[str]] = {
     "orchestrator": ["coordination", "review", "writing", "code"],
@@ -185,70 +210,76 @@ async def run_worker_loop(
                             "current_task_id": task_id,
                         },
                     )
+                    lease_stop = asyncio.Event()
+                    lease_task = asyncio.create_task(
+                        renew_task_lease_periodically(client, worker_id, task_id, claim_token, lease_stop)
+                    )
                     try:
                         exec_res = await adapter.execute_task(
                             task_id, task_info.get("spec", ""), stage, {}
                         )
-                    finally:
-                        active_task_id = None
 
-                    if exec_res.get("success"):
-                        result_text = exec_res.get("result_text", "")
-                        
-                        # If this is a QA stage, submit formal QA review
-                        if stage in ("qa", "qa_review"):
-                            verdict = "pass"
-                            reason = None
-                            if "fail" in result_text.lower() or "revision_needed" in result_text.lower():
-                                verdict = "revision_needed"
-                                reason = "QA checks requested revision"
+                        if exec_res.get("success"):
+                            result_text = exec_res.get("result_text", "")
                             
-                            qa_payload = {
-                                "reviewer_worker_id": worker_id,
-                                "verdict": verdict,
-                                "rejection_reason": reason,
-                                "checks_passed": {"evaluated": True, "score": 90 if verdict == "pass" else 50},
-                                "summary": f"QA review: {verdict.upper()}",
-                                "result_text": result_text,
-                            }
-                            await client.post(
-                                f"{ORCHESTRATOR_URL}/tasks/{task_id}/qa-review",
-                                json=qa_payload,
-                            )
-                            print(f"[+] [{worker_id}] Task {task_id} QA review submitted: {verdict.upper()}")
-                        else:
-                            # Normal stage: submit checkpoint
-                            cp_payload = {
-                                "task_id": task_id,
-                                "kind": "text",
-                                "summary": exec_res.get("summary", ""),
-                                "result_text": result_text,
-                                "submitted_by": worker_id,
-                                "claim_token": claim_token,
-                            }
-                            await client.post(
-                                f"{ORCHESTRATOR_URL}/tasks/{task_id}/checkpoint",
-                                json=cp_payload,
-                            )
-                            print(f"[+] [{worker_id}] Task {task_id} checkpoint submitted.")
+                            # If this is a QA stage, submit formal QA review
+                            if stage in ("qa", "qa_review"):
+                                verdict = "pass"
+                                reason = None
+                                if "fail" in result_text.lower() or "revision_needed" in result_text.lower():
+                                    verdict = "revision_needed"
+                                    reason = "QA checks requested revision"
+                                
+                                qa_payload = {
+                                    "reviewer_worker_id": worker_id,
+                                    "verdict": verdict,
+                                    "rejection_reason": reason,
+                                    "checks_passed": {"evaluated": True, "score": 90 if verdict == "pass" else 50},
+                                    "summary": f"QA review: {verdict.upper()}",
+                                    "result_text": result_text,
+                                }
+                                await client.post(
+                                    f"{ORCHESTRATOR_URL}/tasks/{task_id}/qa-review",
+                                    json=qa_payload,
+                                )
+                                print(f"[+] [{worker_id}] Task {task_id} QA review submitted: {verdict.upper()}")
+                            else:
+                                # Normal stage: submit checkpoint
+                                cp_payload = {
+                                    "task_id": task_id,
+                                    "kind": "text",
+                                    "summary": exec_res.get("summary", ""),
+                                    "result_text": result_text,
+                                    "submitted_by": worker_id,
+                                    "claim_token": claim_token,
+                                }
+                                await client.post(
+                                    f"{ORCHESTRATOR_URL}/tasks/{task_id}/checkpoint",
+                                    json=cp_payload,
+                                )
+                                print(f"[+] [{worker_id}] Task {task_id} checkpoint submitted.")
 
-                    elif exec_res.get("error") == "RATE_LIMIT_429":
-                        print(f"[!] [{worker_id}] Rate limit detected in Claude UI! Entering 5h cooldown.")
-                        await client.post(
-                            f"{ORCHESTRATOR_URL}/workers/{worker_id}/heartbeat",
-                            json={"trigger_cooldown": True},
-                        )
-                        await client.post(
-                            f"{ORCHESTRATOR_URL}/tasks/{task_id}/release",
-                            json={"worker_id": worker_id, "claim_token": claim_token},
-                        )
-                        await asyncio.sleep(300)
-                    else:
-                        print(f"[!] [{worker_id}] Task execution failed: {exec_res.get('error')}")
-                        await client.post(
-                            f"{ORCHESTRATOR_URL}/tasks/{task_id}/release",
-                            json={"worker_id": worker_id, "claim_token": claim_token},
-                        )
+                        elif exec_res.get("error") == "RATE_LIMIT_429":
+                            print(f"[!] [{worker_id}] Rate limit detected in Claude UI! Entering 5h cooldown.")
+                            await client.post(
+                                f"{ORCHESTRATOR_URL}/workers/{worker_id}/heartbeat",
+                                json={"trigger_cooldown": True},
+                            )
+                            await client.post(
+                                f"{ORCHESTRATOR_URL}/tasks/{task_id}/release",
+                                json={"worker_id": worker_id, "claim_token": claim_token},
+                            )
+                            await asyncio.sleep(300)
+                        else:
+                            print(f"[!] [{worker_id}] Task execution failed: {exec_res.get('error')}")
+                            await client.post(
+                                f"{ORCHESTRATOR_URL}/tasks/{task_id}/release",
+                                json={"worker_id": worker_id, "claim_token": claim_token},
+                            )
+                    finally:
+                        lease_stop.set()
+                        await lease_task
+                        active_task_id = None
 
             reconnect_delay = 1.0
             await asyncio.sleep(POLL_INTERVAL_SECONDS)

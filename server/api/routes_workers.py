@@ -62,6 +62,7 @@ async def list_workers(
             quota_used_current=r["quota_used_current"],
             cooldown_window_minutes=r["cooldown_window_minutes"],
             cooldown_until=r["cooldown_until"],
+            rate_limit_headroom=r["rate_limit_headroom"] if "rate_limit_headroom" in r.keys() else None,
             last_heartbeat=r["last_heartbeat"],
             registered_at=r["registered_at"]
         )
@@ -87,6 +88,7 @@ async def get_worker(worker_id: str, db: aiosqlite.Connection = Depends(get_db))
         quota_used_current=r["quota_used_current"],
         cooldown_window_minutes=r["cooldown_window_minutes"],
         cooldown_until=r["cooldown_until"],
+        rate_limit_headroom=r["rate_limit_headroom"] if "rate_limit_headroom" in r.keys() else None,
         last_heartbeat=r["last_heartbeat"],
         registered_at=r["registered_at"]
     )
@@ -122,13 +124,16 @@ async def worker_heartbeat(worker_id: str, hb: WorkerHeartbeat, db: aiosqlite.Co
     if status == "offline":
         status = "idle"
 
+    # Persist headroom if provided, otherwise preserve previous value
+    new_headroom = hb.rate_limit_headroom if hb.rate_limit_headroom is not None else worker["rate_limit_headroom"]
+
     await db.execute(
         """
         UPDATE workers 
-        SET status = ?, cooldown_until = ?, last_heartbeat = ?
+        SET status = ?, cooldown_until = ?, rate_limit_headroom = ?, last_heartbeat = ?
         WHERE id = ?
         """,
-        (status, cooldown_until, now_iso, worker_id)
+        (status, cooldown_until, new_headroom, now_iso, worker_id)
     )
     await db.commit()
     

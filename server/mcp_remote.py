@@ -29,6 +29,15 @@ def _row_to_dict(row: aiosqlite.Row | None) -> dict[str, Any]:
         return {}
     return {k: row[k] for k in row.keys()}
 
+def _sanitize_task_dict(d: dict[str, Any]) -> dict[str, Any]:
+    """Mask sensitive operational mutation tokens from read queries."""
+    if not d:
+        return d
+    sanitized = dict(d)
+    if "claim_token" in sanitized:
+        sanitized["claim_token"] = None
+    return sanitized
+
 # =====================================================================
 # 1. TASK MANAGEMENT TOOLS
 # =====================================================================
@@ -103,7 +112,7 @@ async def list_tasks(
 
         cursor = await db.execute(query, tuple(params))
         rows = await cursor.fetchall()
-        return [_row_to_dict(r) for r in rows]
+        return [_sanitize_task_dict(_row_to_dict(r)) for r in rows]
     finally:
         await db.close()
 
@@ -118,7 +127,7 @@ async def get_task(task_id: str) -> dict[str, Any]:
         row = await cursor.fetchone()
         if not row:
             return {"error": f"Task '{task_id}' not found"}
-        return _row_to_dict(row)
+        return _sanitize_task_dict(_row_to_dict(row))
     finally:
         await db.close()
 

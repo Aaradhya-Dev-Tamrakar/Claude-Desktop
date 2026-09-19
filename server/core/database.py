@@ -36,5 +36,11 @@ async def init_db() -> None:
         if "claim_token" not in columns:
             await db.execute("ALTER TABLE tasks ADD COLUMN claim_token TEXT")
 
+        # Check and migrate columns on workers table if already existing
+        cursor = await db.execute("PRAGMA table_info(workers)")
+        worker_cols = [row[1] for row in await cursor.fetchall()]
+        if "rate_limit_headroom" not in worker_cols:
+            await db.execute("ALTER TABLE workers ADD COLUMN rate_limit_headroom INTEGER DEFAULT NULL")
+
         await db.commit()
 

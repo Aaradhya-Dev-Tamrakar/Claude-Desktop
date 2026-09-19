@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS workers (
     quota_used_current INTEGER DEFAULT 0,
     cooldown_window_minutes INTEGER DEFAULT 300, -- e.g. 300 min (5 hours for Claude Free)
     cooldown_until DATETIME,
+    rate_limit_headroom INTEGER DEFAULT NULL,
     last_heartbeat DATETIME,
     registered_at DATETIME DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))
 );

@@ -197,3 +197,47 @@ Date: 2026-09-19 (Remediation & Formal Evidence Calibration)
 - Full Python test suite: **96/96 passed** across 15 test modules.
 - Formally calibrated `INV-WSR-002.md` to **Evidence Tier E2** (`EMPIRICAL BENCHMARK & TEST SUITE PROVEN`).
 
+---
+
+Date: 2026-09-19 (Phase 2 Hardening & Cross-Worker Resumption Proof)
+
+## Completed Phase 2 Hardening: Lease Lifecycle, Token Isolation & Migration Proof
+
+### Fix G-1: Worker Daemon Lease Lifecycle Race Remediation
+- Shifted task checkpoint submission (`POST /tasks/{id}/checkpoint`), error handling, and release/cooldown logic *inside* the periodic lease renewal window in `client/worker_daemon.py`.
+- Lease renewal loop runs uninterrupted through model execution AND network checkpoint acceptance, eliminating the window where network latency caused lease expiration before result ingestion.
+
+### Fix G-2: Fleet Supervisor Lease Renewal Parity
+- Added `renew_task_lease_periodically` helper and periodic background renewal loop to `client/fleet_supervisor.py`.
+- Ensured long-running CDP tasks (>300s) maintain active lease renewals across execution and QA/checkpoint delivery.
+- Verified in `test_fleet_supervisor.py::test_fleet_lease_renewal_periodically`.
+
+### Fix G-3: Remote MCP Authentication Tightening
+- Removed query-string credential parsing (`?api_key=...` / `?token=...`) from `MCPAuthMiddleware` in `server/main.py`.
+- Authentication credentials are now strictly accepted via HTTP headers (`X-API-Key` or `Authorization: Bearer`), preventing secret leakage into proxy logs and browser history.
+- Verified in `tests/test_auth_enforcement.py`.
+
+### Fix G-4: Claim Token Masking on Read-Only Endpoints
+- Masked `claim_token = None` on read-only REST endpoints (`GET /tasks` and `GET /tasks/{id}`) in `server/api/routes_tasks.py`.
+- Masked `claim_token = None` on MCP read tools (`list_tasks` and `get_task`) via `_sanitize_task_dict` in `server/mcp_remote.py`.
+- Preserved `claim_token` strictly within atomic lease mutation responses (`TaskClaimResponse` from `/claim`, `/acquire`, and `/renew-lease`).
+- Verified in `test_claim_token_masked_on_read_endpoints`.
+
+### Fix G-5: Empirical Provider Quota Telemetry Persistence
+- Added `rate_limit_headroom INTEGER DEFAULT NULL` column to `workers` table in `server/database/schema.sql` with automatic migration in `server/core/database.py`.
+- Exposed `rate_limit_headroom: int | None` on `WorkerResponse` in `server/models/schemas.py`.
+- Persisted and returned headroom in `server/api/routes_workers.py` during heartbeat processing and worker listings.
+
+### Fix G-6: Cross-Worker Session Migration & Resumption Proof
+- Created end-to-end integration test `test_cross_worker_session_migration_and_resumption` in `tests/test_invariants_wsr_002.py`:
+  1. Worker A (Claude Desktop CDP) executes Stage 1 (`research`), submitting durable checkpoint.
+  2. DAG generates Stage 2 (`draft`) inheriting Worker A's research findings in `spec`.
+  3. Worker A acquires Stage 2, encounters 429 rate limit, enters cooldown, releases task.
+  4. Worker B (Copilot Headless) atomically pulls Stage 2 task via `/tasks/acquire` with fresh `claim_token`.
+  5. Worker B executes Stage 2, submits checkpoint, advances to Stage 3 (`format`), and completes job.
+  6. Verified unbroken deliverable lineage and attribution across disparate workers and providers.
+
+### Verification Results
+- Full Python test suite: **99/99 passed** across 15 test modules.
+- Graphify AST knowledge graph ready for update.
+

@@ -128,6 +128,7 @@ class WorkerResponse(BaseModel):
     quota_used_current: int
     cooldown_window_minutes: int
     cooldown_until: str | None
+    rate_limit_headroom: int | None = None
     last_heartbeat: str | None
     registered_at: str
 

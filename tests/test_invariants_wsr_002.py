@@ -338,3 +338,240 @@ async def test_invariant_d_atomic_rollback_on_failure(monkeypatch):
 
             successor = await (await db.execute("SELECT * FROM tasks WHERE parent_id = 'task_rollback_1'")).fetchone()
             assert successor is None, "Successor task must not exist after rollback"
+
+@pytest.mark.asyncio
+async def test_claim_token_masked_on_read_endpoints():
+    """Security hardening (G-4): claim_token must be None on read-only endpoints, exposed only to claiming worker."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        # 1. Register worker
+        await client.post("/api/v1/workers/register", json={
+            "id": "mask_worker_01",
+            "provider": "ollama_local",
+            "node_id": "node-mask",
+            "nickname": "Masking Worker",
+            "capabilities": ["research"],
+        })
+
+        # 2. Create task
+        await client.post("/api/v1/tasks", json={
+            "id": "task_masked_token_1",
+            "stage": "research",
+            "stage_order": 1,
+            "kind": "text",
+            "spec": "Test token masking",
+        })
+
+        # Read before claim
+        get_before = await client.get("/api/v1/tasks/task_masked_token_1")
+        assert get_before.status_code == 200
+        assert get_before.json()["claim_token"] is None
+
+        # Claim task: must return claim_token to claiming worker
+        claim_resp = await client.post("/api/v1/tasks/task_masked_token_1/claim", json={
+            "worker_id": "mask_worker_01",
+            "lease_seconds": 300,
+        })
+        assert claim_resp.status_code == 200
+        claim_token = claim_resp.json()["claim_token"]
+        assert claim_token is not None and len(claim_token) > 0
+
+        # Read after claim via GET /tasks/{id}: MUST be masked
+        get_after = await client.get("/api/v1/tasks/task_masked_token_1")
+        assert get_after.status_code == 200
+        assert get_after.json()["claim_token"] is None, "claim_token must be masked on GET /tasks/{id}"
+
+        # Read after claim via GET /tasks: MUST be masked
+        list_after = await client.get("/api/v1/tasks")
+        assert list_after.status_code == 200
+        matching = [t for t in list_after.json() if t["id"] == "task_masked_token_1"]
+        assert len(matching) == 1
+        assert matching[0]["claim_token"] is None, "claim_token must be masked on GET /tasks"
+
+
+@pytest.mark.asyncio
+async def test_cross_worker_session_migration_and_resumption():
+    """The Cross-Worker Session Continuity Money Test (INV-WSR-002 Invariants A, B, C, D):
+    1. Worker A (claude_worker) acquires stage 1 ('research'), executes, submits durable checkpoint.
+    2. DAG automatically generates stage 2 ('draft') containing Worker A's findings in spec.
+    3. Worker A acquires stage 2, encounters rate limit (429), triggers cooldown, and releases task.
+    4. Worker B (copilot_worker) calls /tasks/acquire, atomically pulls stage 2 task with durable state.
+    5. Worker B executes stage 2, submits checkpoint, advances to stage 3 ('format').
+    6. Stage 3 completes with unbroken provenance across workers and providers.
+    """
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        # Create Job with 3 stages: [research, draft, format]
+        job_res = await client.post("/api/v1/jobs", json={
+            "sku": "cross_migration_sku",
+            "client": "enterprise_client",
+            "input_uri": "s3://corp/project_alpha",
+            "pipeline": ["research", "draft", "format"],
+        })
+        assert job_res.status_code == 201
+        job_id = job_res.json()["id"]
+
+        # Register Worker A (Claude Desktop CDP)
+        await client.post("/api/v1/workers/register", json={
+            "id": "worker_claude_primary",
+            "provider": "claude_desktop_cdp",
+            "node_id": "node-cdp-01",
+            "nickname": "Claude Primary",
+            "capabilities": ["research", "draft", "qa"],
+            "quota_limit_per_window": 50,
+            "cooldown_window_minutes": 300,
+        })
+
+        # Register Worker B (Copilot Headless)
+        await client.post("/api/v1/workers/register", json={
+            "id": "worker_copilot_overflow",
+            "provider": "copilot_headless",
+            "node_id": "node-copilot-02",
+            "nickname": "Copilot Overflow",
+            "capabilities": ["draft", "format", "writing"],
+            "quota_limit_per_window": 50,
+            "cooldown_window_minutes": 300,
+        })
+
+        # Create Stage 1 task
+        t1_res = await client.post("/api/v1/tasks", json={
+            "id": "task_cm_stage_1",
+            "job_id": job_id,
+            "stage": "research",
+            "stage_order": 1,
+            "kind": "text",
+            "spec": "Conduct deep analysis on distributed agent consensus protocols.",
+        })
+        assert t1_res.status_code == 201
+
+        # Step 1: Worker A acquires stage 1 task
+        acq1 = await client.post("/api/v1/tasks/acquire", json={
+            "worker_id": "worker_claude_primary",
+            "capabilities": ["research", "draft"],
+            "lease_seconds": 300,
+        })
+        assert acq1.status_code == 200
+        claim_data_1 = acq1.json()
+        assert claim_data_1["task"]["id"] == "task_cm_stage_1"
+        token_1 = claim_data_1["claim_token"]
+
+        # Step 2: Worker A completes stage 1 and submits checkpoint
+        w1_findings = "RESEARCH OUTPUT: Consensus achieves sub-second finality with raft quorum."
+        cp1_res = await client.post("/api/v1/tasks/task_cm_stage_1/checkpoint", json={
+            "task_id": "task_cm_stage_1",
+            "kind": "text",
+            "summary": "Consensus research completed",
+            "result_text": w1_findings,
+            "submitted_by": "worker_claude_primary",
+            "claim_token": token_1,
+        })
+        assert cp1_res.status_code == 201
+
+        # Step 3: Find generated stage 2 task
+        async with aiosqlite.connect(str(settings.DATABASE_PATH)) as db:
+            db.row_factory = aiosqlite.Row
+            s2_task = await (await db.execute("SELECT * FROM tasks WHERE parent_id = 'task_cm_stage_1'")).fetchone()
+            assert s2_task is not None
+            assert s2_task["stage"] == "draft"
+            stage_2_id = s2_task["id"]
+            # Spec must contain Worker A's research findings
+            assert w1_findings in s2_task["spec"]
+
+        # Step 4: Worker A acquires stage 2 task
+        acq2 = await client.post("/api/v1/tasks/acquire", json={
+            "worker_id": "worker_claude_primary",
+            "capabilities": ["research", "draft"],
+            "lease_seconds": 300,
+        })
+        assert acq2.status_code == 200
+        token_2_claude = acq2.json()["claim_token"]
+
+        # Step 5: Worker A encounters RATE LIMIT 429 during execution!
+        # Worker A triggers cooldown and releases task back to pending
+        hb_cooldown = await client.post("/api/v1/workers/worker_claude_primary/heartbeat", json={
+            "rate_limit_headroom": 0,
+            "trigger_cooldown": True,
+        })
+        assert hb_cooldown.status_code == 200
+        assert hb_cooldown.json()["status"] == "cooldown"
+
+        release_resp = await client.post(f"/api/v1/tasks/{stage_2_id}/release", json={
+            "worker_id": "worker_claude_primary",
+            "claim_token": token_2_claude,
+        })
+        assert release_resp.status_code == 200
+        assert release_resp.json()["status"] == "pending"
+
+        # Step 6: Worker A can NO LONGER acquire tasks because it is in cooldown
+        acq_blocked = await client.post("/api/v1/tasks/acquire", json={
+            "worker_id": "worker_claude_primary",
+            "capabilities": ["research", "draft"],
+        })
+        assert acq_blocked.status_code == 204
+
+        # Step 7: Worker B (Copilot overflow) acquires the stage 2 task seamlessly
+        acq_copilot = await client.post("/api/v1/tasks/acquire", json={
+            "worker_id": "worker_copilot_overflow",
+            "capabilities": ["draft", "format"],
+            "lease_seconds": 300,
+        })
+        assert acq_copilot.status_code == 200
+        claim_data_copilot = acq_copilot.json()
+        assert claim_data_copilot["task"]["id"] == stage_2_id
+        token_copilot = claim_data_copilot["claim_token"]
+        assert token_copilot != token_2_claude, "Reclaimed task must issue a fresh, unique claim_token"
+
+        # Verify Worker B has the uncorrupted spec containing Worker A's research output
+        assert w1_findings in claim_data_copilot["task"]["spec"]
+
+        # Step 8: Worker B executes stage 2 and submits checkpoint
+        w2_draft = "DRAFT OUTPUT: Architecture draft incorporating raft consensus findings."
+        cp2_res = await client.post(f"/api/v1/tasks/{stage_2_id}/checkpoint", json={
+            "task_id": stage_2_id,
+            "kind": "text",
+            "summary": "Draft created from Worker A research",
+            "result_text": w2_draft,
+            "submitted_by": "worker_copilot_overflow",
+            "claim_token": token_copilot,
+        })
+        assert cp2_res.status_code == 201
+
+        # Step 9: Worker B acquires and completes final stage ('format')
+        async with aiosqlite.connect(str(settings.DATABASE_PATH)) as db:
+            db.row_factory = aiosqlite.Row
+            s3_task = await (await db.execute("SELECT * FROM tasks WHERE parent_id = ?", (stage_2_id,))).fetchone()
+            assert s3_task is not None
+            assert s3_task["stage"] == "format"
+            stage_3_id = s3_task["id"]
+
+        acq3 = await client.post("/api/v1/tasks/acquire", json={
+            "worker_id": "worker_copilot_overflow",
+            "capabilities": ["draft", "format"],
+            "lease_seconds": 300,
+        })
+        assert acq3.status_code == 200
+        assert acq3.json()["task"]["id"] == stage_3_id
+
+        cp3_res = await client.post(f"/api/v1/tasks/{stage_3_id}/checkpoint", json={
+            "task_id": stage_3_id,
+            "kind": "text",
+            "summary": "Final document formatted",
+            "result_text": "FINAL DELIVERABLE: Beautifully formatted specification document.",
+            "submitted_by": "worker_copilot_overflow",
+            "claim_token": acq3.json()["claim_token"],
+        })
+        assert cp3_res.status_code == 201
+
+        # Step 10: Verify complete job status & lineage across checkpoints
+        async with aiosqlite.connect(str(settings.DATABASE_PATH)) as db:
+            db.row_factory = aiosqlite.Row
+            job_row = await (await db.execute("SELECT status FROM jobs WHERE id = ?", (job_id,))).fetchone()
+            assert job_row["status"] == "completed"
+
+            checkpoints = await (await db.execute("SELECT * FROM checkpoints WHERE job_id = ? ORDER BY submitted_at ASC", (job_id,))).fetchall()
+            assert len(checkpoints) == 3
+            # Checkpoint 1 submitted by Worker A
+            assert checkpoints[0]["submitted_by"] == "worker_claude_primary"
+            # Checkpoint 2 and 3 submitted by Worker B
+            assert checkpoints[1]["submitted_by"] == "worker_copilot_overflow"
+            assert checkpoints[2]["submitted_by"] == "worker_copilot_overflow"
