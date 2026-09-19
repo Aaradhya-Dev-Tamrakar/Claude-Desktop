@@ -301,43 +301,17 @@
       "source_location": "L16"
     },
     {
-      "id": "client_adapters_base_adapter_baseworkeradapter",
-      "label": "BaseWorkerAdapter",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "baseworkeradapter",
-      "source_file": "client/adapters/base_adapter.py",
-      "source_location": "L6"
-    },
-    {
       "id": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter",
       "label": "ClaudeDesktopProxyAdapter",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 103,
+      "community_name": "ClaudeDesktopProxyAdapter",
       "file_type": "code",
       "norm_label": "claudedesktopproxyadapter",
       "source_file": "client/adapters/claude_desktop_proxy.py",
       "source_location": "L11"
-    },
-    {
-      "id": "client_adapters_gemini_free_adapter_geminifreeadapter",
-      "label": "GeminiFreeAdapter",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "geminifreeadapter",
-      "source_file": "client/adapters/gemini_free_adapter.py",
-      "source_location": "L9"
     },
     {
       "id": "client_adapters_groq_adapter_groqadapter",
@@ -345,8 +319,8 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 104,
+      "community_name": "GroqAdapter",
       "file_type": "code",
       "norm_label": "groqadapter",
       "source_file": "client/adapters/groq_adapter.py",
@@ -359,11 +333,37 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": "ollamalocaladapter",
       "source_file": "client/adapters/ollama_local_adapter.py",
       "source_location": "L9"
+    },
+    {
+      "id": "client_adapters_gemini_free_adapter_geminifreeadapter",
+      "label": "GeminiFreeAdapter",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "GeminiFreeAdapter",
+      "file_type": "code",
+      "norm_label": "geminifreeadapter",
+      "source_file": "client/adapters/gemini_free_adapter.py",
+      "source_location": "L9"
+    },
+    {
+      "id": "server_main_mcpauthmiddleware",
+      "label": "MCPAuthMiddleware",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 119,
+      "community_name": "MCPAuthMiddleware",
+      "file_type": "code",
+      "norm_label": "mcpauthmiddleware",
+      "source_file": "server/main.py",
+      "source_location": "L56"
     },
     {
       "id": "server_models_schemas_contextresponse",
@@ -376,33 +376,7 @@
       "file_type": "code",
       "norm_label": "contextresponse",
       "source_file": "server/models/schemas.py",
-      "source_location": "L204"
-    },
-    {
-      "id": "server_models_schemas_contextupsert",
-      "label": "ContextUpsert",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "routes_memory.py",
-      "file_type": "code",
-      "norm_label": "contextupsert",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L201"
-    },
-    {
-      "id": "server_models_schemas_memorycreate",
-      "label": "MemoryCreate",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "routes_memory.py",
-      "file_type": "code",
-      "norm_label": "memorycreate",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L191"
+      "source_location": "L206"
     },
     {
       "id": "server_models_schemas_memoryresponse",
@@ -415,7 +389,7 @@
       "file_type": "code",
       "norm_label": "memoryresponse",
       "source_file": "server/models/schemas.py",
-      "source_location": "L195"
+      "source_location": "L197"
     },
     {
       "id": "client_adapters_winpilot_bridge_winpilotbridge",
@@ -569,7 +543,7 @@
       "file_type": "code",
       "norm_label": "jobmetricsresponse",
       "source_file": "server/models/schemas.py",
-      "source_location": "L178"
+      "source_location": "L180"
     },
     {
       "id": "server_models_schemas_jobresponse",
@@ -675,13 +649,26 @@
       "source_location": "L259"
     },
     {
+      "id": "server_core_config_settings",
+      "label": "Settings",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "settings",
+      "source_file": "server/core/config.py",
+      "source_location": "L10"
+    },
+    {
       "id": "server_models_schemas_checkpointresponse",
       "label": "CheckpointResponse",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "checkpointresponse",
       "source_file": "server/models/schemas.py",
@@ -694,11 +681,37 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "checkpointsubmit",
       "source_file": "server/models/schemas.py",
       "source_location": "L135"
+    },
+    {
+      "id": "server_models_schemas_contextupsert",
+      "label": "ContextUpsert",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "schemas.py",
+      "file_type": "code",
+      "norm_label": "contextupsert",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L203"
+    },
+    {
+      "id": "server_models_schemas_memorycreate",
+      "label": "MemoryCreate",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "schemas.py",
+      "file_type": "code",
+      "norm_label": "memorycreate",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L193"
     },
     {
       "id": "server_models_schemas_qareviewresponse",
@@ -707,11 +720,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "qareviewresponse",
       "source_file": "server/models/schemas.py",
-      "source_location": "L167"
+      "source_location": "L169"
     },
     {
       "id": "server_models_schemas_qareviewsubmit",
@@ -720,7 +733,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "qareviewsubmit",
       "source_file": "server/models/schemas.py",
@@ -733,7 +746,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "taskacquirerequest",
       "source_file": "server/models/schemas.py",
@@ -746,7 +759,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "taskblockrequest",
       "source_file": "server/models/schemas.py",
@@ -759,24 +772,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "taskclaimrequest",
       "source_file": "server/models/schemas.py",
       "source_location": "L75"
-    },
-    {
-      "id": "server_models_schemas_taskclaimresponse",
-      "label": "TaskClaimResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "taskclaimresponse",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L80"
     },
     {
       "id": "server_models_schemas_taskcreate",
@@ -785,7 +785,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "taskcreate",
       "source_file": "server/models/schemas.py",
@@ -798,7 +798,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "taskleaserenewrequest",
       "source_file": "server/models/schemas.py",
@@ -811,24 +811,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "taskreleaserequest",
       "source_file": "server/models/schemas.py",
       "source_location": "L90"
-    },
-    {
-      "id": "server_models_schemas_taskresponse",
-      "label": "TaskResponse",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "taskresponse",
-      "source_file": "server/models/schemas.py",
-      "source_location": "L51"
     },
     {
       "id": "server_models_schemas_workerregister",
@@ -837,7 +824,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "workerregister",
       "source_file": "server/models/schemas.py",
@@ -984,17 +971,30 @@
       "source_location": "L162"
     },
     {
-      "id": "server_core_config_settings",
-      "label": "Settings",
+      "id": "server_models_schemas_taskclaimresponse",
+      "label": "TaskClaimResponse",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 47,
-      "community_name": "config.py",
+      "community": 7,
+      "community_name": "routes_tasks.py",
       "file_type": "code",
-      "norm_label": "settings",
-      "source_file": "server/core/config.py",
-      "source_location": "L10"
+      "norm_label": "taskclaimresponse",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L80"
+    },
+    {
+      "id": "server_models_schemas_taskresponse",
+      "label": "TaskResponse",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "taskresponse",
+      "source_file": "server/models/schemas.py",
+      "source_location": "L51"
     },
     {
       "id": "tools_virtualdesktop11_24h2_vdesktool_program",
@@ -1014,6 +1014,19 @@
       "norm_label": "program",
       "source_file": "tools/VirtualDesktop11-24H2.cs",
       "source_location": "L713"
+    },
+    {
+      "id": "client_adapters_base_adapter_baseworkeradapter",
+      "label": "BaseWorkerAdapter",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 88,
+      "community_name": "BaseWorkerAdapter",
+      "file_type": "code",
+      "norm_label": "baseworkeradapter",
+      "source_file": "client/adapters/base_adapter.py",
+      "source_location": "L6"
     },
     {
       "id": "client_adapters_claude_desktop_cdp_claudedesktopcdpadapter",
@@ -2608,66 +2621,6 @@
       "source_location": "L49"
     },
     {
-      "id": "client_fleet_supervisor_create_adapter",
-      "label": "create_adapter()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "create_adapter()",
-      "source_file": "client/fleet_supervisor.py",
-      "source_location": "L60"
-    },
-    {
-      "id": "client_fleet_supervisor_get_system_telemetry",
-      "label": "get_system_telemetry()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "get_system_telemetry()",
-      "source_file": "client/fleet_supervisor.py",
-      "source_location": "L43"
-    },
-    {
-      "id": "client_fleet_supervisor_get_winpilot_bridge",
-      "label": "get_winpilot_bridge()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "get_winpilot_bridge()",
-      "source_file": "client/fleet_supervisor.py",
-      "source_location": "L20"
-    },
-    {
-      "id": "client_fleet_supervisor_main",
-      "label": "main()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "main()",
-      "source_file": "client/fleet_supervisor.py",
-      "source_location": "L247"
-    },
-    {
-      "id": "client_fleet_supervisor_run_worker_loop",
-      "label": "run_worker_loop()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "run_worker_loop()",
-      "source_file": "client/fleet_supervisor.py",
-      "source_location": "L101"
-    },
-    {
       "id": "tests_test_copilot_headless_test_copilot_headless_execute_task_success",
       "label": "test_copilot_headless_execute_task_success()",
       "_callable": true,
@@ -2726,66 +2679,6 @@
       "norm_label": "test_copilot_headless_token_from_env()",
       "source_file": "tests/test_copilot_headless.py",
       "source_location": "L24"
-    },
-    {
-      "id": "tests_test_fleet_supervisor_test_create_adapter_cdp",
-      "label": "test_create_adapter_cdp()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "test_create_adapter_cdp()",
-      "source_file": "tests/test_fleet_supervisor.py",
-      "source_location": "L59"
-    },
-    {
-      "id": "tests_test_fleet_supervisor_test_create_adapter_copilot_headless",
-      "label": "test_create_adapter_copilot_headless()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "test_create_adapter_copilot_headless()",
-      "source_file": "tests/test_fleet_supervisor.py",
-      "source_location": "L73"
-    },
-    {
-      "id": "tests_test_fleet_supervisor_test_create_adapter_unknown_provider",
-      "label": "test_create_adapter_unknown_provider()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "test_create_adapter_unknown_provider()",
-      "source_file": "tests/test_fleet_supervisor.py",
-      "source_location": "L90"
-    },
-    {
-      "id": "tests_test_fleet_supervisor_test_role_capabilities_mapping",
-      "label": "test_role_capabilities_mapping()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "test_role_capabilities_mapping()",
-      "source_file": "tests/test_fleet_supervisor.py",
-      "source_location": "L13"
-    },
-    {
-      "id": "tests_test_fleet_supervisor_test_worker_loop_registration_and_exit_on_stop",
-      "label": "test_worker_loop_registration_and_exit_on_stop()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "test_worker_loop_registration_and_exit_on_stop()",
-      "source_file": "tests/test_fleet_supervisor.py",
-      "source_location": "L20"
     },
     {
       "id": "claude_skills_mcp_chat_archiver_save_chat_clean_text",
@@ -2860,120 +2753,60 @@
       "source_location": "L112"
     },
     {
-      "id": "client_adapters_base_adapter_baseworkeradapter_check_health",
-      "label": ".check_health()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": ".check_health()",
-      "source_file": "client/adapters/base_adapter.py",
-      "source_location": "L29"
-    },
-    {
-      "id": "client_adapters_base_adapter_baseworkeradapter_execute_task",
-      "label": ".execute_task()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": ".execute_task()",
-      "source_file": "client/adapters/base_adapter.py",
-      "source_location": "L15"
-    },
-    {
-      "id": "client_adapters_base_adapter_baseworkeradapter_init",
-      "label": ".__init__()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": ".__init__()",
-      "source_file": "client/adapters/base_adapter.py",
-      "source_location": "L9"
-    },
-    {
       "id": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_check_health",
       "label": ".check_health()",
       "_callable": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 103,
+      "community_name": "ClaudeDesktopProxyAdapter",
       "file_type": "code",
       "norm_label": ".check_health()",
       "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L24"
+      "source_location": "L34"
     },
     {
       "id": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_local_profile_stage",
       "label": "._execute_local_profile_stage()",
       "_callable": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 103,
+      "community_name": "ClaudeDesktopProxyAdapter",
       "file_type": "code",
       "norm_label": "._execute_local_profile_stage()",
       "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L75"
+      "source_location": "L101"
     },
     {
       "id": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_task",
       "label": ".execute_task()",
       "_callable": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 103,
+      "community_name": "ClaudeDesktopProxyAdapter",
       "file_type": "code",
       "norm_label": ".execute_task()",
       "source_file": "client/adapters/claude_desktop_proxy.py",
+      "source_location": "L39"
+    },
+    {
+      "id": "tests_test_e2e_pipeline_test_e2e_sku_pipeline_execution",
+      "label": "test_e2e_sku_pipeline_execution()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "ClaudeDesktopProxyAdapter",
+      "file_type": "code",
+      "norm_label": "test_e2e_sku_pipeline_execution()",
+      "source_file": "tests/test_e2e_pipeline.py",
       "source_location": "L29"
-    },
-    {
-      "id": "client_adapters_gemini_free_adapter_geminifreeadapter_check_health",
-      "label": ".check_health()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": ".check_health()",
-      "source_file": "client/adapters/gemini_free_adapter.py",
-      "source_location": "L20"
-    },
-    {
-      "id": "client_adapters_gemini_free_adapter_geminifreeadapter_execute_task",
-      "label": ".execute_task()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": ".execute_task()",
-      "source_file": "client/adapters/gemini_free_adapter.py",
-      "source_location": "L23"
-    },
-    {
-      "id": "client_adapters_gemini_free_adapter_geminifreeadapter_init",
-      "label": ".__init__()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": ".__init__()",
-      "source_file": "client/adapters/gemini_free_adapter.py",
-      "source_location": "L14"
     },
     {
       "id": "client_adapters_groq_adapter_groqadapter_check_health",
       "label": ".check_health()",
       "_callable": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 104,
+      "community_name": "GroqAdapter",
       "file_type": "code",
       "norm_label": ".check_health()",
       "source_file": "client/adapters/groq_adapter.py",
@@ -2984,8 +2817,8 @@
       "label": ".execute_task()",
       "_callable": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 104,
+      "community_name": "GroqAdapter",
       "file_type": "code",
       "norm_label": ".execute_task()",
       "source_file": "client/adapters/groq_adapter.py",
@@ -2996,12 +2829,36 @@
       "label": ".__init__()",
       "_callable": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 104,
+      "community_name": "GroqAdapter",
       "file_type": "code",
       "norm_label": ".__init__()",
       "source_file": "client/adapters/groq_adapter.py",
       "source_location": "L24"
+    },
+    {
+      "id": "tests_test_groq_adapter_test_groq_adapter_missing_key_returns_error",
+      "label": "test_groq_adapter_missing_key_returns_error()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "GroqAdapter",
+      "file_type": "code",
+      "norm_label": "test_groq_adapter_missing_key_returns_error()",
+      "source_file": "tests/test_groq_adapter.py",
+      "source_location": "L7"
+    },
+    {
+      "id": "tests_test_groq_adapter_test_groq_adapter_uses_env_model_override",
+      "label": "test_groq_adapter_uses_env_model_override()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "GroqAdapter",
+      "file_type": "code",
+      "norm_label": "test_groq_adapter_uses_env_model_override()",
+      "source_file": "tests/test_groq_adapter.py",
+      "source_location": "L17"
     },
     {
       "id": "client_adapters_ollama_local_adapter_ollamalocaladapter_check_health",
@@ -3009,7 +2866,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": ".check_health()",
       "source_file": "client/adapters/ollama_local_adapter.py",
@@ -3021,7 +2878,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": ".execute_task()",
       "source_file": "client/adapters/ollama_local_adapter.py",
@@ -3033,7 +2890,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": ".__init__()",
       "source_file": "client/adapters/ollama_local_adapter.py",
@@ -3045,7 +2902,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": "get_adapter()",
       "source_file": "client/worker_daemon.py",
@@ -3057,7 +2914,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": "get_system_telemetry()",
       "source_file": "client/worker_daemon.py",
@@ -3069,7 +2926,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": "main_loop()",
       "source_file": "client/worker_daemon.py",
@@ -3081,95 +2938,71 @@
       "_callable": true,
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": "renew_task_lease_periodically()",
       "source_file": "client/worker_daemon.py",
       "source_location": "L55"
     },
     {
-      "id": "tests_test_e2e_pipeline_test_e2e_sku_pipeline_execution",
-      "label": "test_e2e_sku_pipeline_execution()",
+      "id": "client_adapters_gemini_free_adapter_geminifreeadapter_check_health",
+      "label": ".check_health()",
       "_callable": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 114,
+      "community_name": "GeminiFreeAdapter",
       "file_type": "code",
-      "norm_label": "test_e2e_sku_pipeline_execution()",
-      "source_file": "tests/test_e2e_pipeline.py",
-      "source_location": "L29"
+      "norm_label": ".check_health()",
+      "source_file": "client/adapters/gemini_free_adapter.py",
+      "source_location": "L20"
     },
     {
-      "id": "tests_test_groq_adapter_test_groq_adapter_missing_key_returns_error",
-      "label": "test_groq_adapter_missing_key_returns_error()",
+      "id": "client_adapters_gemini_free_adapter_geminifreeadapter_execute_task",
+      "label": ".execute_task()",
       "_callable": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 114,
+      "community_name": "GeminiFreeAdapter",
       "file_type": "code",
-      "norm_label": "test_groq_adapter_missing_key_returns_error()",
-      "source_file": "tests/test_groq_adapter.py",
-      "source_location": "L7"
+      "norm_label": ".execute_task()",
+      "source_file": "client/adapters/gemini_free_adapter.py",
+      "source_location": "L23"
     },
     {
-      "id": "tests_test_groq_adapter_test_groq_adapter_uses_env_model_override",
-      "label": "test_groq_adapter_uses_env_model_override()",
+      "id": "client_adapters_gemini_free_adapter_geminifreeadapter_init",
+      "label": ".__init__()",
       "_callable": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 114,
+      "community_name": "GeminiFreeAdapter",
       "file_type": "code",
-      "norm_label": "test_groq_adapter_uses_env_model_override()",
-      "source_file": "tests/test_groq_adapter.py",
-      "source_location": "L17"
+      "norm_label": ".__init__()",
+      "source_file": "client/adapters/gemini_free_adapter.py",
+      "source_location": "L14"
     },
     {
-      "id": "tests_test_invariants_wsr_002_setup_test_db",
-      "label": "setup_test_db()",
+      "id": "server_main_mcpauthmiddleware_call",
+      "label": ".__call__()",
       "_callable": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 119,
+      "community_name": "MCPAuthMiddleware",
       "file_type": "code",
-      "norm_label": "setup_test_db()",
-      "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L17"
+      "norm_label": ".__call__()",
+      "source_file": "server/main.py",
+      "source_location": "L62"
     },
     {
-      "id": "tests_test_invariants_wsr_002_test_invariant_b_strict_separation_of_real_and_simulation",
-      "label": "test_invariant_b_strict_separation_of_real_and_simulation()",
+      "id": "server_main_mcpauthmiddleware_init",
+      "label": ".__init__()",
       "_callable": true,
       "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community": 119,
+      "community_name": "MCPAuthMiddleware",
       "file_type": "code",
-      "norm_label": "test_invariant_b_strict_separation_of_real_and_simulation()",
-      "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L25"
-    },
-    {
-      "id": "tests_test_invariants_wsr_002_test_invariant_c_truthful_telemetry",
-      "label": "test_invariant_c_truthful_telemetry()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "test_invariant_c_truthful_telemetry()",
-      "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L49"
-    },
-    {
-      "id": "tests_test_invariants_wsr_002_test_invariant_d_atomic_dag_stage_advancement",
-      "label": "test_invariant_d_atomic_dag_stage_advancement()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "test_invariant_d_atomic_dag_stage_advancement()",
-      "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L60"
+      "norm_label": ".__init__()",
+      "source_file": "server/main.py",
+      "source_location": "L59"
     },
     {
       "id": "server_api_routes_memory_get_all_context",
@@ -3254,6 +3087,18 @@
       "norm_label": "upsert_context()",
       "source_file": "server/api/routes_memory.py",
       "source_location": "L125"
+    },
+    {
+      "id": "client_adapters_base_adapter_baseworkeradapter_execute_task",
+      "label": ".execute_task()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 120,
+      "community_name": ".execute_task",
+      "file_type": "code",
+      "norm_label": ".execute_task()",
+      "source_file": "client/adapters/base_adapter.py",
+      "source_location": "L15"
     },
     {
       "id": "client_adapters_winpilot_bridge_winpilotbridge_batch_setup_and_inject",
@@ -3374,6 +3219,126 @@
       "norm_label": ".toggle_thinking()",
       "source_file": "client/adapters/winpilot_bridge.py",
       "source_location": "L71"
+    },
+    {
+      "id": "client_fleet_supervisor_create_adapter",
+      "label": "create_adapter()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "create_adapter()",
+      "source_file": "client/fleet_supervisor.py",
+      "source_location": "L60"
+    },
+    {
+      "id": "client_fleet_supervisor_get_system_telemetry",
+      "label": "get_system_telemetry()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "get_system_telemetry()",
+      "source_file": "client/fleet_supervisor.py",
+      "source_location": "L43"
+    },
+    {
+      "id": "client_fleet_supervisor_get_winpilot_bridge",
+      "label": "get_winpilot_bridge()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "get_winpilot_bridge()",
+      "source_file": "client/fleet_supervisor.py",
+      "source_location": "L20"
+    },
+    {
+      "id": "client_fleet_supervisor_main",
+      "label": "main()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "main()",
+      "source_file": "client/fleet_supervisor.py",
+      "source_location": "L263"
+    },
+    {
+      "id": "client_fleet_supervisor_run_worker_loop",
+      "label": "run_worker_loop()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "run_worker_loop()",
+      "source_file": "client/fleet_supervisor.py",
+      "source_location": "L101"
+    },
+    {
+      "id": "tests_test_fleet_supervisor_test_create_adapter_cdp",
+      "label": "test_create_adapter_cdp()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "test_create_adapter_cdp()",
+      "source_file": "tests/test_fleet_supervisor.py",
+      "source_location": "L59"
+    },
+    {
+      "id": "tests_test_fleet_supervisor_test_create_adapter_copilot_headless",
+      "label": "test_create_adapter_copilot_headless()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "test_create_adapter_copilot_headless()",
+      "source_file": "tests/test_fleet_supervisor.py",
+      "source_location": "L73"
+    },
+    {
+      "id": "tests_test_fleet_supervisor_test_create_adapter_unknown_provider",
+      "label": "test_create_adapter_unknown_provider()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "test_create_adapter_unknown_provider()",
+      "source_file": "tests/test_fleet_supervisor.py",
+      "source_location": "L90"
+    },
+    {
+      "id": "tests_test_fleet_supervisor_test_role_capabilities_mapping",
+      "label": "test_role_capabilities_mapping()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "test_role_capabilities_mapping()",
+      "source_file": "tests/test_fleet_supervisor.py",
+      "source_location": "L13"
+    },
+    {
+      "id": "tests_test_fleet_supervisor_test_worker_loop_registration_and_exit_on_stop",
+      "label": "test_worker_loop_registration_and_exit_on_stop()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "test_worker_loop_registration_and_exit_on_stop()",
+      "source_file": "tests/test_fleet_supervisor.py",
+      "source_location": "L20"
     },
     {
       "id": "tests_test_winpilot_bridge_test_winpilot_bridge_batch_setup_and_inject",
@@ -4058,6 +4023,18 @@
       "norm_label": "worker_heartbeat()",
       "source_file": "server/api/routes_workers.py",
       "source_location": "L95"
+    },
+    {
+      "id": "server_core_auth_verify_api_key",
+      "label": "verify_api_key()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "verify_api_key()",
+      "source_file": "server/core/auth.py",
+      "source_location": "L9"
     },
     {
       "id": "server_core_database_get_db",
@@ -4797,7 +4774,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "run_supervisor_cycle()",
       "source_file": "server/core/supervisor.py",
@@ -4809,7 +4786,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_cross_provider_tier_prioritization_and_overflow()",
       "source_file": "tests/test_cloud_scheduler.py",
@@ -4821,7 +4798,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_quota_scheduler_capability_matching()",
       "source_file": "tests/test_cloud_scheduler.py",
@@ -4833,7 +4810,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_scheduler_cooldown_filtering()",
       "source_file": "tests/test_cloud_scheduler.py",
@@ -4845,7 +4822,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_stage_affinity_routing()",
       "source_file": "tests/test_cloud_scheduler.py",
@@ -4857,7 +4834,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_supervisor_dead_worker_recovery()",
       "source_file": "tests/test_cloud_scheduler.py",
@@ -4869,7 +4846,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_checkpoint_replay_is_idempotent_but_other_worker_is_rejected()",
       "source_file": "tests/test_e2e_pipeline.py",
@@ -4881,7 +4858,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_concurrent_task_leasing_race_safety()",
       "source_file": "tests/test_e2e_pipeline.py",
@@ -4893,7 +4870,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_expired_lease_reclamation_and_recovery()",
       "source_file": "tests/test_e2e_pipeline.py",
@@ -4905,7 +4882,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_lease_renewal_heartbeat()",
       "source_file": "tests/test_e2e_pipeline.py",
@@ -4917,23 +4894,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_stale_claim_token_cannot_mutate_reclaimed_task()",
       "source_file": "tests/test_e2e_pipeline.py",
       "source_location": "L268"
-    },
-    {
-      "id": "server_api_routes_tasks_acquire_task",
-      "label": "acquire_task()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "acquire_task()",
-      "source_file": "server/api/routes_tasks.py",
-      "source_location": "L151"
     },
     {
       "id": "tools_virtualdesktop11_24h2_virtualdesktop_iapplicationview_enumerateownershiptree",
@@ -5233,7 +5198,7 @@
       "file_type": "code",
       "norm_label": ".check_and_finalize_job()",
       "source_file": "server/core/pipeline_engine.py",
-      "source_location": "L135"
+      "source_location": "L139"
     },
     {
       "id": "server_core_pipeline_engine_pipelineengine_decompose_job_into_tasks",
@@ -5905,7 +5870,7 @@
       "file_type": "code",
       "norm_label": "health_check()",
       "source_file": "server/main.py",
-      "source_location": "L100"
+      "source_location": "L139"
     },
     {
       "id": "server_main_liveness_check",
@@ -5917,7 +5882,7 @@
       "file_type": "code",
       "norm_label": "liveness_check()",
       "source_file": "server/main.py",
-      "source_location": "L108"
+      "source_location": "L147"
     },
     {
       "id": "server_main_metrics",
@@ -5929,7 +5894,7 @@
       "file_type": "code",
       "norm_label": "metrics()",
       "source_file": "server/main.py",
-      "source_location": "L125"
+      "source_location": "L164"
     },
     {
       "id": "server_main_observe_http_requests",
@@ -5941,7 +5906,7 @@
       "file_type": "code",
       "norm_label": "observe_http_requests()",
       "source_file": "server/main.py",
-      "source_location": "L76"
+      "source_location": "L115"
     },
     {
       "id": "server_main_readiness_check",
@@ -5953,7 +5918,7 @@
       "file_type": "code",
       "norm_label": "readiness_check()",
       "source_file": "server/main.py",
-      "source_location": "L112"
+      "source_location": "L151"
     },
     {
       "id": "server_core_database_init_db",
@@ -6002,6 +5967,18 @@
       "norm_label": "setup_test_db()",
       "source_file": "tests/test_pipeline_engine.py",
       "source_location": "L16"
+    },
+    {
+      "id": "tests_test_pipeline_engine_test_pipeline_decomposition_and_waterfall",
+      "label": "test_pipeline_decomposition_and_waterfall()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "init_db",
+      "file_type": "code",
+      "norm_label": "test_pipeline_decomposition_and_waterfall()",
+      "source_file": "tests/test_pipeline_engine.py",
+      "source_location": "L23"
     },
     {
       "id": "tests_test_remote_mcp_setup_test_db",
@@ -6801,7 +6778,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 41,
-      "community_name": "FastAPI",
+      "community_name": "validate_security_settings",
       "file_type": "code",
       "norm_label": "validate_security_settings()",
       "source_file": "server/core/config.py",
@@ -6813,7 +6790,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 41,
-      "community_name": "FastAPI",
+      "community_name": "validate_security_settings",
       "file_type": "code",
       "norm_label": "lifespan()",
       "source_file": "server/main.py",
@@ -6825,7 +6802,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 41,
-      "community_name": "FastAPI",
+      "community_name": "validate_security_settings",
       "file_type": "code",
       "norm_label": "run_supervisor_loop()",
       "source_file": "server/main.py",
@@ -6837,7 +6814,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 41,
-      "community_name": "FastAPI",
+      "community_name": "validate_security_settings",
       "file_type": "code",
       "norm_label": "test_development_allows_empty_auth_key()",
       "source_file": "tests/test_security_config.py",
@@ -6849,7 +6826,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 41,
-      "community_name": "FastAPI",
+      "community_name": "validate_security_settings",
       "file_type": "code",
       "norm_label": "test_production_accepts_strong_auth_key()",
       "source_file": "tests/test_security_config.py",
@@ -6861,23 +6838,95 @@
       "_callable": true,
       "_origin": "ast",
       "community": 41,
-      "community_name": "FastAPI",
+      "community_name": "validate_security_settings",
       "file_type": "code",
       "norm_label": "test_production_rejects_missing_auth_key()",
       "source_file": "tests/test_security_config.py",
       "source_location": "L13"
     },
     {
-      "id": "tests_test_pipeline_engine_test_pipeline_decomposition_and_waterfall",
-      "label": "test_pipeline_decomposition_and_waterfall()",
+      "id": "tests_test_invariants_wsr_002_setup_test_db",
+      "label": "setup_test_db()",
       "_callable": true,
       "_origin": "ast",
       "community": 47,
-      "community_name": "config.py",
+      "community_name": "test_invariants_wsr_002.py",
       "file_type": "code",
-      "norm_label": "test_pipeline_decomposition_and_waterfall()",
-      "source_file": "tests/test_pipeline_engine.py",
-      "source_location": "L23"
+      "norm_label": "setup_test_db()",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L18"
+    },
+    {
+      "id": "tests_test_invariants_wsr_002_test_invariant_b_strict_separation_of_real_and_simulation",
+      "label": "test_invariant_b_strict_separation_of_real_and_simulation()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "code",
+      "norm_label": "test_invariant_b_strict_separation_of_real_and_simulation()",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L26"
+    },
+    {
+      "id": "tests_test_invariants_wsr_002_test_invariant_c_no_spurious_cooldown_on_high_memory",
+      "label": "test_invariant_c_no_spurious_cooldown_on_high_memory()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "code",
+      "norm_label": "test_invariant_c_no_spurious_cooldown_on_high_memory()",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L96"
+    },
+    {
+      "id": "tests_test_invariants_wsr_002_test_invariant_c_truthful_telemetry",
+      "label": "test_invariant_c_truthful_telemetry()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "code",
+      "norm_label": "test_invariant_c_truthful_telemetry()",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L85"
+    },
+    {
+      "id": "tests_test_invariants_wsr_002_test_invariant_d_atomic_dag_stage_advancement",
+      "label": "test_invariant_d_atomic_dag_stage_advancement()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "code",
+      "norm_label": "test_invariant_d_atomic_dag_stage_advancement()",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L129"
+    },
+    {
+      "id": "tests_test_invariants_wsr_002_test_invariant_d_atomic_rollback_on_failure",
+      "label": "test_invariant_d_atomic_rollback_on_failure()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "code",
+      "norm_label": "test_invariant_d_atomic_rollback_on_failure()",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L271"
+    },
+    {
+      "id": "tests_test_invariants_wsr_002_test_invariant_d_qa_checkpoint_preservation",
+      "label": "test_invariant_d_qa_checkpoint_preservation()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "code",
+      "norm_label": "test_invariant_d_qa_checkpoint_preservation()",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L196"
     },
     {
       "id": "mcp_servers_notebooklm_mcp_run_server_find_uvx",
@@ -6973,7 +7022,7 @@
       "file_type": "code",
       "norm_label": "get_job()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L567"
+      "source_location": "L579"
     },
     {
       "id": "server_mcp_remote_get_job_metrics",
@@ -6985,7 +7034,7 @@
       "file_type": "code",
       "norm_label": "get_job_metrics()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L585"
+      "source_location": "L597"
     },
     {
       "id": "server_mcp_remote_get_system_health",
@@ -6997,7 +7046,7 @@
       "file_type": "code",
       "norm_label": "get_system_health()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L721"
+      "source_location": "L733"
     },
     {
       "id": "server_mcp_remote_get_task",
@@ -7021,7 +7070,7 @@
       "file_type": "code",
       "norm_label": "get_worker()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L704"
+      "source_location": "L716"
     },
     {
       "id": "server_mcp_remote_list_jobs",
@@ -7033,7 +7082,7 @@
       "file_type": "code",
       "norm_label": "list_jobs()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L541"
+      "source_location": "L553"
     },
     {
       "id": "server_mcp_remote_list_tasks",
@@ -7057,7 +7106,7 @@
       "file_type": "code",
       "norm_label": "list_workers()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L681"
+      "source_location": "L693"
     },
     {
       "id": "server_mcp_remote_now_iso",
@@ -7081,7 +7130,7 @@
       "file_type": "code",
       "norm_label": "push_memory()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L765"
+      "source_location": "L777"
     },
     {
       "id": "server_mcp_remote_read_team_context",
@@ -7093,7 +7142,7 @@
       "file_type": "code",
       "norm_label": "read_team_context()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L834"
+      "source_location": "L846"
     },
     {
       "id": "server_mcp_remote_read_team_memory",
@@ -7105,7 +7154,7 @@
       "file_type": "code",
       "norm_label": "read_team_memory()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L810"
+      "source_location": "L822"
     },
     {
       "id": "server_mcp_remote_register_worker",
@@ -7117,7 +7166,7 @@
       "file_type": "code",
       "norm_label": "register_worker()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L604"
+      "source_location": "L616"
     },
     {
       "id": "server_mcp_remote_release_task",
@@ -7165,7 +7214,7 @@
       "file_type": "code",
       "norm_label": "search_memory()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L790"
+      "source_location": "L802"
     },
     {
       "id": "server_mcp_remote_submit_checkpoint",
@@ -7189,7 +7238,7 @@
       "file_type": "code",
       "norm_label": "submit_job_from_template()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L493"
+      "source_location": "L505"
     },
     {
       "id": "server_mcp_remote_submit_qa_review",
@@ -7225,7 +7274,7 @@
       "file_type": "code",
       "norm_label": "worker_heartbeat()",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L643"
+      "source_location": "L655"
     },
     {
       "id": "tests_test_remote_mcp_test_checkpoint_retry_is_idempotent",
@@ -7396,12 +7445,24 @@
       "source_location": "L43"
     },
     {
+      "id": "server_api_routes_tasks_acquire_task",
+      "label": "acquire_task()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "acquire_task()",
+      "source_file": "server/api/routes_tasks.py",
+      "source_location": "L151"
+    },
+    {
       "id": "server_api_routes_tasks_block_task",
       "label": "block_task()",
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "block_task()",
       "source_file": "server/api/routes_tasks.py",
@@ -7413,7 +7474,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "claim_task()",
       "source_file": "server/api/routes_tasks.py",
@@ -7425,7 +7486,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "create_task()",
       "source_file": "server/api/routes_tasks.py",
@@ -7437,7 +7498,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "get_checkpoint()",
       "source_file": "server/api/routes_tasks.py",
@@ -7449,7 +7510,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "get_task()",
       "source_file": "server/api/routes_tasks.py",
@@ -7461,7 +7522,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "list_tasks()",
       "source_file": "server/api/routes_tasks.py",
@@ -7473,7 +7534,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "_now_iso()",
       "source_file": "server/api/routes_tasks.py",
@@ -7485,7 +7546,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "release_task()",
       "source_file": "server/api/routes_tasks.py",
@@ -7497,7 +7558,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "renew_task_lease()",
       "source_file": "server/api/routes_tasks.py",
@@ -7509,7 +7570,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "submit_checkpoint()",
       "source_file": "server/api/routes_tasks.py",
@@ -7521,7 +7582,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "submit_qa_review()",
       "source_file": "server/api/routes_tasks.py",
@@ -7942,15 +8003,27 @@
       "source_location": "L507"
     },
     {
-      "id": "server_core_auth_verify_api_key",
-      "label": "verify_api_key()",
+      "id": "client_adapters_base_adapter_baseworkeradapter_check_health",
+      "label": ".check_health()",
       "_callable": true,
       "_origin": "ast",
       "community": 88,
-      "community_name": "verify_api_key",
+      "community_name": "BaseWorkerAdapter",
       "file_type": "code",
-      "norm_label": "verify_api_key()",
-      "source_file": "server/core/auth.py",
+      "norm_label": ".check_health()",
+      "source_file": "client/adapters/base_adapter.py",
+      "source_location": "L29"
+    },
+    {
+      "id": "client_adapters_base_adapter_baseworkeradapter_init",
+      "label": ".__init__()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 88,
+      "community_name": "BaseWorkerAdapter",
+      "file_type": "code",
+      "norm_label": ".__init__()",
+      "source_file": "client/adapters/base_adapter.py",
       "source_location": "L9"
     },
     {
@@ -8799,17 +8872,6 @@
       "source_location": "L590"
     },
     {
-      "id": "client_adapters_copilot_headless",
-      "label": "copilot_headless.py",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "copilot_headless.py",
-      "source_file": "client/adapters/copilot_headless.py",
-      "source_location": "L1"
-    },
-    {
       "id": "client_adapters_copilot_headless_py_any",
       "label": "Any",
       "_origin": "ast",
@@ -8817,50 +8879,6 @@
       "community_name": "CopilotHeadlessAdapter",
       "file_type": "code",
       "norm_label": "any",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "client_fleet_supervisor",
-      "label": "fleet_supervisor.py",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "fleet_supervisor.py",
-      "source_file": "client/fleet_supervisor.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_fleet_supervisor_py_any",
-      "label": "Any",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "any",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "client_fleet_supervisor_py_asyncclient",
-      "label": "AsyncClient",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "asyncclient",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "client_fleet_supervisor_py_event",
-      "label": "Event",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "event",
       "source_file": "",
       "source_location": ""
     },
@@ -8885,39 +8903,6 @@
       "norm_label": "asyncio",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "tests_test_fleet_supervisor",
-      "label": "test_fleet_supervisor.py",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "test_fleet_supervisor.py",
-      "source_file": "tests/test_fleet_supervisor.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_fleet_supervisor_py_asyncio",
-      "label": "asyncio",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "code",
-      "norm_label": "asyncio",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "client_adapters_copilot_headless_rationale_1",
-      "label": "Copilot Headless Adapter: Pure asynchronous HTTP adapter for GitHub Copilot\u2026",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "rationale",
-      "norm_label": "copilot headless adapter: pure asynchronous http adapter for github copilot...",
-      "source_file": "client/adapters/copilot_headless.py",
-      "source_location": "L1"
     },
     {
       "id": "client_adapters_copilot_headless_rationale_108",
@@ -8975,50 +8960,6 @@
       "source_location": "L68"
     },
     {
-      "id": "client_fleet_supervisor_rationale_110",
-      "label": "Worker loop that drives any BaseWorkerAdapter through the orchestrator task\u2026",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "rationale",
-      "norm_label": "worker loop that drives any baseworkeradapter through the orchestrator task...",
-      "source_file": "client/fleet_supervisor.py",
-      "source_location": "L110"
-    },
-    {
-      "id": "client_fleet_supervisor_rationale_21",
-      "label": "Return shared WinPilotBridge singleton to coordinate physical desktop input.",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "rationale",
-      "norm_label": "return shared winpilotbridge singleton to coordinate physical desktop input.",
-      "source_file": "client/fleet_supervisor.py",
-      "source_location": "L21"
-    },
-    {
-      "id": "client_fleet_supervisor_rationale_44",
-      "label": "Measure empirical OS metrics (Invariant C).",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "rationale",
-      "norm_label": "measure empirical os metrics (invariant c).",
-      "source_file": "client/fleet_supervisor.py",
-      "source_location": "L44"
-    },
-    {
-      "id": "client_fleet_supervisor_rationale_61",
-      "label": "Instantiate the correct adapter from a fleet-entry dict. Supported providers: -\u2026",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "rationale",
-      "norm_label": "instantiate the correct adapter from a fleet-entry dict. supported providers: -...",
-      "source_file": "client/fleet_supervisor.py",
-      "source_location": "L61"
-    },
-    {
       "id": "tests_test_copilot_headless_rationale_1",
       "label": "Unit tests for CopilotHeadlessAdapter in Claude-Desktop.",
       "_origin": "ast",
@@ -9028,39 +8969,6 @@
       "norm_label": "unit tests for copilotheadlessadapter in claude-desktop.",
       "source_file": "tests/test_copilot_headless.py",
       "source_location": "L1"
-    },
-    {
-      "id": "tests_test_fleet_supervisor_rationale_60",
-      "label": "create_adapter builds a ClaudeDesktopCDPAdapter for CDP entries.",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "rationale",
-      "norm_label": "create_adapter builds a claudedesktopcdpadapter for cdp entries.",
-      "source_file": "tests/test_fleet_supervisor.py",
-      "source_location": "L60"
-    },
-    {
-      "id": "tests_test_fleet_supervisor_rationale_74",
-      "label": "create_adapter builds a CopilotHeadlessAdapter for headless entries.",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "rationale",
-      "norm_label": "create_adapter builds a copilotheadlessadapter for headless entries.",
-      "source_file": "tests/test_fleet_supervisor.py",
-      "source_location": "L74"
-    },
-    {
-      "id": "tests_test_fleet_supervisor_rationale_91",
-      "label": "create_adapter raises ValueError for unknown providers.",
-      "_origin": "ast",
-      "community": 100,
-      "community_name": "CopilotHeadlessAdapter",
-      "file_type": "rationale",
-      "norm_label": "create_adapter raises valueerror for unknown providers.",
-      "source_file": "tests/test_fleet_supervisor.py",
-      "source_location": "L91"
     },
     {
       "id": "2026_09_15_analyse_repo_conversation_32_my_p0_fixes",
@@ -9202,6 +9110,105 @@
       "norm_label": "determines the dedicated subfolder for chat histories. - if user explicitly...",
       "source_file": "Claude Skills + MCP/chat-archiver/save_chat.py",
       "source_location": "L147"
+    },
+    {
+      "id": "client_adapters_claude_desktop_proxy_py_any",
+      "label": "Any",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "ClaudeDesktopProxyAdapter",
+      "file_type": "code",
+      "norm_label": "any",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "client_adapters_claude_desktop_proxy_rationale_102",
+      "label": "Stage-aware local processing engine producing structured deliverables.",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "ClaudeDesktopProxyAdapter",
+      "file_type": "rationale",
+      "norm_label": "stage-aware local processing engine producing structured deliverables.",
+      "source_file": "client/adapters/claude_desktop_proxy.py",
+      "source_location": "L102"
+    },
+    {
+      "id": "client_adapters_claude_desktop_proxy_rationale_12",
+      "label": "Adapter representing a local Windows Claude Desktop profile session. Interfaces\u2026",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "ClaudeDesktopProxyAdapter",
+      "file_type": "rationale",
+      "norm_label": "adapter representing a local windows claude desktop profile session. interfaces...",
+      "source_file": "client/adapters/claude_desktop_proxy.py",
+      "source_location": "L12"
+    },
+    {
+      "id": "client_adapters_claude_desktop_proxy_rationale_40",
+      "label": "Execute task using Anthropic Claude API, CDP bridge, or explicit simulation\u2026",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "ClaudeDesktopProxyAdapter",
+      "file_type": "rationale",
+      "norm_label": "execute task using anthropic claude api, cdp bridge, or explicit simulation...",
+      "source_file": "client/adapters/claude_desktop_proxy.py",
+      "source_location": "L40"
+    },
+    {
+      "id": "tests_test_e2e_pipeline_rationale_30",
+      "label": "End-to-End Test: Intake a 3-item '100_product_descriptions' job through all 5\u2026",
+      "_origin": "ast",
+      "community": 103,
+      "community_name": "ClaudeDesktopProxyAdapter",
+      "file_type": "rationale",
+      "norm_label": "end-to-end test: intake a 3-item '100_product_descriptions' job through all 5...",
+      "source_file": "tests/test_e2e_pipeline.py",
+      "source_location": "L30"
+    },
+    {
+      "id": "client_adapters_groq_adapter",
+      "label": "groq_adapter.py",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "GroqAdapter",
+      "file_type": "code",
+      "norm_label": "groq_adapter.py",
+      "source_file": "client/adapters/groq_adapter.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_adapters_groq_adapter_py_any",
+      "label": "Any",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "GroqAdapter",
+      "file_type": "code",
+      "norm_label": "any",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_groq_adapter",
+      "label": "test_groq_adapter.py",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "GroqAdapter",
+      "file_type": "code",
+      "norm_label": "test_groq_adapter.py",
+      "source_file": "tests/test_groq_adapter.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_adapters_groq_adapter_rationale_11",
+      "label": "Adapter for Groq-hosted LLMs via the OpenAI-compatible chat completions API.",
+      "_origin": "ast",
+      "community": 104,
+      "community_name": "GroqAdapter",
+      "file_type": "rationale",
+      "norm_label": "adapter for groq-hosted llms via the openai-compatible chat completions api.",
+      "source_file": "client/adapters/groq_adapter.py",
+      "source_location": "L11"
     },
     {
       "id": "2026_09_15_analyse_repo_conversation_analyse_repo",
@@ -9604,121 +9611,11 @@
       "source_location": "L2913"
     },
     {
-      "id": "abc",
-      "label": "ABC",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "abc",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "client_adapters_base_adapter",
-      "label": "base_adapter.py",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "base_adapter.py",
-      "source_file": "client/adapters/base_adapter.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_adapters_base_adapter_py_any",
-      "label": "Any",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "any",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "client_adapters_claude_desktop_cdp",
-      "label": "claude_desktop_cdp.py",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "claude_desktop_cdp.py",
-      "source_file": "client/adapters/claude_desktop_cdp.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_adapters_claude_desktop_proxy",
-      "label": "claude_desktop_proxy.py",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "claude_desktop_proxy.py",
-      "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_adapters_claude_desktop_proxy_py_any",
-      "label": "Any",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "any",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "client_adapters_gemini_free_adapter",
-      "label": "gemini_free_adapter.py",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "gemini_free_adapter.py",
-      "source_file": "client/adapters/gemini_free_adapter.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_adapters_gemini_free_adapter_py_any",
-      "label": "Any",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "any",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "client_adapters_groq_adapter",
-      "label": "groq_adapter.py",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "groq_adapter.py",
-      "source_file": "client/adapters/groq_adapter.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "client_adapters_groq_adapter_py_any",
-      "label": "Any",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "any",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "client_adapters_ollama_local_adapter",
       "label": "ollama_local_adapter.py",
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": "ollama_local_adapter.py",
       "source_file": "client/adapters/ollama_local_adapter.py",
@@ -9729,7 +9626,7 @@
       "label": "Any",
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": "any",
       "source_file": "",
@@ -9740,7 +9637,7 @@
       "label": "worker_daemon.py",
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": "worker_daemon.py",
       "source_file": "client/worker_daemon.py",
@@ -9751,7 +9648,7 @@
       "label": "Any",
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": "any",
       "source_file": "",
@@ -9762,7 +9659,7 @@
       "label": "AsyncClient",
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": "asyncclient",
       "source_file": "",
@@ -9773,150 +9670,18 @@
       "label": "Event",
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "code",
       "norm_label": "event",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "tests_test_groq_adapter",
-      "label": "test_groq_adapter.py",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "test_groq_adapter.py",
-      "source_file": "tests/test_groq_adapter.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_invariants_wsr_002",
-      "label": "test_invariants_wsr_002.py",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "test_invariants_wsr_002.py",
-      "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "tests_test_invariants_wsr_002_py_asyncio",
-      "label": "asyncio",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "asyncio",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_invariants_wsr_002_py_fixture",
-      "label": "fixture",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "code",
-      "norm_label": "fixture",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "client_adapters_base_adapter_rationale_16",
-      "label": "Executes work specified in `spec`. Returns dictionary: { \"summary\": \"...\",\u2026",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "executes work specified in `spec`. returns dictionary: { \"summary\": \"...\",...",
-      "source_file": "client/adapters/base_adapter.py",
-      "source_location": "L16"
-    },
-    {
-      "id": "client_adapters_base_adapter_rationale_30",
-      "label": "Returns True if the backend AI model / profile is online and usable.",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "returns true if the backend ai model / profile is online and usable.",
-      "source_file": "client/adapters/base_adapter.py",
-      "source_location": "L30"
-    },
-    {
-      "id": "client_adapters_base_adapter_rationale_7",
-      "label": "Abstract interface for worker execution endpoints.",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "abstract interface for worker execution endpoints.",
-      "source_file": "client/adapters/base_adapter.py",
-      "source_location": "L7"
-    },
-    {
-      "id": "client_adapters_claude_desktop_proxy_rationale_12",
-      "label": "Adapter representing a local Windows Claude Desktop profile session. Interfaces\u2026",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "adapter representing a local windows claude desktop profile session. interfaces...",
-      "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L12"
-    },
-    {
-      "id": "client_adapters_claude_desktop_proxy_rationale_30",
-      "label": "Execute task using Anthropic Claude API, CDP bridge, or structured prompt\u2026",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "execute task using anthropic claude api, cdp bridge, or structured prompt...",
-      "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L30"
-    },
-    {
-      "id": "client_adapters_claude_desktop_proxy_rationale_76",
-      "label": "Stage-aware local processing engine producing structured deliverables.",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "stage-aware local processing engine producing structured deliverables.",
-      "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L76"
-    },
-    {
-      "id": "client_adapters_gemini_free_adapter_rationale_10",
-      "label": "Adapter for Google AI Studio Free Tier (Gemini 2.5 / 3.0). Provides free tokens\u2026",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "adapter for google ai studio free tier (gemini 2.5 / 3.0). provides free tokens...",
-      "source_file": "client/adapters/gemini_free_adapter.py",
-      "source_location": "L10"
-    },
-    {
-      "id": "client_adapters_groq_adapter_rationale_11",
-      "label": "Adapter for Groq-hosted LLMs via the OpenAI-compatible chat completions API.",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "adapter for groq-hosted llms via the openai-compatible chat completions api.",
-      "source_file": "client/adapters/groq_adapter.py",
-      "source_location": "L11"
-    },
-    {
       "id": "client_adapters_ollama_local_adapter_rationale_10",
       "label": "Adapter for local Ollama / LM Studio models (e.g. Qwen 2.5, Llama 3.3). $0\u2026",
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "rationale",
       "norm_label": "adapter for local ollama / lm studio models (e.g. qwen 2.5, llama 3.3). $0...",
       "source_file": "client/adapters/ollama_local_adapter.py",
@@ -9924,58 +9689,14 @@
     },
     {
       "id": "client_worker_daemon_rationale_34",
-      "label": "Measure empirical OS metrics (Invariant C).",
+      "label": "Measure empirical OS metrics (Invariant C). Does NOT include quota/usage fields.",
       "_origin": "ast",
       "community": 11,
-      "community_name": "BaseWorkerAdapter",
+      "community_name": "worker_daemon.py",
       "file_type": "rationale",
-      "norm_label": "measure empirical os metrics (invariant c).",
+      "norm_label": "measure empirical os metrics (invariant c). does not include quota/usage fields.",
       "source_file": "client/worker_daemon.py",
       "source_location": "L34"
-    },
-    {
-      "id": "tests_test_e2e_pipeline_rationale_30",
-      "label": "End-to-End Test: Intake a 3-item '100_product_descriptions' job through all 5\u2026",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "end-to-end test: intake a 3-item '100_product_descriptions' job through all 5...",
-      "source_file": "tests/test_e2e_pipeline.py",
-      "source_location": "L30"
-    },
-    {
-      "id": "tests_test_invariants_wsr_002_rationale_26",
-      "label": "Invariant B: Unhandled API / network failure MUST emit typed error, NEVER\u2026",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "invariant b: unhandled api / network failure must emit typed error, never...",
-      "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L26"
-    },
-    {
-      "id": "tests_test_invariants_wsr_002_rationale_50",
-      "label": "Invariant C: Worker telemetry produces non-null empirical system metrics.",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "invariant c: worker telemetry produces non-null empirical system metrics.",
-      "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L50"
-    },
-    {
-      "id": "tests_test_invariants_wsr_002_rationale_61",
-      "label": "Invariant D: Checkpoint submission and DAG next-stage creation commit\u2026",
-      "_origin": "ast",
-      "community": 11,
-      "community_name": "BaseWorkerAdapter",
-      "file_type": "rationale",
-      "norm_label": "invariant d: checkpoint submission and dag next-stage creation commit...",
-      "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L61"
     },
     {
       "id": "2026_09_15_analyse_repo_conversation_1_the_biggest_bug_your_scheduler_and_workers_disagree_about_who_owns_task_acquisition",
@@ -10146,6 +9867,28 @@
       "source_location": "L3262"
     },
     {
+      "id": "client_adapters_gemini_free_adapter_py_any",
+      "label": "Any",
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "GeminiFreeAdapter",
+      "file_type": "code",
+      "norm_label": "any",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "client_adapters_gemini_free_adapter_rationale_10",
+      "label": "Adapter for Google AI Studio Free Tier (Gemini 2.5 / 3.0). Provides free tokens\u2026",
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "GeminiFreeAdapter",
+      "file_type": "rationale",
+      "norm_label": "adapter for google ai studio free tier (gemini 2.5 / 3.0). provides free tokens...",
+      "source_file": "client/adapters/gemini_free_adapter.py",
+      "source_location": "L10"
+    },
+    {
       "id": "2026_09_15_analyse_repo_conversation_10_your_tests_give_a_false_sense_of_security_here",
       "label": "10. Your tests give a false sense of security here",
       "_origin": "ast",
@@ -10228,6 +9971,17 @@
       "norm_label": "chat-archiver.skill",
       "source_file": "Claude Skills + MCP/chat-archiver.skill",
       "source_location": "L1"
+    },
+    {
+      "id": "server_main_rationale_57",
+      "label": "Enforce API key authentication on the mounted MCP SSE application.",
+      "_origin": "ast",
+      "community": 119,
+      "community_name": "MCPAuthMiddleware",
+      "file_type": "rationale",
+      "norm_label": "enforce api key authentication on the mounted mcp sse application.",
+      "source_file": "server/main.py",
+      "source_location": "L57"
     },
     {
       "id": "put",
@@ -10351,6 +10105,28 @@
       "source_location": "L87"
     },
     {
+      "id": "client_adapters_base_adapter_py_any",
+      "label": "Any",
+      "_origin": "ast",
+      "community": 120,
+      "community_name": ".execute_task",
+      "file_type": "code",
+      "norm_label": "any",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "client_adapters_base_adapter_rationale_16",
+      "label": "Executes work specified in `spec`. Returns dictionary: { \"summary\": \"...\",\u2026",
+      "_origin": "ast",
+      "community": 120,
+      "community_name": ".execute_task",
+      "file_type": "rationale",
+      "norm_label": "executes work specified in `spec`. returns dictionary: { \"summary\": \"...\",...",
+      "source_file": "client/adapters/base_adapter.py",
+      "source_location": "L16"
+    },
+    {
       "id": "client_adapters_winpilot_bridge",
       "label": "winpilot_bridge.py",
       "_origin": "ast",
@@ -10380,6 +10156,72 @@
       "community_name": "WinPilotBridge",
       "file_type": "code",
       "norm_label": "path",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "client_fleet_supervisor",
+      "label": "fleet_supervisor.py",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "fleet_supervisor.py",
+      "source_file": "client/fleet_supervisor.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_fleet_supervisor_py_any",
+      "label": "Any",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "any",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "client_fleet_supervisor_py_asyncclient",
+      "label": "AsyncClient",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "asyncclient",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "client_fleet_supervisor_py_event",
+      "label": "Event",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "event",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "tests_test_fleet_supervisor",
+      "label": "test_fleet_supervisor.py",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "test_fleet_supervisor.py",
+      "source_file": "tests/test_fleet_supervisor.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_fleet_supervisor_py_asyncio",
+      "label": "asyncio",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "code",
+      "norm_label": "asyncio",
       "source_file": "",
       "source_location": ""
     },
@@ -10525,6 +10367,83 @@
       "norm_label": "inspects claude desktop ui to detect 90% warning or 100% cooldown. extracts...",
       "source_file": "client/adapters/winpilot_bridge.py",
       "source_location": "L85"
+    },
+    {
+      "id": "client_fleet_supervisor_rationale_110",
+      "label": "Worker loop that drives any BaseWorkerAdapter through the orchestrator task\u2026",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "rationale",
+      "norm_label": "worker loop that drives any baseworkeradapter through the orchestrator task...",
+      "source_file": "client/fleet_supervisor.py",
+      "source_location": "L110"
+    },
+    {
+      "id": "client_fleet_supervisor_rationale_21",
+      "label": "Return shared WinPilotBridge singleton to coordinate physical desktop input.",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "rationale",
+      "norm_label": "return shared winpilotbridge singleton to coordinate physical desktop input.",
+      "source_file": "client/fleet_supervisor.py",
+      "source_location": "L21"
+    },
+    {
+      "id": "client_fleet_supervisor_rationale_44",
+      "label": "Measure empirical OS metrics (Invariant C). Does NOT include quota/usage fields.",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "rationale",
+      "norm_label": "measure empirical os metrics (invariant c). does not include quota/usage fields.",
+      "source_file": "client/fleet_supervisor.py",
+      "source_location": "L44"
+    },
+    {
+      "id": "client_fleet_supervisor_rationale_61",
+      "label": "Instantiate the correct adapter from a fleet-entry dict. Supported providers: -\u2026",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "rationale",
+      "norm_label": "instantiate the correct adapter from a fleet-entry dict. supported providers: -...",
+      "source_file": "client/fleet_supervisor.py",
+      "source_location": "L61"
+    },
+    {
+      "id": "tests_test_fleet_supervisor_rationale_60",
+      "label": "create_adapter builds a ClaudeDesktopCDPAdapter for CDP entries.",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "rationale",
+      "norm_label": "create_adapter builds a claudedesktopcdpadapter for cdp entries.",
+      "source_file": "tests/test_fleet_supervisor.py",
+      "source_location": "L60"
+    },
+    {
+      "id": "tests_test_fleet_supervisor_rationale_74",
+      "label": "create_adapter builds a CopilotHeadlessAdapter for headless entries.",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "rationale",
+      "norm_label": "create_adapter builds a copilotheadlessadapter for headless entries.",
+      "source_file": "tests/test_fleet_supervisor.py",
+      "source_location": "L74"
+    },
+    {
+      "id": "tests_test_fleet_supervisor_rationale_91",
+      "label": "create_adapter raises ValueError for unknown providers.",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "WinPilotBridge",
+      "file_type": "rationale",
+      "norm_label": "create_adapter raises valueerror for unknown providers.",
+      "source_file": "tests/test_fleet_supervisor.py",
+      "source_location": "L91"
     },
     {
       "id": "tests_test_winpilot_bridge_rationale_1",
@@ -10783,6 +10702,28 @@
       "source_location": ""
     },
     {
+      "id": "fastapi",
+      "label": "FastAPI",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "fastapi",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "httpauthorizationcredentials",
+      "label": "HTTPAuthorizationCredentials",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "httpauthorizationcredentials",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "server_api_routes_workers",
       "label": "routes_workers.py",
       "_origin": "ast",
@@ -10825,6 +10766,17 @@
       "norm_label": "post",
       "source_file": "",
       "source_location": ""
+    },
+    {
+      "id": "server_core_auth",
+      "label": "auth.py",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "routes_workers.py",
+      "file_type": "code",
+      "norm_label": "auth.py",
+      "source_file": "server/core/auth.py",
+      "source_location": "L1"
     },
     {
       "id": "server_core_database_py_connection",
@@ -10880,6 +10832,17 @@
       "norm_label": "process heartbeat from a worker, updating usage, cooldown, and status.",
       "source_file": "server/api/routes_workers.py",
       "source_location": "L96"
+    },
+    {
+      "id": "server_core_auth_rationale_13",
+      "label": "Verify that incoming request provides a valid API token via Bearer header or\u2026",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "routes_workers.py",
+      "file_type": "rationale",
+      "norm_label": "verify that incoming request provides a valid api token via bearer header or...",
+      "source_file": "server/core/auth.py",
+      "source_location": "L13"
     },
     {
       "id": "server_core_database_rationale_16",
@@ -11069,11 +11032,44 @@
       "source_location": "L181"
     },
     {
+      "id": "server_core_config",
+      "label": "config.py",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "config.py",
+      "source_file": "server/core/config.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "server_core_config_py_basemodel",
+      "label": "BaseModel",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "basemodel",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_core_pipeline_engine",
+      "label": "pipeline_engine.py",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "config.py",
+      "file_type": "code",
+      "norm_label": "pipeline_engine.py",
+      "source_file": "server/core/pipeline_engine.py",
+      "source_location": "L1"
+    },
+    {
       "id": "server_core_supervisor",
       "label": "supervisor.py",
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "supervisor.py",
       "source_file": "server/core/supervisor.py",
@@ -11084,7 +11080,7 @@
       "label": "test_cloud_scheduler.py",
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_cloud_scheduler.py",
       "source_file": "tests/test_cloud_scheduler.py",
@@ -11095,7 +11091,7 @@
       "label": "test_e2e_pipeline.py",
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "code",
       "norm_label": "test_e2e_pipeline.py",
       "source_file": "tests/test_e2e_pipeline.py",
@@ -11106,7 +11102,7 @@
       "label": "Periodic self-healing supervisor loop: 1. Identifies workers with stale\u2026",
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "periodic self-healing supervisor loop: 1. identifies workers with stale...",
       "source_file": "server/core/supervisor.py",
@@ -11117,7 +11113,7 @@
       "label": "Verify that Claude primary is preferred when available, but overflows to\u2026",
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "verify that claude primary is preferred when available, but overflows to...",
       "source_file": "tests/test_cloud_scheduler.py",
@@ -11128,7 +11124,7 @@
       "label": "Verify that repetitive format stages favor Copilot headless, while QA favors\u2026",
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "verify that repetitive format stages favor copilot headless, while qa favors...",
       "source_file": "tests/test_cloud_scheduler.py",
@@ -11139,7 +11135,7 @@
       "label": "Test that when multiple workers race to claim the same task simultaneously,\u2026",
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "test that when multiple workers race to claim the same task simultaneously,...",
       "source_file": "tests/test_e2e_pipeline.py",
@@ -11150,7 +11146,7 @@
       "label": "Test that tasks with expired leases can be claimed by a new worker or\u2026",
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "test that tasks with expired leases can be claimed by a new worker or...",
       "source_file": "tests/test_e2e_pipeline.py",
@@ -11161,7 +11157,7 @@
       "label": "Test that an active worker can extend its task lease before expiration.",
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "test that an active worker can extend its task lease before expiration.",
       "source_file": "tests/test_e2e_pipeline.py",
@@ -11172,40 +11168,18 @@
       "label": "A worker that lost an expired lease cannot release or complete its replacement\u2026",
       "_origin": "ast",
       "community": 20,
-      "community_name": "test_e2e_pipeline.py",
+      "community_name": "config.py",
       "file_type": "rationale",
       "norm_label": "a worker that lost an expired lease cannot release or complete its replacement...",
       "source_file": "tests/test_e2e_pipeline.py",
       "source_location": "L269"
     },
     {
-      "id": "response",
-      "label": "Response",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "response",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "server_api_routes_tasks",
-      "label": "routes_tasks.py",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "routes_tasks.py",
-      "file_type": "code",
-      "norm_label": "routes_tasks.py",
-      "source_file": "server/api/routes_tasks.py",
-      "source_location": "L1"
-    },
-    {
       "id": "server_models_schemas",
       "label": "schemas.py",
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "schemas.py",
       "source_file": "server/models/schemas.py",
@@ -11216,22 +11190,11 @@
       "label": "BaseModel",
       "_origin": "ast",
       "community": 21,
-      "community_name": "routes_tasks.py",
+      "community_name": "schemas.py",
       "file_type": "code",
       "norm_label": "basemodel",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "server_api_routes_tasks_rationale_152",
-      "label": "Pull-with-Scheduler-Arbitration (INV-WSR-002 Invariant A). Atomically matches,\u2026",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "routes_tasks.py",
-      "file_type": "rationale",
-      "norm_label": "pull-with-scheduler-arbitration (inv-wsr-002 invariant a). atomically matches,...",
-      "source_file": "server/api/routes_tasks.py",
-      "source_location": "L152"
     },
     {
       "id": "client_output_harvester",
@@ -11322,7 +11285,7 @@
       "source_location": "L14"
     },
     {
-      "id": "server_core_pipeline_engine_rationale_140",
+      "id": "server_core_pipeline_engine_rationale_144",
       "label": "Checks whether all tasks for a job have reached terminal state (done/merged).\u2026",
       "_origin": "ast",
       "community": 25,
@@ -11330,7 +11293,7 @@
       "file_type": "rationale",
       "norm_label": "checks whether all tasks for a job have reached terminal state (done/merged)....",
       "source_file": "server/core/pipeline_engine.py",
-      "source_location": "L140"
+      "source_location": "L144"
     },
     {
       "id": "server_core_pipeline_engine_rationale_21",
@@ -11910,6 +11873,17 @@
       "source_location": "L24"
     },
     {
+      "id": "server_core_database",
+      "label": "database.py",
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "init_db",
+      "file_type": "code",
+      "norm_label": "database.py",
+      "source_file": "server/core/database.py",
+      "source_location": "L1"
+    },
+    {
       "id": "tests_test_cloud_scheduler_py_fixture",
       "label": "fixture",
       "_origin": "ast",
@@ -11952,6 +11926,17 @@
       "norm_label": "path",
       "source_file": "",
       "source_location": ""
+    },
+    {
+      "id": "tests_test_pipeline_engine",
+      "label": "test_pipeline_engine.py",
+      "_origin": "ast",
+      "community": 34,
+      "community_name": "init_db",
+      "file_type": "code",
+      "norm_label": "test_pipeline_engine.py",
+      "source_file": "tests/test_pipeline_engine.py",
+      "source_location": "L1"
     },
     {
       "id": "tests_test_pipeline_engine_py_fixture",
@@ -12433,33 +12418,11 @@
       "source_location": "L181"
     },
     {
-      "id": "fastapi",
-      "label": "FastAPI",
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "FastAPI",
-      "file_type": "code",
-      "norm_label": "fastapi",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "server_core_auth",
-      "label": "auth.py",
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "FastAPI",
-      "file_type": "code",
-      "norm_label": "auth.py",
-      "source_file": "server/core/auth.py",
-      "source_location": "L1"
-    },
-    {
       "id": "tests_test_security_config",
       "label": "test_security_config.py",
       "_origin": "ast",
       "community": 41,
-      "community_name": "FastAPI",
+      "community_name": "validate_security_settings",
       "file_type": "code",
       "norm_label": "test_security_config.py",
       "source_file": "tests/test_security_config.py",
@@ -12467,12 +12430,12 @@
     },
     {
       "id": "server_main_rationale_38",
-      "label": "Background supervisor monitoring heartbeats, dead workers, and auto-scheduling\u2026",
+      "label": "Background supervisor monitoring heartbeats, dead workers, and reclaiming\u2026",
       "_origin": "ast",
       "community": 41,
-      "community_name": "FastAPI",
+      "community_name": "validate_security_settings",
       "file_type": "rationale",
-      "norm_label": "background supervisor monitoring heartbeats, dead workers, and auto-scheduling...",
+      "norm_label": "background supervisor monitoring heartbeats, dead workers, and reclaiming...",
       "source_file": "server/main.py",
       "source_location": "L38"
     },
@@ -12868,59 +12831,103 @@
       "source_location": "L65"
     },
     {
-      "id": "server_core_config",
-      "label": "config.py",
+      "id": "tests_test_invariants_wsr_002",
+      "label": "test_invariants_wsr_002.py",
       "_origin": "ast",
       "community": 47,
-      "community_name": "config.py",
+      "community_name": "test_invariants_wsr_002.py",
       "file_type": "code",
-      "norm_label": "config.py",
-      "source_file": "server/core/config.py",
+      "norm_label": "test_invariants_wsr_002.py",
+      "source_file": "tests/test_invariants_wsr_002.py",
       "source_location": "L1"
     },
     {
-      "id": "server_core_config_py_basemodel",
-      "label": "BaseModel",
+      "id": "tests_test_invariants_wsr_002_py_asyncio",
+      "label": "asyncio",
       "_origin": "ast",
       "community": 47,
-      "community_name": "config.py",
+      "community_name": "test_invariants_wsr_002.py",
       "file_type": "code",
-      "norm_label": "basemodel",
+      "norm_label": "asyncio",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "server_core_database",
-      "label": "database.py",
+      "id": "tests_test_invariants_wsr_002_py_fixture",
+      "label": "fixture",
       "_origin": "ast",
       "community": 47,
-      "community_name": "config.py",
+      "community_name": "test_invariants_wsr_002.py",
       "file_type": "code",
-      "norm_label": "database.py",
-      "source_file": "server/core/database.py",
-      "source_location": "L1"
+      "norm_label": "fixture",
+      "source_file": "",
+      "source_location": ""
     },
     {
-      "id": "server_core_pipeline_engine",
-      "label": "pipeline_engine.py",
+      "id": "tests_test_invariants_wsr_002_rationale_130",
+      "label": "Invariant D: Checkpoint submission and DAG next-stage creation commit\u2026",
       "_origin": "ast",
       "community": 47,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "pipeline_engine.py",
-      "source_file": "server/core/pipeline_engine.py",
-      "source_location": "L1"
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "rationale",
+      "norm_label": "invariant d: checkpoint submission and dag next-stage creation commit...",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L130"
     },
     {
-      "id": "tests_test_pipeline_engine",
-      "label": "test_pipeline_engine.py",
+      "id": "tests_test_invariants_wsr_002_rationale_197",
+      "label": "Invariant D / Fix 5: Passing QA review preserves deliverable in checkpoints\u2026",
       "_origin": "ast",
       "community": 47,
-      "community_name": "config.py",
-      "file_type": "code",
-      "norm_label": "test_pipeline_engine.py",
-      "source_file": "tests/test_pipeline_engine.py",
-      "source_location": "L1"
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "rationale",
+      "norm_label": "invariant d / fix 5: passing qa review preserves deliverable in checkpoints...",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L197"
+    },
+    {
+      "id": "tests_test_invariants_wsr_002_rationale_27",
+      "label": "Invariant B: Unhandled API / network failure MUST emit typed error, NEVER\u2026",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "rationale",
+      "norm_label": "invariant b: unhandled api / network failure must emit typed error, never...",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L27"
+    },
+    {
+      "id": "tests_test_invariants_wsr_002_rationale_272",
+      "label": "Invariant D / Fix 6: Failure during stage advancement rolls back checkpoint and\u2026",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "rationale",
+      "norm_label": "invariant d / fix 6: failure during stage advancement rolls back checkpoint and...",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L272"
+    },
+    {
+      "id": "tests_test_invariants_wsr_002_rationale_86",
+      "label": "Invariant C: Worker telemetry produces non-null empirical system metrics\u2026",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "rationale",
+      "norm_label": "invariant c: worker telemetry produces non-null empirical system metrics...",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L86"
+    },
+    {
+      "id": "tests_test_invariants_wsr_002_rationale_97",
+      "label": "Invariant C: High OS RAM utilization MUST NEVER trigger worker quota cooldown.",
+      "_origin": "ast",
+      "community": 47,
+      "community_name": "test_invariants_wsr_002.py",
+      "file_type": "rationale",
+      "norm_label": "invariant c: high os ram utilization must never trigger worker quota cooldown.",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L97"
     },
     {
       "id": "mcp_servers_notebooklm_mcp_run_server",
@@ -13933,11 +13940,33 @@
       "source_location": "L1"
     },
     {
+      "id": "response",
+      "label": "Response",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "response",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "server_api_routes_tasks",
+      "label": "routes_tasks.py",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "routes_tasks.py",
+      "file_type": "code",
+      "norm_label": "routes_tasks.py",
+      "source_file": "server/api/routes_tasks.py",
+      "source_location": "L1"
+    },
+    {
       "id": "server_api_routes_tasks_py_connection",
       "label": "Connection",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "connection",
       "source_file": "",
@@ -13948,7 +13977,7 @@
       "label": "get",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "get",
       "source_file": "",
@@ -13959,7 +13988,7 @@
       "label": "post",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "code",
       "norm_label": "post",
       "source_file": "",
@@ -13970,18 +13999,29 @@
       "label": "Get single task details.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "get single task details.",
       "source_file": "server/api/routes_tasks.py",
       "source_location": "L124"
     },
     {
+      "id": "server_api_routes_tasks_rationale_152",
+      "label": "Pull-with-Scheduler-Arbitration (INV-WSR-002 Invariant A). Atomically matches,\u2026",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "routes_tasks.py",
+      "file_type": "rationale",
+      "norm_label": "pull-with-scheduler-arbitration (inv-wsr-002 invariant a). atomically matches,...",
+      "source_file": "server/api/routes_tasks.py",
+      "source_location": "L152"
+    },
+    {
       "id": "server_api_routes_tasks_rationale_194",
       "label": "Claim a pending or expired task atomically with a lease duration.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "claim a pending or expired task atomically with a lease duration.",
       "source_file": "server/api/routes_tasks.py",
@@ -13992,7 +14032,7 @@
       "label": "Renew the lease on an actively claimed task.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "renew the lease on an actively claimed task.",
       "source_file": "server/api/routes_tasks.py",
@@ -14003,7 +14043,7 @@
       "label": "Create a new task in the queue.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "create a new task in the queue.",
       "source_file": "server/api/routes_tasks.py",
@@ -14014,7 +14054,7 @@
       "label": "Release a claimed task back to pending.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "release a claimed task back to pending.",
       "source_file": "server/api/routes_tasks.py",
@@ -14025,7 +14065,7 @@
       "label": "Mark a claimed task as blocked.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "mark a claimed task as blocked.",
       "source_file": "server/api/routes_tasks.py",
@@ -14036,7 +14076,7 @@
       "label": "Submit finished task deliverable, mark task 'done', and advance pipeline stage.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "submit finished task deliverable, mark task 'done', and advance pipeline stage.",
       "source_file": "server/api/routes_tasks.py",
@@ -14047,7 +14087,7 @@
       "label": "Retrieve checkpoint deliverable for a task.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "retrieve checkpoint deliverable for a task.",
       "source_file": "server/api/routes_tasks.py",
@@ -14058,7 +14098,7 @@
       "label": "Submit a QA verification pass/fail/revision review.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "submit a qa verification pass/fail/revision review.",
       "source_file": "server/api/routes_tasks.py",
@@ -14069,7 +14109,7 @@
       "label": "List tasks with flexible filtering.",
       "_origin": "ast",
       "community": 7,
-      "community_name": "Connection",
+      "community_name": "routes_tasks.py",
       "file_type": "rationale",
       "norm_label": "list tasks with flexible filtering.",
       "source_file": "server/api/routes_tasks.py",
@@ -14912,26 +14952,103 @@
       "source_location": "L2993"
     },
     {
-      "id": "httpauthorizationcredentials",
-      "label": "HTTPAuthorizationCredentials",
+      "id": "abc",
+      "label": "ABC",
       "_origin": "ast",
       "community": 88,
-      "community_name": "verify_api_key",
+      "community_name": "BaseWorkerAdapter",
       "file_type": "code",
-      "norm_label": "httpauthorizationcredentials",
+      "norm_label": "abc",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "server_core_auth_rationale_13",
-      "label": "Verify that incoming request provides a valid API token via Bearer header or\u2026",
+      "id": "client_adapters_base_adapter",
+      "label": "base_adapter.py",
       "_origin": "ast",
       "community": 88,
-      "community_name": "verify_api_key",
+      "community_name": "BaseWorkerAdapter",
+      "file_type": "code",
+      "norm_label": "base_adapter.py",
+      "source_file": "client/adapters/base_adapter.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_adapters_claude_desktop_cdp",
+      "label": "claude_desktop_cdp.py",
+      "_origin": "ast",
+      "community": 88,
+      "community_name": "BaseWorkerAdapter",
+      "file_type": "code",
+      "norm_label": "claude_desktop_cdp.py",
+      "source_file": "client/adapters/claude_desktop_cdp.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_adapters_claude_desktop_proxy",
+      "label": "claude_desktop_proxy.py",
+      "_origin": "ast",
+      "community": 88,
+      "community_name": "BaseWorkerAdapter",
+      "file_type": "code",
+      "norm_label": "claude_desktop_proxy.py",
+      "source_file": "client/adapters/claude_desktop_proxy.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_adapters_copilot_headless",
+      "label": "copilot_headless.py",
+      "_origin": "ast",
+      "community": 88,
+      "community_name": "BaseWorkerAdapter",
+      "file_type": "code",
+      "norm_label": "copilot_headless.py",
+      "source_file": "client/adapters/copilot_headless.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_adapters_gemini_free_adapter",
+      "label": "gemini_free_adapter.py",
+      "_origin": "ast",
+      "community": 88,
+      "community_name": "BaseWorkerAdapter",
+      "file_type": "code",
+      "norm_label": "gemini_free_adapter.py",
+      "source_file": "client/adapters/gemini_free_adapter.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "client_adapters_base_adapter_rationale_30",
+      "label": "Returns True if the backend AI model / profile is online and usable.",
+      "_origin": "ast",
+      "community": 88,
+      "community_name": "BaseWorkerAdapter",
       "file_type": "rationale",
-      "norm_label": "verify that incoming request provides a valid api token via bearer header or...",
-      "source_file": "server/core/auth.py",
-      "source_location": "L13"
+      "norm_label": "returns true if the backend ai model / profile is online and usable.",
+      "source_file": "client/adapters/base_adapter.py",
+      "source_location": "L30"
+    },
+    {
+      "id": "client_adapters_base_adapter_rationale_7",
+      "label": "Abstract interface for worker execution endpoints.",
+      "_origin": "ast",
+      "community": 88,
+      "community_name": "BaseWorkerAdapter",
+      "file_type": "rationale",
+      "norm_label": "abstract interface for worker execution endpoints.",
+      "source_file": "client/adapters/base_adapter.py",
+      "source_location": "L7"
+    },
+    {
+      "id": "client_adapters_copilot_headless_rationale_1",
+      "label": "Copilot Headless Adapter: Pure asynchronous HTTP adapter for GitHub Copilot\u2026",
+      "_origin": "ast",
+      "community": 88,
+      "community_name": "BaseWorkerAdapter",
+      "file_type": "rationale",
+      "norm_label": "copilot headless adapter: pure asynchronous http adapter for github copilot...",
+      "source_file": "client/adapters/copilot_headless.py",
+      "source_location": "L1"
     },
     {
       "id": "tests_test_task_acquisition",
@@ -17376,7 +17493,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L67",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
@@ -17388,7 +17505,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L22",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -17628,7 +17745,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/fleet_supervisor.py",
-      "source_location": "L292",
+      "source_location": "L308",
       "weight": 1.0
     },
     {
@@ -17640,7 +17757,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/fleet_supervisor.py",
-      "source_location": "L298",
+      "source_location": "L314",
       "weight": 1.0
     },
     {
@@ -17652,7 +17769,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/fleet_supervisor.py",
-      "source_location": "L150",
+      "source_location": "L151",
       "weight": 1.0
     },
     {
@@ -17748,7 +17865,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/worker_daemon.py",
-      "source_location": "L111",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -17760,7 +17877,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "client/worker_daemon.py",
-      "source_location": "L138",
+      "source_location": "L150",
       "weight": 1.0
     },
     {
@@ -19548,7 +19665,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/core/pipeline_engine.py",
-      "source_location": "L112",
+      "source_location": "L116",
       "weight": 1.0
     },
     {
@@ -19560,7 +19677,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/core/pipeline_engine.py",
-      "source_location": "L144",
+      "source_location": "L148",
       "weight": 1.0
     },
     {
@@ -19656,7 +19773,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/main.py",
-      "source_location": "L126",
+      "source_location": "L165",
       "weight": 1.0
     },
     {
@@ -19668,7 +19785,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/main.py",
-      "source_location": "L77",
+      "source_location": "L116",
       "weight": 1.0
     },
     {
@@ -19680,7 +19797,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/main.py",
-      "source_location": "L86",
+      "source_location": "L125",
       "weight": 1.0
     },
     {
@@ -19692,7 +19809,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/main.py",
-      "source_location": "L87",
+      "source_location": "L126",
       "weight": 1.0
     },
     {
@@ -19704,7 +19821,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/main.py",
-      "source_location": "L115",
+      "source_location": "L154",
       "weight": 1.0
     },
     {
@@ -19716,19 +19833,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/main.py",
-      "source_location": "L46",
-      "weight": 1.0
-    },
-    {
-      "source": "server_main_run_supervisor_loop",
-      "target": "server_core_database_get_db_conn",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "server/main.py",
-      "source_location": "L49",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -19848,7 +19953,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L568",
+      "source_location": "L580",
       "weight": 1.0
     },
     {
@@ -19860,7 +19965,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L574",
+      "source_location": "L586",
       "weight": 1.0
     },
     {
@@ -19872,7 +19977,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L586",
+      "source_location": "L598",
       "weight": 1.0
     },
     {
@@ -19884,7 +19989,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L592",
+      "source_location": "L604",
       "weight": 1.0
     },
     {
@@ -19896,7 +20001,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L722",
+      "source_location": "L734",
       "weight": 1.0
     },
     {
@@ -19932,7 +20037,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L705",
+      "source_location": "L717",
       "weight": 1.0
     },
     {
@@ -19944,7 +20049,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L711",
+      "source_location": "L723",
       "weight": 1.0
     },
     {
@@ -19956,7 +20061,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L542",
+      "source_location": "L554",
       "weight": 1.0
     },
     {
@@ -19968,7 +20073,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L555",
+      "source_location": "L567",
       "weight": 1.0
     },
     {
@@ -20004,7 +20109,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L682",
+      "source_location": "L694",
       "weight": 1.0
     },
     {
@@ -20016,7 +20121,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L693",
+      "source_location": "L705",
       "weight": 1.0
     },
     {
@@ -20028,7 +20133,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L769",
+      "source_location": "L781",
       "weight": 1.0
     },
     {
@@ -20040,7 +20145,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L775",
+      "source_location": "L787",
       "weight": 1.0
     },
     {
@@ -20052,7 +20157,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L837",
+      "source_location": "L849",
       "weight": 1.0
     },
     {
@@ -20064,7 +20169,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L842",
+      "source_location": "L854",
       "weight": 1.0
     },
     {
@@ -20076,24 +20181,12 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L847",
+      "source_location": "L859",
       "weight": 1.0
     },
     {
       "source": "server_mcp_remote_read_team_memory",
       "target": "server_core_database_get_db_conn",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "server/mcp_remote.py",
-      "source_location": "L814",
-      "weight": 1.0
-    },
-    {
-      "source": "server_mcp_remote_read_team_memory",
-      "target": "server_mcp_remote_row_to_dict",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -20104,6 +20197,18 @@
       "weight": 1.0
     },
     {
+      "source": "server_mcp_remote_read_team_memory",
+      "target": "server_mcp_remote_row_to_dict",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "server/mcp_remote.py",
+      "source_location": "L838",
+      "weight": 1.0
+    },
+    {
       "source": "server_mcp_remote_register_worker",
       "target": "server_core_database_get_db_conn",
       "relation": "calls",
@@ -20112,7 +20217,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L613",
+      "source_location": "L625",
       "weight": 1.0
     },
     {
@@ -20124,7 +20229,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L616",
+      "source_location": "L628",
       "weight": 1.0
     },
     {
@@ -20136,7 +20241,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L633",
+      "source_location": "L645",
       "weight": 1.0
     },
     {
@@ -20208,7 +20313,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L794",
+      "source_location": "L806",
       "weight": 1.0
     },
     {
@@ -20220,7 +20325,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L802",
+      "source_location": "L814",
       "weight": 1.0
     },
     {
@@ -20268,7 +20373,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L500",
+      "source_location": "L512",
       "weight": 1.0
     },
     {
@@ -20280,7 +20385,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L518",
+      "source_location": "L530",
       "weight": 1.0
     },
     {
@@ -20292,7 +20397,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L530",
+      "source_location": "L542",
       "weight": 1.0
     },
     {
@@ -20304,7 +20409,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L427",
+      "source_location": "L429",
       "weight": 1.0
     },
     {
@@ -20316,7 +20421,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L429",
+      "source_location": "L431",
       "weight": 1.0
     },
     {
@@ -20364,7 +20469,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L649",
+      "source_location": "L661",
       "weight": 1.0
     },
     {
@@ -20544,7 +20649,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L21",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -20556,7 +20661,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L51",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -24132,7 +24237,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/main.py",
-      "source_location": "L99",
+      "source_location": "L138",
       "weight": 1.0
     },
     {
@@ -24144,7 +24249,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/main.py",
-      "source_location": "L107",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
@@ -24156,7 +24261,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/main.py",
-      "source_location": "L124",
+      "source_location": "L163",
       "weight": 1.0
     },
     {
@@ -24168,7 +24273,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/main.py",
-      "source_location": "L75",
+      "source_location": "L114",
       "weight": 1.0
     },
     {
@@ -24180,7 +24285,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/main.py",
-      "source_location": "L111",
+      "source_location": "L150",
       "weight": 1.0
     },
     {
@@ -24240,7 +24345,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L563",
+      "source_location": "L575",
       "weight": 1.0
     },
     {
@@ -24252,7 +24357,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L581",
+      "source_location": "L593",
       "weight": 1.0
     },
     {
@@ -24264,7 +24369,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L717",
+      "source_location": "L729",
       "weight": 1.0
     },
     {
@@ -24288,7 +24393,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L700",
+      "source_location": "L712",
       "weight": 1.0
     },
     {
@@ -24300,7 +24405,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L537",
+      "source_location": "L549",
       "weight": 1.0
     },
     {
@@ -24324,7 +24429,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L677",
+      "source_location": "L689",
       "weight": 1.0
     },
     {
@@ -24336,7 +24441,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L761",
+      "source_location": "L773",
       "weight": 1.0
     },
     {
@@ -24348,7 +24453,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L830",
+      "source_location": "L842",
       "weight": 1.0
     },
     {
@@ -24360,7 +24465,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L806",
+      "source_location": "L818",
       "weight": 1.0
     },
     {
@@ -24372,7 +24477,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L600",
+      "source_location": "L612",
       "weight": 1.0
     },
     {
@@ -24408,7 +24513,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L786",
+      "source_location": "L798",
       "weight": 1.0
     },
     {
@@ -24432,7 +24537,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L489",
+      "source_location": "L501",
       "weight": 1.0
     },
     {
@@ -24468,7 +24573,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L639",
+      "source_location": "L651",
       "weight": 1.0
     },
     {
@@ -24852,7 +24957,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -24864,7 +24969,19 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L24",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002_test_invariant_c_no_spurious_cooldown_on_high_memory",
+      "target": "tests_test_invariants_wsr_002_py_asyncio",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "decorator",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -24876,7 +24993,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L48",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -24888,7 +25005,31 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L59",
+      "source_location": "L128",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002_test_invariant_d_atomic_rollback_on_failure",
+      "target": "tests_test_invariants_wsr_002_py_asyncio",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "decorator",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L270",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002_test_invariant_d_qa_checkpoint_preservation",
+      "target": "tests_test_invariants_wsr_002_py_asyncio",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "decorator",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L195",
       "weight": 1.0
     },
     {
@@ -25368,7 +25509,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L29",
+      "source_location": "L39",
       "weight": 1.0
     },
     {
@@ -26052,7 +26193,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L567",
+      "source_location": "L579",
       "weight": 1.0
     },
     {
@@ -26064,7 +26205,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L585",
+      "source_location": "L597",
       "weight": 1.0
     },
     {
@@ -26076,7 +26217,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L721",
+      "source_location": "L733",
       "weight": 1.0
     },
     {
@@ -26100,7 +26241,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L704",
+      "source_location": "L716",
       "weight": 1.0
     },
     {
@@ -26112,7 +26253,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L541",
+      "source_location": "L553",
       "weight": 1.0
     },
     {
@@ -26136,7 +26277,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L681",
+      "source_location": "L693",
       "weight": 1.0
     },
     {
@@ -26148,7 +26289,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L765",
+      "source_location": "L777",
       "weight": 1.0
     },
     {
@@ -26160,7 +26301,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L834",
+      "source_location": "L846",
       "weight": 1.0
     },
     {
@@ -26172,7 +26313,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L810",
+      "source_location": "L822",
       "weight": 1.0
     },
     {
@@ -26184,7 +26325,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L604",
+      "source_location": "L616",
       "weight": 1.0
     },
     {
@@ -26232,7 +26373,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L790",
+      "source_location": "L802",
       "weight": 1.0
     },
     {
@@ -26256,7 +26397,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L493",
+      "source_location": "L505",
       "weight": 1.0
     },
     {
@@ -26292,7 +26433,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "server/mcp_remote.py",
-      "source_location": "L643",
+      "source_location": "L655",
       "weight": 1.0
     },
     {
@@ -27209,7 +27350,7 @@
     },
     {
       "source": "tests_test_invariants_wsr_002",
-      "target": "client_worker_daemon_get_system_telemetry",
+      "target": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -27217,6 +27358,18 @@
       "context": "import",
       "source_file": "tests/test_invariants_wsr_002.py",
       "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002",
+      "target": "client_worker_daemon_get_system_telemetry",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -28553,7 +28706,7 @@
     },
     {
       "source": "tests_test_invariants_wsr_002",
-      "target": "client_worker_daemon",
+      "target": "client_adapters_claude_desktop_proxy",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -28561,6 +28714,18 @@
       "context": "import",
       "source_file": "tests/test_invariants_wsr_002.py",
       "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002",
+      "target": "client_worker_daemon",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -30618,7 +30783,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "server/core/pipeline_engine.py",
-      "source_location": "L135",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -30690,7 +30855,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "server/main.py",
-      "source_location": "L76",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -33545,7 +33710,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/fleet_supervisor.py",
-      "source_location": "L247",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -35816,13 +35981,24 @@
     },
     {
       "source": "server_main",
+      "target": "server_main_observe_http_requests",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/main.py",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "server_main",
       "target": "server_main_health_check",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/main.py",
-      "source_location": "L100",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -35833,7 +36009,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/main.py",
-      "source_location": "L108",
+      "source_location": "L147",
       "weight": 1.0
     },
     {
@@ -35844,7 +36020,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/main.py",
-      "source_location": "L112",
+      "source_location": "L151",
       "weight": 1.0
     },
     {
@@ -35855,7 +36031,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/main.py",
-      "source_location": "L125",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -35882,13 +36058,13 @@
     },
     {
       "source": "server_main",
-      "target": "server_main_observe_http_requests",
+      "target": "server_main_mcpauthmiddleware",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/main.py",
-      "source_location": "L76",
+      "source_location": "L56",
       "weight": 1.0
     },
     {
@@ -36031,7 +36207,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L493",
+      "source_location": "L505",
       "weight": 1.0
     },
     {
@@ -36042,7 +36218,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L541",
+      "source_location": "L553",
       "weight": 1.0
     },
     {
@@ -36053,7 +36229,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L567",
+      "source_location": "L579",
       "weight": 1.0
     },
     {
@@ -36064,7 +36240,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L585",
+      "source_location": "L597",
       "weight": 1.0
     },
     {
@@ -36075,7 +36251,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L604",
+      "source_location": "L616",
       "weight": 1.0
     },
     {
@@ -36086,7 +36262,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L643",
+      "source_location": "L655",
       "weight": 1.0
     },
     {
@@ -36097,7 +36273,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L681",
+      "source_location": "L693",
       "weight": 1.0
     },
     {
@@ -36108,7 +36284,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L704",
+      "source_location": "L716",
       "weight": 1.0
     },
     {
@@ -36119,18 +36295,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L721",
-      "weight": 1.0
-    },
-    {
-      "source": "server_mcp_remote",
-      "target": "server_mcp_remote_push_memory",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "server/mcp_remote.py",
-      "source_location": "L765",
+      "source_location": "L733",
       "weight": 1.0
     },
     {
@@ -36146,13 +36311,24 @@
     },
     {
       "source": "server_mcp_remote",
+      "target": "server_mcp_remote_push_memory",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/mcp_remote.py",
+      "source_location": "L777",
+      "weight": 1.0
+    },
+    {
+      "source": "server_mcp_remote",
       "target": "server_mcp_remote_search_memory",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L790",
+      "source_location": "L802",
       "weight": 1.0
     },
     {
@@ -36163,7 +36339,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L810",
+      "source_location": "L822",
       "weight": 1.0
     },
     {
@@ -36174,7 +36350,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/mcp_remote.py",
-      "source_location": "L834",
+      "source_location": "L846",
       "weight": 1.0
     },
     {
@@ -36262,7 +36438,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L167",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -36273,7 +36449,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L178",
+      "source_location": "L180",
       "weight": 1.0
     },
     {
@@ -36284,7 +36460,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L191",
+      "source_location": "L193",
       "weight": 1.0
     },
     {
@@ -36295,7 +36471,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L195",
+      "source_location": "L197",
       "weight": 1.0
     },
     {
@@ -36306,7 +36482,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L201",
+      "source_location": "L203",
       "weight": 1.0
     },
     {
@@ -36317,7 +36493,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L204",
+      "source_location": "L206",
       "weight": 1.0
     },
     {
@@ -37697,13 +37873,35 @@
     },
     {
       "source": "tests_test_invariants_wsr_002",
+      "target": "tests_test_invariants_wsr_002_test_invariant_d_atomic_dag_stage_advancement",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002",
       "target": "tests_test_invariants_wsr_002_setup_test_db",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L17",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002",
+      "target": "tests_test_invariants_wsr_002_test_invariant_d_qa_checkpoint_preservation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L196",
       "weight": 1.0
     },
     {
@@ -37714,7 +37912,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L25",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002",
+      "target": "tests_test_invariants_wsr_002_test_invariant_d_atomic_rollback_on_failure",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L271",
       "weight": 1.0
     },
     {
@@ -37725,18 +37934,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L49",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
       "source": "tests_test_invariants_wsr_002",
-      "target": "tests_test_invariants_wsr_002_test_invariant_d_atomic_dag_stage_advancement",
+      "target": "tests_test_invariants_wsr_002_test_invariant_c_no_spurious_cooldown_on_high_memory",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L60",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -38825,7 +39034,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L204",
+      "source_location": "L206",
       "weight": 1.0
     },
     {
@@ -38836,7 +39045,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L201",
+      "source_location": "L203",
       "weight": 1.0
     },
     {
@@ -38858,7 +39067,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L178",
+      "source_location": "L180",
       "weight": 1.0
     },
     {
@@ -38891,7 +39100,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L191",
+      "source_location": "L193",
       "weight": 1.0
     },
     {
@@ -38902,7 +39111,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L195",
+      "source_location": "L197",
       "weight": 1.0
     },
     {
@@ -38913,7 +39122,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/models/schemas.py",
-      "source_location": "L167",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -39314,6 +39523,17 @@
     },
     {
       "source": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter",
+      "target": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_local_profile_stage",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/adapters/claude_desktop_proxy.py",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter",
       "target": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_init",
       "relation": "method",
       "_origin": "ast",
@@ -39331,7 +39551,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L24",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -39342,18 +39562,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L29",
-      "weight": 1.0
-    },
-    {
-      "source": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter",
-      "target": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_local_profile_stage",
-      "relation": "method",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L75",
+      "source_location": "L39",
       "weight": 1.0
     },
     {
@@ -39628,7 +39837,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/core/pipeline_engine.py",
-      "source_location": "L135",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -39717,6 +39926,28 @@
       "confidence_score": 1.0,
       "source_file": "server/core/scheduler.py",
       "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "server_main_mcpauthmiddleware",
+      "target": "server_main_mcpauthmiddleware_init",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/main.py",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "server_main_mcpauthmiddleware",
+      "target": "server_main_mcpauthmiddleware_call",
+      "relation": "method",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/main.py",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -42580,6 +42811,17 @@
       "weight": 1.0
     },
     {
+      "source": "client_adapters_claude_desktop_proxy_rationale_102",
+      "target": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_local_profile_stage",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "client/adapters/claude_desktop_proxy.py",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
       "source": "client_adapters_claude_desktop_proxy_rationale_12",
       "target": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter",
       "relation": "rationale_for",
@@ -42591,25 +42833,14 @@
       "weight": 1.0
     },
     {
-      "source": "client_adapters_claude_desktop_proxy_rationale_30",
+      "source": "client_adapters_claude_desktop_proxy_rationale_40",
       "target": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_task",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L30",
-      "weight": 1.0
-    },
-    {
-      "source": "client_adapters_claude_desktop_proxy_rationale_76",
-      "target": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter_execute_local_profile_stage",
-      "relation": "rationale_for",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L76",
+      "source_location": "L40",
       "weight": 1.0
     },
     {
@@ -43372,14 +43603,14 @@
       "weight": 1.0
     },
     {
-      "source": "server_core_pipeline_engine_rationale_140",
+      "source": "server_core_pipeline_engine_rationale_144",
       "target": "server_core_pipeline_engine_pipelineengine_check_and_finalize_job",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "server/core/pipeline_engine.py",
-      "source_location": "L140",
+      "source_location": "L144",
       "weight": 1.0
     },
     {
@@ -43490,6 +43721,17 @@
       "confidence_score": 1.0,
       "source_file": "server/main.py",
       "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "server_main_rationale_57",
+      "target": "server_main_mcpauthmiddleware",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "server/main.py",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -43669,36 +43911,69 @@
       "weight": 1.0
     },
     {
-      "source": "tests_test_invariants_wsr_002_rationale_26",
-      "target": "tests_test_invariants_wsr_002_test_invariant_b_strict_separation_of_real_and_simulation",
-      "relation": "rationale_for",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L26",
-      "weight": 1.0
-    },
-    {
-      "source": "tests_test_invariants_wsr_002_rationale_50",
-      "target": "tests_test_invariants_wsr_002_test_invariant_c_truthful_telemetry",
-      "relation": "rationale_for",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L50",
-      "weight": 1.0
-    },
-    {
-      "source": "tests_test_invariants_wsr_002_rationale_61",
+      "source": "tests_test_invariants_wsr_002_rationale_130",
       "target": "tests_test_invariants_wsr_002_test_invariant_d_atomic_dag_stage_advancement",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L61",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002_rationale_197",
+      "target": "tests_test_invariants_wsr_002_test_invariant_d_qa_checkpoint_preservation",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L197",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002_rationale_27",
+      "target": "tests_test_invariants_wsr_002_test_invariant_b_strict_separation_of_real_and_simulation",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002_rationale_272",
+      "target": "tests_test_invariants_wsr_002_test_invariant_d_atomic_rollback_on_failure",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L272",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002_rationale_86",
+      "target": "tests_test_invariants_wsr_002_test_invariant_c_truthful_telemetry",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "tests_test_invariants_wsr_002_rationale_97",
+      "target": "tests_test_invariants_wsr_002_test_invariant_c_no_spurious_cooldown_on_high_memory",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -44280,7 +44555,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "client/adapters/claude_desktop_proxy.py",
-      "source_location": "L22",
+      "source_location": "L31",
       "weight": 0.8
     },
     {
@@ -44500,7 +44775,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "server/api/routes_tasks.py",
-      "source_location": "L469",
+      "source_location": "L479",
       "weight": 0.8
     },
     {
@@ -44753,7 +45028,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L27",
+      "source_location": "L29",
       "weight": 0.8
     },
     {
@@ -44764,7 +45039,18 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "tests/test_invariants_wsr_002.py",
-      "source_location": "L38",
+      "source_location": "L41",
+      "weight": 0.8
+    },
+    {
+      "source": "tests_test_invariants_wsr_002_test_invariant_b_strict_separation_of_real_and_simulation",
+      "target": "client_adapters_claude_desktop_proxy_claudedesktopproxyadapter",
+      "relation": "uses",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "tests/test_invariants_wsr_002.py",
+      "source_location": "L52",
       "weight": 0.8
     },
     {
@@ -45261,5 +45547,5 @@
       "source_file": "worker-prompts/orchestrator.md"
     }
   ],
-  "built_at_commit": "89c5540d442470946d14a12c07e91a87bf696a7f"
+  "built_at_commit": "659b30da991afd306fc5345af87c2e26e23870bf"
 }

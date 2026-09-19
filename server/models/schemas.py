@@ -163,6 +163,8 @@ class QAReviewSubmit(BaseModel):
     verdict: QAVerdict
     rejection_reason: str | None = None
     checks_passed: dict[str, bool] = Field(default_factory=dict)
+    summary: str | None = None
+    result_text: str | None = None
 
 class QAReviewResponse(BaseModel):
     id: int

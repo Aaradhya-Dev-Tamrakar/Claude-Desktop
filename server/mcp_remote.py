@@ -423,6 +423,8 @@ async def submit_qa_review(
     verdict: str,
     checks_passed: dict[str, bool] | None = None,
     rejection_reason: str | None = None,
+    summary: str | None = None,
+    result_text: str | None = None,
 ) -> dict[str, Any]:
     db = await get_db_conn()
     try:
@@ -463,6 +465,16 @@ async def submit_qa_review(
                 )
         elif verdict == "pass":
             await db.execute("UPDATE tasks SET status = 'merged', updated_at = ? WHERE id = ?", (now, task_id))
+            # Ensure checkpoint exists so downstream stages inherit QA deliverable (Fix 5)
+            cp_summary = summary or f"QA review passed: {verdict}"
+            cp_result = result_text or f"QA review passed by {reviewer_worker_id}"
+            await db.execute(
+                """
+                INSERT OR REPLACE INTO checkpoints (task_id, job_id, kind, summary, result_text, submitted_by, submitted_at)
+                VALUES (?, ?, 'text', ?, ?, ?, ?)
+                """,
+                (task_id, task["job_id"], cp_summary, cp_result, reviewer_worker_id, now)
+            )
             if task["job_id"]:
                 await db.execute(
                     "UPDATE job_metrics SET completed_tasks = completed_tasks + 1 WHERE job_id = ?",

@@ -107,6 +107,10 @@ class PipelineEngine:
         # Fetch checkpoint result from prior stage
         cp_cursor = await db.execute("SELECT result_text, summary FROM checkpoints WHERE task_id = ?", (completed_task_id,))
         cp = await cp_cursor.fetchone()
+        if not cp and curr_task["parent_id"]:
+            # If current stage did not produce a separate deliverable, inherit parent's deliverable
+            parent_cursor = await db.execute("SELECT result_text, summary FROM checkpoints WHERE task_id = ?", (curr_task["parent_id"],))
+            cp = await parent_cursor.fetchone()
         prior_output = cp["result_text"] if cp else ""
 
         now = _now_iso()

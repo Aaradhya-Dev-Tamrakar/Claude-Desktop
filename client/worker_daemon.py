@@ -31,14 +31,14 @@ MAX_RECONNECT_DELAY_SECONDS = 60
 API_KEY = os.getenv("API_AUTH_KEY") or os.getenv("ORCHESTRATOR_API_KEY", "")
 
 def get_system_telemetry() -> dict[str, Any]:
-    """Measure empirical OS metrics (Invariant C)."""
+    """Measure empirical OS metrics (Invariant C). Does NOT include quota/usage fields."""
     try:
         import psutil
         cpu = psutil.cpu_percent(interval=None)
         mem = psutil.virtual_memory().percent
-        return {"cpu_percent": float(cpu), "memory_percent": float(mem), "usage_percent": int(mem)}
+        return {"cpu_percent": float(cpu), "memory_percent": float(mem)}
     except Exception:
-        return {"cpu_percent": 0.0, "memory_percent": 0.0, "usage_percent": 0}
+        return {"cpu_percent": 0.0, "memory_percent": 0.0}
 
 def get_adapter() -> BaseWorkerAdapter:
     if PROVIDER == "gemini_free":
@@ -105,15 +105,16 @@ async def main_loop():
 
         # 2. Main pull & heartbeat loop
         reconnect_delay = 1
+        active_task_id: str | None = None
         while True:
             try:
                 # Send Heartbeat with empirical telemetry (Invariant C)
                 telemetry = get_system_telemetry()
                 hb_payload = {
-                    "usage_percent": telemetry["usage_percent"],
                     "cpu_percent": telemetry["cpu_percent"],
                     "memory_percent": telemetry["memory_percent"],
-                    "active_leases": 0,
+                    "active_leases": 1 if active_task_id else 0,
+                    "current_task_id": active_task_id,
                 }
                 await client.post(f"{ORCHESTRATOR_URL}/workers/{WORKER_ID}/heartbeat", json=hb_payload)
 
@@ -133,6 +134,17 @@ async def main_loop():
 
                     if task_id and claim_token:
                         print(f"[>] Acquired task {task_id} (stage: {stage}). Executing...")
+                        active_task_id = task_id
+                        # Report busy state & active lease immediately in heartbeat
+                        await client.post(
+                            f"{ORCHESTRATOR_URL}/workers/{WORKER_ID}/heartbeat",
+                            json={
+                                "cpu_percent": telemetry["cpu_percent"],
+                                "memory_percent": telemetry["memory_percent"],
+                                "active_leases": 1,
+                                "current_task_id": task_id,
+                            },
+                        )
                         lease_stop = asyncio.Event()
                         lease_task = asyncio.create_task(
                             renew_task_lease_periodically(client, task_id, claim_token, lease_stop)
@@ -142,6 +154,7 @@ async def main_loop():
                         finally:
                             lease_stop.set()
                             await lease_task
+                            active_task_id = None
 
                         if exec_res.get("success"):
                             # Submit checkpoint

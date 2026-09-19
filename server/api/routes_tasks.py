@@ -453,6 +453,16 @@ async def submit_qa_review(task_id: str, qa: QAReviewSubmit, db: aiosqlite.Conne
             )
     elif qa.verdict == "pass":
         await db.execute("UPDATE tasks SET status = 'merged', updated_at = ? WHERE id = ?", (now, task_id))
+        # Ensure checkpoint exists so downstream stages inherit QA deliverable (Fix 5)
+        summary = qa.summary or f"QA review passed: {qa.verdict}"
+        result_text = qa.result_text or f"QA review passed by {qa.reviewer_worker_id}"
+        await db.execute(
+            """
+            INSERT OR REPLACE INTO checkpoints (task_id, job_id, kind, summary, result_text, submitted_by, submitted_at)
+            VALUES (?, ?, 'text', ?, ?, ?, ?)
+            """,
+            (task_id, task["job_id"], summary, result_text, qa.reviewer_worker_id, now)
+        )
         if task["job_id"]:
             await db.execute(
                 "UPDATE job_metrics SET completed_tasks = completed_tasks + 1 WHERE job_id = ?",

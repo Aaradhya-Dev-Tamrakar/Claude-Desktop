@@ -113,8 +113,8 @@ async def worker_heartbeat(worker_id: str, hb: WorkerHeartbeat, db: aiosqlite.Co
             cooldown_until = None
             await db.execute("UPDATE workers SET quota_used_current = 0 WHERE id = ?", (worker_id,))
 
-    # Trigger cooldown if requested or usage >= 95%
-    if hb.trigger_cooldown or (hb.usage_percent and hb.usage_percent >= 95):
+    # Trigger cooldown if requested or provider rate limit headroom exhausted (Invariant C)
+    if hb.trigger_cooldown or (hb.rate_limit_headroom is not None and hb.rate_limit_headroom <= 0):
         status = "cooldown"
         cooldown_until_dt = now + timedelta(minutes=worker["cooldown_window_minutes"])
         cooldown_until = cooldown_until_dt.strftime("%Y-%m-%dT%H:%M:%SZ")

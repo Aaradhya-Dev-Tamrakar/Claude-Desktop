@@ -73,8 +73,8 @@ async def test_e2e_sku_pipeline_execution():
         
         assert len(created_task_ids) == 3
 
-        # 4. Simulate worker executing each stage through to completion
-        adapter = ClaudeDesktopProxyAdapter(worker_id="worker_claude_01", nickname="Claude Lead")
+        # 4. Simulate worker executing each stage through to completion (explicit simulation mode per Invariant B)
+        adapter = ClaudeDesktopProxyAdapter(worker_id="worker_claude_01", nickname="Claude Lead", execution_mode="SIMULATION")
 
         for stage_idx, stage_name in enumerate(pipeline, start=1):
             # Fetch pending tasks for this stage

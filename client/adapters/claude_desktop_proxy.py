@@ -13,13 +13,23 @@ class ClaudeDesktopProxyAdapter(BaseWorkerAdapter):
     Adapter representing a local Windows Claude Desktop profile session.
     Interfaces via Anthropic API, local CDP session (free tier), or simulated profile engine fallback.
     """
-    def __init__(self, worker_id: str, nickname: str, profile_path: str = "", api_key: str | None = None, model: str = "claude-3-5-sonnet-20241022", cdp_port: int | None = None):
+    def __init__(
+        self,
+        worker_id: str,
+        nickname: str,
+        profile_path: str = "",
+        api_key: str | None = None,
+        model: str = "claude-3-5-sonnet-20241022",
+        cdp_port: int | None = None,
+        execution_mode: str | None = None,
+    ):
         super().__init__(worker_id, nickname, ["writing", "research", "code", "qa", "seo", "formatting"])
         self.profile_path = profile_path
         self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY", "")
         self.model = model
         self.cdp_port = cdp_port if cdp_port is not None else int(os.getenv("CLAUDE_CDP_PORT") or "0")
         self._cdp_adapter = ClaudeDesktopCDPAdapter(worker_id, nickname, cdp_port=self.cdp_port) if self.cdp_port > 0 else None
+        self.execution_mode = execution_mode if execution_mode is not None else os.getenv("EXECUTION_MODE", "")
 
     async def check_health(self) -> bool:
         if self._cdp_adapter:
@@ -27,7 +37,11 @@ class ClaudeDesktopProxyAdapter(BaseWorkerAdapter):
         return True
 
     async def execute_task(self, task_id: str, spec: str, stage: str, context: dict[str, Any]) -> dict[str, Any]:
-        """Execute task using Anthropic Claude API, CDP bridge, or structured prompt transformer."""
+        """Execute task using Anthropic Claude API, CDP bridge, or explicit simulation mode.
+
+        Error propagation follows INV-WSR-002 Invariant B: unhandled provider
+        failures MUST emit typed errors, NEVER synthetic success.
+        """
         # 1. If CDP port is active, use Chrome DevTools Protocol to automate free Claude Desktop
         if self._cdp_adapter and await self._cdp_adapter.check_health():
             return await self._cdp_adapter.execute_task(task_id, spec, stage, context)
@@ -51,25 +65,37 @@ class ClaudeDesktopProxyAdapter(BaseWorkerAdapter):
                     resp = await client.post("https://api.anthropic.com/v1/messages", headers=headers, json=payload)
                     if resp.status_code == 429:
                         return {"success": False, "error": "RATE_LIMIT_429", "summary": "", "result_text": ""}
-                    if resp.status_code == 200:
-                        data = resp.json()
-                        result_text = data["content"][0]["text"]
-                        return {
-                            "success": True,
-                            "summary": f"Completed {stage} via Claude ({self.model})",
-                            "result_text": result_text,
-                            "error": None
-                        }
+                    if resp.status_code != 200:
+                        return {"success": False, "error": f"HTTP_{resp.status_code}: {resp.text[:200]}", "summary": "", "result_text": ""}
+                    data = resp.json()
+                    result_text = data["content"][0]["text"]
+                    return {
+                        "success": True,
+                        "summary": f"Completed {stage} via Claude ({self.model})",
+                        "result_text": result_text,
+                        "error": None
+                    }
+            except httpx.TimeoutException:
+                return {"success": False, "error": "TIMEOUT", "summary": "", "result_text": ""}
             except Exception as e:
-                pass  # Fallback to local profile transform engine
+                return {"success": False, "error": f"EXECUTION_FAILED: {e}", "summary": "", "result_text": ""}
 
-        # 2. Local profile structured execution engine (for offline/local/desktop runner)
-        transformed_result = self._execute_local_profile_stage(stage, spec)
+        # 3. Explicit simulation mode — only when EXECUTION_MODE=SIMULATION (INV-WSR-002 §1.2)
+        if self.execution_mode.upper() == "SIMULATION":
+            transformed_result = self._execute_local_profile_stage(stage, spec)
+            return {
+                "success": True,
+                "summary": f"[SIMULATION] Processed {stage} by Claude Desktop profile '{self.nickname}'",
+                "result_text": transformed_result,
+                "error": None
+            }
+
+        # No provider available and not in simulation mode
         return {
-            "success": True,
-            "summary": f"Processed {stage} by Claude Desktop profile '{self.nickname}'",
-            "result_text": transformed_result,
-            "error": None
+            "success": False,
+            "error": "NO_PROVIDER_AVAILABLE: No API key, no CDP port, and EXECUTION_MODE != SIMULATION",
+            "summary": "",
+            "result_text": ""
         }
 
     def _execute_local_profile_stage(self, stage: str, spec: str) -> str:

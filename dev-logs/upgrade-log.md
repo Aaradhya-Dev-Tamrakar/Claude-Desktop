@@ -156,3 +156,44 @@ Date: 2026-09-19
 - Full Python test suite: **93/93 passed**.
 - Graphify AST knowledge graph updated: 1,316 nodes, 2,446 edges, 116 communities.
 
+---
+
+Date: 2026-09-19 (Remediation & Formal Evidence Calibration)
+
+## Completed Remediation: INV-WSR-002 Implementation Gaps Fixed
+
+### Fix 1 (Invariant B): Claude Proxy Zero Silent Fallback
+- Replaced `except Exception: pass` fallthrough in `client/adapters/claude_desktop_proxy.py` with typed error propagation (`TIMEOUT`, `HTTP_{code}`, `EXECUTION_FAILED`, `NO_PROVIDER_AVAILABLE`).
+- Gated `_execute_local_profile_stage()` strictly behind `execution_mode="SIMULATION"` or `EXECUTION_MODE=SIMULATION`.
+- Verified zero synthetic success on unhandled provider failures via `test_invariant_b_strict_separation_of_real_and_simulation`.
+
+### Fix 2 (Invariant C): Telemetry Decoupling & Spurious Cooldown Elimination
+- Removed `usage_percent` from `get_system_telemetry()` in `client/worker_daemon.py` and `client/fleet_supervisor.py`.
+- Prevented spurious 5-hour quota cooldown triggers on high OS memory by modifying `server/api/routes_workers.py` to trigger cooldown solely on `trigger_cooldown` or provider `rate_limit_headroom <= 0`.
+- Truthfully tracked `active_leases` (`1` during active task execution, `0` when idle).
+- Verified immunity to high RAM utilization via `test_invariant_c_no_spurious_cooldown_on_high_memory`.
+
+### Fix 3 (Invariant A): Elimination of Auto-Scheduler Push Path
+- Disabled `scheduler.schedule_next_pending_tasks()` push loop from the background supervisor in `server/main.py`.
+- Preserved supervisor watchdog cycle (`run_supervisor_cycle`) for dead worker recovery and expired lease reclamation.
+- Enforced pure pull-based dispatch (`POST /tasks/acquire`).
+
+### Fix 4 (Security): Remote MCP SSE Authentication
+- Wrapped `mcp_server.sse_app()` with `MCPAuthMiddleware` in `server/main.py`.
+- Validates `X-API-Key`, `Authorization: Bearer`, or query parameter `api_key` against `settings.API_AUTH_KEY`, returning HTTP 401 on unauthenticated requests.
+- Verified in `tests/test_auth_enforcement.py`.
+
+### Fix 5 (Invariant D): QA Deliverable Preservation & Inheritance
+- Added `summary` and `result_text` fields to `QAReviewSubmit` schema.
+- Modified `submit_qa_review` in `routes_tasks.py` and `mcp_remote.py` to insert a checkpoint deliverable when QA passes.
+- Added parent checkpoint fallback in `PipelineEngine.advance_task_to_next_stage`.
+- Verified in `test_invariant_d_qa_checkpoint_preservation`.
+
+### Fix 6 (Invariant D): Atomic Rollback Proof
+- Added `test_invariant_d_atomic_rollback_on_failure` injecting failure into `advance_task_to_next_stage`.
+- Verified that on failure, task remains `claimed`, checkpoint row is omitted, and successor tasks are not created.
+
+### Verification Results
+- Full Python test suite: **96/96 passed** across 15 test modules.
+- Formally calibrated `INV-WSR-002.md` to **Evidence Tier E2** (`EMPIRICAL BENCHMARK & TEST SUITE PROVEN`).
+

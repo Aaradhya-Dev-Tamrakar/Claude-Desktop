@@ -35,26 +35,65 @@ async def lifespan(app: FastAPI):
         pass
 
 async def run_supervisor_loop():
-    """Background supervisor monitoring heartbeats, dead workers, and auto-scheduling pending tasks."""
+    """Background supervisor monitoring heartbeats, dead workers, and reclaiming expired leases."""
     while True:
         try:
             await asyncio.sleep(settings.SUPERVISOR_INTERVAL_SECONDS)
             from server.core.supervisor import run_supervisor_cycle
-            from server.core.scheduler import scheduler
-            
+
             # 1. Run supervisor watchdog cycle (reclaim expired/offline tasks)
             await run_supervisor_cycle()
-            
-            # 2. Auto-schedule pending tasks to idle workers
-            db = await get_db_conn()
-            try:
-                await scheduler.schedule_next_pending_tasks(db, limit=10)
-            finally:
-                await db.close()
+
+            # NOTE (INV-WSR-002 §1.1): Auto-scheduler PUSH assignment is disabled in favor of
+            # Closed-Loop Pull-with-Scheduler-Arbitration (POST /tasks/acquire).
+            # This prevents dual-mode concurrency where the scheduler claims tasks
+            # that pull workers never ingest, generating orphaned leases.
         except asyncio.CancelledError:
             break
         except Exception as e:
             print(f"[Supervisor Error] {e}")
+
+class MCPAuthMiddleware:
+    """Enforce API key authentication on the mounted MCP SSE application."""
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] == "http":
+            expected_key = settings.API_AUTH_KEY
+            if expected_key:
+                headers = dict(scope.get("headers", []))
+                x_api_key = headers.get(b"x-api-key", b"").decode("utf-8", errors="ignore")
+                auth_header = headers.get(b"authorization", b"").decode("utf-8", errors="ignore")
+
+                bearer_token = ""
+                if auth_header.lower().startswith("bearer "):
+                    bearer_token = auth_header[7:].strip()
+
+                query_string = scope.get("query_string", b"").decode("utf-8", errors="ignore")
+                query_params = dict(qp.split("=", 1) for qp in query_string.split("&") if "=" in qp)
+                query_token = query_params.get("api_key") or query_params.get("token", "")
+
+                provided_token = x_api_key or bearer_token or query_token
+                if not provided_token or provided_token != expected_key:
+                    response_body = b'{"detail": "Invalid or missing authentication credentials"}'
+                    await send({
+                        "type": "http.response.start",
+                        "status": 401,
+                        "headers": [
+                            (b"content-type", b"application/json"),
+                            (b"www-authenticate", b"Bearer"),
+                            (b"content-length", str(len(response_body)).encode("utf-8")),
+                        ],
+                    })
+                    await send({
+                        "type": "http.response.body",
+                        "body": response_body,
+                    })
+                    return
+
+        await self.app(scope, receive, send)
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -93,8 +132,8 @@ app.include_router(tasks_router, prefix=settings.API_V1_STR)
 app.include_router(workers_router, prefix=settings.API_V1_STR)
 app.include_router(memory_router, prefix=settings.API_V1_STR)
 
-# Mount the Streamable HTTP / SSE MCP Server directly into FastAPI
-app.mount(settings.MCP_PATH, mcp_server.sse_app())
+# Mount the Streamable HTTP / SSE MCP Server directly into FastAPI with auth enforcement
+app.mount(settings.MCP_PATH, MCPAuthMiddleware(mcp_server.sse_app()))
 
 @app.get("/health")
 async def health_check():

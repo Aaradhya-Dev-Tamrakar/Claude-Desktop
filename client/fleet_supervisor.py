@@ -41,14 +41,14 @@ ROLE_CAPABILITIES: dict[str, list[str]] = {
 }
 
 def get_system_telemetry() -> dict[str, Any]:
-    """Measure empirical OS metrics (Invariant C)."""
+    """Measure empirical OS metrics (Invariant C). Does NOT include quota/usage fields."""
     try:
         import psutil
         cpu = psutil.cpu_percent(interval=None)
         mem = psutil.virtual_memory().percent
-        return {"cpu_percent": float(cpu), "memory_percent": float(mem), "usage_percent": int(mem)}
+        return {"cpu_percent": float(cpu), "memory_percent": float(mem)}
     except Exception:
-        return {"cpu_percent": 0.0, "memory_percent": 0.0, "usage_percent": 0}
+        return {"cpu_percent": 0.0, "memory_percent": 0.0}
 
 # ── Provider-based adapter factory ──────────────────────────────────
 _PROVIDER_REGISTRY: dict[str, type] = {
@@ -144,6 +144,7 @@ async def run_worker_loop(
         print(f"[!] [{worker_id}] Failed to register with orchestrator: {e}")
 
     reconnect_delay = 1.0
+    active_task_id: str | None = None
     while not stop_event.is_set():
         try:
             # Heartbeat with truthful telemetry (Invariant C)
@@ -151,10 +152,10 @@ async def run_worker_loop(
             await client.post(
                 f"{ORCHESTRATOR_URL}/workers/{worker_id}/heartbeat",
                 json={
-                    "usage_percent": telemetry["usage_percent"],
                     "cpu_percent": telemetry["cpu_percent"],
                     "memory_percent": telemetry["memory_percent"],
-                    "active_leases": 0,
+                    "active_leases": 1 if active_task_id else 0,
+                    "current_task_id": active_task_id,
                 },
             )
 
@@ -174,9 +175,22 @@ async def run_worker_loop(
 
                 if task_id and claim_token:
                     print(f"[>] [{worker_id}] Acquired task {task_id} (stage: {stage}). Executing...")
-                    exec_res = await adapter.execute_task(
-                        task_id, task_info.get("spec", ""), stage, {}
+                    active_task_id = task_id
+                    await client.post(
+                        f"{ORCHESTRATOR_URL}/workers/{worker_id}/heartbeat",
+                        json={
+                            "cpu_percent": telemetry["cpu_percent"],
+                            "memory_percent": telemetry["memory_percent"],
+                            "active_leases": 1,
+                            "current_task_id": task_id,
+                        },
                     )
+                    try:
+                        exec_res = await adapter.execute_task(
+                            task_id, task_info.get("spec", ""), stage, {}
+                        )
+                    finally:
+                        active_task_id = None
 
                     if exec_res.get("success"):
                         result_text = exec_res.get("result_text", "")
@@ -194,6 +208,8 @@ async def run_worker_loop(
                                 "verdict": verdict,
                                 "rejection_reason": reason,
                                 "checks_passed": {"evaluated": True, "score": 90 if verdict == "pass" else 50},
+                                "summary": f"QA review: {verdict.upper()}",
+                                "result_text": result_text,
                             }
                             await client.post(
                                 f"{ORCHESTRATOR_URL}/tasks/{task_id}/qa-review",

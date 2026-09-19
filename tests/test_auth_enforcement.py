@@ -46,14 +46,17 @@ async def test_auth_enforced_when_api_key_configured(monkeypatch):
 
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
-        # Unauthenticated calls MUST return 401
-        for endpoint in ["/api/v1/jobs", "/api/v1/tasks", "/api/v1/workers", "/api/v1/memory"]:
+        # Unauthenticated calls MUST return 401 (including MCP SSE mount)
+        for endpoint in ["/api/v1/jobs", "/api/v1/tasks", "/api/v1/workers", "/api/v1/memory", "/mcp/"]:
             unauth = await client.get(endpoint)
             assert unauth.status_code == 401, f"Expected 401 for {endpoint}, got {unauth.status_code}"
 
         # Invalid token MUST return 401
         invalid = await client.get("/api/v1/jobs", headers={"Authorization": "Bearer invalid-bearer-value"})
         assert invalid.status_code == 401
+
+        invalid_mcp = await client.get("/mcp/", headers={"X-API-Key": "wrong_key"})
+        assert invalid_mcp.status_code == 401
 
         # Valid Bearer token MUST succeed
         valid_bearer = await client.get("/api/v1/jobs", headers={"Authorization": f"Bearer {dummy_auth_val}"})
