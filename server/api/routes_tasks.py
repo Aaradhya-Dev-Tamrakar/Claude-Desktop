@@ -3,19 +3,20 @@ from __future__ import annotations
 from datetime import datetime, timezone, timedelta
 import json
 import uuid
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 import aiosqlite
 
+from server.core.auth import verify_api_key
 from server.core.config import settings
 from server.core.database import get_db
 from server.core.pipeline_engine import pipeline_engine
 from server.models.schemas import (
-    TaskCreate, TaskResponse, TaskClaimRequest, TaskClaimResponse, TaskLeaseRenewRequest,
+    TaskCreate, TaskResponse, TaskAcquireRequest, TaskClaimRequest, TaskClaimResponse, TaskLeaseRenewRequest,
     TaskReleaseRequest, TaskBlockRequest, CheckpointSubmit, CheckpointResponse,
     QAReviewSubmit, QAReviewResponse
 )
 
-router = APIRouter(prefix="/tasks", tags=["Tasks"])
+router = APIRouter(prefix="/tasks", tags=["Tasks"], dependencies=[Depends(verify_api_key)])
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -144,6 +145,48 @@ async def get_task(task_id: str, db: aiosqlite.Connection = Depends(get_db)):
         blocked_reason=r["blocked_reason"],
         created_at=r["created_at"],
         updated_at=r["updated_at"]
+    )
+
+@router.post("/acquire", response_model=TaskClaimResponse | None, status_code=200)
+async def acquire_task(req: TaskAcquireRequest, response: Response, db: aiosqlite.Connection = Depends(get_db)):
+    """Pull-with-Scheduler-Arbitration (INV-WSR-002 Invariant A).
+    Atomically matches, leases, and returns the assigned task directly to the requester."""
+    from server.core.scheduler import scheduler
+
+    res = await scheduler.acquire_task_for_worker(
+        worker_id=req.worker_id,
+        db=db,
+        capabilities=req.capabilities,
+        lease_seconds=req.lease_seconds,
+    )
+    if not res:
+        response.status_code = status.HTTP_204_NO_CONTENT
+        return None
+
+    task_dict = res["task"]
+    task_resp = TaskResponse(
+        id=task_dict["id"],
+        job_id=task_dict["job_id"],
+        parent_id=task_dict["parent_id"],
+        stage=task_dict["stage"],
+        stage_order=task_dict["stage_order"],
+        kind=task_dict["kind"],
+        spec=task_dict["spec"],
+        status=task_dict["status"],
+        priority=task_dict["priority"],
+        owner_worker_id=task_dict["owner_worker_id"],
+        claimed_at=task_dict["claimed_at"],
+        lease_expires_at=task_dict.get("lease_expires_at"),
+        claim_token=task_dict.get("claim_token"),
+        completed_at=task_dict.get("completed_at"),
+        blocked_reason=task_dict.get("blocked_reason"),
+        created_at=task_dict["created_at"],
+        updated_at=task_dict["updated_at"],
+    )
+    return TaskClaimResponse(
+        task=task_resp,
+        claim_token=res["claim_token"],
+        lease_expires_at=res["lease_expires_at"],
     )
 
 @router.post("/{task_id}/claim", response_model=TaskClaimResponse)
@@ -333,14 +376,15 @@ async def submit_checkpoint(task_id: str, cp: CheckpointSubmit, db: aiosqlite.Co
         (now, cp.submitted_by)
     )
 
-    await db.commit()
-
-    # Automatically advance task to next stage in pipeline
+    # Automatically advance task to next stage in pipeline (within same atomic transaction)
     if task["job_id"]:
-        next_task_id = await pipeline_engine.advance_task_to_next_stage(task_id, db)
+        next_task_id = await pipeline_engine.advance_task_to_next_stage(task_id, db, auto_commit=False)
         if not next_task_id:
             # If final stage or waiting on siblings, check if entire job can be finalized
-            await pipeline_engine.check_and_finalize_job(task["job_id"], db)
+            await pipeline_engine.check_and_finalize_job(task["job_id"], db, auto_commit=False)
+
+    # Invariant D: Single atomic commit for checkpoint submission + task state + DAG stage generation
+    await db.commit()
 
     return CheckpointResponse(
         task_id=task_id,
@@ -415,10 +459,11 @@ async def submit_qa_review(task_id: str, qa: QAReviewSubmit, db: aiosqlite.Conne
                 (task["job_id"],)
             )
             # Advance to next stage or finalize job
-            next_task = await pipeline_engine.advance_task_to_next_stage(task_id, db)
+            next_task = await pipeline_engine.advance_task_to_next_stage(task_id, db, auto_commit=False)
             if not next_task:
-                await pipeline_engine.check_and_finalize_job(task["job_id"], db)
+                await pipeline_engine.check_and_finalize_job(task["job_id"], db, auto_commit=False)
 
+    # Single atomic commit for QA review + DAG transition
     await db.commit()
 
     return QAReviewResponse(

@@ -75,7 +75,8 @@ class PipelineEngine:
     @staticmethod
     async def advance_task_to_next_stage(
         completed_task_id: str,
-        db: aiosqlite.Connection
+        db: aiosqlite.Connection,
+        auto_commit: bool = True
     ) -> str | None:
         """
         When a task is verified (or passes QA), triggers generation of the next stage task
@@ -125,14 +126,16 @@ class PipelineEngine:
             """,
             (next_task_id, job_id, completed_task_id, next_stage, next_stage_order, next_spec, now, now)
         )
-        await db.commit()
+        if auto_commit:
+            await db.commit()
 
         return next_task_id
 
     @staticmethod
     async def check_and_finalize_job(
         job_id: str,
-        db: aiosqlite.Connection
+        db: aiosqlite.Connection,
+        auto_commit: bool = True
     ) -> bool:
         """
         Checks whether all tasks for a job have reached terminal state (done/merged).
@@ -199,7 +202,8 @@ class PipelineEngine:
             """,
             (total_count, completed_count, now, job_id)
         )
-        await db.commit()
+        if auto_commit:
+            await db.commit()
         return True
 
 pipeline_engine = PipelineEngine()

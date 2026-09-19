@@ -5,10 +5,11 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, Query
 import aiosqlite
 
+from server.core.auth import verify_api_key
 from server.core.database import get_db
 from server.models.schemas import JobCreate, JobResponse, JobUpdate, JobMetricsResponse
 
-router = APIRouter(prefix="/jobs", tags=["Jobs"])
+router = APIRouter(prefix="/jobs", tags=["Jobs"], dependencies=[Depends(verify_api_key)])
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")

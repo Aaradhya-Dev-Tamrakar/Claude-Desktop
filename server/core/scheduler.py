@@ -38,6 +38,21 @@ class QuotaAwareScheduler:
             "ollama_local": 0.4,
         }
 
+    @staticmethod
+    def is_stage_compatible(stage: str, caps: list[str]) -> bool:
+        """Check if worker capabilities satisfy a task stage."""
+        if "all" in caps or stage in caps:
+            return True
+        if stage == "draft" and "writing" in caps:
+            return True
+        if stage == "seo_optimize" and ("seo" in caps or "writing" in caps):
+            return True
+        if stage in ("format", "formatting", "markdown", "schema") and ("formatting" in caps or "writing" in caps or "code" in caps):
+            return True
+        if stage in ("qa", "qa_review", "audit") and ("qa" in caps or "qa_review" in caps or "audit" in caps or "review" in caps):
+            return True
+        return False
+
     async def select_best_worker_for_task(self, task_id: str, db: aiosqlite.Connection) -> str | None:
         """Find the optimal worker ID to claim a given pending task or expired lease."""
         now = datetime.now(timezone.utc)
@@ -76,18 +91,7 @@ class QuotaAwareScheduler:
 
         for w in candidates:
             caps = json.loads(w["capabilities"])
-            # Check capability match
-            matched = False
-            if stage in caps:
-                matched = True
-            elif stage == "draft" and "writing" in caps:
-                matched = True
-            elif stage == "seo_optimize" and ("seo" in caps or "writing" in caps):
-                matched = True
-            elif stage == "format" and ("formatting" in caps or "writing" in caps or "code" in caps):
-                matched = True
-
-            if not matched:
+            if not self.is_stage_compatible(stage, caps):
                 continue
 
             # Compute headroom ratio (0.0 to 1.0)
@@ -111,8 +115,6 @@ class QuotaAwareScheduler:
             tier_weight = self.provider_tier_weights.get(provider_type, 0.5)
 
             # Stage affinity bonus:
-            # - Heavy reasoning / review (qa, audit) prefers primary CDP instances
-            # - Repetitive grunt stages (format, overflow) perform excellently on copilot_headless
             affinity_bonus = 0.0
             if stage in ("qa", "qa_review", "audit") and "claude" in provider_type:
                 affinity_bonus = 0.2
@@ -131,6 +133,109 @@ class QuotaAwareScheduler:
                 best_worker_id = w["id"]
 
         return best_worker_id
+
+    async def acquire_task_for_worker(
+        self,
+        worker_id: str,
+        db: aiosqlite.Connection,
+        capabilities: list[str] | None = None,
+        lease_seconds: int | None = None,
+    ) -> dict[str, Any] | None:
+        """
+        Pull-with-Scheduler-Arbitration (INV-WSR-002 Invariant A).
+        Atomically inspects candidate tasks matching worker's capabilities, assigns, leases,
+        and returns the claimed task with claim_token in a single atomic database transition.
+        """
+        from server.core.config import settings
+
+        now = datetime.now(timezone.utc)
+        now_iso = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+        lease_sec = max(1, min(lease_seconds or self.default_lease_seconds, 3600))
+        lease_exp_iso = (now + timedelta(seconds=lease_sec)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        # 1. Fetch worker state and capabilities
+        w_cursor = await db.execute("SELECT * FROM workers WHERE id = ?", (worker_id,))
+        worker = await w_cursor.fetchone()
+        if not worker:
+            return None
+        if worker["status"] == "offline":
+            return None
+        if worker["cooldown_until"] and worker["cooldown_until"] > now_iso:
+            return None
+        if (worker["quota_used_current"] or 0) >= (worker["quota_limit_per_window"] or 50):
+            return None
+
+        caps = capabilities if capabilities is not None else json.loads(worker["capabilities"])
+
+        # 2. Find eligible candidate tasks:
+        # First priority: tasks already assigned to this worker whose lease expired or needs pickup
+        # Second priority: pending or expired tasks ordered by priority, created_at
+        candidate_cursor = await db.execute(
+            """
+            SELECT * FROM tasks 
+            WHERE (status = 'pending' OR (status = 'claimed' AND lease_expires_at IS NOT NULL AND lease_expires_at < ?))
+            ORDER BY 
+                CASE WHEN owner_worker_id = ? THEN 0 ELSE 1 END,
+                priority ASC, 
+                created_at ASC
+            LIMIT 50
+            """,
+            (now_iso, worker_id)
+        )
+        candidate_tasks = await candidate_cursor.fetchall()
+
+        for t in candidate_tasks:
+            stage = t["stage"]
+            if not self.is_stage_compatible(stage, caps):
+                continue
+
+            task_id = t["id"]
+            claim_token = str(uuid.uuid4())
+
+            # Atomic compare-and-swap lease claim
+            update_cursor = await db.execute(
+                """
+                UPDATE tasks 
+                SET status = 'claimed', owner_worker_id = ?, claimed_at = ?, lease_expires_at = ?, claim_token = ?, updated_at = ?
+                WHERE id = ? AND (status = 'pending' OR (status = 'claimed' AND lease_expires_at IS NOT NULL AND lease_expires_at <= ?))
+                """,
+                (worker_id, now_iso, lease_exp_iso, claim_token, now_iso, task_id, now_iso)
+            )
+            if update_cursor.rowcount == 0:
+                continue  # Lost race to another worker, check next candidate
+
+            # Check attempt limit
+            attempt_cursor = await db.execute("SELECT COUNT(*) FROM task_attempts WHERE task_id = ?", (task_id,))
+            attempt_num = (await attempt_cursor.fetchone())[0] + 1
+            if attempt_num > settings.MAX_TASK_ATTEMPTS:
+                await db.execute(
+                    "UPDATE tasks SET status = 'failed', owner_worker_id = NULL, claim_token = NULL, lease_expires_at = NULL, updated_at = ? WHERE id = ?",
+                    (now_iso, task_id),
+                )
+                await db.commit()
+                continue
+
+            # Record attempt
+            await db.execute(
+                "INSERT INTO task_attempts (task_id, worker_id, attempt_number, status, started_at) VALUES (?, ?, ?, 'running', ?)",
+                (task_id, worker_id, attempt_num, now_iso)
+            )
+
+            # Update worker status to busy and update heartbeat
+            await db.execute("UPDATE workers SET status = 'busy', last_heartbeat = ? WHERE id = ?", (now_iso, worker_id))
+            await db.commit()
+
+            # Retrieve full task
+            task_cursor = await db.execute("SELECT * FROM tasks WHERE id = ?", (task_id,))
+            claimed_row = await task_cursor.fetchone()
+
+            return {
+                "task": dict(claimed_row),
+                "claim_token": claim_token,
+                "lease_expires_at": lease_exp_iso,
+            }
+
+        return None
 
     async def schedule_next_pending_tasks(self, db: aiosqlite.Connection, limit: int = 10, lease_seconds: int | None = None) -> list[dict[str, str]]:
         """Find pending tasks (or expired leases) and auto-assign to best available workers atomically."""

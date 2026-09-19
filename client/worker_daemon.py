@@ -28,6 +28,18 @@ HTTP_MAX_KEEPALIVE_CONNECTIONS = max(1, min(
 ))
 MAX_RECONNECT_DELAY_SECONDS = 60
 
+API_KEY = os.getenv("API_AUTH_KEY") or os.getenv("ORCHESTRATOR_API_KEY", "")
+
+def get_system_telemetry() -> dict[str, Any]:
+    """Measure empirical OS metrics (Invariant C)."""
+    try:
+        import psutil
+        cpu = psutil.cpu_percent(interval=None)
+        mem = psutil.virtual_memory().percent
+        return {"cpu_percent": float(cpu), "memory_percent": float(mem), "usage_percent": int(mem)}
+    except Exception:
+        return {"cpu_percent": 0.0, "memory_percent": 0.0, "usage_percent": 0}
+
 def get_adapter() -> BaseWorkerAdapter:
     if PROVIDER == "gemini_free":
         return GeminiFreeAdapter(worker_id=WORKER_ID, nickname="Gemini Free Worker")
@@ -72,7 +84,8 @@ async def main_loop():
         max_connections=HTTP_MAX_CONNECTIONS,
         max_keepalive_connections=HTTP_MAX_KEEPALIVE_CONNECTIONS,
     )
-    async with httpx.AsyncClient(timeout=30.0, limits=limits) as client:
+    headers = {"X-API-Key": API_KEY} if API_KEY else {}
+    async with httpx.AsyncClient(timeout=30.0, limits=limits, headers=headers) as client:
         # 1. Register with cloud orchestrator
         reg_payload = {
             "id": WORKER_ID,
@@ -94,57 +107,63 @@ async def main_loop():
         reconnect_delay = 1
         while True:
             try:
-                # Send Heartbeat
-                await client.post(f"{ORCHESTRATOR_URL}/workers/{WORKER_ID}/heartbeat", json={"usage_percent": 10})
+                # Send Heartbeat with empirical telemetry (Invariant C)
+                telemetry = get_system_telemetry()
+                hb_payload = {
+                    "usage_percent": telemetry["usage_percent"],
+                    "cpu_percent": telemetry["cpu_percent"],
+                    "memory_percent": telemetry["memory_percent"],
+                    "active_leases": 0,
+                }
+                await client.post(f"{ORCHESTRATOR_URL}/workers/{WORKER_ID}/heartbeat", json=hb_payload)
 
-                # Check if there is an assigned or claimable task
-                task_resp = await client.get(f"{ORCHESTRATOR_URL}/tasks", params={"status": "pending", "limit": 5})
-                if task_resp.status_code == 200:
-                    tasks = task_resp.json()
-                    for t in tasks:
-                        task_id = t["id"]
-                        stage = t["stage"]
-                        
-                        # Try to claim
-                        claim_r = await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/claim", json={"worker_id": WORKER_ID, "lease_seconds": 300})
-                        if claim_r.status_code == 200:
-                            claim_data = claim_r.json()
-                            claim_token = claim_data.get("claim_token")
-                            task_info = claim_data.get("task", t)
-                            print(f"[>] Claimed task {task_id} (stage: {stage}). Executing...")
-                            lease_stop = asyncio.Event()
-                            lease_task = asyncio.create_task(
-                                renew_task_lease_periodically(client, task_id, claim_token, lease_stop)
-                            )
-                            try:
-                                exec_res = await adapter.execute_task(task_id, task_info["spec"], stage, {})
-                            finally:
-                                lease_stop.set()
-                                await lease_task
-                            
-                            if exec_res.get("success"):
-                                # Submit checkpoint
-                                cp_payload = {
-                                    "task_id": task_id,
-                                    "kind": "text",
-                                    "summary": exec_res["summary"],
-                                    "result_text": exec_res["result_text"],
-                                    "submitted_by": WORKER_ID,
-                                    "claim_token": claim_token
-                                }
-                                checkpoint_r = await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/checkpoint", json=cp_payload)
-                                checkpoint_r.raise_for_status()
-                                print(f"[+] Task {task_id} completed and checkpoint submitted!")
-                            elif exec_res.get("error") == "RATE_LIMIT_429":
-                                print(f"[!] Rate limit 429 encountered! Triggering cooldown...")
-                                await client.post(f"{ORCHESTRATOR_URL}/workers/{WORKER_ID}/heartbeat", json={"trigger_cooldown": True})
-                                await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID, "claim_token": claim_token})
-                                break
-                            else:
-                                print(f"[!] Task execution failed: {exec_res.get('error')}")
-                                await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID, "claim_token": claim_token})
+                # Acquire task via Closed-Loop Protocol (Invariant A)
+                acq_payload = {
+                    "worker_id": WORKER_ID,
+                    "capabilities": adapter.capabilities,
+                    "lease_seconds": LEASE_SECONDS,
+                }
+                acq_r = await client.post(f"{ORCHESTRATOR_URL}/tasks/acquire", json=acq_payload)
+                if acq_r.status_code == 200 and acq_r.json():
+                    claim_data = acq_r.json()
+                    claim_token = claim_data.get("claim_token")
+                    task_info = claim_data.get("task", {})
+                    task_id = task_info.get("id")
+                    stage = task_info.get("stage")
 
-                        
+                    if task_id and claim_token:
+                        print(f"[>] Acquired task {task_id} (stage: {stage}). Executing...")
+                        lease_stop = asyncio.Event()
+                        lease_task = asyncio.create_task(
+                            renew_task_lease_periodically(client, task_id, claim_token, lease_stop)
+                        )
+                        try:
+                            exec_res = await adapter.execute_task(task_id, task_info.get("spec", ""), stage, {})
+                        finally:
+                            lease_stop.set()
+                            await lease_task
+
+                        if exec_res.get("success"):
+                            # Submit checkpoint
+                            cp_payload = {
+                                "task_id": task_id,
+                                "kind": "text",
+                                "summary": exec_res.get("summary", ""),
+                                "result_text": exec_res.get("result_text", ""),
+                                "submitted_by": WORKER_ID,
+                                "claim_token": claim_token,
+                            }
+                            checkpoint_r = await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/checkpoint", json=cp_payload)
+                            checkpoint_r.raise_for_status()
+                            print(f"[+] Task {task_id} completed and checkpoint submitted!")
+                        elif exec_res.get("error") == "RATE_LIMIT_429":
+                            print(f"[!] Rate limit 429 encountered! Triggering cooldown...")
+                            await client.post(f"{ORCHESTRATOR_URL}/workers/{WORKER_ID}/heartbeat", json={"trigger_cooldown": True})
+                            await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID, "claim_token": claim_token})
+                        else:
+                            print(f"[!] Task execution failed: {exec_res.get('error')}")
+                            await client.post(f"{ORCHESTRATOR_URL}/tasks/{task_id}/release", json={"worker_id": WORKER_ID, "claim_token": claim_token})
+
                 reconnect_delay = 1
                 await asyncio.sleep(POLL_INTERVAL_SECONDS)
             except asyncio.CancelledError:

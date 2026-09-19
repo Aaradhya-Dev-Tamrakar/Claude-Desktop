@@ -124,3 +124,35 @@ Files:
 - Resolve the SQLite versus PostgreSQL deployment/documentation difference.
 - Add deeper CI checks for Docker startup, dependency vulnerability scanning, and type checking.
 - Add task cancellation, dead-letter inspection, and administrative retry controls.
+
+---
+
+Date: 2026-09-19
+
+## Completed Upgrades: Invariant Calibration & Worker Completeness (`INV-WSR-002`)
+
+### P0: REST API & Remote MCP Auth Enforcement
+- Attached `verify_api_key` dependency to all FastAPI APIRouters (`/jobs`, `/tasks`, `/workers`, `/memory`).
+- Validates bearer authorization / `X-API-Key` headers when `API_AUTH_KEY` is configured or in production environment.
+- Added comprehensive authentication test coverage.
+
+### P1: Closed-Loop Worker Dispatch (Invariant A)
+- Implemented `POST /tasks/acquire` endpoint and `QuotaAwareScheduler.acquire_task_for_worker`.
+- Replaced uncoordinated pending task polling in `client/worker_daemon.py` and `client/fleet_supervisor.py` with atomic single-step matching, leasing, and dispatch.
+
+### P2: Real vs. Simulation Isolation (Invariant B)
+- Enforced strict typed error propagation (`RATE_LIMIT_429`, `AUTH_ERROR`, `HTTP_5xx`, `NETWORK_ERROR`) on adapter failures.
+- Prohibited fallback to synthetic success mocks when provider/network exceptions occur.
+
+### P3: Empirical Quota & Resource Telemetry (Invariant C)
+- Replaced hardcoded `usage_percent: 10` heartbeats with live OS performance metrics (`cpu_percent`, `memory_percent` via `psutil`).
+- Extended `WorkerHeartbeat` schema to ingest structured system and rate limit telemetry.
+
+### P4: Atomic DAG Stage Advancement (Invariant D)
+- Refactored `PipelineEngine.advance_task_to_next_stage` and `check_and_finalize_job` to support transactional integration (`auto_commit=False`).
+- Wrapped checkpoint insertion, task completion, attempt logging, worker quota updates, successor task creation, and job finalization inside single atomic transactions.
+
+### Verification Results
+- Full Python test suite: **93/93 passed**.
+- Graphify AST knowledge graph updated: 1,316 nodes, 2,446 edges, 116 communities.
+

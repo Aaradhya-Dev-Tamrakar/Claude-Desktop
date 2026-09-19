@@ -123,6 +123,36 @@ async def get_task(task_id: str) -> dict[str, Any]:
         await db.close()
 
 @mcp_server.tool(
+    name="acquire_task",
+    description="Pull-with-Scheduler-Arbitration (INV-WSR-002 Invariant A). Atomically match, lease, and return next assigned task for worker."
+)
+async def acquire_task(
+    worker_id: str,
+    capabilities: list[str] | None = None,
+    lease_seconds: int = 300,
+) -> dict[str, Any]:
+    from server.core.scheduler import scheduler
+
+    db = await get_db_conn()
+    try:
+        res = await scheduler.acquire_task_for_worker(
+            worker_id=worker_id,
+            db=db,
+            capabilities=capabilities,
+            lease_seconds=lease_seconds,
+        )
+        if not res:
+            return {"success": False, "task": None, "message": "No matching pending or assignable tasks available"}
+        return {
+            "success": True,
+            "task": res["task"],
+            "claim_token": res["claim_token"],
+            "lease_expires_at": res["lease_expires_at"],
+        }
+    finally:
+        await db.close()
+
+@mcp_server.tool(
     name="claim_task",
     description="Claim a pending or expired task with an atomic lease duration."
 )
@@ -365,13 +395,14 @@ async def submit_checkpoint(
             "UPDATE workers SET status = 'idle', quota_used_current = quota_used_current + 1, last_heartbeat = ? WHERE id = ?",
             (now, submitted_by)
         )
-        await db.commit()
 
-        # Advance stage if part of a job
+        # Advance stage if part of a job (within same transaction)
         if task["job_id"]:
-            next_task_id = await pipeline_engine.advance_task_to_next_stage(task_id, db)
+            next_task_id = await pipeline_engine.advance_task_to_next_stage(task_id, db, auto_commit=False)
             if not next_task_id:
-                await pipeline_engine.check_and_finalize_job(task["job_id"], db)
+                await pipeline_engine.check_and_finalize_job(task["job_id"], db, auto_commit=False)
+
+        await db.commit()
 
         cp_cursor = await db.execute("SELECT * FROM checkpoints WHERE task_id = ?", (task_id,))
         return {"success": True, "checkpoint": _row_to_dict(await cp_cursor.fetchone())}
@@ -437,9 +468,9 @@ async def submit_qa_review(
                     "UPDATE job_metrics SET completed_tasks = completed_tasks + 1 WHERE job_id = ?",
                     (task["job_id"],)
                 )
-                next_task = await pipeline_engine.advance_task_to_next_stage(task_id, db)
+                next_task = await pipeline_engine.advance_task_to_next_stage(task_id, db, auto_commit=False)
                 if not next_task:
-                    await pipeline_engine.check_and_finalize_job(task["job_id"], db)
+                    await pipeline_engine.check_and_finalize_job(task["job_id"], db, auto_commit=False)
 
         await db.commit()
         return {

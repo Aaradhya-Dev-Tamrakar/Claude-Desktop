@@ -5,13 +5,14 @@ import aiosqlite
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pathlib import Path
 
+from server.core.auth import verify_api_key
 from server.core.config import settings
 from server.core.database import get_db
 from server.models.schemas import (
     MemoryCreate, MemoryResponse, ContextUpsert, ContextResponse
 )
 
-router = APIRouter(tags=["Memory & Context"])
+router = APIRouter(tags=["Memory & Context"], dependencies=[Depends(verify_api_key)])
 
 def _now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")

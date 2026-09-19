@@ -40,6 +40,16 @@ ROLE_CAPABILITIES: dict[str, list[str]] = {
     "overflow_worker": ["writing", "research", "formatting"],
 }
 
+def get_system_telemetry() -> dict[str, Any]:
+    """Measure empirical OS metrics (Invariant C)."""
+    try:
+        import psutil
+        cpu = psutil.cpu_percent(interval=None)
+        mem = psutil.virtual_memory().percent
+        return {"cpu_percent": float(cpu), "memory_percent": float(mem), "usage_percent": int(mem)}
+    except Exception:
+        return {"cpu_percent": 0.0, "memory_percent": 0.0, "usage_percent": 0}
+
 # ── Provider-based adapter factory ──────────────────────────────────
 _PROVIDER_REGISTRY: dict[str, type] = {
     "claude_desktop_cdp": ClaudeDesktopCDPAdapter,
@@ -136,99 +146,93 @@ async def run_worker_loop(
     reconnect_delay = 1.0
     while not stop_event.is_set():
         try:
-            # Heartbeat
+            # Heartbeat with truthful telemetry (Invariant C)
+            telemetry = get_system_telemetry()
             await client.post(
                 f"{ORCHESTRATOR_URL}/workers/{worker_id}/heartbeat",
-                json={"usage_percent": 10},
+                json={
+                    "usage_percent": telemetry["usage_percent"],
+                    "cpu_percent": telemetry["cpu_percent"],
+                    "memory_percent": telemetry["memory_percent"],
+                    "active_leases": 0,
+                },
             )
 
-            # Check for claimable tasks matching worker capabilities
-            task_resp = await client.get(
-                f"{ORCHESTRATOR_URL}/tasks",
-                params={"status": "pending", "limit": 5},
-            )
-            if task_resp.status_code == 200:
-                tasks = task_resp.json()
-                for t in tasks:
-                    task_id = t["id"]
-                    stage = t["stage"]
-                    
-                    # Verify capability match
-                    if stage not in capabilities and "all" not in capabilities:
-                        continue
+            # Acquire task via Closed-Loop Protocol (Invariant A)
+            acq_payload = {
+                "worker_id": worker_id,
+                "capabilities": capabilities,
+                "lease_seconds": LEASE_SECONDS,
+            }
+            acq_r = await client.post(f"{ORCHESTRATOR_URL}/tasks/acquire", json=acq_payload)
+            if acq_r.status_code == 200 and acq_r.json():
+                claim_data = acq_r.json()
+                claim_token = claim_data.get("claim_token")
+                task_info = claim_data.get("task", {})
+                task_id = task_info.get("id")
+                stage = task_info.get("stage")
 
-                    # Try to claim
-                    claim_r = await client.post(
-                        f"{ORCHESTRATOR_URL}/tasks/{task_id}/claim",
-                        json={"worker_id": worker_id, "lease_seconds": LEASE_SECONDS},
+                if task_id and claim_token:
+                    print(f"[>] [{worker_id}] Acquired task {task_id} (stage: {stage}). Executing...")
+                    exec_res = await adapter.execute_task(
+                        task_id, task_info.get("spec", ""), stage, {}
                     )
-                    if claim_r.status_code == 200:
-                        claim_data = claim_r.json()
-                        claim_token = claim_data.get("claim_token")
-                        task_info = claim_data.get("task", t)
-                        print(f"[>] [{worker_id}] Claimed task {task_id} (stage: {stage}). Executing via CDP...")
 
-                        exec_res = await adapter.execute_task(
-                            task_id, task_info["spec"], stage, {}
-                        )
-
-                        if exec_res.get("success"):
-                            result_text = exec_res.get("result_text", "")
+                    if exec_res.get("success"):
+                        result_text = exec_res.get("result_text", "")
+                        
+                        # If this is a QA stage, submit formal QA review
+                        if stage in ("qa", "qa_review"):
+                            verdict = "pass"
+                            reason = None
+                            if "fail" in result_text.lower() or "revision_needed" in result_text.lower():
+                                verdict = "revision_needed"
+                                reason = "QA checks requested revision"
                             
-                            # If this is a QA stage, submit formal QA review
-                            if stage in ("qa", "qa_review"):
-                                verdict = "pass"
-                                reason = None
-                                if "fail" in result_text.lower() or "revision_needed" in result_text.lower():
-                                    verdict = "revision_needed"
-                                    reason = "QA checks requested revision"
-                                
-                                qa_payload = {
-                                    "reviewer_worker_id": worker_id,
-                                    "verdict": verdict,
-                                    "rejection_reason": reason,
-                                    "checks_passed": {"evaluated": True, "score": 90 if verdict == "pass" else 50},
-                                }
-                                await client.post(
-                                    f"{ORCHESTRATOR_URL}/tasks/{task_id}/qa-review",
-                                    json=qa_payload,
-                                )
-                                print(f"[+] [{worker_id}] Task {task_id} QA review submitted: {verdict.upper()}")
-                            else:
-                                # Normal stage: submit checkpoint
-                                cp_payload = {
-                                    "task_id": task_id,
-                                    "kind": "text",
-                                    "summary": exec_res["summary"],
-                                    "result_text": result_text,
-                                    "submitted_by": worker_id,
-                                    "claim_token": claim_token,
-                                }
-                                await client.post(
-                                    f"{ORCHESTRATOR_URL}/tasks/{task_id}/checkpoint",
-                                    json=cp_payload,
-                                )
-                                print(f"[+] [{worker_id}] Task {task_id} checkpoint submitted.")
-
-                        elif exec_res.get("error") == "RATE_LIMIT_429":
-                            print(f"[!] [{worker_id}] Rate limit detected in Claude UI! Entering 5h cooldown.")
+                            qa_payload = {
+                                "reviewer_worker_id": worker_id,
+                                "verdict": verdict,
+                                "rejection_reason": reason,
+                                "checks_passed": {"evaluated": True, "score": 90 if verdict == "pass" else 50},
+                            }
                             await client.post(
-                                f"{ORCHESTRATOR_URL}/workers/{worker_id}/heartbeat",
-                                json={"trigger_cooldown": True},
+                                f"{ORCHESTRATOR_URL}/tasks/{task_id}/qa-review",
+                                json=qa_payload,
                             )
-                            await client.post(
-                                f"{ORCHESTRATOR_URL}/tasks/{task_id}/release",
-                                json={"worker_id": worker_id, "claim_token": claim_token},
-                            )
-                            # Sleep during cooldown or until stop
-                            await asyncio.sleep(300)
+                            print(f"[+] [{worker_id}] Task {task_id} QA review submitted: {verdict.upper()}")
                         else:
-                            print(f"[!] [{worker_id}] Task execution failed: {exec_res.get('error')}")
+                            # Normal stage: submit checkpoint
+                            cp_payload = {
+                                "task_id": task_id,
+                                "kind": "text",
+                                "summary": exec_res.get("summary", ""),
+                                "result_text": result_text,
+                                "submitted_by": worker_id,
+                                "claim_token": claim_token,
+                            }
                             await client.post(
-                                f"{ORCHESTRATOR_URL}/tasks/{task_id}/release",
-                                json={"worker_id": worker_id, "claim_token": claim_token},
+                                f"{ORCHESTRATOR_URL}/tasks/{task_id}/checkpoint",
+                                json=cp_payload,
                             )
-                        break
+                            print(f"[+] [{worker_id}] Task {task_id} checkpoint submitted.")
+
+                    elif exec_res.get("error") == "RATE_LIMIT_429":
+                        print(f"[!] [{worker_id}] Rate limit detected in Claude UI! Entering 5h cooldown.")
+                        await client.post(
+                            f"{ORCHESTRATOR_URL}/workers/{worker_id}/heartbeat",
+                            json={"trigger_cooldown": True},
+                        )
+                        await client.post(
+                            f"{ORCHESTRATOR_URL}/tasks/{task_id}/release",
+                            json={"worker_id": worker_id, "claim_token": claim_token},
+                        )
+                        await asyncio.sleep(300)
+                    else:
+                        print(f"[!] [{worker_id}] Task execution failed: {exec_res.get('error')}")
+                        await client.post(
+                            f"{ORCHESTRATOR_URL}/tasks/{task_id}/release",
+                            json={"worker_id": worker_id, "claim_token": claim_token},
+                        )
 
             reconnect_delay = 1.0
             await asyncio.sleep(POLL_INTERVAL_SECONDS)

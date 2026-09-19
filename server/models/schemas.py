@@ -67,6 +67,11 @@ class TaskResponse(BaseModel):
     created_at: str
     updated_at: str
 
+class TaskAcquireRequest(BaseModel):
+    worker_id: str
+    capabilities: list[str] | None = None
+    lease_seconds: int = 300
+
 class TaskClaimRequest(BaseModel):
     worker_id: str
     lease_seconds: int = 300
@@ -107,6 +112,10 @@ class WorkerHeartbeat(BaseModel):
     note: str | None = None
     usage_percent: int | None = None
     trigger_cooldown: bool = False
+    cpu_percent: float | None = None
+    memory_percent: float | None = None
+    active_leases: int | None = None
+    rate_limit_headroom: int | None = None
 
 class WorkerResponse(BaseModel):
     id: str
