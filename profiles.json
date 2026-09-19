@@ -6,9 +6,9 @@
     "thinking_budget": 8000,
     "cdp_port": 9222,
     "path": "%USERPROFILE%\\.claude-profiles\\user1",
-    "first_login_time": "2026-09-17 17:07:03",
-    "last_login_date": "2026-09-17",
-    "last_login_time": "17:39:41"
+    "last_login_date": "2026-09-19",
+    "last_login_time": "18:18:07",
+    "first_login_time": "2026-09-19 18:18:07"
   },
   "user2": {
     "nickname": "dev83",
@@ -17,9 +17,9 @@
     "thinking_budget": 0,
     "cdp_port": 9223,
     "path": "%USERPROFILE%\\.claude-profiles\\user2",
-    "last_login_date": "2026-09-16",
-    "last_login_time": "15:31:16",
-    "first_login_time": "2026-09-16 15:31:16"
+    "last_login_date": "2026-09-19",
+    "last_login_time": "18:18:12",
+    "first_login_time": "2026-09-19 18:18:12"
   },
   "user3": {
     "nickname": "xavier",
@@ -28,9 +28,9 @@
     "thinking_budget": 0,
     "cdp_port": 9224,
     "path": "%USERPROFILE%\\.claude-profiles\\user3",
-    "last_login_date": "2026-09-16",
-    "last_login_time": "15:34:09",
-    "first_login_time": "2026-09-16 15:34:09"
+    "last_login_date": "2026-09-19",
+    "last_login_time": "18:18:12",
+    "first_login_time": "2026-09-19 18:18:12"
   },
   "user4": {
     "path": "%USERPROFILE%\\.claude-profiles\\user4",
