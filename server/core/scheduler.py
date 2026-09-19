@@ -13,11 +13,30 @@ class QuotaAwareScheduler:
     Acquires race-safe atomic leases.
     """
     
-    def __init__(self, w_capability: float = 0.5, w_quota: float = 0.3, w_concurrency: float = 0.2, default_lease_seconds: int = 300):
+    def __init__(
+        self,
+        w_capability: float = 0.5,
+        w_quota: float = 0.3,
+        w_concurrency: float = 0.2,
+        w_provider_tier: float = 0.25,
+        default_lease_seconds: int = 300,
+        provider_tier_weights: dict[str, float] | None = None,
+    ):
         self.w_capability = w_capability
         self.w_quota = w_quota
         self.w_concurrency = w_concurrency
+        self.w_provider_tier = w_provider_tier
         self.default_lease_seconds = default_lease_seconds
+        # Primary tier (Claude Desktop CDP) gets higher default weight;
+        # Secondary tier (Copilot Headless / Free REST) provides zero-cost overflow capacity
+        self.provider_tier_weights = provider_tier_weights or {
+            "claude_desktop_cdp": 1.0,
+            "claude_desktop": 1.0,
+            "copilot_headless": 0.7,
+            "gemini_free": 0.6,
+            "groq": 0.5,
+            "ollama_local": 0.4,
+        }
 
     async def select_best_worker_for_task(self, task_id: str, db: aiosqlite.Connection) -> str | None:
         """Find the optimal worker ID to claim a given pending task or expired lease."""
@@ -87,9 +106,23 @@ class QuotaAwareScheduler:
             )
             active_count = (await act_cursor.fetchone())[0]
 
+            # Provider tier preference (Claude primary, Copilot zero-GUI overflow, etc.)
+            provider_type = w["provider"]
+            tier_weight = self.provider_tier_weights.get(provider_type, 0.5)
+
+            # Stage affinity bonus:
+            # - Heavy reasoning / review (qa, audit) prefers primary CDP instances
+            # - Repetitive grunt stages (format, overflow) perform excellently on copilot_headless
+            affinity_bonus = 0.0
+            if stage in ("qa", "qa_review", "audit") and "claude" in provider_type:
+                affinity_bonus = 0.2
+            elif stage in ("format", "formatting", "markdown", "schema", "overflow") and "copilot" in provider_type:
+                affinity_bonus = 0.15
+
             score = (
                 self.w_capability * 1.0 +
-                self.w_quota * headroom -
+                self.w_quota * headroom +
+                self.w_provider_tier * (tier_weight + affinity_bonus) -
                 self.w_concurrency * active_count
             )
 

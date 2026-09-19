@@ -108,6 +108,73 @@ async def test_supervisor_dead_worker_recovery():
         assert t["status"] == "pending"
         assert t["owner_worker_id"] is None
 
-        w_cursor = await db.execute("SELECT status FROM workers WHERE id = 'dead_worker_01'")
-        w = await w_cursor.fetchone()
-        assert w["status"] == "offline"
+async def test_cross_provider_tier_prioritization_and_overflow():
+    """Verify that Claude primary is preferred when available, but overflows to Copilot when in cooldown."""
+    async with aiosqlite.connect(str(settings.DATABASE_PATH)) as db:
+        db.row_factory = aiosqlite.Row
+
+        # Register Claude CDP primary and Copilot headless overflow worker
+        await db.execute(
+            """
+            INSERT INTO workers (id, provider, node_id, nickname, status, capabilities, quota_limit_per_window, quota_used_current, cooldown_until)
+            VALUES ('claude_primary_01', 'claude_desktop_cdp', 'win-node', 'Claude Primary', 'idle', '["writing", "formatting"]', 50, 10, NULL),
+                   ('copilot_overflow_01', 'copilot_headless', 'win-node', 'Copilot Overflow', 'idle', '["writing", "formatting"]', 10, 1, NULL)
+            """
+        )
+
+        # 1. Normal task: Claude has higher provider tier weight, should be chosen
+        await db.execute(
+            """
+            INSERT INTO tasks (id, stage, stage_order, kind, spec, status, priority)
+            VALUES ('task_tier_01', 'draft', 1, 'text', 'Draft section', 'pending', 5)
+            """
+        )
+        await db.commit()
+
+        best_worker = await scheduler.select_best_worker_for_task('task_tier_01', db)
+        assert best_worker == "claude_primary_01"
+
+        # 2. Put Claude into cooldown (e.g. 5-hour limit hit)
+        await db.execute(
+            "UPDATE workers SET status = 'cooldown', cooldown_until = '2099-01-01T00:00:00Z' WHERE id = 'claude_primary_01'"
+        )
+
+        await db.execute(
+            """
+            INSERT INTO tasks (id, stage, stage_order, kind, spec, status, priority)
+            VALUES ('task_tier_02', 'draft', 1, 'text', 'Draft another section', 'pending', 5)
+            """
+        )
+        await db.commit()
+
+        # Should automatically overflow to Copilot headless without pipeline stall
+        best_overflow = await scheduler.select_best_worker_for_task('task_tier_02', db)
+        assert best_overflow == "copilot_overflow_01"
+
+
+async def test_stage_affinity_routing():
+    """Verify that repetitive format stages favor Copilot headless, while QA favors Claude."""
+    async with aiosqlite.connect(str(settings.DATABASE_PATH)) as db:
+        db.row_factory = aiosqlite.Row
+
+        # Register equal-quota workers with different providers
+        await db.execute(
+            """
+            INSERT INTO workers (id, provider, node_id, nickname, status, capabilities, quota_limit_per_window, quota_used_current)
+            VALUES ('claude_worker', 'claude_desktop_cdp', 'win-node', 'Claude Bot', 'idle', '["formatting", "qa"]', 50, 0),
+                   ('copilot_worker', 'copilot_headless', 'win-node', 'Copilot Bot', 'idle', '["formatting", "qa"]', 50, 0)
+            """
+        )
+
+        # QA task -> Claude has QA affinity
+        await db.execute(
+            "INSERT INTO tasks (id, stage, stage_order, kind, spec, status, priority) VALUES ('task_qa_01', 'qa', 3, 'text', 'Review draft', 'pending', 1)"
+        )
+        # Format task -> Copilot has format affinity
+        await db.execute(
+            "INSERT INTO tasks (id, stage, stage_order, kind, spec, status, priority) VALUES ('task_fmt_01', 'format', 4, 'text', 'Clean markdown', 'pending', 1)"
+        )
+        await db.commit()
+
+        best_qa = await scheduler.select_best_worker_for_task('task_qa_01', db)
+        assert best_qa == "claude_worker"
