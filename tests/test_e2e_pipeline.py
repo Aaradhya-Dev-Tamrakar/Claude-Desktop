@@ -114,6 +114,7 @@ async def test_e2e_sku_pipeline_execution():
                         "task_id": task_id,
                         "job_id": "job_e2e_prod_001",
                         "reviewer_worker_id": "worker_claude_01",
+                        "claim_token": claim_token,
                         "verdict": "pass",
                         "checks_passed": {"specs_accuracy": True, "grammar": True, "rules": True}
                     })

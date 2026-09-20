@@ -126,3 +126,38 @@ async def test_fleet_lease_renewal_periodically():
     assert call_kwargs["json"]["worker_id"] == "fleet_worker_01"
     assert call_kwargs["json"]["claim_token"] == "tk1"
 
+
+@pytest.mark.asyncio
+async def test_worker_loop_copilot_headless_bool_health():
+    """Verify run_worker_loop handles boolean check_health() return without AttributeError."""
+    mock_client = AsyncMock()
+    mock_reg_resp = MagicMock()
+    mock_reg_resp.status_code = 201
+    mock_client.post.return_value = mock_reg_resp
+
+    stop_event = asyncio.Event()
+
+    mock_adapter = AsyncMock()
+    mock_adapter.check_health.return_value = True  # Returns pure bool
+
+    loop_task = asyncio.create_task(
+        run_worker_loop(
+            worker_id="copilot_test_1",
+            nickname="dev_copilot",
+            role="researcher",
+            provider="copilot_headless",
+            adapter=mock_adapter,
+            client=mock_client,
+            stop_event=stop_event,
+        )
+    )
+
+    await asyncio.sleep(0.05)
+    stop_event.set()
+    await asyncio.wait_for(loop_task, timeout=1.0)
+
+    # Health check must have been called without throwing AttributeError
+    mock_adapter.check_health.assert_awaited_once()
+    assert mock_client.post.call_count >= 1
+
+

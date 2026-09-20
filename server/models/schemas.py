@@ -161,6 +161,7 @@ class QAReviewSubmit(BaseModel):
     task_id: str
     job_id: str | None = None
     reviewer_worker_id: str
+    claim_token: str
     verdict: QAVerdict
     rejection_reason: str | None = None
     checks_passed: dict[str, bool] = Field(default_factory=dict)

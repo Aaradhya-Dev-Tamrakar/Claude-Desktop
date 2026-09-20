@@ -30,6 +30,7 @@ NODE_ID = os.getenv("NODE_ID", "local-fleet-node")
 POLL_INTERVAL_SECONDS = max(1.0, float(os.getenv("WORKER_POLL_INTERVAL_SECONDS", "5")))
 LEASE_SECONDS = max(30, int(os.getenv("LEASE_SECONDS", "300")))
 LEASE_RENEWAL_SECONDS = max(10, int(os.getenv("LEASE_RENEWAL_SECONDS", str(LEASE_SECONDS // 3))))
+API_KEY = os.getenv("API_AUTH_KEY") or os.getenv("ORCHESTRATOR_API_KEY", "")
 
 async def renew_task_lease_periodically(
     client: httpx.AsyncClient,
@@ -73,7 +74,47 @@ def get_system_telemetry() -> dict[str, Any]:
         mem = psutil.virtual_memory().percent
         return {"cpu_percent": float(cpu), "memory_percent": float(mem)}
     except Exception:
-        return {"cpu_percent": 0.0, "memory_percent": 0.0}
+        pass
+
+    try:
+        import ctypes
+        import time
+        if sys.platform == "win32":
+            class MEMORYSTATUSEX(ctypes.Structure):
+                _fields_ = [
+                    ("dwLength", ctypes.c_ulong),
+                    ("dwMemoryLoad", ctypes.c_ulong),
+                    ("ullTotalPhys", ctypes.c_ulonglong),
+                    ("ullAvailPhys", ctypes.c_ulonglong),
+                    ("ullTotalPageFile", ctypes.c_ulonglong),
+                    ("ullAvailPageFile", ctypes.c_ulonglong),
+                    ("ullTotalVirtual", ctypes.c_ulonglong),
+                    ("ullAvailVirtual", ctypes.c_ulonglong),
+                    ("sullAvailExtendedVirtual", ctypes.c_ulonglong),
+                ]
+            stat = MEMORYSTATUSEX()
+            stat.dwLength = ctypes.sizeof(MEMORYSTATUSEX)
+            ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(stat))
+            mem = float(stat.dwMemoryLoad)
+
+            class FILETIME(ctypes.Structure):
+                _fields_ = [("dwLowDateTime", ctypes.c_ulong), ("dwHighDateTime", ctypes.c_ulong)]
+
+            idle, kernel, user = FILETIME(), FILETIME(), FILETIME()
+            if ctypes.windll.kernel32.GetSystemTimes(ctypes.byref(idle), ctypes.byref(kernel), ctypes.byref(user)):
+                to_int = lambda ft: (ft.dwHighDateTime << 32) + ft.dwLowDateTime
+                i1, k1, u1 = to_int(idle), to_int(kernel), to_int(user)
+                time.sleep(0.01)
+                ctypes.windll.kernel32.GetSystemTimes(ctypes.byref(idle), ctypes.byref(kernel), ctypes.byref(user))
+                i2, k2, u2 = to_int(idle), to_int(kernel), to_int(user)
+                sys_time = (k2 - k1) + (u2 - u1)
+                idle_time = (i2 - i1)
+                cpu = float(round(100.0 * (sys_time - idle_time) / sys_time, 1)) if sys_time > 0 else 0.0
+                return {"cpu_percent": cpu, "memory_percent": mem}
+    except Exception:
+        pass
+
+    return {"cpu_percent": None, "memory_percent": None}
 
 # ── Provider-based adapter factory ──────────────────────────────────
 _PROVIDER_REGISTRY: dict[str, type] = {
@@ -146,7 +187,8 @@ async def run_worker_loop(
             print(f"[+] [{worker_id}] CDP on port {cdp_port} is READY.")
     elif provider == "copilot_headless":
         health = await adapter.check_health()
-        tag = "READY" if health.get("ok") else "DEGRADED"
+        is_ready = health if isinstance(health, bool) else bool(health.get("ok", False))
+        tag = "READY" if is_ready else "DEGRADED"
         print(f"[+] [{worker_id}] Copilot Headless adapter {tag}.")
     else:
         print(f"[*] [{worker_id}] Provider '{provider}' — skipping readiness probe.")
@@ -231,7 +273,9 @@ async def run_worker_loop(
                                     reason = "QA checks requested revision"
                                 
                                 qa_payload = {
+                                    "task_id": task_id,
                                     "reviewer_worker_id": worker_id,
+                                    "claim_token": claim_token,
                                     "verdict": verdict,
                                     "rejection_reason": reason,
                                     "checks_passed": {"evaluated": True, "score": 90 if verdict == "pass" else 50},
@@ -327,7 +371,8 @@ async def main():
     print("============================================================")
 
     stop_event = asyncio.Event()
-    async with httpx.AsyncClient(timeout=30.0) as client:
+    headers = {"X-API-Key": API_KEY} if API_KEY else {}
+    async with httpx.AsyncClient(timeout=30.0, headers=headers) as client:
         tasks = []
         for inst in fleet_data:
             worker_id = inst.get("Account", "unknown")

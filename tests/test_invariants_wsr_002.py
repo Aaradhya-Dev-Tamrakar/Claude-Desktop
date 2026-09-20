@@ -245,10 +245,22 @@ async def test_invariant_d_qa_checkpoint_preservation():
             assert qa_task is not None
             qa_task_id = qa_task["id"]
 
-        # Submit QA review PASS with result_text
+        # Acquire QA task via Closed-Loop Protocol
+        qa_claim = await client.post("/api/v1/tasks/acquire", json={
+            "worker_id": "qa_worker_01",
+            "capabilities": ["qa", "writing", "code"],
+            "lease_seconds": 300
+        })
+        assert qa_claim.status_code == 200
+        qa_claim_data = qa_claim.json()
+        assert qa_claim_data["task"]["id"] == qa_task_id
+        qa_token = qa_claim_data["claim_token"]
+
+        # Submit QA review PASS with result_text and claim_token
         qa_resp = await client.post(f"/api/v1/tasks/{qa_task_id}/qa-review", json={
             "task_id": qa_task_id,
             "reviewer_worker_id": "qa_worker_01",
+            "claim_token": qa_token,
             "verdict": "pass",
             "summary": "QA verified 100% compliant",
             "result_text": "QA Verified Deliverable: Draft body text approved.",
@@ -575,3 +587,115 @@ async def test_cross_worker_session_migration_and_resumption():
             # Checkpoint 2 and 3 submitted by Worker B
             assert checkpoints[1]["submitted_by"] == "worker_copilot_overflow"
             assert checkpoints[2]["submitted_by"] == "worker_copilot_overflow"
+
+
+@pytest.mark.asyncio
+async def test_qa_review_enforces_lease_and_claim_token(setup_test_db):
+    """
+    Invariant E Verification:
+    QA review submission requires lease ownership and valid claim token.
+    Rejects unowned tasks, wrong workers, and invalid claim tokens with HTTP 403.
+    """
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        # Register workers
+        await client.post("/api/v1/workers/register", json={
+            "id": "qa_legit_worker",
+            "provider": "claude_desktop_cdp",
+            "node_id": "test-node",
+            "nickname": "Legit QA Worker",
+            "capabilities": ["qa", "review"],
+            "quota_limit_per_window": 50,
+            "cooldown_window_minutes": 300,
+        })
+        await client.post("/api/v1/workers/register", json={
+            "id": "qa_intruder_worker",
+            "provider": "groq",
+            "node_id": "test-node",
+            "nickname": "Intruder Worker",
+            "capabilities": ["qa"],
+            "quota_limit_per_window": 50,
+            "cooldown_window_minutes": 300,
+        })
+
+        # Create task
+        task_res = await client.post("/api/v1/tasks", json={
+            "id": "task_qa_lease_test_001",
+            "stage": "qa",
+            "stage_order": 1,
+            "kind": "text",
+            "spec": "Review code for architectural invariants",
+            "priority": 1,
+        })
+        assert task_res.status_code == 201
+
+        # Case 1: Unclaimed task rejects QA review
+        unclaimed_res = await client.post("/api/v1/tasks/task_qa_lease_test_001/qa-review", json={
+            "task_id": "task_qa_lease_test_001",
+            "reviewer_worker_id": "qa_legit_worker",
+            "claim_token": "fake-token",
+            "verdict": "pass",
+        })
+        assert unclaimed_res.status_code == 403
+        assert "not 'qa_legit_worker'" in unclaimed_res.json()["detail"]
+
+        # Acquire task with legit worker
+        acq_res = await client.post("/api/v1/tasks/acquire", json={
+            "worker_id": "qa_legit_worker",
+            "capabilities": ["qa", "review"],
+            "lease_seconds": 300,
+        })
+        assert acq_res.status_code == 200
+        legit_token = acq_res.json()["claim_token"]
+
+        # Case 2: Wrong worker ID with valid token rejects QA review
+        intruder_res = await client.post("/api/v1/tasks/task_qa_lease_test_001/qa-review", json={
+            "task_id": "task_qa_lease_test_001",
+            "reviewer_worker_id": "qa_intruder_worker",
+            "claim_token": legit_token,
+            "verdict": "pass",
+        })
+        assert intruder_res.status_code == 403
+        assert "owned by 'qa_legit_worker'" in intruder_res.json()["detail"]
+
+        # Case 3: Legit worker with wrong claim token rejects QA review
+        bad_token_res = await client.post("/api/v1/tasks/task_qa_lease_test_001/qa-review", json={
+            "task_id": "task_qa_lease_test_001",
+            "reviewer_worker_id": "qa_legit_worker",
+            "claim_token": "wrong-token-abc",
+            "verdict": "pass",
+        })
+        assert bad_token_res.status_code == 403
+        assert "Invalid or expired claim token" in bad_token_res.json()["detail"]
+
+        # Case 4: Legit worker with legit claim token succeeds
+        valid_res = await client.post("/api/v1/tasks/task_qa_lease_test_001/qa-review", json={
+            "task_id": "task_qa_lease_test_001",
+            "reviewer_worker_id": "qa_legit_worker",
+            "claim_token": legit_token,
+            "verdict": "pass",
+            "summary": "QA approved with valid lease token",
+        })
+        assert valid_res.status_code == 201
+
+
+def test_telemetry_truthfulness_on_exception(monkeypatch):
+    """
+    Invariant C Verification:
+    When system telemetry probes fail or raise an exception,
+    the telemetry function must return None rather than synthetic 0.0% placeholders.
+    """
+    import sys
+    from client.fleet_supervisor import get_system_telemetry as fleet_telemetry
+    from client.worker_daemon import get_system_telemetry as daemon_telemetry
+
+    # Force platform where probes are unavailable to simulate telemetry failure
+    monkeypatch.setattr(sys, "platform", "unsupported_os_failure_simulation")
+
+    fleet_res = fleet_telemetry()
+    assert fleet_res["cpu_percent"] is None
+    assert fleet_res["memory_percent"] is None
+
+    daemon_res = daemon_telemetry()
+    assert daemon_res["cpu_percent"] is None
+    assert daemon_res["memory_percent"] is None
+

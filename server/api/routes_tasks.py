@@ -427,6 +427,12 @@ async def submit_qa_review(task_id: str, qa: QAReviewSubmit, db: aiosqlite.Conne
     task = await cursor.fetchone()
     if not task:
         raise HTTPException(status_code=404, detail=f"Task '{task_id}' not found")
+    if task["status"] == "merged":
+        raise HTTPException(status_code=409, detail=f"Task '{task_id}' is already completed")
+    if task["owner_worker_id"] != qa.reviewer_worker_id:
+        raise HTTPException(status_code=403, detail=f"Task is owned by '{task['owner_worker_id']}', not '{qa.reviewer_worker_id}'")
+    if task["claim_token"] != qa.claim_token:
+        raise HTTPException(status_code=403, detail=f"Invalid or expired claim token for task '{task_id}'")
 
     checks_json = json.dumps(qa.checks_passed)
 
@@ -438,6 +444,19 @@ async def submit_qa_review(task_id: str, qa: QAReviewSubmit, db: aiosqlite.Conne
         (task_id, task["job_id"], qa.reviewer_worker_id, qa.verdict, qa.rejection_reason, checks_json, now)
     )
     review_id = cursor.lastrowid
+
+    # Update attempt status
+    attempt_status = "succeeded" if qa.verdict == "pass" else "failed"
+    await db.execute(
+        "UPDATE task_attempts SET status = ?, finished_at = ? WHERE task_id = ? AND worker_id = ? AND status = 'running'",
+        (attempt_status, now, task_id, qa.reviewer_worker_id),
+    )
+
+    # Free reviewer worker back to idle
+    await db.execute(
+        "UPDATE workers SET status = 'idle', quota_used_current = quota_used_current + 1, last_heartbeat = ? WHERE id = ?",
+        (now, qa.reviewer_worker_id),
+    )
 
     # Handle verdict impact on task and metrics
     if qa.verdict in ("fail", "revision_needed"):

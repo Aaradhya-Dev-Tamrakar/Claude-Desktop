@@ -38,7 +38,47 @@ def get_system_telemetry() -> dict[str, Any]:
         mem = psutil.virtual_memory().percent
         return {"cpu_percent": float(cpu), "memory_percent": float(mem)}
     except Exception:
-        return {"cpu_percent": 0.0, "memory_percent": 0.0}
+        pass
+
+    try:
+        import ctypes
+        import time
+        if sys.platform == "win32":
+            class MEMORYSTATUSEX(ctypes.Structure):
+                _fields_ = [
+                    ("dwLength", ctypes.c_ulong),
+                    ("dwMemoryLoad", ctypes.c_ulong),
+                    ("ullTotalPhys", ctypes.c_ulonglong),
+                    ("ullAvailPhys", ctypes.c_ulonglong),
+                    ("ullTotalPageFile", ctypes.c_ulonglong),
+                    ("ullAvailPageFile", ctypes.c_ulonglong),
+                    ("ullTotalVirtual", ctypes.c_ulonglong),
+                    ("ullAvailVirtual", ctypes.c_ulonglong),
+                    ("sullAvailExtendedVirtual", ctypes.c_ulonglong),
+                ]
+            stat = MEMORYSTATUSEX()
+            stat.dwLength = ctypes.sizeof(MEMORYSTATUSEX)
+            ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(stat))
+            mem = float(stat.dwMemoryLoad)
+
+            class FILETIME(ctypes.Structure):
+                _fields_ = [("dwLowDateTime", ctypes.c_ulong), ("dwHighDateTime", ctypes.c_ulong)]
+
+            idle, kernel, user = FILETIME(), FILETIME(), FILETIME()
+            if ctypes.windll.kernel32.GetSystemTimes(ctypes.byref(idle), ctypes.byref(kernel), ctypes.byref(user)):
+                to_int = lambda ft: (ft.dwHighDateTime << 32) + ft.dwLowDateTime
+                i1, k1, u1 = to_int(idle), to_int(kernel), to_int(user)
+                time.sleep(0.01)
+                ctypes.windll.kernel32.GetSystemTimes(ctypes.byref(idle), ctypes.byref(kernel), ctypes.byref(user))
+                i2, k2, u2 = to_int(idle), to_int(kernel), to_int(user)
+                sys_time = (k2 - k1) + (u2 - u1)
+                idle_time = (i2 - i1)
+                cpu = float(round(100.0 * (sys_time - idle_time) / sys_time, 1)) if sys_time > 0 else 0.0
+                return {"cpu_percent": cpu, "memory_percent": mem}
+    except Exception:
+        pass
+
+    return {"cpu_percent": None, "memory_percent": None}
 
 def get_adapter() -> BaseWorkerAdapter:
     if PROVIDER == "gemini_free":
