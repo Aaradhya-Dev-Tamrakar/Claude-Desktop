@@ -1,9 +1,9 @@
 {
-  "Account": "user2",
-  "Nickname": "dev83",
-  "Role": "researcher",
-  "PreferredModel": "claude-3-5-haiku",
+  "Account": "user3",
+  "Nickname": "xavier",
+  "Role": "writer",
+  "PreferredModel": "claude-3-5-sonnet",
   "ThinkingBudget": 0,
-  "CdpPort": 9223,
-  "LaunchedAt": "2026-09-19T18:28:36Z"
+  "CdpPort": 9224,
+  "LaunchedAt": "2026-09-24T13:59:44Z"
 }
