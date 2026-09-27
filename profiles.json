@@ -31,9 +31,9 @@
     "thinking": false,
     "cdp_port": 9224,
     "path": "%USERPROFILE%\\.claude-profiles\\user3",
+    "first_login_time": "2026-09-27 10:45:45",
     "last_login_date": "2026-09-27",
-    "last_login_time": "10:45:45",
-    "first_login_time": "2026-09-27 10:45:45"
+    "last_login_time": "11:23:24"
   },
   "user4": {
     "path": "%USERPROFILE%\\.claude-profiles\\user4",
