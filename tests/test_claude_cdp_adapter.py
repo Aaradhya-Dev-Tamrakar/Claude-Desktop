@@ -132,10 +132,10 @@ async def test_cdp_adapter_custom_model_and_thinking_init():
         worker_id="user6",
         nickname="QA Reviewer",
         cdp_port=9227,
-        preferred_model="claude-3-7-sonnet",
+        preferred_model="Sonnet 5",
         thinking_budget=16000
     )
-    assert adapter.preferred_model == "claude-3-7-sonnet"
+    assert adapter.preferred_model == "Sonnet 5"
     assert adapter.thinking_budget == 16000
     assert adapter.cdp_port == 9227
 
@@ -174,7 +174,7 @@ async def test_cdp_execute_task_via_winpilot_bridge():
         worker_id="user1",
         nickname="Claude Lead",
         cdp_port=9222,
-        preferred_model="claude-3-7-sonnet",
+        preferred_model="Sonnet 5",
         thinking_budget=10000,
         winpilot_bridge=mock_bridge,
         window_title="Claude - Claude Lead",

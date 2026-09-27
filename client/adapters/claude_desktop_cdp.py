@@ -20,7 +20,7 @@ class ClaudeDesktopCDPAdapter(BaseWorkerAdapter):
         nickname: str,
         cdp_port: int = 9222,
         cdp_host: str = "127.0.0.1",
-        preferred_model: str = "claude-3-5-sonnet",
+        preferred_model: str = "Sonnet 5",
         thinking_budget: int = 0,
         timeout: float = 180.0,
         poll_interval: float | None = None,
@@ -498,7 +498,7 @@ class ClaudeDesktopUIAAdapter(BaseWorkerAdapter):
         nickname: str,
         hwnd: int | None = None,
         role: str = "worker",
-        preferred_model: str = "claude-3-5-sonnet",
+        preferred_model: str = "Sonnet 5",
         thinking_budget: int = 0,
     ):
         super().__init__(worker_id, nickname, ["writing", "research", "code", "qa", "seo", "formatting"])

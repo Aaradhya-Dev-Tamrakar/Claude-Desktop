@@ -19,7 +19,7 @@ class ClaudeDesktopProxyAdapter(BaseWorkerAdapter):
         nickname: str,
         profile_path: str = "",
         api_key: str | None = None,
-        model: str = "claude-3-5-sonnet-20241022",
+        model: str = "Sonnet 5",
         cdp_port: int | None = None,
         execution_mode: str | None = None,
     ):

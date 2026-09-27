@@ -46,7 +46,7 @@ def load_fleet_data() -> list[dict[str, Any]]:
             pass
     # Fallback to scanning ports 9222-9229
     return [
-        {"Account": f"user{i}", "Nickname": f"Instance {i}", "CdpPort": 9220 + i, "PreferredModel": "claude-3-5-sonnet", "Role": "worker"}
+        {"Account": f"user{i}", "Nickname": f"Instance {i}", "CdpPort": 9220 + i, "PreferredModel": "Sonnet 5", "Role": "worker"}
         for i in range(2, 7)
     ]
 
@@ -65,7 +65,7 @@ async def cmd_status():
             role = inst.get("Role", "worker")
             port = int(inst.get("CdpPort", 9222))
             hwnd = inst.get("Hwnd")
-            model = inst.get("PreferredModel", "claude-3-5-sonnet")
+            model = inst.get("PreferredModel", "Sonnet 5")
 
             win_str = "NOT ATTACHED"
             if hwnd:
@@ -104,7 +104,7 @@ async def cmd_broadcast(prompt: str):
             return acc, res.get("success", False), res.get("summary", "")
         else:
             port = int(inst.get("CdpPort", 9222))
-            model = inst.get("PreferredModel", "claude-3-5-sonnet")
+            model = inst.get("PreferredModel", "Sonnet 5")
             adapter = ClaudeDesktopCDPAdapter(worker_id=acc, nickname=acc, cdp_port=port, preferred_model=model)
             res = await adapter.execute_task(task_id="broadcast", spec=prompt, stage="interactive", context={})
             return acc, res.get("success", False), res.get("result_text", res.get("error", ""))
@@ -133,12 +133,12 @@ async def cmd_send(target: str, prompt: str):
 
     if not target_inst:
         port = int(target) if target.isdigit() else 9222
-        target_inst = {"Account": target, "CdpPort": port, "PreferredModel": "claude-3-5-sonnet"}
+        target_inst = {"Account": target, "CdpPort": port, "PreferredModel": "Sonnet 5"}
 
     acc = target_inst.get("Account", target)
     hwnd = target_inst.get("Hwnd")
     port = int(target_inst.get("CdpPort", 9222))
-    model = target_inst.get("PreferredModel", "claude-3-5-sonnet")
+    model = target_inst.get("PreferredModel", "Sonnet 5")
 
     if hwnd:
         print(f"[*] Sending prompt to {acc} via Windows UI Automation (HWND={hwnd})...")

@@ -2488,7 +2488,7 @@ function Invoke-ProfileLaunch {
                 Account         = $Account
                 Nickname        = $Nickname
                 Role            = if ($ProfileInfo.role) { $ProfileInfo.role } else { "worker" }
-                PreferredModel  = if ($ProfileInfo.preferred_model) { $ProfileInfo.preferred_model } else { "claude-3-5-sonnet" }
+                PreferredModel  = if ($ProfileInfo.preferred_model) { $ProfileInfo.preferred_model } else { "Sonnet 5" }
                 ThinkingBudget  = if ($ProfileInfo.thinking_budget) { [int]$ProfileInfo.thinking_budget } else { 0 }
                 CdpPort         = $AssignedCdpPort
                 LaunchedAt      = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")

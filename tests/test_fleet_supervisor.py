@@ -63,7 +63,7 @@ def test_create_adapter_cdp():
         "Nickname": "claude-lead",
         "Provider": "claude_desktop_cdp",
         "CdpPort": 9222,
-        "PreferredModel": "claude-3-7-sonnet",
+        "PreferredModel": "Sonnet 5",
         "ThinkingBudget": 10000,
     }
     adapter = create_adapter(inst)

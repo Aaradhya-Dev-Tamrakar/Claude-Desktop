@@ -891,7 +891,7 @@ class FleetControlApp(tk.Tk):
                     p_info = profiles.get(acc, {})
                     nick = p_info.get("nickname", acc)
                     role = p_info.get("role", "worker")
-                    model = p_info.get("preferred_model", "claude-3-5-sonnet")
+                    model = p_info.get("preferred_model", "Sonnet 5")
                     extra = f"Budget: {p_info.get('thinking_budget', 0)}" if p_info.get('thinking_budget') else "Fast Analysis"
                     color = color_palette[idx % len(color_palette)]
 
