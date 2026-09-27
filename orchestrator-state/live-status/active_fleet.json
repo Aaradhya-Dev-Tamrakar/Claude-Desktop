@@ -1,9 +1,32 @@
-{
-  "Account": "user1",
-  "Nickname": "adevtmr",
-  "Role": "orchestrator",
-  "PreferredModel": "claude-3-7-sonnet",
-  "ThinkingBudget": 8000,
-  "CdpPort": 9222,
-  "LaunchedAt": "2026-09-27T08:28:28Z"
-}
+[
+  {
+    "Account": "user2",
+    "Nickname": "dev83",
+    "Role": "researcher",
+    "PreferredModel": "claude-3-5-haiku",
+    "ThinkingBudget": 0,
+    "CdpPort": 9223,
+    "LaunchedAt": "2026-09-27T10:45:44Z",
+    "Hwnd": 1120524
+  },
+  {
+    "Account": "user3",
+    "Nickname": "xavier",
+    "Role": "writer",
+    "PreferredModel": "claude-3-5-sonnet",
+    "ThinkingBudget": 0,
+    "CdpPort": 9224,
+    "LaunchedAt": "2026-09-27T10:45:45Z",
+    "Hwnd": 2034138
+  },
+  {
+    "Account": "user4",
+    "Nickname": "adtbei79001",
+    "Role": "writer",
+    "PreferredModel": "claude-3-5-sonnet",
+    "ThinkingBudget": 0,
+    "CdpPort": 9225,
+    "LaunchedAt": "2026-09-27T10:45:45Z",
+    "Hwnd": 1640296
+  }
+]
