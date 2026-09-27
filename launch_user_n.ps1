@@ -1613,7 +1613,8 @@ public class ClaudeDesktopWindowHelper {
         out PROCESS_INFORMATION lpProcessInformation
     );
 
-    public const uint DETACHED_PROCESS = 0x00000008;
+    public const uint STARTF_USESHOWWINDOW = 0x00000001;
+    public const short SW_SHOWNORMAL = 1;
     public const uint CREATE_NEW_PROCESS_GROUP = 0x00000200;
     public const uint CREATE_BREAKAWAY_FROM_JOB = 0x01000000;
 
@@ -1631,9 +1632,11 @@ public class ClaudeDesktopWindowHelper {
         STARTUPINFO si = new STARTUPINFO();
         si.cb = Marshal.SizeOf(si);
         si.lpDesktop = @"WinSta0\Default";
+        si.dwFlags = (int)STARTF_USESHOWWINDOW;
+        si.wShowWindow = SW_SHOWNORMAL;
         PROCESS_INFORMATION pi = new PROCESS_INFORMATION();
         string cmd = string.IsNullOrEmpty(args) ? ("\"" + exePath + "\"") : ("\"" + exePath + "\" " + args);
-        uint creationFlags = DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP | CREATE_BREAKAWAY_FROM_JOB;
+        uint creationFlags = CREATE_NEW_PROCESS_GROUP;
         bool success = CreateProcess(null, cmd, IntPtr.Zero, IntPtr.Zero, false, creationFlags, IntPtr.Zero, null, ref si, out pi);
         if (success) {
             int pid = pi.dwProcessId;
@@ -2528,10 +2531,10 @@ function Invoke-ProfileLaunch {
 
             if ($launchedPid -eq 0) {
                 if ($ProcessArgs.Count -gt 0) {
-                    Start-Process $ClaudeExe -ArgumentList ($ProcessArgs -join " ") -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+                    Start-Process $ClaudeExe -ArgumentList ($ProcessArgs -join " ")
                 }
                 else {
-                    Start-Process $ClaudeExe -RedirectStandardOutput $OutLog -RedirectStandardError $ErrLog
+                    Start-Process $ClaudeExe
                 }
             }
         }
