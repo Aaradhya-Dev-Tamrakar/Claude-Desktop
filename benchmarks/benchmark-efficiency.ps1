@@ -1,7 +1,8 @@
 param(
     [string[]]$Profiles = @("user1", "user2", "user3", "user4"),
     [ValidateRange(1, 20)][int]$Iterations = 3,
-    [switch]$IncludeProcessSnapshot
+    [switch]$IncludeProcessSnapshot,
+    [switch]$Live
 )
 
 $ErrorActionPreference = "Stop"
@@ -37,20 +38,28 @@ if (-not (Test-Path $Launcher) -or -not (Test-Path $McpSync)) {
 }
 
 Write-Host "Efficiency benchmark" -ForegroundColor Cyan
-Write-Host "Profiles: $ProfileArgument | Iterations: $Iterations"
-Write-Host "All measurements are side-effect-free dry runs." -ForegroundColor DarkGray
+Write-Host "Profiles: $ProfileArgument | Iterations: $Iterations | Mode: $(if ($Live) { 'LIVE INSTANCE' } else { 'DRY RUN (-WhatIf)' })"
+if (-not $Live) {
+    Write-Host "All measurements are side-effect-free dry runs. Pass -Live to launch real Claude Desktop windows." -ForegroundColor DarkGray
+}
 Write-Host ""
+
+$dryRunFlag = if ($Live) { "" } else { "-WhatIf" }
 
 $launcherTimes = @(
     1..$Iterations | ForEach-Object {
         Measure-Milliseconds {
-            & pwsh -NoProfile -File $Launcher -Mode Concurrent -Users $ProfileArgument -WhatIf -NoTUI -NoTeamSync -NoSnap *> $null
+            if ($Live) {
+                & pwsh -NoProfile -File $Launcher -Mode Concurrent -Users $ProfileArgument -NoTUI -NoTeamSync -NoSnap -NoPrompt -NoCooldownAlarm *> $null
+            } else {
+                & pwsh -NoProfile -File $Launcher -Mode Concurrent -Users $ProfileArgument -WhatIf -NoTUI -NoTeamSync -NoSnap *> $null
+            }
         }
     }
 )
 $launcherStats = Get-Statistics -Values $launcherTimes
 [pscustomobject]@{
-    Benchmark = "Concurrent launcher dry run"
+    Benchmark = if ($Live) { "Concurrent launcher LIVE launch" } else { "Concurrent launcher dry run" }
     Iterations = $Iterations
     AverageMs = $launcherStats.AverageMs
     MinimumMs = $launcherStats.MinimumMs
