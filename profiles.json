@@ -17,9 +17,9 @@
     "thinking_budget": 0,
     "cdp_port": 9223,
     "path": "%USERPROFILE%\\.claude-profiles\\user2",
-    "last_login_date": "2026-09-25",
-    "last_login_time": "19:43:35",
-    "first_login_time": "2026-09-25 19:43:35"
+    "last_login_date": "2026-09-27",
+    "last_login_time": "10:45:43",
+    "first_login_time": "2026-09-27 10:45:43"
   },
   "user3": {
     "nickname": "xavier",
@@ -28,9 +28,9 @@
     "thinking_budget": 0,
     "cdp_port": 9224,
     "path": "%USERPROFILE%\\.claude-profiles\\user3",
-    "last_login_date": "2026-09-25",
-    "last_login_time": "19:49:57",
-    "first_login_time": "2026-09-25 19:49:57"
+    "last_login_date": "2026-09-27",
+    "last_login_time": "10:45:45",
+    "first_login_time": "2026-09-27 10:45:45"
   },
   "user4": {
     "path": "%USERPROFILE%\\.claude-profiles\\user4",
@@ -39,9 +39,9 @@
     "preferred_model": "claude-3-5-sonnet",
     "thinking_budget": 0,
     "cdp_port": 9225,
-    "last_login_date": "2026-09-25",
-    "last_login_time": "21:13:49",
-    "first_login_time": "2026-09-25 21:13:49"
+    "last_login_date": "2026-09-27",
+    "last_login_time": "10:45:45",
+    "first_login_time": "2026-09-27 10:45:45"
   },
   "user5": {
     "nickname": "games2061",
