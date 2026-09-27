@@ -37,7 +37,11 @@ def _attach_default_desktop():
 def load_fleet_data() -> list[dict[str, Any]]:
     if FLEET_JSON.exists():
         try:
-            return json.loads(FLEET_JSON.read_text(encoding="utf-8"))
+            raw = json.loads(FLEET_JSON.read_text(encoding="utf-8"))
+            if isinstance(raw, dict):
+                return [raw]
+            elif isinstance(raw, list):
+                return raw
         except Exception:
             pass
     # Fallback to scanning ports 9222-9229
