@@ -28,10 +28,11 @@ class QuotaAwareScheduler:
         self.w_provider_tier = w_provider_tier
         self.default_lease_seconds = default_lease_seconds
         # Primary tier (Claude Desktop CDP) gets higher default weight;
-        # Secondary tier (Copilot Headless / Free REST) provides zero-cost overflow capacity
+        # Secondary tier (Copilot CLI / Copilot Headless) provides high-throughput execution & overflow
         self.provider_tier_weights = provider_tier_weights or {
             "claude_desktop_cdp": 1.0,
             "claude_desktop": 1.0,
+            "copilot_cli": 0.85,
             "copilot_headless": 0.7,
             "gemini_free": 0.6,
             "groq": 0.5,
@@ -117,6 +118,8 @@ class QuotaAwareScheduler:
             # Stage affinity bonus:
             affinity_bonus = 0.0
             if stage in ("qa", "qa_review", "audit") and "claude" in provider_type:
+                affinity_bonus = 0.2
+            elif stage in ("code", "draft", "refactor", "unit_test") and "copilot_cli" in provider_type:
                 affinity_bonus = 0.2
             elif stage in ("format", "formatting", "markdown", "schema", "overflow") and "copilot" in provider_type:
                 affinity_bonus = 0.15

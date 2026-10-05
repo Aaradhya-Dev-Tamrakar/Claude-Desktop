@@ -117,9 +117,12 @@ def get_system_telemetry() -> dict[str, Any]:
     return {"cpu_percent": None, "memory_percent": None}
 
 # ── Provider-based adapter factory ──────────────────────────────────
+from client.adapters.copilot_cli_adapter import CopilotCLIAdapter
+
 _PROVIDER_REGISTRY: dict[str, type] = {
     "claude_desktop_cdp": ClaudeDesktopCDPAdapter,
     "copilot_headless": CopilotHeadlessAdapter,
+    "copilot_cli": CopilotCLIAdapter,
 }
 
 
@@ -129,6 +132,7 @@ def create_adapter(inst: dict[str, Any]) -> BaseWorkerAdapter:
     Supported providers:
       - claude_desktop_cdp  → ClaudeDesktopCDPAdapter (CDP/WebSocket)
       - copilot_headless    → CopilotHeadlessAdapter  (REST API, zero-GUI)
+      - copilot_cli         → CopilotCLIAdapter       (Subprocess CLI, autopilot)
     """
     provider = inst.get("Provider", "claude_desktop_cdp")
     worker_id = inst.get("Account", "unknown")
@@ -160,6 +164,21 @@ def create_adapter(inst: dict[str, Any]) -> BaseWorkerAdapter:
             model=model,
         )
 
+    if provider == "copilot_cli":
+        copilot_path = inst.get("CopilotPath")
+        worktree = inst.get("Worktree")
+        timeout = float(inst.get("Timeout", 180.0))
+        max_continues = int(inst.get("MaxContinues", 5))
+        return CopilotCLIAdapter(
+            worker_id=worker_id,
+            nickname=nickname,
+            copilot_path=copilot_path,
+            worktree=worktree,
+            timeout=timeout,
+            max_autopilot_continues=max_continues,
+            model=model if model != "claude-3-5-sonnet" else None,
+        )
+
     raise ValueError(f"Unknown provider '{provider}' for worker '{worker_id}'")
 
 
@@ -185,11 +204,11 @@ async def run_worker_loop(
             print(f"[!] [{worker_id}] Warning: CDP port {cdp_port} did not report ready. Retrying in background...")
         else:
             print(f"[+] [{worker_id}] CDP on port {cdp_port} is READY.")
-    elif provider == "copilot_headless":
+    elif provider in ("copilot_headless", "copilot_cli"):
         health = await adapter.check_health()
         is_ready = health if isinstance(health, bool) else bool(health.get("ok", False))
         tag = "READY" if is_ready else "DEGRADED"
-        print(f"[+] [{worker_id}] Copilot Headless adapter {tag}.")
+        print(f"[+] [{worker_id}] {provider} adapter {tag}.")
     else:
         print(f"[*] [{worker_id}] Provider '{provider}' — skipping readiness probe.")
 
