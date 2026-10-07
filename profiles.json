@@ -9,7 +9,7 @@
     "path": "%USERPROFILE%\\.claude-profiles\\user1",
     "first_login_time": "2026-10-07 16:58:00",
     "last_login_date": "2026-10-07",
-    "last_login_time": "17:23:22"
+    "last_login_time": "17:42:33"
   },
   "user2": {
     "nickname": "dev83",
@@ -43,9 +43,9 @@
     "effort": "Low",
     "thinking": false,
     "cdp_port": 9225,
+    "first_login_time": "2026-10-07 17:19:53",
     "last_login_date": "2026-10-07",
-    "last_login_time": "17:19:53",
-    "first_login_time": "2026-10-07 17:19:53"
+    "last_login_time": "17:42:31"
   },
   "user5": {
     "nickname": "games2061",

@@ -1,9 +1,10 @@
 {
-  "Account": "user2",
-  "Nickname": "dev83",
-  "Role": "orchestrator",
-  "PreferredModel": "Sonnet 5",
+  "Account": "user3",
+  "Nickname": "xavier",
+  "Role": "worker_scout",
+  "PreferredModel": "Haiku 4.5",
   "ThinkingBudget": 0,
-  "CdpPort": 9223,
-  "LaunchedAt": "2026-10-07T17:25:40Z"
+  "CdpPort": 9224,
+  "LaunchedAt": "2026-10-07T17:28:33Z",
+  "Hwnd": 7276028
 }
