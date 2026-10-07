@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-10-07_011",
+  "parent_id": "task_2026-10-07_001",
+  "kind": "code",
+  "spec": "WBS-10 launch_hybrid_swarm.bat + tools/fleet_cli.py: bat = (1) Claude-Desktop\\\\launch-fleet.ps1 on virtual desktop, (2) uvicorn server.main:app (DB init via lifespan), (3) client\\\\fleet_supervisor.py workers, (4) python tools\\\\fleet_cli.py live. fleet_cli: add `live` dashboard (workers/tasks/jobs polling, Ctrl+C exit) and `submit --sku` option; default behaviour unchanged.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-10-07T11:25:29Z",
+  "updated_at": "2026-10-07T11:25:29Z"
+}

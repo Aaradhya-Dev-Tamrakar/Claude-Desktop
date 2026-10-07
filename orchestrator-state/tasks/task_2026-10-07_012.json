@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-10-07_012",
+  "parent_id": "task_2026-10-07_001",
+  "kind": "code",
+  "spec": "WBS-11 Verification: full `pytest tests/` (baseline = 82 collected, all pass when psutil absent; test_telemetry_truthfulness_on_exception fails only if psutil installed), plus new tests/test_hybrid_cycle_e2e.py covering plan -> fan-out -> fan-in -> QA REVISE -> fix -> QA PASS -> job completed, and cooldown rotation (plan task released by cooldown profile is re-acquired by second Claude worker). Diff new content against repo conventions; no secrets; deliver zip preserving repo-relative paths + sync.ps1 commit command.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-10-07T11:25:29Z",
+  "updated_at": "2026-10-07T11:25:29Z"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-10-07_010",
+  "parent_id": "task_2026-10-07_001",
+  "kind": "code",
+  "spec": "WBS-9 client/claude_fleet_supervisor.py (Component 1): load profiles.json (env CLAUDE_DESKTOP_PROFILES_JSON, default F:\\\\Aaradhya-Dev-Tamrakar\\\\Claude-Desktop\\\\profiles.json; tolerant of list/dict + key aliases, port fallback 9222+index), audit CDP ports 9222..9226 concurrently via /json/version, health ping, cooldown tracking (sync from GET /workers cooldown_until), role-preference lease assignment + rotation (architect: user1,user2,user3; reviewer: user4,user3,user2; configurable), state snapshot to orchestrator-state/live-status/claude_fleet_state.json, CLI audit|watch. Tests with injected health fn in tests/test_claude_fleet_supervisor.py.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-10-07T11:25:29Z",
+  "updated_at": "2026-10-07T11:25:29Z"
+}

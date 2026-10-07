@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-10-07_006",
+  "parent_id": "task_2026-10-07_001",
+  "kind": "code",
+  "spec": "WBS-5 server/api/routes_jobs.py + routes_tasks.py: POST /jobs auto-decomposes when SKU template has auto_decompose=true (single item {task_spec: input_uri}); qa-review route calls pipeline_engine.record_qa_outcome (scratchpad section 3) and dispatch_fix_for_revision before default requeue; hybrid-only dead-job detection (failed siblings, none active -> job failed). Tests via TestClient in tests/test_e2e_pipeline.py style.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-10-07T11:25:29Z",
+  "updated_at": "2026-10-07T11:25:29Z"
+}

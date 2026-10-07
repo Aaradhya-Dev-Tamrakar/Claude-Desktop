@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-10-07_009",
+  "parent_id": "task_2026-10-07_001",
+  "kind": "code",
+  "spec": "WBS-8 client/fleet_supervisor.py + client/worker_daemon.py: pass build_task_context(task_info) instead of {}; qa_review verdict via parse_qa_verdict; checkpoint kind from task_info.kind and branch_name/commit_sha from exec_res when present; ROLE_CAPABILITIES += architect (plan,research,writing,coordination,review) and worker_reviewer (== qa_reviewer); orchestrator role += plan. Tests in tests/test_fleet_supervisor.py.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-10-07T11:25:29Z",
+  "updated_at": "2026-10-07T11:25:29Z"
+}

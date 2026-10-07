@@ -19,9 +19,9 @@
     "thinking": false,
     "cdp_port": 9223,
     "path": "%USERPROFILE%\\.claude-profiles\\user2",
-    "first_login_time": "2026-09-27 10:45:43",
-    "last_login_date": "2026-09-27",
-    "last_login_time": "10:48:10"
+    "last_login_date": "2026-10-07",
+    "last_login_time": "17:19:51",
+    "first_login_time": "2026-10-07 17:19:51"
   },
   "user3": {
     "nickname": "xavier",
@@ -31,9 +31,9 @@
     "thinking": false,
     "cdp_port": 9224,
     "path": "%USERPROFILE%\\.claude-profiles\\user3",
-    "first_login_time": "2026-09-27 10:45:45",
-    "last_login_date": "2026-09-27",
-    "last_login_time": "11:23:24"
+    "last_login_date": "2026-10-07",
+    "last_login_time": "17:19:52",
+    "first_login_time": "2026-10-07 17:19:52"
   },
   "user4": {
     "path": "%USERPROFILE%\\.claude-profiles\\user4",
@@ -43,9 +43,9 @@
     "effort": "Low",
     "thinking": false,
     "cdp_port": 9225,
-    "last_login_date": "2026-09-27",
-    "last_login_time": "10:45:45",
-    "first_login_time": "2026-09-27 10:45:45"
+    "last_login_date": "2026-10-07",
+    "last_login_time": "17:19:53",
+    "first_login_time": "2026-10-07 17:19:53"
   },
   "user5": {
     "nickname": "games2061",
@@ -55,9 +55,9 @@
     "thinking": false,
     "cdp_port": 9226,
     "path": "%USERPROFILE%\\.claude-profiles\\user5",
-    "last_login_date": "2026-09-09",
-    "last_login_time": "14:08:11",
-    "first_login_time": "2026-09-09 14:08:11"
+    "last_login_date": "2026-10-07",
+    "last_login_time": "17:19:54",
+    "first_login_time": "2026-10-07 17:19:54"
   },
   "user6": {
     "nickname": "adt_ieee",

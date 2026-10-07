@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-10-07_003",
+  "parent_id": "task_2026-10-07_001",
+  "kind": "code",
+  "spec": "WBS-2 client/qa_verdict.py: parse_qa_verdict(text)->(verdict 'pass'|'revision_needed', reason). Explicit 'QA_VERDICT: PASS|REVISE' marker wins (last marker); legacy keyword heuristic only when no marker. Tests incl. PASS text that mentions 'fail'.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-10-07T11:25:29Z",
+  "updated_at": "2026-10-07T11:25:29Z"
+}

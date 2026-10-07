@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-10-07_004",
+  "parent_id": "task_2026-10-07_001",
+  "kind": "code",
+  "spec": "WBS-3 server/core/config.py + pipeline_engine.py: SCRATCHPAD_DIR, MAX_FANOUT_TASKS=64, MAX_QA_REVISIONS=3; mtime-cached load_sku_template; get_stage_config(sku,stage); parse_wbs (fenced json / bare json, list or {tasks}); plan checkpoint -> scratchpad section 1; fan-out next stage into N kind=code child tasks (idempotent, fallback to single task on unparseable/oversize WBS); fan-in barrier (all stage siblings done/merged) -> single qa_review task with aggregated diffs + scratchpad section 2; dispatch_fix_for_revision (blocked QA task + code-stage fix task, reopen on fix completion, qa_hold after MAX_QA_REVISIONS); emit directives (wbs / qa_verdict) appended to specs. Behaviour for templates without stage_config MUST be unchanged. Tests in tests/test_pipeline_engine.py.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-10-07T11:25:29Z",
+  "updated_at": "2026-10-07T11:25:29Z"
+}

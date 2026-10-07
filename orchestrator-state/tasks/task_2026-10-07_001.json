@@ -1,0 +1,13 @@
+{
+  "id": "task_2026-10-07_001",
+  "parent_id": null,
+  "kind": "code",
+  "spec": "PARENT: Implement claude_desktop_and_copilot_orchestrator_plan.md in github.com/AaradhyaDT/Fleet-Orchestrator (main). Claude Desktop CDP profiles = Architect (plan) + Adversarial Reviewer (qa_review); 27 Copilot CLI workers = parallel code fan-out. Adaptations to repo conventions: SKU template uses repo schema (sku_id/display_name/pipeline + stage_config), scratchpad sections follow Component 2 (1=plan, 2=diffs, 3=QA verdict). Out of scope: Handoff 4 (audit.bat lives in brainstorm repo). Gates: pytest tests/ 100% pass; commit via .\\sync.ps1 only.",
+  "status": "pending",
+  "owner_account": null,
+  "branch_name": null,
+  "blocked_reason": null,
+  "created_by": "orchestrator",
+  "created_at": "2026-10-07T11:25:11Z",
+  "updated_at": "2026-10-07T11:25:11Z"
+}
