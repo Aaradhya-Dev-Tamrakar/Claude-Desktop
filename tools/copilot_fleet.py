@@ -13,6 +13,7 @@ import os
 import sys
 from pathlib import Path
 from typing import Any
+import httpx
 
 # Ensure project root is in sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -93,18 +94,39 @@ async def cmd_status(args: argparse.Namespace) -> None:
     total_credits = 0
     active_workers = 0
 
-    for acc in accounts:
-        status_str = "[READY]" if acc["has_token"] else "[NO TOKEN SET]"
-        token_hint = f"{acc['token'][:14]}...{acc['token'][-4:]}" if acc["has_token"] else "(empty / placeholder)"
-        print(f"\nWorker {acc['index']}: {acc['worker_id']} ({acc['name']})")
-        print(f"  Status:       {status_str}")
-        print(f"  Token:        {token_hint}")
-        print(f"  Quota Pool:   {acc['monthly_credits']} AI credits/mo")
-        print(f"  Session Home: {acc['state_dir']}")
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        for acc in accounts:
+            status_str = "[NO TOKEN SET]"
+            if acc["has_token"]:
+                try:
+                    resp = await client.get(
+                        "https://api.github.com/user",
+                        headers={
+                            "Authorization": f"token {acc['token']}",
+                            "Accept": "application/vnd.github.v3+json",
+                            "User-Agent": "Fleet-Orchestrator",
+                        },
+                    )
+                    if resp.status_code == 200:
+                        gh_login = resp.json().get("login", "")
+                        status_str = f"[VERIFIED: @{gh_login}]"
+                    elif resp.status_code == 401:
+                        status_str = "[INVALID / EXPIRED TOKEN (401)]"
+                    else:
+                        status_str = f"[API HTTP {resp.status_code}]"
+                except Exception:
+                    status_str = "[READY (Offline check)]"
 
-        if acc["has_token"]:
-            total_credits += acc["monthly_credits"]
-            active_workers += 1
+            token_hint = f"{acc['token'][:14]}...{acc['token'][-4:]}" if acc["has_token"] else "(empty / placeholder)"
+            print(f"\nWorker {acc['index']}: {acc['worker_id']} ({acc['name']})")
+            print(f"  Status:       {status_str}")
+            print(f"  Token:        {token_hint}")
+            print(f"  Quota Pool:   {acc['monthly_credits']} AI credits/mo")
+            print(f"  Session Home: {acc['state_dir']}")
+
+            if acc["has_token"]:
+                total_credits += acc["monthly_credits"]
+                active_workers += 1
 
     print("\n" + "-" * 70)
     print(f"Active Ready Workers: {active_workers} / {len(accounts)}")
