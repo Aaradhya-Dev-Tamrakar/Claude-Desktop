@@ -36,6 +36,9 @@ class CopilotCLIAdapter(BaseWorkerAdapter):
         timeout: float = 180.0,
         max_autopilot_continues: int = 5,
         model: str | None = None,
+        github_token: str | None = None,
+        copilot_home: str | Path | None = None,
+        max_ai_credits: int | None = None,
     ):
         caps = capabilities or self.DEFAULT_CAPABILITIES
         super().__init__(worker_id, nickname, caps)
@@ -44,6 +47,9 @@ class CopilotCLIAdapter(BaseWorkerAdapter):
         self.timeout = timeout
         self.max_autopilot_continues = max_autopilot_continues
         self.model = model
+        self.github_token = github_token
+        self.copilot_home = Path(copilot_home).resolve() if copilot_home else None
+        self.max_ai_credits = max_ai_credits
 
     @staticmethod
     def _resolve_copilot_binary() -> str:
@@ -93,6 +99,9 @@ class CopilotCLIAdapter(BaseWorkerAdapter):
             str(self.max_autopilot_continues),
         ]
 
+        if self.max_ai_credits is not None:
+            cmd.extend(["--max-ai-credits", str(self.max_ai_credits)])
+
         if self.model:
             cmd.extend(["--model", self.model])
 
@@ -131,11 +140,20 @@ class CopilotCLIAdapter(BaseWorkerAdapter):
 
         cwd = str(self.worktree) if self.worktree and self.worktree.exists() else None
 
+        # Build isolated environment for child process
+        child_env = os.environ.copy()
+        if self.github_token:
+            child_env["COPILOT_GITHUB_TOKEN"] = self.github_token
+        if self.copilot_home:
+            self.copilot_home.mkdir(parents=True, exist_ok=True)
+            child_env["COPILOT_HOME"] = str(self.copilot_home)
+
         proc = None
         try:
             proc = await asyncio.create_subprocess_exec(
                 *cmd,
                 cwd=cwd,
+                env=child_env,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
             )

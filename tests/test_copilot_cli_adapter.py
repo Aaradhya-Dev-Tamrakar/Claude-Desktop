@@ -124,3 +124,38 @@ async def test_copilot_cli_execute_task_timeout():
 
         assert res["success"] is False
         assert "TIMEOUT" in res["error"]
+
+
+@pytest.mark.asyncio
+async def test_copilot_cli_env_and_credits_isolation(tmp_path):
+    copilot_home = tmp_path / "custom_copilot_home"
+    dummy_tok = "mock" + "_dummy_pat_123"
+    adapter = CopilotCLIAdapter(
+        worker_id="cli-isolated",
+        nickname="Isolated Worker",
+        copilot_path="copilot.exe",
+        github_token=dummy_tok,
+        copilot_home=copilot_home,
+        max_ai_credits=25,
+    )
+
+    # Check CLI command contains max-ai-credits
+    cmd = adapter.build_cli_command("Run isolated")
+    assert "--max-ai-credits" in cmd
+    assert "25" in cmd
+
+    mock_proc = AsyncMock()
+    mock_proc.returncode = 0
+    mock_proc.communicate.return_value = (b"Execution complete", b"")
+
+    with patch("asyncio.create_subprocess_exec", return_value=mock_proc) as mock_exec:
+        res = await adapter.execute_task("task_iso", "spec", "code", {})
+        assert res["success"] is True
+
+        # Verify child environment passed to subprocess
+        _, kwargs = mock_exec.call_args
+        env_passed = kwargs.get("env", {})
+        assert env_passed.get("COPILOT_GITHUB_TOKEN") == dummy_tok
+        assert env_passed.get("COPILOT_HOME") == str(copilot_home)
+        assert copilot_home.exists()
+
