@@ -6,6 +6,22 @@ Safely sync a Git repo, check staged changes for secrets, and commit when approp
 Pulls the latest changes from the configured origin remote, appends new orchestrator memory
 entries to team-memory.md, prevents accidental credential commits, and exits cleanly when there
 is nothing to commit.
+
+.PARAMETER Message
+Custom commit message (e.g. -m "feat: add feature"). Alias: -m.
+If omitted, an intelligent conventional commit message is generated.
+
+.PARAMETER PullOnly
+Safely pull remote updates with --rebase --autostash without committing or pushing.
+
+.PARAMETER SkipCI
+Bypasses the GitHub Actions runner matrix by appending [skip ci] to the commit message.
+Aliases: -NoCI, -SkipActions.
+Automatically auto-detected when only operational state, memory dumps, or markdown files are staged.
+
+.PARAMETER WhatIf
+Dry-run mode: previews changes, secret scan, and commit message without altering git repository state.
+Alias: -DryRun.
 #>
 
 [CmdletBinding()]
@@ -13,7 +29,13 @@ param (
     [Alias("m")]
     [string]$Message,
 
-    [switch]$PullOnly
+    [switch]$PullOnly,
+
+    [Alias("NoCI", "SkipActions")]
+    [switch]$SkipCI,
+
+    [Alias("DryRun")]
+    [switch]$WhatIf
 )
 
 Set-StrictMode -Version Latest
@@ -38,7 +60,7 @@ function Write-Success {
 }
 
 function Find-StagedSecrets {
-    $stagedDiff = git diff --cached -U0 -- ":!scripts/ci_self_healing.py" 2>$null
+    $stagedDiff = git diff --cached -U0 -- ":!scripts/ci_self_healing.py" ":!sync.ps1" ":!sync.bat" 2>$null
     if (-not $stagedDiff) { return @() }
 
     $addedLines = $stagedDiff | Where-Object { $_ -match '^\+[^+]' } | ForEach-Object { $_.Substring(1) }
@@ -71,6 +93,43 @@ function Find-StagedSecrets {
     }
 
     return @($hits)
+}
+
+function Test-ShouldSkipCI {
+    param(
+        [string[]]$StagedFiles
+    )
+
+    if (-not $StagedFiles -or @($StagedFiles).Count -eq 0) {
+        return $false
+    }
+
+    foreach ($rawFile in $StagedFiles) {
+        $f = $rawFile.Trim() -replace '\\', '/'
+        if (-not $f) { continue }
+
+        $isEligible = $false
+
+        if ($f -like '*.md' -or
+            $f -like 'orchestrator-state/*' -or
+            $f -like 'dev-logs/*' -or
+            $f -like 'graphify-out/*' -or
+            $f -like 'outputs/*' -or
+            $f -like 'benchmarks/*' -or
+            $f -like 'worker-prompts/*' -or
+            $f -like '*.log' -or
+            $f -like '*.memory-appended' -or
+            $f -eq 'LICENSE' -or
+            $f -eq '.gitignore') {
+            $isEligible = $true
+        }
+
+        if (-not $isEligible) {
+            return $false
+        }
+    }
+
+    return $true
 }
 
 function Get-AutoCommitMessage {
@@ -298,11 +357,48 @@ try {
         exit 1
     }
 
+    $stagedFiles = @(git diff --cached --name-only 2>$null | Where-Object { $_.Trim() })
+
+    $skipCiApplied = $false
+    $skipCiReason = ""
+
+    if ($SkipCI) {
+        $skipCiApplied = $true
+        $skipCiReason = "explicit -SkipCI parameter"
+    }
+    elseif (Test-ShouldSkipCI -StagedFiles $stagedFiles) {
+        $skipCiApplied = $true
+        $skipCiReason = "auto-detected operational/doc-only changes (orchestrator-state/memory/docs)"
+    }
+
     if (-not $Message) {
         $Message = Get-AutoCommitMessage
         if ($Message) {
             Write-Notice -Message "Auto-generated commit message: '$Message'"
         }
+    }
+
+    if ($Message -and $skipCiApplied) {
+        if ($Message -notmatch '(?i)\[(?:skip\s*ci|ci\s*skip|no\s*ci|skip\s*actions)\]') {
+            $Message = "$Message [skip ci]"
+            Write-Status -Message "CI Runner Bypass: $skipCiReason. Appended [skip ci] to commit message." -Color ([System.ConsoleColor]::DarkCyan)
+        }
+    }
+
+    if ($WhatIf) {
+        Write-Status -Message "================== [DRY-RUN / WHATIF PREVIEW] ==================" -Color ([System.ConsoleColor]::Magenta)
+        Write-Host "  Repository   : $RepoPath" -ForegroundColor Gray
+        Write-Host "  Branch       : $currentBranch" -ForegroundColor Gray
+        Write-Host "  Commit Msg   : $Message" -ForegroundColor Yellow
+        Write-Host "  Skip CI      : $(if ($skipCiApplied) { "YES ($skipCiReason)" } else { "NO (Full CI will run)" })" -ForegroundColor Cyan
+        Write-Host "  Staged Files : $($stagedFiles.Count) file(s)" -ForegroundColor Gray
+        foreach ($sf in $stagedFiles) {
+            Write-Host "    - $sf" -ForegroundColor DarkGray
+        }
+        Write-Host "  Remote Push  : $(if ($hasOrigin) { "origin/$currentBranch" } else { "None" })" -ForegroundColor Gray
+        Write-Status -Message "Dry-run complete. Resetting staging index. No changes committed or pushed." -Color ([System.ConsoleColor]::Green)
+        git reset
+        exit 0
     }
 
     if ($Message) {

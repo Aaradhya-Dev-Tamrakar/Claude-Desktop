@@ -26,6 +26,12 @@ To avoid breaking multi-account coordination and prevent wasteful multi-step Git
   .\sync.bat -m "feat(scope): detailed architectural commit summary"
   ```
 
+- **Skip CI for Operational / Doc Commits**:
+  ```powershell
+  .\sync.bat -SkipCI                      # or .\sync.bat -m "docs: notes" -SkipCI
+  ```
+  _Explicitly appends `[skip ci]` to bypass GitHub Actions runner matrix. Automatically auto-detected when only operational state, memory dumps, or markdown files are staged._
+
 - **Safe Pull Only**:
   ```powershell
   .\sync.bat -PullOnly
