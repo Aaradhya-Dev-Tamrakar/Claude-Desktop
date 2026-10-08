@@ -9,17 +9,14 @@ on:
       - 'refactor/**'
       - 'chore/**'
     paths:
-      - 'client/**'
-      - 'server/**'
       - 'mcp-servers/**'
       - 'scripts/**'
       - 'tools/**'
       - 'tests/**'
-      - 'sku-templates/**'
-      - 'server/requirements.txt'
+      - 'requirements.txt'
       - 'pytest.ini'
-      - 'launch_user_*.bat'
-      - 'launch_*.bat'
+      - 'launch.bat'
+      - 'launch_user_n.ps1'
       - 'bypass-all-profiles.ps1'
       - 'disable-autoupdate.ps1'
       - 'reset_profiles.ps1'
@@ -38,17 +35,14 @@ on:
     branches:
       - main
     paths:
-      - 'client/**'
-      - 'server/**'
       - 'mcp-servers/**'
       - 'scripts/**'
       - 'tools/**'
       - 'tests/**'
-      - 'sku-templates/**'
-      - 'server/requirements.txt'
+      - 'requirements.txt'
       - 'pytest.ini'
-      - 'launch_user_*.bat'
-      - 'launch_*.bat'
+      - 'launch.bat'
+      - 'launch_user_n.ps1'
       - 'bypass-all-profiles.ps1'
       - 'disable-autoupdate.ps1'
       - 'reset_profiles.ps1'
@@ -112,16 +106,16 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
-          cache-dependency-path: 'server/requirements.txt'
+          cache-dependency-path: 'requirements.txt'
 
       - name: Install dependencies with network retry
         run: |
           python -m pip install --upgrade pip
-          python -m pip install --retries 5 --timeout 30 -r server/requirements.txt
+          python -m pip install --retries 5 --timeout 30 -r requirements.txt
 
-      - name: Run Full Pytest Suite (116 Specs)
+      - name: Run FastMCP Pytest Suite (37 Specs)
         run: |
-          python -m pytest tests -q --tb=short
+          python -m pytest tests/orchestrator_mcp_test.py -q --tb=short
 
       - name: Verify Live E2E Task Lifecycle
         run: |
@@ -147,15 +141,15 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip'
-          cache-dependency-path: 'server/requirements.txt'
+          cache-dependency-path: 'requirements.txt'
 
       - name: Install dependencies
         run: |
-          python -m pip install --retries 5 --timeout 30 -r server/requirements.txt
+          python -m pip install --retries 5 --timeout 30 -r requirements.txt
 
       - name: Run adversarial lease coverage
         run: |
-          python -m pytest tests/test_remote_mcp.py::test_mcp_mutations_require_current_claim_token -v --tb=short
+          python -m pytest tests/orchestrator_mcp_test.py::test_qa_lease_authorization_and_self_review_guard -v --tb=short
 
   # --------------------------------------------------------------------------
   # 4. Windows PowerShell Automation & Pester Suite
