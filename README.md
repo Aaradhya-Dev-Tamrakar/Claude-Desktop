@@ -1,12 +1,12 @@
 # Claude Desktop Multi-Profile Orchestration & FastMCP Ecosystem
 
-PowerShell automation, terminal-independent profile launching, stdio FastMCP servers, and decentralized filesystem state contracts to orchestrate multi-account workflows for the Claude Desktop application on Windows.
+Orchestrate multiple isolated Windows Claude Desktop accounts through terminal-independent PowerShell profile launching, stdio FastMCP coordination, and decentralized filesystem state contracts.
 
 ---
 
 ## 1. System Architecture & Core Workflow
 
-This repository provides the **interactive, human-in-the-loop coordination hub** for Claude Desktop. It is completely self-contained and operates with **zero background terminal daemons** and **zero CDP browser puppeteering**.
+This repository provides the interactive coordination hub for Claude Desktop on Windows. It operates with zero background terminal daemons and zero Chromium DevTools Protocol (CDP) browser puppeteering.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -36,26 +36,50 @@ This repository provides the **interactive, human-in-the-loop coordination hub**
 
 1. **Terminal Independence**:
    - Profiles launch via `launch.bat` using PowerShell's detached `Start-Process`.
-   - Once Claude Desktop launches, you can **close the launcher terminal immediately**. Claude Desktop and its stdio MCP tools remain fully alive and self-sufficient.
+   - Once Claude Desktop starts, the launcher terminal closes immediately without interrupting Claude Desktop or its stdio MCP child processes.
 2. **Automatic Instance Teardown**:
-   - In **Isolated Mode** (the default `[1]`), the launcher automatically detects, prompts, and cleanly shuts down all other running or concurrent Claude Desktop instances before configuring and starting the chosen profile.
+   - In Isolated Mode (Option `1`, default), the launcher detects and terminates prior running Claude Desktop instances before configuring and starting the selected profile.
 3. **Manual Version Control**:
-   - Automatic Git commit spam on profile launch is completely disabled.
-   - All repository synchronization and version control is deliberate and manually managed via `.\sync.bat`.
-4. **Frictionless Code Delivery (Zero Copy-Pasting)**:
-   - Claude Desktop instances use `write_file_to_workspace` and `read_workspace_file` to write code, diffs, and scripts directly to disk inside the repository with a single tool call.
+   - Automatic Git commit spam on profile launch is disabled.
+   - All repository synchronization runs deliberately through `.\sync.bat`.
+4. **Direct In-Workspace File I/O**:
+   - Claude Desktop instances call `write_file_to_workspace` and `read_workspace_file` to inspect and write repository code directly on disk, eliminating manual clipboard transfer.
 5. **Decoupled Headless Execution**:
-   - Complex headless batch processing, API schedulers, and autonomous Copilot queue workers reside in the dedicated companion repository: [`Fleet-Orchestrator`](../Fleet-Orchestrator).
+   - Background batch processing, REST schedulers, and autonomous Copilot queue workers reside in the companion repository: [`Fleet-Orchestrator`](../Fleet-Orchestrator).
 
 ---
 
-## 2. Repository Structure
+## 2. Scope Boundaries & Architectural Non-Goals
+
+To maintain system reliability and prevent operational drift, this repository enforces strict architectural boundaries:
+
+- **Zero Browser Automation**: Chromium DevTools Protocol (CDP) port automation (ports 9222–9229) is retired. All legacy browser scripts are archived in `legacy/`. Claude Desktop operates strictly as an interactive native Windows desktop application.
+- **Zero Background Daemons**: Launching a profile spawns no long-running PowerShell daemons. Claude Desktop communicates with FastMCP tools via standard stdio pipes managed by the Electron runtime.
+- **Zero Headless Worker Fleets**: Headless Copilot worker daemons, FastAPI HTTP endpoints, SQLite WAL task queues, and multi-account credit pooling belong exclusively to `Fleet-Orchestrator`.
+- **Zero Automatic Commit Churn**: Opening or closing profiles never generates automated git commits. Version control is explicit and verified before each push.
+
+---
+
+## 3. Verified Empirical Metrics
+
+Every release and architectural change must satisfy local deterministic verification gates before merging:
+
+| Subsystem | Metric | Verification Command |
+| :--- | :--- | :--- |
+| **FastMCP Server** | 37 / 37 passed (100%) | `pytest tests/orchestrator_mcp_test.py -q` |
+| **PowerShell Launcher** | 51 / 51 passed (100%) | `pwsh -Command "Invoke-Pester .\tests\launch_user_n.Tests.ps1 -Output Detailed"` |
+| **MCP Tool Surface** | 27 registered tools | `mcp-servers/orchestrator-mcp/run_server.py` |
+| **Configured Profiles** | 26 isolated accounts | `%USERPROFILE%\.claude-profiles` |
+
+---
+
+## 4. Repository Structure
 
 ```
 Claude-Desktop/
 ├── launch.bat                     # Double-click launcher wrapper for Claude Desktop profiles
 ├── launch_user_n.ps1              # Core launcher: profile swap, instance teardown, detached GUI launch
-├── sync.bat                       # Zero-friction git sync wrapper (PowerShell ExecutionPolicy bypass)
+├── sync.bat                       # Windows git sync entrypoint (PowerShell ExecutionPolicy bypass)
 ├── sync.ps1                       # Git sync engine: pull --rebase, secret scan, commit, push
 ├── sync-mcp.ps1                   # Syncs team-mcp.json into all Claude Desktop profile configs
 ├── profiles.json                  # Account name -> nickname/paths/role metadata map
@@ -105,7 +129,7 @@ Claude-Desktop/
 
 ---
 
-## 3. Quick Start
+## 5. Quick Start
 
 ### 1. Launching Claude Desktop
 Double-click [`launch.bat`](launch.bat) or run from PowerShell:
@@ -128,7 +152,7 @@ pwsh -File .\sync-mcp.ps1
 pytest tests/orchestrator_mcp_test.py -v
 
 # 2. PowerShell / Pester launcher suite (51 tests)
-Invoke-Pester .\tests\launch_user_n.Tests.ps1 -Output Detailed
+pwsh -Command "Invoke-Pester .\tests\launch_user_n.Tests.ps1 -Output Detailed"
 
 # 3. Repository state self-healing & secret scan
 python scripts/ci_self_healing.py --heal
