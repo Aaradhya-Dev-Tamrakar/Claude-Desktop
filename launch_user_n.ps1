@@ -1544,6 +1544,12 @@ public class ClaudeDesktopWindowHelper {
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public struct STARTUPINFOEX {
+        public STARTUPINFO StartupInfo;
+        public IntPtr lpAttributeList;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public struct PROCESS_INFORMATION {
         public IntPtr hProcess;
         public IntPtr hThread;
@@ -1554,6 +1560,20 @@ public class ClaudeDesktopWindowHelper {
     [DllImport("kernel32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool CloseHandle(IntPtr hObject);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern IntPtr OpenProcess(uint processAccess, bool bInheritHandle, int processId);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool InitializeProcThreadAttributeList(IntPtr lpAttributeList, int dwAttributeCount, int dwFlags, ref IntPtr lpSize);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool UpdateProcThreadAttribute(IntPtr lpAttributeList, uint dwFlags, IntPtr attribute, ref IntPtr lpValue, IntPtr cbSize, IntPtr lpPreviousValue, IntPtr lpReturnSize);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern void DeleteProcThreadAttributeList(IntPtr lpAttributeList);
 
     [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     public static extern bool CreateProcess(
@@ -1569,11 +1589,28 @@ public class ClaudeDesktopWindowHelper {
         out PROCESS_INFORMATION lpProcessInformation
     );
 
+    [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern bool CreateProcess(
+        string lpApplicationName,
+        string lpCommandLine,
+        IntPtr lpProcessAttributes,
+        IntPtr lpThreadAttributes,
+        bool bInheritHandles,
+        uint dwCreationFlags,
+        IntPtr lpEnvironment,
+        string lpCurrentDirectory,
+        ref STARTUPINFOEX lpStartupInfo,
+        out PROCESS_INFORMATION lpProcessInformation
+    );
+
     public const uint STARTF_USESHOWWINDOW = 0x00000001;
     public const short SW_SHOWNORMAL = 1;
     public const uint CREATE_NEW_PROCESS_GROUP = 0x00000200;
     public const uint CREATE_BREAKAWAY_FROM_JOB = 0x01000000;
     public const uint DETACHED_PROCESS = 0x00000008;
+    public const uint EXTENDED_STARTUPINFO_PRESENT = 0x00080000;
+    public const uint PROCESS_CREATE_PROCESS = 0x0080;
+    public const int PROC_THREAD_ATTRIBUTE_PARENT_PROCESS = 0x00020000;
 
     public static void AttachToDefaultDesktop() {
         try {
@@ -1586,19 +1623,76 @@ public class ClaudeDesktopWindowHelper {
 
     public static int LaunchOnDefaultDesktop(string exePath, string args) {
         AttachToDefaultDesktop();
+        string cmd = string.IsNullOrEmpty(args) ? ("\"" + exePath + "\"") : ("\"" + exePath + "\" " + args);
+
+        // Tier 1: Win32 Extended CreateProcess with PROC_THREAD_ATTRIBUTE_PARENT_PROCESS targeting explorer.exe.
+        // Terminal consoles and Windows Terminal tabs run inside Job Objects configured with JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE
+        // without JOB_OBJECT_LIMIT_BREAKAWAY_OK. Reparenting to explorer.exe cleanly detaches the process tree without elevation.
+        try {
+            System.Diagnostics.Process[] explorers = System.Diagnostics.Process.GetProcessesByName("explorer");
+            IntPtr hParent = IntPtr.Zero;
+            foreach (System.Diagnostics.Process exp in explorers) {
+                hParent = OpenProcess(PROCESS_CREATE_PROCESS, false, exp.Id);
+                if (hParent != IntPtr.Zero) break;
+            }
+
+            if (hParent != IntPtr.Zero) {
+                IntPtr lpSize = IntPtr.Zero;
+                InitializeProcThreadAttributeList(IntPtr.Zero, 1, 0, ref lpSize);
+                if (lpSize != IntPtr.Zero) {
+                    IntPtr lpAttributeList = Marshal.AllocHGlobal(lpSize);
+                    if (InitializeProcThreadAttributeList(lpAttributeList, 1, 0, ref lpSize)) {
+                        IntPtr hParentRef = hParent;
+                        if (UpdateProcThreadAttribute(lpAttributeList, 0, (IntPtr)PROC_THREAD_ATTRIBUTE_PARENT_PROCESS, ref hParentRef, (IntPtr)IntPtr.Size, IntPtr.Zero, IntPtr.Zero)) {
+                            STARTUPINFOEX siex = new STARTUPINFOEX();
+                            siex.StartupInfo.cb = Marshal.SizeOf(siex);
+                            siex.StartupInfo.lpDesktop = @"WinSta0\Default";
+                            siex.StartupInfo.dwFlags = (int)STARTF_USESHOWWINDOW;
+                            siex.StartupInfo.wShowWindow = SW_SHOWNORMAL;
+                            siex.lpAttributeList = lpAttributeList;
+
+                            PROCESS_INFORMATION pi = new PROCESS_INFORMATION();
+                            uint creationFlags = EXTENDED_STARTUPINFO_PRESENT | CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS;
+                            bool success = CreateProcess(null, cmd, IntPtr.Zero, IntPtr.Zero, false, creationFlags, IntPtr.Zero, null, ref siex, out pi);
+
+                            DeleteProcThreadAttributeList(lpAttributeList);
+                            Marshal.FreeHGlobal(lpAttributeList);
+                            CloseHandle(hParent);
+
+                            if (success) {
+                                int pid = pi.dwProcessId;
+                                if (pi.hProcess != IntPtr.Zero) CloseHandle(pi.hProcess);
+                                if (pi.hThread != IntPtr.Zero) CloseHandle(pi.hThread);
+                                return pid;
+                            }
+                        } else {
+                            DeleteProcThreadAttributeList(lpAttributeList);
+                            Marshal.FreeHGlobal(lpAttributeList);
+                            CloseHandle(hParent);
+                        }
+                    } else {
+                        Marshal.FreeHGlobal(lpAttributeList);
+                        CloseHandle(hParent);
+                    }
+                } else {
+                    CloseHandle(hParent);
+                }
+            }
+        } catch { }
+
+        // Tier 2 Fallback: Standard CreateProcess with CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS
         STARTUPINFO si = new STARTUPINFO();
         si.cb = Marshal.SizeOf(si);
         si.lpDesktop = @"WinSta0\Default";
         si.dwFlags = (int)STARTF_USESHOWWINDOW;
         si.wShowWindow = SW_SHOWNORMAL;
-        PROCESS_INFORMATION pi = new PROCESS_INFORMATION();
-        string cmd = string.IsNullOrEmpty(args) ? ("\"" + exePath + "\"") : ("\"" + exePath + "\" " + args);
-        uint creationFlags = CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS;
-        bool success = CreateProcess(null, cmd, IntPtr.Zero, IntPtr.Zero, false, creationFlags, IntPtr.Zero, null, ref si, out pi);
-        if (success) {
-            int pid = pi.dwProcessId;
-            if (pi.hProcess != IntPtr.Zero) CloseHandle(pi.hProcess);
-            if (pi.hThread != IntPtr.Zero) CloseHandle(pi.hThread);
+        PROCESS_INFORMATION fallbackPi = new PROCESS_INFORMATION();
+        uint fallbackFlags = CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS;
+        bool fallbackSuccess = CreateProcess(null, cmd, IntPtr.Zero, IntPtr.Zero, false, fallbackFlags, IntPtr.Zero, null, ref si, out fallbackPi);
+        if (fallbackSuccess) {
+            int pid = fallbackPi.dwProcessId;
+            if (fallbackPi.hProcess != IntPtr.Zero) CloseHandle(fallbackPi.hProcess);
+            if (fallbackPi.hThread != IntPtr.Zero) CloseHandle(fallbackPi.hThread);
             return pid;
         }
         return 0;
@@ -2472,6 +2566,9 @@ function Invoke-ProfileLaunch {
                 $ProcessArgs += "--disable-renderer-backgrounding"
                 $ProcessArgs += "--disable-background-timer-throttling"
             }
+
+            # Suppress Electron internal console attachment and diagnostic spew (MaxListenersExceededWarning, ExperimentalWarning)
+            $env:ELECTRON_NO_ATTACH_CONSOLE = "1"
 
             $launchedPid = 0
             try {
