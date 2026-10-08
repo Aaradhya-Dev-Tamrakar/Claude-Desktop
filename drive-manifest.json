@@ -7,19 +7,25 @@
       "drive_file_id": "1TSctdISQL5LuFzXw9EB9OhSA3kC61N2fZ-8gd9ptljk",
       "drive_file_name": "claude-desktop_README.md",
       "description": "Claude Desktop Orchestrator \u2014 Multi-Profile Launcher & MCP Server Hub",
-      "sha256": "78ef734d86817064"
+      "sha256": "18fb6294d838f18d"
     },
     "team-context.md": {
       "drive_file_id": "16zHwFP9aV5_qO1L9Ljr_GDTPflZngNXZIsEL6fLnzpY",
       "drive_file_name": "claude-desktop_team-context.md",
       "description": "Team Context \u2014 Shared Project Context & Conventions",
-      "sha256": "0d738f0040533b29"
+      "sha256": "f8cfd15b46b5dc34"
     },
     "team-memory.md": {
       "drive_file_id": "15seSPbTAwPcOFuAqXFtt_txCdX8j--WM1vLUwDxLhtQ",
       "drive_file_name": "claude-desktop_team-memory.md",
       "description": "Team Memory \u2014 Accumulated Knowledge & Decision Log",
       "sha256": "986b6b04ca1f5002"
+    },
+    "docs/how-we-decoupled-claude-desktop-from-windows-terminal-job-object.md": {
+      "drive_file_id": "17NUx5U2MRsjP6o566JX4pe8D7HN3ETPzFj7rYhf-nEI",
+      "drive_file_name": "claude-desktop_windows-terminal-job-object-detachment.md",
+      "description": "Engineering Case Study \u2014 How We Decoupled Claude Desktop from the Windows Terminal Job Object",
+      "sha256": "c191c40dba481d5e"
     }
   }
 }
