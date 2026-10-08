@@ -1,0 +1,13 @@
+{
+  "blocked_reason": null,
+  "branch_name": null,
+  "created_at": "2026-10-08T12:17:55Z",
+  "created_by": "Aaradhya",
+  "id": "task_2026-10-08_017",
+  "kind": "text",
+  "owner_account": "claude_chat",
+  "parent_id": null,
+  "spec": "DEMO: connectivity and workflow test task created from Claude chat. No action required; safe to close.",
+  "status": "done",
+  "updated_at": "2026-10-08T12:19:08Z"
+}

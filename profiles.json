@@ -7,9 +7,9 @@
     "thinking": false,
     "cdp_port": 9222,
     "path": "%USERPROFILE%\\.claude-profiles\\user1",
-    "first_login_time": "2026-10-07 16:58:00",
-    "last_login_date": "2026-10-07",
-    "last_login_time": "17:42:33"
+    "last_login_date": "2026-10-08",
+    "last_login_time": "17:58:36",
+    "first_login_time": "2026-10-08 17:58:36"
   },
   "user2": {
     "nickname": "dev83",
@@ -19,9 +19,9 @@
     "thinking": false,
     "cdp_port": 9223,
     "path": "%USERPROFILE%\\.claude-profiles\\user2",
-    "first_login_time": "2026-10-07 17:19:51",
-    "last_login_date": "2026-10-07",
-    "last_login_time": "17:25:39"
+    "last_login_date": "2026-10-08",
+    "last_login_time": "17:58:39",
+    "first_login_time": "2026-10-08 17:58:39"
   },
   "user3": {
     "nickname": "xavier",

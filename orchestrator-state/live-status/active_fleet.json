@@ -1,0 +1,22 @@
+[
+  {
+    "Account": "user1",
+    "CdpPort": 9222,
+    "Hwnd": 394742,
+    "LaunchedAt": "2026-10-08T17:58:37Z",
+    "Nickname": "adevtmr",
+    "PreferredModel": "Sonnet 5",
+    "Role": "orchestrator",
+    "ThinkingBudget": 0
+  },
+  {
+    "Account": "user2",
+    "CdpPort": 9223,
+    "Hwnd": 335034,
+    "LaunchedAt": "2026-10-08T17:58:39Z",
+    "Nickname": "dev83",
+    "PreferredModel": "Sonnet 5",
+    "Role": "orchestrator",
+    "ThinkingBudget": 0
+  }
+]
