@@ -1,10 +1,22 @@
-{
-  "Account": "user3",
-  "Nickname": "xavier",
-  "Role": "worker_scout",
-  "PreferredModel": "Haiku 4.5",
-  "ThinkingBudget": 0,
-  "CdpPort": 9224,
-  "LaunchedAt": "2026-10-07T17:28:33Z",
-  "Hwnd": 7276028
-}
+[
+  {
+    "Account": "user4",
+    "Nickname": "adtbei79001",
+    "Role": "worker_reviewer",
+    "PreferredModel": "Haiku 4.5",
+    "ThinkingBudget": 0,
+    "CdpPort": 9225,
+    "LaunchedAt": "2026-10-07T17:42:32Z",
+    "Hwnd": 5056454
+  },
+  {
+    "Account": "user1",
+    "Nickname": "adevtmr",
+    "Role": "orchestrator",
+    "PreferredModel": "Sonnet 5",
+    "ThinkingBudget": 0,
+    "CdpPort": 9222,
+    "LaunchedAt": "2026-10-07T17:42:33Z",
+    "Hwnd": 1057178
+  }
+]
