@@ -149,7 +149,7 @@ jobs:
 
       - name: Run adversarial lease coverage
         run: |
-          python -m pytest tests/orchestrator_mcp_test.py::test_qa_lease_authorization_and_self_review_guard -v --tb=short
+          python -m pytest tests/orchestrator_mcp_test.py -k "TestClaimRace or test_submit_qa_review_lifecycle" -v --tb=short
 
   # --------------------------------------------------------------------------
   # 4. Windows PowerShell Automation & Pester Suite
