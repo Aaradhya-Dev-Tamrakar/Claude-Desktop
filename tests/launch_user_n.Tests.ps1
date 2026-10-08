@@ -44,9 +44,9 @@
 #>
 
 BeforeAll {
-    $ScriptPath = Join-Path $PSScriptRoot "..\legacy\launch_user_n.ps1"
+    $ScriptPath = Join-Path $PSScriptRoot "..\launch_user_n.ps1"
     if (-not (Test-Path $ScriptPath)) {
-        $ScriptPath = Join-Path $PSScriptRoot ".." "launch_user_n.ps1"
+        $ScriptPath = Join-Path $PSScriptRoot ".." "legacy" "launch_user_n.ps1"
     }
     . $ScriptPath -TestHook
 }
@@ -665,7 +665,7 @@ Describe "TestHook contract" {
         Get-Command Get-EnrichedProfileRows -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Select-ProfileInteractive -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Add-NewProfile -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
-        Get-Command Start-LocalOrchestratorServer -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
+        Get-Command Close-AllClaudeInstances -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Get-DesktopBatchAllocation -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Initialize-VirtualDesktopTool -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty
         Get-Command Get-WindowGridLayout -ErrorAction SilentlyContinue | Should -Not -BeNullOrEmpty

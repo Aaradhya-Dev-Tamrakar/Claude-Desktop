@@ -39,15 +39,6 @@
         "F:\\AaradhyaDT\\AaradhyaDT.github.io\\mcp-server\\site_mcp.py"
       ],
       "env": {}
-    },
-    "cloud-orchestrator-mcp": {
-      "command": "{{REPO_ROOT}}\\.venv\\Scripts\\python.exe",
-      "args": [
-        "{{REPO_ROOT}}\\mcp-servers\\cloud-orchestrator-mcp\\run_server.py"
-      ],
-      "env": {
-        "ORCHESTRATOR_API_URL": "http://localhost:8000/api/v1"
-      }
     }
   }
 }
