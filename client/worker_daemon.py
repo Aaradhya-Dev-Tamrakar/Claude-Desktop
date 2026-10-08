@@ -32,6 +32,9 @@ API_KEY = os.getenv("API_AUTH_KEY") or os.getenv("ORCHESTRATOR_API_KEY", "")
 
 def get_system_telemetry() -> dict[str, Any]:
     """Measure empirical OS metrics (Invariant C). Does NOT include quota/usage fields."""
+    if sys.platform not in ("win32", "linux", "darwin"):
+        return {"cpu_percent": None, "memory_percent": None}
+
     try:
         import psutil
         cpu = psutil.cpu_percent(interval=None)
