@@ -46,6 +46,8 @@ This repository provides the interactive coordination hub for Claude Desktop on 
    - Claude Desktop instances call `write_file_to_workspace` and `read_workspace_file` to inspect and write repository code directly on disk, eliminating manual clipboard transfer.
 5. **Decoupled Headless Execution**:
    - Background batch processing, REST schedulers, and autonomous Copilot queue workers reside in the companion repository: [`Fleet-Orchestrator`](../Fleet-Orchestrator).
+6. **Thinking-Off Transition Handoffs**:
+   - Model switching and thinking effort levels cannot be altered automatically by MCP tools. When initiating an inter-account handoff, the agent's very first line instructs the user to toggle thinking OFF (or switch to low effort) in the UI, preserving context tokens for subsequent reasoning tasks.
 
 ---
 

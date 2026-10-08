@@ -18,6 +18,7 @@ This repository implements **pure intra-Claude Desktop multi-account orchestrati
   - When Account 1 hits rate limits, Account 2 reads the scratchpad via `get_context_bundle()` and resumes instantly with zero lost context.
   - Or Account 1 acts as Lead/Architect (decomposing specs), Account 2 acts as Developer/Coder (implementing code and testing in the local repo), and Account 3 acts as QA Auditor.
 - **Zero-Daemon Stdio Architecture**: Each Claude Desktop profile talks to `mcp-servers/orchestrator-mcp/run_server.py` over stdio via `team-mcp.json`. No CDP browser puppeteering, no port scanning, no Electron window management.
+- **Thinking-Off / Low-Effort Transition Invariant**: Model selection and thinking effort cannot be changed automatically via MCP tools. When initiating a transition handoff, the **very first line of the agent's response must instruct the user to toggle thinking OFF (or switch to low effort)** in the Claude Desktop UI before recording the handoff note.
 
 ```
 ┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐

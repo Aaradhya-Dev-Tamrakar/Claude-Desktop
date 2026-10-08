@@ -107,6 +107,8 @@ Coordination across multiple Claude Desktop accounts (`user1` Lead, `user2` Code
    ```
    *Strictly avoid individual round-trips to `read_team_context`, `read_team_memory`, `list_tasks`, `read_all_live_status`, or `read_scratchpad`.*
 2. **Inter-Account Handoffs**:
+   - **Thinking-Off / Low-Effort UI Advisory**: Model selection and thinking effort levels cannot be altered automatically via MCP tools. When preparing or executing a transition handoff, the **very first line** of the agent's response must instruct the user:
+     `> [!IMPORTANT] Please toggle thinking OFF (or switch to low effort) in the Claude Desktop UI for this handoff.`
    - When completing an implementation step, submitting a checkpoint, or approaching context/message limits, append a high-signal handoff note:
      ```python
      append_scratchpad(
