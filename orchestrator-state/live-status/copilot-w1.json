@@ -2,10 +2,10 @@
   "account": "copilot-w1",
   "status": "idle",
   "current_task_id": null,
-  "credits_used": 4,
-  "credits_remaining": 196,
+  "credits_used": 5,
+  "credits_remaining": 195,
   "monthly_credits": 200,
   "cooldown_until": null,
-  "heartbeat_at": "2026-10-08T02:30:32Z",
+  "heartbeat_at": "2026-10-08T02:47:54Z",
   "note": "Idle - completed task"
 }

@@ -52,7 +52,6 @@ graphify-out/cache/**
 !graphify-out/wiki/
 *.sig
 .gemini/
-GEMINI.md
 
 # Google Calendar OAuth client secret & cached token — never commit
 gcal-credentials.json
@@ -86,4 +85,6 @@ cookies*.json
 
 # Generated deliverables
 /outputs/*.pdf
+/*.pdf
+dummy.txt
 

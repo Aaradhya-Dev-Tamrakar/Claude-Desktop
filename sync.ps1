@@ -257,8 +257,14 @@ try {
     Write-Status -Message "Current branch: $currentBranch"
 
     if ($hasOrigin) {
-        Write-Status -Message "Pulling latest from origin/$currentBranch..."
-        git pull --rebase --autostash origin $currentBranch
+        $remoteBranchExists = (git ls-remote --heads origin $currentBranch 2>$null)
+        if ($remoteBranchExists) {
+            Write-Status -Message "Pulling latest from origin/$currentBranch..."
+            git pull --rebase --autostash origin $currentBranch
+        }
+        else {
+            Write-Notice -Message "Branch '$currentBranch' does not yet exist on origin; skipping pull."
+        }
     }
     else {
         Write-Notice -Message "No 'origin' remote configured; skipping pull and push to avoid a broken sync step."
@@ -305,11 +311,11 @@ try {
 
         if ($hasOrigin) {
             Write-Status -Message "Pushing to origin/$currentBranch..."
-            git push origin $currentBranch
+            git push -u origin $currentBranch
             if ($LASTEXITCODE -ne 0) {
                 Write-Notice -Message "Push rejected. Re-pulling and retrying push..."
                 git pull --rebase --autostash origin $currentBranch
-                git push origin $currentBranch
+                git push -u origin $currentBranch
             }
         }
         else {
