@@ -113,6 +113,8 @@ class TestToolRegistration:
                 "read_scratchpad",
                 "append_scratchpad",
                 "overwrite_scratchpad",
+                "write_file_to_workspace",
+                "read_workspace_file",
             ]
         )
         assert names == expected
@@ -576,3 +578,42 @@ class TestSharedScratchpad:
         rs, _ = repo
         with pytest.raises(ValueError):
             rs.read_scratchpad("../../../etc/passwd")
+
+
+class TestWorkspaceFileIOAndRelaxedCheckpoint:
+    def test_write_and_read_workspace_file(self, repo):
+        rs, repo_root = repo
+        res = rs.write_file_to_workspace("src/hello.py", "print('hello world')\n")
+        assert res["status"] == "success"
+        assert (repo_root / "src" / "hello.py").exists()
+
+        read_res = rs.read_workspace_file("src/hello.py")
+        assert "print('hello world')" in read_res["content"]
+        assert read_res["total_characters"] > 0
+
+    def test_path_traversal_rejected(self, repo):
+        rs, _ = repo
+        with pytest.raises(ValueError):
+            rs.write_file_to_workspace("../evil.py", "malicious")
+        with pytest.raises(ValueError):
+            rs.read_workspace_file("../evil.py")
+
+    def test_code_task_relaxed_checkpoint_with_result_text(self, repo):
+        rs, _ = repo
+        task = rs.create_task(spec="draft snippet", kind="code", created_by="user1")
+        rs.claim_task(task_id=task["id"], account="user2", branch_name="task/draft")
+
+        # Submitting without commit sha, but with result_text
+        cp = rs.submit_checkpoint(
+            task_id=task["id"],
+            account="user2",
+            summary="draft implementation",
+            branch_name="task/draft",
+            result_text="def helper(): return 42\n",
+        )
+        assert cp["task_id"] == task["id"]
+        assert cp["summary"] == "draft implementation"
+        assert cp["result_text"] == "def helper(): return 42\n"
+
+        updated = rs._read_json(rs._task_path(task["id"]))
+        assert updated["status"] == "done"

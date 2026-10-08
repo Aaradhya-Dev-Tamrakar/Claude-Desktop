@@ -147,11 +147,11 @@ Before completing any task or syncing changes:
    ```
    *Scans and normalizes `orchestrator-state/` entities, validates repository invariants, and guards against credential leaks.*
 
-2. **Local Python Test Suite**:
+2. **Local Python FastMCP Test Suite**:
    ```powershell
-   pytest tests -q --tb=short
+   pytest tests/orchestrator_mcp_test.py -q --tb=short
    ```
-   *Runs all 116 unit, FastMCP, database, and telemetry invariant specs (Target: 0 failures).*
+   *Runs all 37 FastMCP orchestrator and workspace file I/O invariant specs (Target: 0 failures).*
 
 3. **PowerShell Automation & Pester Suite**:
    ```powershell
@@ -164,4 +164,11 @@ Before completing any task or syncing changes:
    python scripts/test_e2e_task_lifecycle.py
    python scripts/test_multi_account_scratchpad_handshake.py
    ```
-   *Exercises the complete 7-stage queue worker and 4-stage cross-account scratchpad handshakes.*
+   *Exercises the cross-account task lifecycle and scratchpad handshakes.*
+
+---
+
+## 8. Architectural Boundary: Claude-Desktop vs. Fleet-Orchestrator
+
+- **`Claude-Desktop` (This Hub)**: Dedicated solely to the interactive Claude Desktop application on Windows. Governs multi-account profile swapping (`launch.bat`, `launch_user_n.ps1`), terminal-independent GUI launches, isolated instance teardown, manual version control (`sync.bat`), shared scratchpads, and native stdio FastMCP tools with direct workspace file read/write capabilities (`write_file_to_workspace`, `read_workspace_file`).
+- **`Fleet-Orchestrator` (`F:\Aaradhya-Dev-Tamrakar\Fleet-Orchestrator`)**: The companion headless automation engine. Hosts the FastAPI coordinator, SQLite WAL databases, Copilot CLI adapters, background queue workers (`copilot_queue_worker.py`), multi-account credit pooling, and synthetic benchmark suites.

@@ -46,7 +46,9 @@ param (
     # Skip automatic NotebookLM authentication check/login on launch
     [switch]$NoNlmLogin,
     # Skip the trailing 'Press Enter to close this window' prompt (for automated / scripted runs)
-    [switch]$NoPrompt
+    [switch]$NoPrompt,
+    # Automatically sync repository via sync.ps1 on launch (default: false for manual version control)
+    [switch]$AutoSync
 )
 
 try {
@@ -1199,64 +1201,7 @@ function Select-ProfileInteractive {
     }
 }
 
-function Start-LocalOrchestratorServer {
-    param(
-        [Parameter(Mandatory = $true)][string]$RepoRoot,
-        [switch]$WhatIf
-    )
 
-    $HealthUrl = "http://127.0.0.1:8000/health"
-    $IsRunning = $false
-
-    try {
-        $response = Invoke-RestMethod -Uri $HealthUrl -Method Get -TimeoutSec 1 -ErrorAction Stop
-        if ($response -and $response.status -eq "ok") {
-            $IsRunning = $true
-        }
-    }
-    catch {
-        $IsRunning = $false
-    }
-
-    if ($IsRunning) {
-        Write-Host "[+] Local Orchestrator server is active on http://127.0.0.1:8000." -ForegroundColor Gray
-        return
-    }
-
-    if ($WhatIf) {
-        Write-Host "[WhatIf] Would spawn background Orchestrator server on http://127.0.0.1:8000." -ForegroundColor DarkCyan
-        return
-    }
-
-    $VenvPython = Join-Path $RepoRoot ".venv\Scripts\python.exe"
-    $PythonExe = if (Test-Path $VenvPython) { $VenvPython } else { "python" }
-    
-    $ProfilesBaseDir = [System.Environment]::ExpandEnvironmentVariables("%USERPROFILE%\.claude-profiles")
-    $ServerLogsDir = Join-Path $ProfilesBaseDir "Logs\server"
-    if (-not (Test-Path $ServerLogsDir)) {
-        New-Item -ItemType Directory -Force -Path $ServerLogsDir | Out-Null
-    }
-    $ServerOutLog = Join-Path $ServerLogsDir "server_out.log"
-    $ServerErrLog = Join-Path $ServerLogsDir "server_err.log"
-
-    Write-Host "[+] Starting background Orchestrator server on http://127.0.0.1:8000..." -ForegroundColor Cyan
-    Start-Process -FilePath $PythonExe -ArgumentList "-m uvicorn server.main:app --host 127.0.0.1 --port 8000" -WorkingDirectory $RepoRoot -WindowStyle Hidden -RedirectStandardOutput $ServerOutLog -RedirectStandardError $ServerErrLog
-
-    # Wait up to 3 seconds for health check
-    $retries = 6
-    while ($retries -gt 0) {
-        Start-Sleep -Milliseconds 500
-        try {
-            $check = Invoke-RestMethod -Uri $HealthUrl -Method Get -TimeoutSec 1 -ErrorAction Stop
-            if ($check -and $check.status -eq "ok") {
-                Write-Host "[+] Local Orchestrator server is ready." -ForegroundColor Green
-                return
-            }
-        }
-        catch { }
-        $retries--
-    }
-}
 
 function Export-ActiveFleetState {
     param(
@@ -2444,9 +2389,6 @@ function Invoke-ProfileLaunch {
             }
         }
 
-        # Ensure local background orchestrator server is running for MCP endpoints
-        Start-LocalOrchestratorServer -RepoRoot $PSScriptRoot -WhatIf:$WhatIf
-
         # Team interlink: force-merge shared MCP servers into all profiles
         # (and active native AppData) claude_desktop_config.json. Opt out with -NoTeamSync.
         if (-not $NoTeamSync) {
@@ -2555,17 +2497,25 @@ function Invoke-ProfileLaunch {
         # sync.ps1's internal `exit` calls (e.g. secret-scan abort) cannot terminate this
         # launcher's own session.
         if ($WhatIf) {
-            Write-Host "[WhatIf] Would auto-sync repository via sync.ps1 (pull, commit, push)." -ForegroundColor DarkCyan
+            if ($AutoSync) {
+                Write-Host "[WhatIf] Would auto-sync repository via sync.ps1 (pull, commit, push)." -ForegroundColor DarkCyan
+            }
+            else {
+                Write-Host "[WhatIf] Auto-sync disabled. Use .\sync.bat to commit and sync changes manually." -ForegroundColor DarkGray
+            }
         }
         elseif ($script:DeferRepoSync) {
             Write-Host "[i] Deferring repository sync until the concurrent launch batch is complete." -ForegroundColor DarkGray
         }
-        else {
+        elseif ($AutoSync) {
             Write-Host "[+] Auto-syncing repository via sync.ps1..." -ForegroundColor Cyan
             & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "sync.ps1") -Message "chore(sync): auto-sync after launching profile '$Account' ($Nickname)"
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "[!] Auto-sync via sync.ps1 exited with code $LASTEXITCODE. Repo may be out of sync." -ForegroundColor Yellow
             }
+        }
+        else {
+            Write-Host "[i] Auto-sync disabled. Use .\sync.bat to commit and sync changes manually." -ForegroundColor DarkGray
         }
     }
     else {
@@ -2579,7 +2529,7 @@ function Sync-RepositoryAfterLaunchBatch {
         [Parameter(Mandatory = $true)][string[]]$Accounts
     )
 
-    if ($WhatIf -or $Accounts.Count -le 1) { return }
+    if ($WhatIf -or $Accounts.Count -le 1 -or -not $AutoSync) { return }
 
     Write-Host "[+] Auto-syncing repository once for the $($Accounts.Count)-profile launch batch..." -ForegroundColor Cyan
     & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "sync.ps1") -Message "chore(sync): auto-sync after concurrent profile batch ($($Accounts -join ', '))"

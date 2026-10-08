@@ -690,9 +690,10 @@ def submit_checkpoint(
 
     kind = task["kind"]
     if kind == "code":
-        if not branch_name or not commit_sha:
-            raise ValueError("kind='code' checkpoints require branch_name and commit_sha")
-        result_text = None
+        if not ((branch_name and commit_sha) or result_text):
+            raise ValueError("kind='code' checkpoints require branch_name and commit_sha, or result_text")
+        if branch_name and commit_sha:
+            result_text = None
     elif kind == "text":
         if not result_text:
             raise ValueError("kind='text' checkpoints require result_text")
@@ -1143,6 +1144,63 @@ def overwrite_scratchpad(
         "author": author,
         "updated_at": _now_iso(),
         "total_chars": len(content),
+    }
+
+
+@srv.tool(
+    name="write_file_to_workspace",
+    description=(
+        "Write text content directly to a file inside the repository workspace. "
+        "Allows Claude Desktop instances to output code, diffs, and notes directly to disk without manual copy-pasting."
+    ),
+)
+def write_file_to_workspace(
+    path: str,
+    content: str,
+    make_dirs: bool = True,
+) -> dict[str, Any]:
+    rel = Path(path)
+    target = (REPO_ROOT / rel).resolve()
+    repo_resolved = REPO_ROOT.resolve()
+    try:
+        target.relative_to(repo_resolved)
+    except ValueError:
+        raise ValueError(f"Path {path!r} resolves outside repository root {REPO_ROOT}")
+    if make_dirs:
+        target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(content, encoding="utf-8")
+    return {
+        "status": "success",
+        "relative_path": str(target.relative_to(repo_resolved)),
+        "bytes_written": len(content.encode("utf-8")),
+        "characters_written": len(content),
+    }
+
+
+@srv.tool(
+    name="read_workspace_file",
+    description="Read text content from a file inside the repository workspace.",
+)
+def read_workspace_file(
+    path: str,
+    max_chars: int = 50000,
+) -> dict[str, Any]:
+    rel = Path(path)
+    target = (REPO_ROOT / rel).resolve()
+    repo_resolved = REPO_ROOT.resolve()
+    try:
+        target.relative_to(repo_resolved)
+    except ValueError:
+        raise ValueError(f"Path {path!r} resolves outside repository root {REPO_ROOT}")
+    if not target.exists() or not target.is_file():
+        raise FileNotFoundError(f"File not found: {path}")
+    raw = target.read_text(encoding="utf-8", errors="replace")
+    truncated = len(raw) > max_chars
+    return {
+        "relative_path": str(target.relative_to(repo_resolved)),
+        "content": raw[:max_chars],
+        "total_characters": len(raw),
+        "truncated": truncated,
     }
 
 

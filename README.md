@@ -1,70 +1,62 @@
 # Claude Desktop Multi-Profile Orchestration & FastMCP Ecosystem
 
-PowerShell automation, stdio FastMCP servers, and decentralized filesystem state contracts to orchestrate multi-account workflows for the Claude Desktop application on Windows.
+PowerShell automation, terminal-independent profile launching, stdio FastMCP servers, and decentralized filesystem state contracts to orchestrate multi-account workflows for the Claude Desktop application on Windows.
 
 ---
 
-## 1. System Architecture & Operational Layers
+## 1. System Architecture & Core Workflow
 
-The repository operates across three complementary architectural layers:
+This repository provides the **interactive, human-in-the-loop coordination hub** for Claude Desktop. It is completely self-contained and operates with **zero background terminal daemons** and **zero CDP browser puppeteering**.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                       LAYER 1: INTERACTIVE CLAUDE DESKTOP                   │
+│                       INTERACTIVE CLAUDE DESKTOP PROFILES                   │
 │   Account 1: Lead/Architect        Account 2: Builder/Coder       Account 6: QA Reviewer   │
-│   (create_task / plan)             (workspace edits / tests)      (adversarial audit)      │
+│   (planning / scratchpad)          (workspace file I/O / code)    (adversarial audit)      │
 └──────────────────────────────────────┬──────────────────────────────────────┘
                                        │ stdio JSON-RPC (team-mcp.json)
                                        ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│            FAST MCP COORDINATION SERVER (run_server.py: 34 Tools)           │
+│          FAST MCP COORDINATION & FILE I/O SERVER (run_server.py)             │
 │   get_context_bundle | init_scratchpad | append_scratchpad | submit_review  │
+│   write_file_to_workspace | read_workspace_file | submit_checkpoint        │
 └──────────────────────────────────────┬──────────────────────────────────────┘
-                                       │ Plain JSON State Contracts
+                                       │ Plain JSON & Markdown State
                                        ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                 FILESYSTEM STATE CONTRACT (orchestrator-state/)              │
+│                 FILESYSTEM COORDINATION STATE (orchestrator-state/)         │
 │   tasks/          checkpoints/      qa-reviews/      live-status/          │
 │   (spec/status)   (deliverables)    (pass/fail)      (heartbeats)          │
 │   ─────────────────────────────────────────────────────────────             │
 │   scratchpads/shared_scratchpad.md (Multi-Account Shared Blackboard)        │
-└──────────────────────────────────────┬──────────────────────────────────────┘
-                                       │ Background Queue Polling
-                                       ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│             LAYER 2: BACKGROUND CODE EXECUTION (Copilot Queue Worker)       │
-│   launch_copilot_worker.bat  ──>  CopilotCLIAdapter (27 ready accounts)     │
-│   Executes non-interactively in isolated git worktrees, submits checkpoints │
-└─────────────────────────────────────────────────────────────────────────────┘
-                                       │
-┌─────────────────────────────────────────────────────────────────────────────┐
-│             LAYER 3: CLOUD COORDINATION BACKEND (v2 - Optional)             │
-│   server/ (FastAPI + SQLite WAL) + Hosted Remote HTTP/SSE MCP Server        │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-### Layer 1: Interactive Multi-Profile Claude Desktop
-- **Zero-CDP Stdio Protocol**: Puppeteering via Chrome DevTools Protocol (CDP ports 9222–9229) is retired in favor of native stdio FastMCP (`mcp-servers/orchestrator-mcp/run_server.py`).
-- **Shared Scratchpad**: Multi-account coordination occurs in-session via [`orchestrator-state/scratchpads/shared_scratchpad.md`](orchestrator-state/scratchpads/shared_scratchpad.md).
-- **Single-Call Bootstrap**: Profiles bootstrap context in one tool call via `get_context_bundle(account="<account>", scratchpad_id="shared")`.
-- **Profile Prompts & Instructions**: Pre-calibrated Custom Instructions for Architect (`user1`), Builder (`user2`), and QA Reviewer (`user6`) are cataloged in [`worker-prompts/CLAUDE_DESKTOP_PROFILES.md`](worker-prompts/CLAUDE_DESKTOP_PROFILES.md).
+### Key Principles
 
-### Layer 2: Background Code Execution (Copilot Queue Worker)
-- One-click runner [`launch_copilot_worker.bat`](launch_copilot_worker.bat) polls `orchestrator-state/tasks/` for `kind: "code"` and `status: "pending"`.
-- Claims tasks using round-robin account rotation across 27 worker profiles, provisions isolated git worktrees, executes non-interactively via Copilot CLI, and writes deliverable checkpoints.
-
-### Layer 3: Cloud Coordination Backend (v2 - Optional)
-- High-concurrency SQLite WAL coordination server located in [`server/`](server/) with REST APIs for batch SKU expansion and a Hosted Remote MCP server (`server/mcp_remote.py`).
+1. **Terminal Independence**:
+   - Profiles launch via `launch.bat` using PowerShell's detached `Start-Process`.
+   - Once Claude Desktop launches, you can **close the launcher terminal immediately**. Claude Desktop and its stdio MCP tools remain fully alive and self-sufficient.
+2. **Automatic Instance Teardown**:
+   - In **Isolated Mode** (the default `[1]`), the launcher automatically detects, prompts, and cleanly shuts down all other running or concurrent Claude Desktop instances before configuring and starting the chosen profile.
+3. **Manual Version Control**:
+   - Automatic Git commit spam on profile launch is completely disabled.
+   - All repository synchronization and version control is deliberate and manually managed via `.\sync.bat`.
+4. **Frictionless Code Delivery (Zero Copy-Pasting)**:
+   - Claude Desktop instances use `write_file_to_workspace` and `read_workspace_file` to write code, diffs, and scripts directly to disk inside the repository with a single tool call.
+5. **Decoupled Headless Execution**:
+   - Complex headless batch processing, API schedulers, and autonomous Copilot queue workers reside in the dedicated companion repository: [`Fleet-Orchestrator`](../Fleet-Orchestrator).
 
 ---
 
 ## 2. Repository Structure
 
-```Claude-Desktop/
-├── launch_copilot_worker.bat      # One-click runner for Copilot queue worker
-├── launch_copilot_fleet.bat       # Multi-account Copilot fleet runner
+```
+Claude-Desktop/
+├── launch.bat                     # Double-click launcher wrapper for Claude Desktop profiles
+├── launch_user_n.ps1              # Core launcher: profile swap, instance teardown, detached GUI launch
 ├── sync.bat                       # Zero-friction git sync wrapper (PowerShell ExecutionPolicy bypass)
-├── sync.ps1                       # Git sync: pull --rebase --autostash, memory auto-sync, commit, push
+├── sync.ps1                       # Git sync engine: pull --rebase, secret scan, commit, push
 ├── sync-mcp.ps1                   # Syncs team-mcp.json into all Claude Desktop profile configs
 ├── profiles.json                  # Account name -> nickname/paths/role metadata map
 ├── team-mcp.json                  # Shared MCP config (orchestrator-mcp, notebooklm-mcp, md2pdf, super-nlm)
@@ -73,30 +65,20 @@ The repository operates across three complementary architectural layers:
 ├── team-memory.md                 # Shared memory log, auto-appended by sync.ps1 + manual entries
 ├── AGENTS.md                      # Authoritative single source of truth for agent rules & workflows
 ├── GEMINI.md                      # Agent rules pointer referencing AGENTS.md
-├── README.md                      # Ecosystem architecture and user guide
+├── README.md                      # Repository documentation and architecture guide
 ├── LICENSE
-│
-├── legacy/                        # Archived legacy CDP automation & multi-window scripts
-│   ├── README.md                  # Documentation of retired CDP components & rationale
-│   ├── launch_user_n.ps1          # Retired multi-profile CDP launcher
-│   ├── launch.bat                 # Retired double-click launcher
-│   ├── launch-gui.bat / .ps1      # Retired Tkinter fleet GUI launcher
-│   ├── close.bat                  # Retired instance closer
-│   ├── launch-fleet.ps1           # Retired virtual desktop launcher
-│   ├── fleet_gui.py               # Retired Tkinter CDP window controller
-│   └── VirtualDesktop.exe / .cs   # Retired virtual desktop P/Invoke CLI
 │
 ├── orchestrator-state/            # Filesystem coordination state contract
 │   ├── SCHEMA.md                  # File contract & invariant documentation
 │   ├── tasks/                     # Task definitions (kind: code|text, status: pending|claimed|done|merged)
-│   ├── checkpoints/               # Worker deliverables (commit_sha, branch_name, summary, result_text)
+│   ├── checkpoints/               # Deliverables (commit_sha, branch_name, summary, result_text)
 │   ├── qa-reviews/                # Adversarial QA audit results (verdict: pass|fail|revision_needed)
 │   ├── live-status/               # Individual worker heartbeats (last-write-wins)
 │   ├── scratchpads/               # Shared multi-account collaboration scratchpads
 │   └── memory/                    # Shared immutable team-memory entries
 │
 ├── mcp-servers/
-│   ├── orchestrator-mcp/          # Hand-written FastMCP local coordination server (34 tools)
+│   ├── orchestrator-mcp/          # FastMCP coordination server with direct workspace file I/O
 │   │   ├── requirements.txt
 │   │   └── run_server.py
 │   ├── notebooklm-mcp/            # uvx launcher for NotebookLM MCP server
@@ -113,64 +95,51 @@ The repository operates across three complementary architectural layers:
 │   ├── seo-optimizer.md           # SEO optimization prompt
 │   └── formatter.md               # Formatting & schema compliance prompt
 │
-├── client/                        # Autonomous worker client daemon & adapters
-│   ├── worker_daemon.py           # Polling daemon: registers worker, claims tasks, runs execution loop
-│   └── adapters/                  # LLM provider adapters (Copilot, Ollama, Gemini, Groq)
-│
-├── server/                        # Cloud-native FastAPI coordination backend
-│   ├── main.py                    # Application entrypoint & background supervisor lifecycle
-│   ├── mcp_remote.py              # Hosted Streamable HTTP/SSE Remote MCP Server
-│   └── database/schema.sql        # SQLite WAL DDL
-│
-├── sku-templates/                 # Production pipeline DAG definitions
-├── dev-logs/                      # Development notes, handoff transcripts, and milestone logs
-├── outputs/                       # Generated reports and deliverables (gitignored)
+├── tools/
+│   └── md2pdf_app.py              # CLI and rendering engine for md2pdf
 │
 └── tests/
-    ├── orchestrator_mcp_test.py   # Complete test suite for orchestrator-mcp (34 specs)
-    ├── test_copilot_cli_adapter.py # Copilot CLI adapter tests
-    ├── test_remote_mcp.py         # Hosted Remote MCP and memory route tests
-    ├── test_cloud_scheduler.py    # Cloud scheduler and supervisor recovery tests
-    ├── test_pipeline_engine.py    # SKU pipeline decomposition tests
-    └── launch_user_n.Tests.ps1    # Pester specs for legacy launcher
+    ├── orchestrator_mcp_test.py   # Full FastMCP test suite (37 specs)
+    └── launch_user_n.Tests.ps1    # Pester specs for profile launcher (51 specs)
 ```
 
 ---
 
-## 3. Getting Started
+## 3. Quick Start
 
-### 1. Synchronizing Claude Desktop Profiles with MCP
-To configure `team-mcp.json` into all local Claude Desktop user profiles:
+### 1. Launching Claude Desktop
+Double-click [`launch.bat`](launch.bat) or run from PowerShell:
+```powershell
+.\launch.bat -Account user1
+```
+- Select your profile from the interactive table.
+- In Isolated mode (Option `1`), any other running Claude instances will be cleanly closed before starting the selected profile.
+- Once Claude Desktop starts, you can close the terminal window immediately.
+
+### 2. Synchronizing MCP Tools Across Profiles
+To propagate [`team-mcp.json`](team-mcp.json) into all installed user profiles in `%USERPROFILE%\.claude-profiles`:
 ```powershell
 pwsh -File .\sync-mcp.ps1
 ```
-Open Claude Desktop naturally. The `orchestrator-mcp` tools will appear in your tools menu.
 
-### 2. Configuring Profile Custom Instructions
-Open Claude Desktop → **Settings** → **Profile** / **Custom Instructions**. Copy-paste the corresponding prompt blocks from [`worker-prompts/CLAUDE_DESKTOP_PROFILES.md`](worker-prompts/CLAUDE_DESKTOP_PROFILES.md):
-- **Box 1 & 2 for Architect** (`user1` `adevtmr`)
-- **Box 1 & 2 for Builder/Coder** (`user2` `dev83`)
-- **Box 1 & 2 for Adversarial QA** (`user6` `adt_ieee`)
-
-### 3. Launching Background Copilot Workers
-To process code tasks asynchronously in the background:
-```bat
-.\launch_copilot_worker.bat
-```
-The worker watches `orchestrator-state/tasks/`, claims pending tasks, executes changes in isolated worktrees, and submits deliverable checkpoints.
-
-### 4. Running the Test Suite
-Ensure the local Python environment has `pytest` and `mcp` installed:
+### 3. Running Verification Gates
 ```powershell
+# 1. FastMCP test suite (37 tests)
 pytest tests/orchestrator_mcp_test.py -v
+
+# 2. PowerShell / Pester launcher suite (51 tests)
+Invoke-Pester .\tests\launch_user_n.Tests.ps1 -Output Detailed
+
+# 3. Repository state self-healing & secret scan
+python scripts/ci_self_healing.py --heal
 ```
 
-### 5. Synchronizing the Repository
-All version control must run through `.\sync.bat` (or `.\sync.ps1`):
+### 4. Synchronizing Repository Changes
+All version control runs through `.\sync.bat`:
 ```powershell
-.\sync.bat -m "feat(scope): concise conventional commit summary"
+.\sync.bat -m "type(scope): summary (#issue_id)"
 ```
-To pull latest changes safely:
+To preview pending changes without touching git state:
 ```powershell
-.\sync.bat -PullOnly
+.\sync.bat -WhatIf
 ```
