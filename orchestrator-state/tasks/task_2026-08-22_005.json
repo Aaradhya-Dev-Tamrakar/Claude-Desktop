@@ -1,13 +1,13 @@
 {
-  "id": "task_2026-08-22_005",
-  "parent_id": "task_2026-08-22_002",
-  "kind": "text",
-  "spec": "TRACK 03 — Stream A (Data Pipeline), Critical. Prompt file: research/track_03_data_validation.md. Output: research/results/03_data_validation_patterns.md. Research data validation patterns for image-classification demographic datasets feeding data_ingestion.py — schema conformance checks, missing/malformed label handling, n>=30 sample-size enforcement per M1.",
-  "status": "merged",
-  "owner_account": "user4",
-  "branch_name": null,
   "blocked_reason": null,
-  "created_by": "user1",
+  "branch_name": null,
   "created_at": "2026-08-22T17:42:33Z",
+  "created_by": "user1",
+  "id": "task_2026-08-22_005",
+  "kind": "text",
+  "owner_account": "user4",
+  "parent_id": "task_2026-08-22_002",
+  "spec": "TRACK 03 \u2014 Stream A (Data Pipeline), Critical. Prompt file: research/track_03_data_validation.md. Output: research/results/03_data_validation_patterns.md. Research data validation patterns for image-classification demographic datasets feeding data_ingestion.py \u2014 schema conformance checks, missing/malformed label handling, n>=30 sample-size enforcement per M1.",
+  "status": "merged",
   "updated_at": "2026-08-23T02:28:30Z"
 }

@@ -1,13 +1,13 @@
 {
+  "blocked_reason": null,
+  "branch_name": null,
+  "created_at": "2026-10-07T11:25:29Z",
+  "created_by": "orchestrator",
   "id": "task_2026-10-07_008",
-  "parent_id": "task_2026-10-07_001",
   "kind": "code",
+  "owner_account": null,
+  "parent_id": "task_2026-10-07_001",
   "spec": "WBS-7 client/adapters/claude_desktop_cdp.py (+claude_desktop_proxy.py): add _check_input_disabled (composer contenteditable=false / disabled textarea / aria-disabled), _detect_limit_state (banner OR disabled composer, reset-time hint regex), yield_on_cooldown() returning typed RATE_LIMIT_429 result {cooldown_reason, reset_hint} and setting adapter cooldown flag; replace the 3 hardcoded RATE_LIMIT_429 returns; _assemble_prompt() injects context['scratchpad'] (or scratchpad_manager.render_context(job_id)). Update tests/test_claude_cdp_adapter.py; existing tests must still pass.",
   "status": "pending",
-  "owner_account": null,
-  "branch_name": null,
-  "blocked_reason": null,
-  "created_by": "orchestrator",
-  "created_at": "2026-10-07T11:25:29Z",
   "updated_at": "2026-10-07T11:25:29Z"
 }

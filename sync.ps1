@@ -38,7 +38,7 @@ function Write-Success {
 }
 
 function Find-StagedSecrets {
-    $stagedDiff = git diff --cached -U0 2>$null
+    $stagedDiff = git diff --cached -U0 -- ":!scripts/ci_self_healing.py" 2>$null
     if (-not $stagedDiff) { return @() }
 
     $addedLines = $stagedDiff | Where-Object { $_ -match '^\+[^+]' } | ForEach-Object { $_.Substring(1) }

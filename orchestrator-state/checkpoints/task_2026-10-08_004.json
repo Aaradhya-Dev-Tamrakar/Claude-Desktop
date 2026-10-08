@@ -1,10 +1,10 @@
 {
-  "task_id": "task_2026-10-08_004",
-  "kind": "code",
-  "summary": "Verified decoupled multi-account scratchpad coordination contract",
   "branch_name": "feat/scratchpad-handshake",
   "commit_sha": "8060f35",
+  "kind": "code",
   "result_text": null,
+  "submitted_at": "2026-10-08T02:34:37Z",
   "submitted_by": "user2",
-  "submitted_at": "2026-10-08T02:34:37Z"
+  "summary": "Verified decoupled multi-account scratchpad coordination contract",
+  "task_id": "task_2026-10-08_004"
 }

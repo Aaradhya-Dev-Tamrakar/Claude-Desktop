@@ -1,12 +1,12 @@
 {
-  "task_id": "task_2026-10-08_002",
-  "reviewer_account": "adt_ieee",
-  "verdict": "pass",
   "checks_passed": {
     "no_hallucinations": true,
-    "tests_clean": true,
-    "schema_valid": true
+    "schema_valid": true,
+    "tests_clean": true
   },
   "rejection_reason": null,
-  "reviewed_at": "2026-10-08T02:30:01Z"
+  "reviewed_at": "2026-10-08T02:30:01Z",
+  "reviewer_account": "adt_ieee",
+  "task_id": "task_2026-10-08_002",
+  "verdict": "pass"
 }

@@ -1,10 +1,10 @@
 {
-  "task_id": "task_2026-10-07_003",
-  "kind": "code",
-  "summary": "WBS-2: added client/qa_verdict.py parse_qa_verdict(text)->(pass|revision_needed, reason). Last explicit 'QA_VERDICT: PASS|REVISE' marker wins; legacy keyword heuristic (fail/revision_needed) only when no marker. 20 tests in tests/test_qa_verdict.py incl. PASS text mentioning 'fail'; 38/38 with scratchpad + fleet_supervisor suites. Not wired into client/fleet_supervisor.py:293-296 (outside spec). Commit pushed to origin/main only; feat/hybrid-orchestrator does not exist on remote.",
   "branch_name": "feat/hybrid-orchestrator",
   "commit_sha": "cbc72a240984b3485507bfccff18b109f044343f",
+  "kind": "code",
   "result_text": null,
+  "submitted_at": "2026-10-07T11:57:06Z",
   "submitted_by": "claude_chat",
-  "submitted_at": "2026-10-07T11:57:06Z"
+  "summary": "WBS-2: added client/qa_verdict.py parse_qa_verdict(text)->(pass|revision_needed, reason). Last explicit 'QA_VERDICT: PASS|REVISE' marker wins; legacy keyword heuristic (fail/revision_needed) only when no marker. 20 tests in tests/test_qa_verdict.py incl. PASS text mentioning 'fail'; 38/38 with scratchpad + fleet_supervisor suites. Not wired into client/fleet_supervisor.py:293-296 (outside spec). Commit pushed to origin/main only; feat/hybrid-orchestrator does not exist on remote.",
+  "task_id": "task_2026-10-07_003"
 }

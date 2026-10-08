@@ -1,13 +1,13 @@
 {
+  "blocked_reason": null,
+  "branch_name": null,
+  "created_at": "2026-10-07T11:25:29Z",
+  "created_by": "orchestrator",
   "id": "task_2026-10-07_007",
-  "parent_id": "task_2026-10-07_001",
   "kind": "code",
+  "owner_account": null,
+  "parent_id": "task_2026-10-07_001",
   "spec": "WBS-6 sku-templates/claude_copilot_hybrid_cycle.json: repo schema (sku_id, display_name, pipeline [plan, code, qa_review], input/output columns, quality_rules, estimated_minutes_per_record, records_per_batch) + auto_decompose + stage_config {plan:{preferred_provider:claude_desktop_cdp, required_capabilities:[research,writing], timeout_seconds:300, emit:wbs, strict_provider:true}, code:{preferred_provider:copilot_cli, required_capabilities:[code], timeout_seconds:180, parallel_fanout:true, kind:code, strict_provider:true}, qa_review:{preferred_provider:claude_desktop_cdp, required_capabilities:[qa], timeout_seconds:300, emit:qa_verdict, on_revise:dispatch_fix, fix_stage:code, strict_provider:true}}. Schema test asserts keys + consumability by PipelineEngine.",
   "status": "pending",
-  "owner_account": null,
-  "branch_name": null,
-  "blocked_reason": null,
-  "created_by": "orchestrator",
-  "created_at": "2026-10-07T11:25:29Z",
   "updated_at": "2026-10-07T11:25:29Z"
 }

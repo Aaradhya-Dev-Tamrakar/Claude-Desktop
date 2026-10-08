@@ -1,13 +1,13 @@
 {
+  "blocked_reason": null,
+  "branch_name": "feat/hybrid-orchestrator",
+  "created_at": "2026-10-07T11:25:29Z",
+  "created_by": "orchestrator",
   "id": "task_2026-10-07_002",
-  "parent_id": "task_2026-10-07_001",
   "kind": "code",
+  "owner_account": "claude_chat",
+  "parent_id": "task_2026-10-07_001",
   "spec": "WBS-1 client/scratchpad_manager.py (Component 2). Section-based Markdown at orchestrator-state/scratchpads/<job_id>_scratchpad.md; O_EXCL lock + atomic os.replace; job_id regex guard; write_section/append_section/render_context/build_task_context. STATUS: implemented in working tree; needs tests/test_scratchpad_manager.py (concurrency, traversal rejection, stale lock, section roundtrip) + .gitignore entry for orchestrator-state/scratchpads/*.",
   "status": "claimed",
-  "owner_account": "claude_chat",
-  "branch_name": "feat/hybrid-orchestrator",
-  "blocked_reason": null,
-  "created_by": "orchestrator",
-  "created_at": "2026-10-07T11:25:29Z",
   "updated_at": "2026-10-07T11:41:59Z"
 }

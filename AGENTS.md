@@ -132,17 +132,30 @@ Coordination across multiple Claude Desktop accounts (`user1` Lead, `user2` Code
 
 ---
 
-## 7. Verification Gates
+## 7. Verification Gates & Self-Healing Pipeline
 
 Before completing any task or syncing changes:
-1. **Local Test Suite**:
+1. **Self-Healing Integrity & Secret Audit**:
    ```powershell
-   pytest tests/orchestrator_mcp_test.py
-   pytest tests/test_remote_mcp.py tests/test_cloud_scheduler.py tests/test_pipeline_engine.py
+   python scripts/ci_self_healing.py --heal
    ```
-   *Target: 100% passing tests (0 errors).*
-2. **Integration Lifecycle Checks**:
+   *Scans and normalizes `orchestrator-state/` entities, validates repository invariants, and guards against credential leaks.*
+
+2. **Local Python Test Suite**:
+   ```powershell
+   pytest tests -q --tb=short
+   ```
+   *Runs all 116 unit, FastMCP, database, and telemetry invariant specs (Target: 0 failures).*
+
+3. **PowerShell Automation & Pester Suite**:
+   ```powershell
+   Invoke-Pester .\tests\launch_user_n.Tests.ps1 -Output Detailed
+   ```
+   *Runs all 51 Pester specs across profile parsing, layout calculation, and MCP merges.*
+
+4. **Integration Lifecycle Checks**:
    ```powershell
    python scripts/test_e2e_task_lifecycle.py
    python scripts/test_multi_account_scratchpad_handshake.py
    ```
+   *Exercises the complete 7-stage queue worker and 4-stage cross-account scratchpad handshakes.*

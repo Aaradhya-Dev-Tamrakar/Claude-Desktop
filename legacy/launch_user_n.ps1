@@ -240,15 +240,26 @@ if ($Users -and $Users.Count -gt 0) {
 }
 
 $ConfigFile = Join-Path $PSScriptRoot "profiles.json"
-
 if (-not (Test-Path $ConfigFile)) {
-    Write-Host "profiles.json file is missing!" -ForegroundColor Red
-    Wait-WindowClosePrompt -NoPrompt:$NoPrompt
-    exit 1
+    $parentConfig = Join-Path (Split-Path -Parent $PSScriptRoot) "profiles.json"
+    if (Test-Path $parentConfig) {
+        $ConfigFile = $parentConfig
+    }
 }
 
-$Profiles = Get-Content $ConfigFile | ConvertFrom-Json
-$AccountKeys = @($Profiles.psobject.properties.Name)
+if (-not (Test-Path $ConfigFile)) {
+    if (-not $TestHook) {
+        Write-Host "profiles.json file is missing!" -ForegroundColor Red
+        Wait-WindowClosePrompt -NoPrompt:$NoPrompt
+        exit 1
+    }
+    $Profiles = [PSCustomObject]@{}
+    $AccountKeys = @()
+}
+else {
+    $Profiles = Get-Content $ConfigFile | ConvertFrom-Json
+    $AccountKeys = @($Profiles.psobject.properties.Name)
+}
 
 function Write-LaunchBanner {
     param(

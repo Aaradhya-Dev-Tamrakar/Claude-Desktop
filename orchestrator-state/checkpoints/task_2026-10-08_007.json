@@ -1,10 +1,10 @@
 {
-  "task_id": "task_2026-10-08_007",
-  "kind": "code",
-  "summary": "Simulated implementation of task_2026-10-08_007 (Implement decoupled stdio file-contract validation test suit...)",
   "branch_name": "task/task_2026-10-08_007",
   "commit_sha": "dryrun0001",
+  "kind": "code",
   "result_text": null,
+  "submitted_at": "2026-10-08T02:47:55Z",
   "submitted_by": "copilot-w2",
-  "submitted_at": "2026-10-08T02:47:55Z"
+  "summary": "Simulated implementation of task_2026-10-08_007 (Implement decoupled stdio file-contract validation test suit...)",
+  "task_id": "task_2026-10-08_007"
 }
