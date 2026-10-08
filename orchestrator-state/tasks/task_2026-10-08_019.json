@@ -1,0 +1,13 @@
+{
+  "blocked_reason": null,
+  "branch_name": "feat/scratchpad-handshake",
+  "created_at": "2026-10-08T12:59:35Z",
+  "created_by": "user1",
+  "id": "task_2026-10-08_019",
+  "kind": "code",
+  "owner_account": "user2",
+  "parent_id": null,
+  "spec": "Implement and verify zero-CDP multi-account scratchpad coordination",
+  "status": "merged",
+  "updated_at": "2026-10-08T12:59:35Z"
+}
