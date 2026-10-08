@@ -78,7 +78,7 @@ This repository implements **pure intra-Claude Desktop multi-account orchestrati
 ## 3. Completed Architecture & Active Backlog
 
 1. **Completed Core Milestones**:
-   - **Profile Launcher & Instance Teardown**: `launch.bat` and `launch_user_n.ps1` handle interactive profile selection, automatic cleanup of stale Claude instances in Isolated Mode, and detached window launching.
+   - **Profile Launcher & Instance Teardown**: `launch.bat` and `launch_user_n.ps1` handle interactive profile selection, automatic cleanup of stale Claude instances in Isolated Mode, Win32 parent process reparenting (`PROC_THREAD_ATTRIBUTE_PARENT_PROCESS`) to `explorer.exe` to guarantee Job Object detachment from Windows Terminal, and console output suppression via `ELECTRON_NO_ATTACH_CONSOLE=1`. Documented in [`docs/how-we-decoupled-claude-desktop-from-windows-terminal-job-object.md`](docs/how-we-decoupled-claude-desktop-from-windows-terminal-job-object.md).
    - **Headless Fleet Decoupling (#8)**: Pruned 10,700 lines of headless Copilot workers and web servers from this repository, preserving Claude-Desktop strictly as the human-in-the-loop desktop hub while delegating background execution to `Fleet-Orchestrator`.
    - **FastMCP In-Workspace File I/O**: Implemented `write_file_to_workspace` and `read_workspace_file` with directory traversal guards, enabling direct repository code changes from Claude Desktop without manual copy-pasting.
    - **Profile Custom Instructions**: Formulated token-optimized custom instructions in `worker-prompts/CLAUDE_DESKTOP_PROFILES.md` for Lead Architect, Builder, and QA Reviewer personas.

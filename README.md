@@ -35,8 +35,10 @@ This repository provides the interactive coordination hub for Claude Desktop on 
 ### Key Principles
 
 1. **Terminal Independence**:
-   - Profiles launch via `launch.bat` using PowerShell's detached `Start-Process`.
-   - Once Claude Desktop starts, the launcher terminal closes immediately without interrupting Claude Desktop or its stdio MCP child processes.
+   - Profiles launch via `launch.bat` using Win32 extended process reparenting (`PROC_THREAD_ATTRIBUTE_PARENT_PROCESS`) targeting `explorer.exe`.
+   - Reparenting detaches the process from the Windows Terminal Job Object (`JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`), allowing users to close the launcher terminal window at any time without terminating active Claude Desktop sessions.
+   - Electron console attachment is suppressed via `ELECTRON_NO_ATTACH_CONSOLE=1`, preventing internal runtime warnings from polluting the terminal buffer.
+   - For full kernel mechanics, Win32 error analysis, and test proof, see the engineering case study: [`docs/how-we-decoupled-claude-desktop-from-windows-terminal-job-object.md`](docs/how-we-decoupled-claude-desktop-from-windows-terminal-job-object.md).
 2. **Automatic Instance Teardown**:
    - In Isolated Mode (Option `1`, default), the launcher detects and terminates prior running Claude Desktop instances before configuring and starting the selected profile.
 3. **Manual Version Control**:
@@ -93,6 +95,9 @@ Claude-Desktop/
 ├── GEMINI.md                      # Agent rules pointer referencing AGENTS.md
 ├── README.md                      # Repository documentation and architecture guide
 ├── LICENSE
+│
+├── docs/                          # Architectural deep dives & engineering case studies
+│   └── how-we-decoupled-claude-desktop-from-windows-terminal-job-object.md
 │
 ├── orchestrator-state/            # Filesystem coordination state contract
 │   ├── SCHEMA.md                  # File contract & invariant documentation
