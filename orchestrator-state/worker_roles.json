@@ -5,6 +5,12 @@
     "capabilities": ["orchestration", "decomposition", "monitoring", "synthesis"],
     "max_concurrent_tasks": 1
   },
+  "coder": {
+    "description": "Implements features, writes tests, executes code tasks directly in the workspace, and logs handoffs to scratchpad",
+    "system_prompt_file": "worker-prompts/coder.md",
+    "capabilities": ["coding", "implementation", "testing", "refactoring", "debugging"],
+    "max_concurrent_tasks": 2
+  },
   "researcher": {
     "description": "Extracts facts, attributes, specifications, and reference data from raw inputs with zero hallucination",
     "system_prompt_file": "worker-prompts/researcher.md",
