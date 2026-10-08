@@ -1573,6 +1573,7 @@ public class ClaudeDesktopWindowHelper {
     public const short SW_SHOWNORMAL = 1;
     public const uint CREATE_NEW_PROCESS_GROUP = 0x00000200;
     public const uint CREATE_BREAKAWAY_FROM_JOB = 0x01000000;
+    public const uint DETACHED_PROCESS = 0x00000008;
 
     public static void AttachToDefaultDesktop() {
         try {
@@ -1592,7 +1593,7 @@ public class ClaudeDesktopWindowHelper {
         si.wShowWindow = SW_SHOWNORMAL;
         PROCESS_INFORMATION pi = new PROCESS_INFORMATION();
         string cmd = string.IsNullOrEmpty(args) ? ("\"" + exePath + "\"") : ("\"" + exePath + "\" " + args);
-        uint creationFlags = CREATE_NEW_PROCESS_GROUP;
+        uint creationFlags = CREATE_NEW_PROCESS_GROUP | DETACHED_PROCESS;
         bool success = CreateProcess(null, cmd, IntPtr.Zero, IntPtr.Zero, false, creationFlags, IntPtr.Zero, null, ref si, out pi);
         if (success) {
             int pid = pi.dwProcessId;
