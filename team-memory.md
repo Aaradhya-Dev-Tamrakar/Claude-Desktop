@@ -626,3 +626,6 @@ Full report: results/24_bias_rootcause_clustering.md (suggested path, not yet wr
 
 ## 2026-09-16
 - [Aaradhya, 2026-09-16] Portfolio canonical repository URL is https://github.com/Aaradhya-Dev-Tamrakar/AaradhyaDT.github.io/ (local workspace: `F:\Aaradhya-Dev-Tamrakar\AaradhyaDT.github.io`).
+
+## 2026-10-08
+- [Aaradhya, 2026-10-08] Google Drive Super-NLM parent folder for ecosystem documentation sync is `1wn330GxoGoMf956xClHxULnsJQWxohxx` (URL: https://drive.google.com/drive/folders/1wn330GxoGoMf956xClHxULnsJQWxohxx, path: "My Drive > Share to Aaradhya > Super-NLM"). Child folders: `Claude-Desktop` (ID: `1o_YWIhBbIGyE0v9bjwbjDrBmWv170bh2`), `Fleet-Orchestrator` (ID: `1wGq53okV7ZaFGSw2fWilEfxL4FEIVeIF`). Continuous sync pipelines in both repositories upload living markdown docs and link into personal NotebookLM `95a79d26-2f87-42cd-8cb9-8361a1e56059`.
