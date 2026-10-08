@@ -41,20 +41,25 @@ This repository implements **pure intra-Claude Desktop multi-account orchestrati
 ## 2. Current State & Assets in `Claude-Desktop`
 
 1. **`mcp-servers/orchestrator-mcp/run_server.py`**:
-   - FastMCP stdio server registering **25 native MCP tools**.
+   - FastMCP stdio server registering **27 native MCP tools**.
    - **Shared Scratchpad Tools**:
      - `init_scratchpad(scratchpad_id="shared", title="...", spec="...", author="...")`
      - `read_scratchpad(scratchpad_id="shared")`
      - `append_scratchpad(content="...", author="...", scratchpad_id="shared", heading="...")`
      - `overwrite_scratchpad(content="...", author="...", scratchpad_id="shared")`
+   - **Workspace File I/O Tools**:
+     - `write_file_to_workspace(rel_path="...", content="...", overwrite=False)`
+     - `read_workspace_file(rel_path="...")`
    - **Task Lifecycle Tools**:
      - `create_task`, `decompose_task`, `claim_task`, `release_task`, `mark_blocked`, `unblock_task`
      - `submit_checkpoint`, `list_tasks`, `merge_results`
      - `submit_qa_review`, `create_job`, `list_jobs`, `get_job_metrics`
    - **Context & Memory Tools**:
      - `get_context_bundle(account, scratchpad_id="shared")` (Single-call bootstrap returning scratchpad, team context, recent memory, active tasks, and active workers).
-     - `push_memory_entry`, `read_team_memory`, `archive_memory`, `read_team_context`, `push_live_status`, `read_all_live_status`
-   - **100% Passing Tests**: **34 / 34 pytest specs passing** in `tests/orchestrator_mcp_test.py`.
+     - `push_memory_entry`, `read_team_memory`, `archive_memory`, `read_team_context`, `push_live_status`, `read_all_live_status`, `read_worker_roles`
+   - **Local Verification Metrics**:
+     - **37 / 37 passing pytest specs** in `tests/orchestrator_mcp_test.py` (FastMCP contracts, workspace file I/O, concurrency guards).
+     - **51 / 51 passing Pester specs** in `tests/launch_user_n.Tests.ps1` (profile parsing, table rendering, MCP sync).
 
 2. **File State Directory (`orchestrator-state/`)**:
    - `scratchpads/`: Shared markdown logs for cross-account handoffs.
@@ -69,20 +74,17 @@ This repository implements **pure intra-Claude Desktop multi-account orchestrati
 
 ---
 
-## 3. Immediate Objectives & Backlog for This Session
+## 3. Completed Architecture & Active Backlog
 
-1. **Profile Prompts & Instructions Customization**:
-   - Write standard instructions/prompt snippets for Claude Desktop profiles to maximize token efficiency:
-     - Bootstrap via `get_context_bundle(account="<my_profile>", scratchpad_id="shared")`.
-     - Read the shared scratchpad first to immediately understand current state.
-     - Document intermediate findings and handoff state via `append_scratchpad`.
-2. **Clean Up Legacy CDP Artifacts**:
-   - Safely move obsolete CDP launcher scripts (`launch_user_n.ps1`, `launch-gui.bat`, `close.bat`, `VirtualDesktop.exe`) into an `archive/cdp_legacy/` folder to clean the root namespace.
-3. **Validate Intra-Claude Multi-Account Handshake**:
-   - Simulate/verify a 2-account workflow in Claude Desktop:
-     - Profile A initializes the scratchpad and decomposes a task.
-     - Profile B boots up, reads the scratchpad in its context bundle, claims the task, implements it, appends its completion notes, and submits checkpoint.
-     - Profile A or C inspects the checkpoint and submits QA review.
+1. **Completed Core Milestones**:
+   - **Profile Launcher & Instance Teardown**: `launch.bat` and `launch_user_n.ps1` handle interactive profile selection, automatic cleanup of stale Claude instances in Isolated Mode, and detached window launching.
+   - **Headless Fleet Decoupling (#8)**: Pruned 10,700 lines of headless Copilot workers and web servers from this repository, preserving Claude-Desktop strictly as the human-in-the-loop desktop hub while delegating background execution to `Fleet-Orchestrator`.
+   - **FastMCP In-Workspace File I/O**: Implemented `write_file_to_workspace` and `read_workspace_file` with directory traversal guards, enabling direct repository code changes from Claude Desktop without manual copy-pasting.
+   - **Profile Custom Instructions**: Formulated token-optimized custom instructions in `worker-prompts/CLAUDE_DESKTOP_PROFILES.md` for Lead Architect, Builder, and QA Reviewer personas.
+
+2. **Active Backlog**:
+   - **Documentation Refinement**: Keep documentation aligned with the calm-authority engineering standard (`blog-writing-like-claude`), documenting exact metrics and explicit scope boundaries.
+   - **Profile Token Optimization**: Monitor session token churn across repeated `get_context_bundle` calls and tune scratchpad pruning thresholds.
 
 ---
 

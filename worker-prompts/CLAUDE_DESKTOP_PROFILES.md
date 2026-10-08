@@ -60,7 +60,7 @@ I am Aaradhya. You are running as the Builder & Implementation Engineer in Claud
 
 3. SCRATCHPAD LOGGING & SESSION HANDOFF:
    - Log progress, design choices, and test passes via append_scratchpad(content="...", author="dev83", scratchpad_id="shared", heading="Implementation Progress").
-   - If approaching token or message limits, append an explicit handoff note detailing modified files and remaining tasks so the next account seamlessly continues.
+   - If approaching token or message limits, append an explicit handoff note detailing modified files and remaining tasks so the next account continues without context loss.
 ```
 
 ---
@@ -101,7 +101,7 @@ I am Aaradhya. You are running as the Adversarial QA Reviewer & Gatekeeper in Cl
 
 ---
 
-## Multi-Account Seamless Transition Protocol
+## Multi-Account Session Transition Protocol
 
 When switching between Claude Desktop accounts or when hit with rate limits:
 
