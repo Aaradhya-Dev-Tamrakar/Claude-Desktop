@@ -18,30 +18,73 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  python:
-    name: Python Test Suite
+  # --------------------------------------------------------------------------
+  # 1. Self-Healing & Repository Integrity Gate
+  # --------------------------------------------------------------------------
+  audit-and-heal:
+    name: 🛡️ Audit & Self-Healing Engine
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
+
+      - name: Execute Self-Healing, Schema & Secret Audit
+        run: |
+          python scripts/ci_self_healing.py --heal
+
+  # --------------------------------------------------------------------------
+  # 2. Comprehensive Python & Invariant Verification Matrix
+  # --------------------------------------------------------------------------
+  python-tests:
+    name: 🐍 Python Suite (${{ matrix.python-version }})
+    needs: audit-and-heal
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.12']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
           cache: 'pip'
           cache-dependency-path: 'server/requirements.txt'
 
-      - name: Install dependencies
+      - name: Install dependencies with network retry
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r server/requirements.txt
+          python -m pip install --retries 5 --timeout 30 -r server/requirements.txt
 
-      - name: Run Python tests
-        run: python -m pytest tests -q --tb=short
+      - name: Run Full Pytest Suite (116 Specs)
+        run: |
+          python -m pytest tests -q --tb=short
 
+      - name: Verify Live E2E Task Lifecycle
+        run: |
+          python scripts/test_e2e_task_lifecycle.py
+
+      - name: Verify Live Multi-Account Scratchpad Handshake
+        run: |
+          python scripts/test_multi_account_scratchpad_handshake.py
+
+  # --------------------------------------------------------------------------
+  # 3. Adversarial Security & Claim Token Defense Gate
+  # --------------------------------------------------------------------------
   lease-security:
-    name: Lease Security (Adversarial)
+    name: 🔒 Lease Security (Adversarial)
+    needs: audit-and-heal
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -56,26 +99,60 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r server/requirements.txt
+          python -m pip install --retries 5 --timeout 30 -r server/requirements.txt
 
       - name: Run adversarial lease coverage
-        run: python -m pytest tests/test_remote_mcp.py::test_mcp_mutations_require_current_claim_token -v --tb=short
+        run: |
+          python -m pytest tests/test_remote_mcp.py::test_mcp_mutations_require_current_claim_token -v --tb=short
 
-  powershell:
-    name: PowerShell Pester Suite
+  # --------------------------------------------------------------------------
+  # 4. Windows PowerShell Automation & Pester Suite
+  # --------------------------------------------------------------------------
+  powershell-tests:
+    name: ⚡ PowerShell Pester Suite
+    needs: audit-and-heal
     runs-on: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Pester
+      - name: Install Pester (v5+)
         shell: pwsh
         run: |
-          if (-not (Get-Module -ListAvailable -Name Pester | Where-Object { $_.Version.Major -ge 5 })) {
+          $pester = Get-Module -ListAvailable -Name Pester | Where-Object { $_.Version.Major -ge 5 } | Select-Object -First 1
+          if (-not $pester) {
+            Write-Host "Installing Pester module..." -ForegroundColor Cyan
             Install-Module Pester -Force -Scope CurrentUser -SkipPublisherCheck
           }
 
-      - name: Run PowerShell tests
+      - name: Run PowerShell Pester Tests (51 Specs)
         shell: pwsh
-        run: Invoke-Pester .\tests\launch_user_n.Tests.ps1 -Output Detailed
+        run: |
+          Invoke-Pester .\tests\launch_user_n.Tests.ps1 -Output Detailed
+
+  # --------------------------------------------------------------------------
+  # 5. Dynamic CI Gatekeeper & Consolidated Dashboard
+  # --------------------------------------------------------------------------
+  ci-gatekeeper:
+    name: 🎯 CI Gatekeeper
+    needs: [audit-and-heal, python-tests, lease-security, powershell-tests]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Evaluate Pipeline Results
+        run: |
+          AUDIT="${{ needs.audit-and-heal.result }}"
+          PY_TESTS="${{ needs.python-tests.result }}"
+          LEASE="${{ needs.lease-security.result }}"
+          PWSH="${{ needs.powershell-tests.result }}"
+
+          echo "Audit Result: $AUDIT"
+          echo "Python Matrix Result: $PY_TESTS"
+          echo "Lease Security Result: $LEASE"
+          echo "PowerShell Result: $PWSH"
+
+          if [ "$AUDIT" != "success" ] || [ "$PY_TESTS" != "success" ] || [ "$LEASE" != "success" ] || [ "$PWSH" != "success" ]; then
+            echo "::error::One or more upstream CI jobs failed."
+            exit 1
+          fi
+          echo "All upstream jobs succeeded. CI Gatekeeper certification complete."

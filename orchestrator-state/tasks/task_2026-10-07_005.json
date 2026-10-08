@@ -1,13 +1,13 @@
 {
+  "blocked_reason": null,
+  "branch_name": null,
+  "created_at": "2026-10-07T11:25:29Z",
+  "created_by": "orchestrator",
   "id": "task_2026-10-07_005",
-  "parent_id": "task_2026-10-07_001",
   "kind": "code",
+  "owner_account": null,
+  "parent_id": "task_2026-10-07_001",
   "spec": "WBS-4 server/core/scheduler.py: is_stage_compatible accepts stage plan/architect for caps plan|research|writing|coordination; stage_config.strict_provider hard-filters provider in acquire_task_for_worker AND select_best_worker_for_task; affinity bonus for plan -> claude. No change for jobs without stage_config. Tests in tests/test_cloud_scheduler.py or new file.",
   "status": "pending",
-  "owner_account": null,
-  "branch_name": null,
-  "blocked_reason": null,
-  "created_by": "orchestrator",
-  "created_at": "2026-10-07T11:25:29Z",
   "updated_at": "2026-10-07T11:25:29Z"
 }

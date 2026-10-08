@@ -2,5 +2,5 @@
   "account": "user4",
   "current_task_id": "task_2026-08-05_002",
   "heartbeat_at": "2026-08-05T08:29:22Z",
-  "note": "collate_batch fix complete; deliverable is standalone .ipynb, no repo branch to commit — handed off outside orchestrator's git-merge path"
+  "note": "collate_batch fix complete; deliverable is standalone .ipynb, no repo branch to commit \u2014 handed off outside orchestrator's git-merge path"
 }

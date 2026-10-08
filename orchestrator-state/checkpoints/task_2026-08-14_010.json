@@ -1,10 +1,10 @@
 {
-  "task_id": "task_2026-08-14_010",
-  "kind": "code",
-  "summary": "Simulated implementation of task_2026-08-14_010 (TRIGGER \u2014 Portfolio website analysis follow-up. Fix pass for...)",
   "branch_name": "task/task_2026-08-14_010",
   "commit_sha": "dryrun0001",
+  "kind": "code",
   "result_text": null,
+  "submitted_at": "2026-10-08T02:28:53Z",
   "submitted_by": "copilot-w1",
-  "submitted_at": "2026-10-08T02:28:53Z"
+  "summary": "Simulated implementation of task_2026-08-14_010 (TRIGGER \u2014 Portfolio website analysis follow-up. Fix pass for...)",
+  "task_id": "task_2026-08-14_010"
 }

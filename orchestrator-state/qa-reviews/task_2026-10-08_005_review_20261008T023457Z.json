@@ -1,12 +1,12 @@
 {
-  "task_id": "task_2026-10-08_005",
-  "reviewer_account": "user6",
-  "verdict": "pass",
   "checks_passed": {
-    "no_hallucinations": true,
     "deterministic_tests_pass": true,
+    "no_hallucinations": true,
     "scratchpad_handshake_clean": true
   },
   "rejection_reason": null,
-  "reviewed_at": "2026-10-08T02:34:57Z"
+  "reviewed_at": "2026-10-08T02:34:57Z",
+  "reviewer_account": "user6",
+  "task_id": "task_2026-10-08_005",
+  "verdict": "pass"
 }

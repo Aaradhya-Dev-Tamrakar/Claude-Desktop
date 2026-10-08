@@ -1,13 +1,13 @@
 {
-  "id": "task_2026-08-21_015",
-  "parent_id": "task_2026-08-21_001",
-  "kind": "text",
-  "spec": "TRACK 14 — Cloud archival architecture patterns for opt-in cold storage (Action #29, Ch.6 future work). Research architecture patterns for optional cloud archival of local clinical fall-event records (JSON + PDF) that preserve the 'local-first, cloud-opt-in' framing Novelty Claim 3 depends on (local SHAP computation must not become cloud-dependent). Include a light pass on any Nepal-relevant health-data-handling norms or expectations, even for an academic prototype, worth a sentence in the thesis limitations/future-work section. Deliverable: a short architecture sketch (not implementation) plus the data-handling note.",
-  "status": "merged",
-  "owner_account": "user14",
-  "branch_name": null,
   "blocked_reason": null,
-  "created_by": "claude-spark-orchestrator",
+  "branch_name": null,
   "created_at": "2026-08-21T01:49:55Z",
+  "created_by": "claude-spark-orchestrator",
+  "id": "task_2026-08-21_015",
+  "kind": "text",
+  "owner_account": "user14",
+  "parent_id": "task_2026-08-21_001",
+  "spec": "TRACK 14 \u2014 Cloud archival architecture patterns for opt-in cold storage (Action #29, Ch.6 future work). Research architecture patterns for optional cloud archival of local clinical fall-event records (JSON + PDF) that preserve the 'local-first, cloud-opt-in' framing Novelty Claim 3 depends on (local SHAP computation must not become cloud-dependent). Include a light pass on any Nepal-relevant health-data-handling norms or expectations, even for an academic prototype, worth a sentence in the thesis limitations/future-work section. Deliverable: a short architecture sketch (not implementation) plus the data-handling note.",
+  "status": "merged",
   "updated_at": "2026-08-22T08:37:30Z"
 }
