@@ -109,6 +109,10 @@ class TestToolRegistration:
                 "submit_qa_review",
                 "read_worker_roles",
                 "get_job_metrics",
+                "init_scratchpad",
+                "read_scratchpad",
+                "append_scratchpad",
+                "overwrite_scratchpad",
             ]
         )
         assert names == expected
@@ -497,3 +501,78 @@ class TestJobProductionLifecycle:
         # Verify task is marked merged
         tasks = rs.list_tasks(status="merged")
         assert any(t["id"] == task["id"] for t in tasks)
+
+
+class TestSharedScratchpad:
+    def test_init_and_read_scratchpad(self, repo):
+        rs, repo_root = repo
+        init_res = rs.init_scratchpad(
+            scratchpad_id="shared",
+            title="Sprint Planning",
+            spec="Build auth layer",
+            author="user1"
+        )
+        assert init_res["status"] == "initialized"
+        assert init_res["scratchpad_id"] == "shared"
+
+        read_res = rs.read_scratchpad("shared")
+        assert read_res["exists"] is True
+        assert "Sprint Planning" in read_res["content"]
+        assert "Build auth layer" in read_res["content"]
+
+    def test_append_scratchpad(self, repo):
+        rs, _ = repo
+        rs.init_scratchpad("shared", title="Sprint Planning", author="user1")
+
+        # user2 appends implementation notes
+        app_res1 = rs.append_scratchpad(
+            scratchpad_id="shared",
+            author="user2",
+            heading="JWT Middleware",
+            content="Added jwt_auth helper to auth.py."
+        )
+        assert app_res1["status"] == "appended"
+
+        # user3 appends QA note
+        app_res2 = rs.append_scratchpad(
+            scratchpad_id="shared",
+            author="user3",
+            heading="Security Audit",
+            content="Verified token expiry and signature validation."
+        )
+        assert app_res2["status"] == "appended"
+
+        read_res = rs.read_scratchpad("shared")
+        assert "JWT Middleware" in read_res["content"]
+        assert "Security Audit" in read_res["content"]
+        assert "user2" in read_res["content"]
+        assert "user3" in read_res["content"]
+
+    def test_overwrite_scratchpad(self, repo):
+        rs, _ = repo
+        rs.append_scratchpad(scratchpad_id="notes", author="user1", content="old raw notes")
+        ow_res = rs.overwrite_scratchpad(
+            scratchpad_id="notes",
+            author="user1",
+            content="# Consolidated Specs\nFinal architecture defined."
+        )
+        assert ow_res["status"] == "overwritten"
+
+        read_res = rs.read_scratchpad("notes")
+        assert "Final architecture defined." in read_res["content"]
+        assert "old raw notes" not in read_res["content"]
+
+    def test_scratchpad_in_context_bundle(self, repo):
+        rs, _ = repo
+        rs.init_scratchpad("shared", title="Shared Board", author="user1")
+        rs.append_scratchpad(content="Sprint in progress", author="user1", scratchpad_id="shared")
+
+        bundle = rs.get_context_bundle(account="user2", scratchpad_id="shared")
+        assert "scratchpad" in bundle
+        assert bundle["scratchpad"]["exists"] is True
+        assert "Sprint in progress" in bundle["scratchpad"]["content"]
+
+    def test_invalid_scratchpad_id_rejected(self, repo):
+        rs, _ = repo
+        with pytest.raises(ValueError):
+            rs.read_scratchpad("../../../etc/passwd")

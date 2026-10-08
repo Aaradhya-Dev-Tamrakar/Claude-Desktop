@@ -16,28 +16,53 @@ PowerShell scripts to manage multiple isolated user profiles for the Claude Desk
 - **Intelligent Commit Messaging**: Dynamically generates conventional commit messages (`feat`, `refactor`, `chore`) derived from staged git diffs, hunk context headers, and line churn statistics (`+ins/-del`).
 - **PowerShell 7 (`pwsh`) Compatible**: Fully compatible with PowerShell 7 (`pwsh`) and Windows PowerShell 5.1.
 
+## Architecture & Stdio Coordination
+
+Claude Desktop operates as an interactive GUI client communicating via stdio FastMCP (`team-mcp.json`). Coordination state lives entirely in plain JSON files under `orchestrator-state/` (zero daemons, zero multi-account shared-write races). Headless background workers (`launch_copilot_worker.bat`) poll `orchestrator-state/tasks` for `kind: "code"`, claim tasks, execute in isolated worktrees, and submit checkpoints for adversarial QA review.
+
 ## Repo Structure
 
 ```Claude-Desktop/
-├── launch_user_n.ps1              # Profile launcher (Isolated / Concurrent)
-├── launch.bat                     # Double-click entry point for File Explorer
+├── launch_copilot_worker.bat      # One-click runner for Copilot queue worker
+├── launch_copilot_fleet.bat       # Multi-account Copilot fleet runner
+├── sync.bat                       # Zero-friction git sync wrapper (PowerShell ExecutionPolicy bypass)
 ├── sync.ps1                       # Git sync: pull --rebase --autostash, memory auto-sync, commit, push
-├── cooldown-reminder.ps1          # Post-login 5h cooldown toast, invoked by launch_user_n.ps1
-├── usage-watchdog.ps1             # Tray UIA usage watchdog polling & auto-checkpointing on threshold
-├── reset_profiles.ps1             # Wipes all profile state, resets profiles.json to {}
-├── bypass-all-profiles.ps1        # Sets bypassPermissionsGateByAccount=true across all profile configs
-├── profiles.json                  # Account name -> nickname/paths/last-login map
-├── team-mcp.json                  # Shared MCP config, force-merged into every profile
-├── team-claude-config.json        # Sanitized team-wide Claude desktop config template (mcpServers + preferences)
-├── team-context.md                # Static identity scaffold, read via read_team_context
+├── sync-mcp.ps1                   # Syncs team-mcp.json into all Claude Desktop profile configs
+├── profiles.json                  # Account name -> nickname/paths/role metadata map
+├── team-mcp.json                  # Shared MCP config (orchestrator-mcp, notebooklm-mcp, md2pdf, super-nlm)
+├── team-claude-config.json        # Sanitized team-wide Claude desktop config template
+├── team-context.md                # Static identity scaffold, read via get_context_bundle
 ├── team-memory.md                 # Shared memory log, auto-appended by sync.ps1 + manual entries
-├── gcal-credentials.json.example  # Google Calendar OAuth credential template
-├── gcal-token.json.example        # Google Calendar token template
 ├── AGENTS.md                      # Repo conventions for agent contributors
 ├── README.md
 ├── LICENSE
-├── .gitattributes
-├── .gitignore
+│
+├── legacy/                        # Archived legacy CDP automation & multi-window scripts
+│   ├── README.md                  # Documentation of retired CDP components & rationale
+│   ├── launch_user_n.ps1          # Retired multi-profile CDP launcher
+│   ├── launch.bat                 # Retired double-click launcher
+│   ├── launch-gui.bat / .ps1      # Retired Tkinter fleet GUI launcher
+│   ├── close.bat                  # Retired instance closer
+│   ├── launch-fleet.ps1           # Retired virtual desktop launcher
+│   ├── fleet_gui.py               # Retired Tkinter CDP window controller
+│   └── VirtualDesktop.exe / .cs   # Retired virtual desktop P/Invoke CLI
+│
+├── orchestrator-state/            # Filesystem coordination state contract
+│   ├── SCHEMA.md                  # File contract & invariant documentation
+│   ├── tasks/                     # Task definitions (kind: code|text, status: pending|claimed|done|merged)
+│   ├── checkpoints/               # Worker deliverables (commit_sha, branch_name, summary, result_text)
+│   ├── qa-reviews/                # Adversarial QA audit results (verdict: pass|fail|revision_needed)
+│   ├── live-status/               # Individual worker heartbeats (last-write-wins)
+│   ├── scratchpads/               # Shared multi-account collaboration scratchpads
+│   └── memory/                    # Shared immutable team-memory entries
+│
+├── mcp-servers/
+│   └── orchestrator-mcp/
+│       └── run_server.py          # FastMCP stdio server (33 tools, 29/29 pytest specs passing)
+│
+├── tests/
+│   ├── orchestrator_mcp_test.py   # Complete test suite for orchestrator-mcp
+│   └── launch_user_n.Tests.ps1    # Pester specs for legacy launcher
 │
 ├── client/                        # Autonomous worker client daemon & adapters
 │   ├── worker_daemon.py           # Polling daemon: registers worker, claims tasks, runs execution loop

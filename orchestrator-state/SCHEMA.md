@@ -203,3 +203,17 @@ directory listing of `orchestrator-state/tasks/` _is_ the index.
 second file that would need to stay in sync with the per-task files and
 would reintroduce exactly the shared-file race this schema exists to
 avoid.
+
+## orchestrator-state/scratchpads/<scratchpad_id>_scratchpad.md
+
+Durable, shared Markdown scratchpads for fast multi Claude Desktop account
+collaboration. When switching between accounts or instances (e.g. Architect
+Lead -> Builder -> QA Reviewer), all Claude Desktop instances coordinate
+in-session via shared scratchpads:
+
+- `init_scratchpad(scratchpad_id="shared", title="...", spec="...")`: Sets up standard template.
+- `read_scratchpad(scratchpad_id="shared")`: Reads the current shared scratchpad.
+- `append_scratchpad(content="...", author="userX", heading="...")`: Appends timestamped log.
+- `overwrite_scratchpad(content="...", author="userX")`: Rewrites or consolidates state.
+- `get_context_bundle(account="...", scratchpad_id="shared")`: Automatically embeds the scratchpad.
+

@@ -1,8 +1,8 @@
-# Context
+# Team Context & Ecosystem Invariants
 
-Call the orchestrator-mcp `read_team_context` tool to pull this into a
-chat, or paste it manually as a first message / into Custom Instructions.
-Edit it directly — it is not a config file, just plain text.
+Bootstrap your session in a single tool call using orchestrator-mcp:
+`get_context_bundle(account="<account>", memory_limit=5, memory_hours=24)`
+This returns team context, recent durable memory, caller's assigned tasks, pending task count, and active worker heartbeats in one round-trip, saving substantial startup tokens compared to individual queries. Edit this file directly to adjust durable context across all profiles.
 
 Because it's pasted identically into every profile (IEEE, personal, gaming,
 family, project accounts alike), keep anything account-specific out of here

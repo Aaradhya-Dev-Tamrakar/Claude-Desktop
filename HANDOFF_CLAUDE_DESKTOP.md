@@ -1,4 +1,4 @@
-# Handoff: Claude-Desktop Orchestration & Native MCP Architecture
+# Handoff: Claude-Desktop Multi-Account Orchestration & Shared Scratchpad Architecture
 
 **Target Repository:** `F:\Aaradhya-Dev-Tamrakar\Claude-Desktop`  
 **Date:** 2026-10-08  
@@ -7,29 +7,33 @@
 
 ---
 
-## 1. System Context & Architecture Overview
+## 1. System Context & Architectural Vision
 
-`Claude-Desktop` serves as the **interactive planning, decomposition, and adversarial QA review hub** for the multi-tier agent ecosystem. 
+This repository implements **pure intra-Claude Desktop multi-account orchestration**. 
 
-### Key Architectural Shift (Decoupling from CDP):
-- **Discarded Fragile Automation**: Browser automation via Chromium DevTools Protocol (CDP port scanning `9222-9225`, multi-window Electron instances consuming 1.17 GB RAM per window, virtual desktops) has been **fully abandoned** due to high operational management overhead.
-- **Adopted Looser Stdio File-Based Coordination**: Claude Desktop operates normally as an interactive GUI client and interfaces natively with local tools via standard stdio JSON-RPC (`team-mcp.json`).
-- **Zero-Daemon Filesystem Coordination**: All coordination state is externalized in plain JSON files under `orchestrator-state/`. There are no background daemons, locks, or network dependencies for Claude.
+### Core Operating Principle (Zero External Switching):
+- **No Ecosystem Hopping**: All planning, implementation, and review work happens **strictly within Claude Desktop instances** across the user's multiple Claude Desktop accounts (`user1`, `user2`, `user3`, `user4`, etc.). Switching across tools or to external CLI fleets is unnecessary overhead.
+- **Shared Persistent Scratchpad**: All Claude Desktop accounts share a common markdown scratchpad (`orchestrator-state/scratchpads/<scratchpad_id>_scratchpad.md`).
+- **Serial & Parallel Multi-Account Flow**:
+  - When Account 1 hits rate limits, Account 2 reads the scratchpad via `get_context_bundle()` and resumes instantly with zero lost context.
+  - Or Account 1 acts as Lead/Architect (decomposing specs), Account 2 acts as Developer/Coder (implementing code and testing in the local repo), and Account 3 acts as QA Auditor.
+- **Zero-Daemon Stdio Architecture**: Each Claude Desktop profile talks to `mcp-servers/orchestrator-mcp/run_server.py` over stdio via `team-mcp.json`. No CDP browser puppeteering, no port scanning, no Electron window management.
 
 ```
-[Claude Desktop (Any Profile)]
-       │
-       ▼ (create_task / decompose_task via orchestrator-mcp stdio)
-[orchestrator-state/tasks/task_*.json]
-       │
-       ▼ (launch_copilot_worker.bat polls & claims task)
-[Copilot CLI (27-Worker Fleet)] ──> writes ──> [orchestrator-state/checkpoints/task_*.json]
-       │
-       ▼ (submit_qa_review via Claude Desktop UI)
-[orchestrator-state/qa-reviews/task_*.json]
-       │
-       ▼ (User final audit & commit)
-[.\sync.bat]
+┌─────────────────────────┐     ┌─────────────────────────┐     ┌─────────────────────────┐
+│ Claude Profile: user1   │     │ Claude Profile: user2   │     │ Claude Profile: user3   │
+│ (Lead / Architect)      │     │ (Builder / Developer)   │     │ (Reviewer / QA)         │
+└───────────┬─────────────┘     └───────────┬─────────────┘     └───────────┬─────────────┘
+            │                               │                               │
+            │ create_task / init_scratchpad │ append_scratchpad / checkpoint│ submit_qa_review
+            ▼                               ▼                               ▼
+═════════════════════════════════════════════════════════════════════════════════════════════
+                   LOCAL ORCHESTRATOR STATE (Plain JSON & Markdown)
+  • orchestrator-state/scratchpads/shared_scratchpad.md (Shared live working document)
+  • orchestrator-state/tasks/<task_id>.json            (Atomic task units)
+  • orchestrator-state/checkpoints/<task_id>.json      (Completed deliverables)
+  • orchestrator-state/qa-reviews/<task_id>.json       (Audit verdicts)
+═════════════════════════════════════════════════════════════════════════════════════════════
 ```
 
 ---
@@ -37,51 +41,53 @@
 ## 2. Current State & Assets in `Claude-Desktop`
 
 1. **`mcp-servers/orchestrator-mcp/run_server.py`**:
-   - 1,009-line robust FastMCP stdio server.
-   - Core tools registered:
-     - `create_task(spec, kind, parent_id, created_by)`
-     - `decompose_task(parent_id, subtask_specs, kind, created_by)`
-     - `claim_task(task_id, account, branch_name)`
-     - `submit_checkpoint(task_id, account, summary, result_text, branch_name, commit_sha)`
-     - `submit_qa_review(task_id, reviewer_account, verdict, notes)`
-     - `list_tasks(status, parent_id, kind)`
-     - `get_context_bundle(account, memory_limit, memory_hours)`
-     - `push_memory_entry(account, text, tags, priority)`
-     - `read_team_memory(since, limit, project)`
-   - Verified with 29/29 passing tests in `tests/orchestrator_mcp_test.py`.
+   - FastMCP stdio server registering **25 native MCP tools**.
+   - **Shared Scratchpad Tools**:
+     - `init_scratchpad(scratchpad_id="shared", title="...", spec="...", author="...")`
+     - `read_scratchpad(scratchpad_id="shared")`
+     - `append_scratchpad(content="...", author="...", scratchpad_id="shared", heading="...")`
+     - `overwrite_scratchpad(content="...", author="...", scratchpad_id="shared")`
+   - **Task Lifecycle Tools**:
+     - `create_task`, `decompose_task`, `claim_task`, `release_task`, `mark_blocked`, `unblock_task`
+     - `submit_checkpoint`, `list_tasks`, `merge_results`
+     - `submit_qa_review`, `create_job`, `list_jobs`, `get_job_metrics`
+   - **Context & Memory Tools**:
+     - `get_context_bundle(account, scratchpad_id="shared")` (Single-call bootstrap returning scratchpad, team context, recent memory, active tasks, and active workers).
+     - `push_memory_entry`, `read_team_memory`, `archive_memory`, `read_team_context`, `push_live_status`, `read_all_live_status`
+   - **100% Passing Tests**: **34 / 34 pytest specs passing** in `tests/orchestrator_mcp_test.py`.
 
-2. **`orchestrator-state/` Directory Contract**:
-   - `tasks/<task_id>.json`: Task definitions (`kind: "code"|"text"`, `status: "pending"|"claimed"|"done"|"blocked"`).
-   - `checkpoints/<task_id>.json`: Code executor deliverables with git branch & commit SHA.
-   - `qa-reviews/<task_id>.json`: Claude Desktop QA audit results with pass/fail verdicts.
-   - `live-status/<account>.json`: Status lights per worker.
-   - `memory/<account>__<entry_id>.json`: Shared team knowledge memory entries.
+2. **File State Directory (`orchestrator-state/`)**:
+   - `scratchpads/`: Shared markdown logs for cross-account handoffs.
+   - `tasks/`: Task specifications and claim states.
+   - `checkpoints/`: Milestone reports and commit hashes.
+   - `qa-reviews/`: Formal verification logs.
+   - `live-status/`: Per-account status lights.
+   - `memory/`: Timestamped cross-session memory notes.
 
-3. **`launch_copilot_worker.bat`**:
-   - One-click runner executing `..\Fleet-Orchestrator\tools\copilot_queue_worker.py` pointing to `orchestrator-state/`.
-
-4. **`team-mcp.json`**:
-   - MCP client config registering `orchestrator-mcp` for Claude Desktop profiles.
+3. **`team-mcp.json`**:
+   - Standard MCP config registering `orchestrator-mcp` for Claude Desktop profiles.
 
 ---
 
 ## 3. Immediate Objectives & Backlog for This Session
 
-1. **Profile Prompts & Guidelines Hardening**:
-   - Provide standard system prompt snippets or custom instructions for Claude Desktop profiles (e.g. Architect/Planner, QA Reviewer) to optimize token efficiency when interacting with `orchestrator-mcp`.
-   - Enforce bootstrap convention: use `get_context_bundle(account="...", ...)` rather than multiple distinct round-trips.
-
+1. **Profile Prompts & Instructions Customization**:
+   - Write standard instructions/prompt snippets for Claude Desktop profiles to maximize token efficiency:
+     - Bootstrap via `get_context_bundle(account="<my_profile>", scratchpad_id="shared")`.
+     - Read the shared scratchpad first to immediately understand current state.
+     - Document intermediate findings and handoff state via `append_scratchpad`.
 2. **Clean Up Legacy CDP Artifacts**:
-   - Review and safely deprecate or archive legacy CDP launcher scripts (`launch_user_n.ps1`, `launch-gui.bat`, `close.bat`, `VirtualDesktop.exe`) into an `archive/` or `legacy/` directory to prevent confusion.
-   - Ensure documentation (`README.md`, `team-context.md`) reflects the clean file-based stdio architecture.
-
-3. **Interactive End-to-End Workflow Validation**:
-   - Conduct a live verification: Create a task in Claude Desktop via `create_task`, observe `launch_copilot_worker.bat` pickup and completion, and run `submit_qa_review` from Claude Desktop.
+   - Safely move obsolete CDP launcher scripts (`launch_user_n.ps1`, `launch-gui.bat`, `close.bat`, `VirtualDesktop.exe`) into an `archive/cdp_legacy/` folder to clean the root namespace.
+3. **Validate Intra-Claude Multi-Account Handshake**:
+   - Simulate/verify a 2-account workflow in Claude Desktop:
+     - Profile A initializes the scratchpad and decomposes a task.
+     - Profile B boots up, reads the scratchpad in its context bundle, claims the task, implements it, appends its completion notes, and submits checkpoint.
+     - Profile A or C inspects the checkpoint and submits QA review.
 
 ---
 
 ## 4. Operational Invariants & Rules
 
-- **Zero Raw Git Commands**: Never run raw `git add`, `git commit`, or `git push`. Always run `.\sync.bat` (or `.\sync.ps1`).
-- **Strict File Contract**: Adhere strictly to `orchestrator-state/SCHEMA.md`. Never create shared files edited concurrently by multiple entities.
-- **Zero CDP / Electron Scraping**: Do not reintroduce browser automation, websockets, or port polling. Claude Desktop is purely an interactive desktop client.
+- **Zero Raw Git Commands**: Never run raw `git add`, `git commit`, or `git push`. Always execute `.\sync.bat` (or `.\sync.ps1`).
+- **Strict File Contract**: Adhere strictly to `orchestrator-state/SCHEMA.md` (one entity per file; zero shared multi-account writes).
+- **Strictly No CDP / Electron Automation**: Keep Claude Desktop purely as an interactive desktop app communicating over stdio MCP.

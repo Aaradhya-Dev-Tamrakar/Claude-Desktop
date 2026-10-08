@@ -42,12 +42,14 @@ MEMORY_DIR = STATE_ROOT / "memory"
 MEMORY_ARCHIVE_DIR = MEMORY_DIR / "archive"
 JOBS_DIR = STATE_ROOT / "jobs"
 QA_REVIEWS_DIR = STATE_ROOT / "qa-reviews"
+SCRATCHPADS_DIR = STATE_ROOT / "scratchpads"
 WORKER_ROLES_PATH = STATE_ROOT / "worker_roles.json"
 TEAM_CONTEXT_PATH = REPO_ROOT / "team-context.md"
 
 _TASK_ID_RE = re.compile(r"^task_\d{4}-\d{2}-\d{2}_\d{3}$")
 _ACCOUNT_RE = re.compile(r"^[A-Za-z0-9_.\-]{1,64}$")
 _MEMORY_FILENAME_RE = re.compile(r"^[A-Za-z0-9_.\-]{1,64}$")
+_SCRATCHPAD_ID_RE = re.compile(r"^[A-Za-z0-9_.\-]{1,64}$")
 
 TaskStatus = Literal["pending", "claimed", "blocked", "done", "merged"]
 TaskKind = Literal["code", "text"]
@@ -58,7 +60,7 @@ def _now_iso() -> str:
 
 
 def _ensure_dirs() -> None:
-    for d in (TASKS_DIR, LIVE_STATUS_DIR, CHECKPOINTS_DIR, MEMORY_DIR, MEMORY_ARCHIVE_DIR, JOBS_DIR, QA_REVIEWS_DIR):
+    for d in (TASKS_DIR, LIVE_STATUS_DIR, CHECKPOINTS_DIR, MEMORY_DIR, MEMORY_ARCHIVE_DIR, JOBS_DIR, QA_REVIEWS_DIR, SCRATCHPADS_DIR):
         d.mkdir(parents=True, exist_ok=True)
 
 
@@ -108,6 +110,18 @@ def _memory_entry_path(account: str, entry_id: str) -> Path:
             f"invalid entry_id {entry_id!r}: must match {_MEMORY_FILENAME_RE.pattern}"
         )
     return MEMORY_DIR / f"{account}__{entry_id}.json"
+
+
+def _validate_scratchpad_id(scratchpad_id: str) -> None:
+    if not _SCRATCHPAD_ID_RE.match(scratchpad_id):
+        raise ValueError(
+            f"invalid scratchpad_id {scratchpad_id!r}: must match {_SCRATCHPAD_ID_RE.pattern}"
+        )
+
+
+def _scratchpad_path(scratchpad_id: str) -> Path:
+    _validate_scratchpad_id(scratchpad_id)
+    return SCRATCHPADS_DIR / f"{scratchpad_id}_scratchpad.md"
 
 
 def _read_json(path: Path) -> dict[str, Any] | None:
@@ -397,7 +411,7 @@ def read_all_live_status(
     now = datetime.now(timezone.utc)
     for path in sorted(LIVE_STATUS_DIR.glob("*.json")):
         data = _read_json(path)
-        if data is None:
+        if not isinstance(data, dict):
             continue
         if stale_threshold_hours is not None:
             hb = data.get("heartbeat_at")
@@ -561,6 +575,7 @@ def get_context_bundle(
     memory_limit: int = 10,
     memory_hours: int = 48,
     include_team_context: bool = True,
+    scratchpad_id: str | None = "shared",
 ) -> dict[str, Any]:
     _ensure_dirs()
     _validate_account(account)
@@ -569,6 +584,7 @@ def get_context_bundle(
 
     team_ctx = read_team_context() if include_team_context else {"exists": False, "content": ""}
     mem = read_team_memory(since=since_iso, limit=memory_limit)
+    scratchpad_info = read_scratchpad(scratchpad_id) if scratchpad_id else {"exists": False, "content": ""}
 
     my_tasks = []
     pending_count = 0
@@ -599,6 +615,7 @@ def get_context_bundle(
         "my_tasks": my_tasks,
         "pending_tasks_count": pending_count,
         "active_workers": [w for w in active_workers if w.get("account") != account],
+        "scratchpad": scratchpad_info,
     }
 
 
@@ -994,6 +1011,138 @@ def get_job_metrics(job_id: str) -> dict[str, Any]:
         "pending_tasks": pending,
         "in_progress_tasks": in_progress,
         "total_reviews": len(reviews),
+    }
+
+
+@srv.tool(
+    name="init_scratchpad",
+    description=(
+        "Initialize or reset a shared markdown scratchpad for multi-Claude Desktop "
+        "collaboration. Creates orchestrator-state/scratchpads/<scratchpad_id>_scratchpad.md."
+    ),
+)
+def init_scratchpad(
+    scratchpad_id: str = "shared",
+    title: str = "Shared Multi-Account Workspace",
+    spec: str = "",
+    author: str = "claude",
+) -> dict[str, Any]:
+    _ensure_dirs()
+    _validate_scratchpad_id(scratchpad_id)
+    _validate_account(author)
+    path = _scratchpad_path(scratchpad_id)
+    now = _now_iso()
+
+    header = (
+        f"# 📋 Shared Multi-Account Scratchpad: {title}\n\n"
+        f"> **Scratchpad ID:** `{scratchpad_id}`  \n"
+        f"> **Initialized By:** `{author}`  \n"
+        f"> **Created At:** `{now}`  \n"
+        f"> **Mode:** Fast Multi Claude Desktop Collaboration\n\n"
+        f"---\n\n"
+        f"## 1. Specification & Objectives\n\n"
+        f"{(spec.strip() if spec else '*(No explicit specification provided)*')}\n\n"
+        f"---\n\n"
+        f"## 2. Shared Work Log & Handoffs\n\n"
+        f"*(Instances append notes, findings, decisions, and handoff summaries below)*\n\n"
+    )
+    path.write_text(header, encoding="utf-8")
+    return {
+        "status": "initialized",
+        "scratchpad_id": scratchpad_id,
+        "path": str(path),
+        "created_at": now,
+    }
+
+
+@srv.tool(
+    name="read_scratchpad",
+    description=(
+        "Read the markdown content of a shared scratchpad. Allows any Claude Desktop "
+        "instance to see previous progress, architectural decisions, and handoff notes."
+    ),
+)
+def read_scratchpad(scratchpad_id: str = "shared") -> dict[str, Any]:
+    _ensure_dirs()
+    path = _scratchpad_path(scratchpad_id)
+    if not path.exists():
+        return {
+            "exists": False,
+            "scratchpad_id": scratchpad_id,
+            "content": "",
+            "path": str(path),
+        }
+    return {
+        "exists": True,
+        "scratchpad_id": scratchpad_id,
+        "content": path.read_text(encoding="utf-8"),
+        "path": str(path),
+    }
+
+
+@srv.tool(
+    name="append_scratchpad",
+    description=(
+        "Append a timestamped note, discovery, or handoff entry to the shared scratchpad. "
+        "Allows fast serial or parallel collaboration across multiple Claude Desktop accounts."
+    ),
+)
+def append_scratchpad(
+    content: str,
+    author: str,
+    scratchpad_id: str = "shared",
+    heading: str | None = None,
+) -> dict[str, Any]:
+    _ensure_dirs()
+    _validate_scratchpad_id(scratchpad_id)
+    _validate_account(author)
+    if not content or not content.strip():
+        raise ValueError("content cannot be empty")
+
+    path = _scratchpad_path(scratchpad_id)
+    now = _now_iso()
+    if not path.exists():
+        init_scratchpad(scratchpad_id=scratchpad_id, author=author)
+
+    header_suffix = f": {heading.strip()}" if heading and heading.strip() else ""
+    tag = f"### [{now}] {author}{header_suffix}"
+    entry = f"{tag}\n\n{content.strip()}\n\n"
+
+    with path.open("a", encoding="utf-8") as f:
+        f.write(entry)
+
+    return {
+        "status": "appended",
+        "scratchpad_id": scratchpad_id,
+        "author": author,
+        "timestamp": now,
+        "appended_chars": len(entry),
+    }
+
+
+@srv.tool(
+    name="overwrite_scratchpad",
+    description=(
+        "Overwrite the shared scratchpad with consolidated or cleaned-up content. "
+        "Use when condensing a long work log into an authoritative state."
+    ),
+)
+def overwrite_scratchpad(
+    content: str,
+    author: str,
+    scratchpad_id: str = "shared",
+) -> dict[str, Any]:
+    _ensure_dirs()
+    _validate_scratchpad_id(scratchpad_id)
+    _validate_account(author)
+    path = _scratchpad_path(scratchpad_id)
+    path.write_text(content, encoding="utf-8")
+    return {
+        "status": "overwritten",
+        "scratchpad_id": scratchpad_id,
+        "author": author,
+        "updated_at": _now_iso(),
+        "total_chars": len(content),
     }
 
 

@@ -44,7 +44,10 @@
 #>
 
 BeforeAll {
-    $ScriptPath = Join-Path $PSScriptRoot ".." "launch_user_n.ps1"
+    $ScriptPath = Join-Path $PSScriptRoot "..\legacy\launch_user_n.ps1"
+    if (-not (Test-Path $ScriptPath)) {
+        $ScriptPath = Join-Path $PSScriptRoot ".." "launch_user_n.ps1"
+    }
     . $ScriptPath -TestHook
 }
 
