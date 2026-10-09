@@ -1,9 +1,22 @@
-{
-  "Account": "user1",
-  "CdpPort": 9222,
-  "LaunchedAt": "2026-10-08T18:49:10Z",
-  "Nickname": "adevtmr",
-  "PreferredModel": "Sonnet 5",
-  "Role": "orchestrator",
-  "ThinkingBudget": 0
-}
+[
+  {
+    "Account": "user2",
+    "CdpPort": 9223,
+    "Hwnd": 659350,
+    "LaunchedAt": "2026-10-08T19:24:11Z",
+    "Nickname": "dev83",
+    "PreferredModel": "Sonnet 5",
+    "Role": "orchestrator",
+    "ThinkingBudget": 0
+  },
+  {
+    "Account": "user3",
+    "CdpPort": 9224,
+    "Hwnd": 462482,
+    "LaunchedAt": "2026-10-08T19:24:13Z",
+    "Nickname": "xavier",
+    "PreferredModel": "Haiku 4.5",
+    "Role": "worker_scout",
+    "ThinkingBudget": 0
+  }
+]
